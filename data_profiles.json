@@ -202,6 +202,74 @@
         "Light Nordic"
       ]
     },
+    "blonde": {
+      "name": "Blonde",
+      "sub": "Light (Marketing Term)",
+      "level": "Light",
+      "group": "light",
+      "aka": [
+        "Golden",
+        "Starbucks Blonde",
+        "Light Roast (retail)"
+      ],
+      "agtron": "85–75",
+      "accent": "#DCC06A",
+      "oneLine": "A pale, golden light roast made famous as a retail term by Starbucks in 2012 — bright and mellow, though in practice most 'blonde' offerings land closer to a City roast than a true extreme-light.",
+      "useFor": "Approachable light-roast retail coffee, lighter espresso for a broad audience, drinkers stepping down from medium who want less bitterness without going fully Nordic.",
+      "curve": {
+        "chargeC": "198–212",
+        "chargeF": "388–414",
+        "tpC": "88–96",
+        "tpF": "190–205",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "204–209",
+        "dropF": "399–408",
+        "totalTime": "9:00–11:00",
+        "dtr": "13–17%"
+      },
+      "flavor": {
+        "acidity": 4,
+        "body": 2,
+        "sweetness": 3,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard even drying. Blonde is a broadly-marketed light roast, so the approach is a clean, unfussy light-roast curve rather than the knife-edge precision of a Nordic or cinnamon."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "A modest browning cooks off the grassy edge and builds gentle sweetness. The aim is 'smooth and light,' not maximum origin expression."
+        },
+        {
+          "h": "First Crack",
+          "body": "You let first crack roll fully, then drop within a short window. Because 'blonde' isn't a precise level, exactly where you drop varies a lot between roasters."
+        },
+        {
+          "h": "Development",
+          "body": "A short-to-moderate window (13–17% DTR). Enough to keep it mellow and approachable rather than sharp — which is why many commercial blonde roasts drift toward City rather than staying truly light."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Not actually light",
+          "cause": "Chasing 'smooth,' the roast drifts to City or beyond and stops being a light roast at all.",
+          "avoid": "If you're selling it as blonde, hold the drop genuinely light; know that the term sets a light expectation even if it's loosely defined."
+        },
+        {
+          "d": "Sour / underdeveloped",
+          "cause": "Overcorrecting toward light and dropping too early.",
+          "avoid": "Give it enough development to resolve acids; blonde should read mellow-bright, not sour."
+        }
+      ],
+      "machine": "Forgiving across machines. The real 'trick' of a blonde roast is honestly just a clean, approachable light-to-light-medium roast — the distinctive thing about it is the name and the marketing, not a unique technique."
+    },
     "city": {
       "name": "City",
       "sub": "Light–Medium Filter",

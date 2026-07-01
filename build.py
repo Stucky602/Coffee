@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v5"
-CACHE_C = "coffee-guide-v5"
+APP_VERSION = "v6"
+CACHE_C = "coffee-guide-v6"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -245,6 +245,15 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .prose{color:var(--ink2);font-size:14.5px;max-width:70ch}
 .machine{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--heat3);
   border-radius:10px;padding:16px 18px;color:var(--ink2);font-size:14.5px;max-width:74ch}
+.snav{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px}
+.snav-cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:3px}
+.snav-cell:not(.empty):hover{border-color:var(--ink3);transform:translateY(-2px)}
+.snav-cell.empty{background:none;border:1px dashed var(--line);cursor:default;opacity:.4}
+.snav-cell .snav-dir{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.snav-cell .snav-name{font-size:17px;font-weight:650}
+.snav-cell .snav-lvl{font-size:12px;color:var(--ink3)}
+.snav-cell:last-child{text-align:right;align-items:flex-end}
 .curvechart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px 8px;margin-top:16px}
 .clegend{display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:6px 4px 4px;font-size:12px;color:var(--ink2)}
 .clegend span{display:flex;align-items:center;gap:7px}
@@ -727,8 +736,26 @@ function profileDetail(id){
     <div class="block"><h2>Machine Considerations</h2>
       <div class="machine">${esc(p.machine)}</div>
     </div>
+    ${spectrumNav(id)}
     <div style="height:40px"></div>
   </div>`;
+}
+function spectrumNav(id){
+  // walk the light→dark spectrum (exclude purpose-built, which aren't on the line)
+  const line=Object.entries(PROFILES).filter(([k,pp])=>pp.group!=='purpose').map(([k])=>k);
+  const i=line.indexOf(id);
+  if(i<0)return '';
+  const lighter=i>0?line[i-1]:null, darker=i<line.length-1?line[i+1]:null;
+  const cell=(nid,dir)=>{
+    if(!nid)return `<div class="snav-cell empty"></div>`;
+    const n=PROFILES[nid];
+    return `<div class="snav-cell" onclick="go('profile','${nid}')">
+      <span class="snav-dir">${dir==='light'?'← Lighter':'Darker →'}</span>
+      <span class="snav-name" style="color:${n.accent}">${esc(n.name)}</span>
+      <span class="snav-lvl">${esc(n.level)}</span></div>`;
+  };
+  return `<div class="block"><h2>Along the Spectrum</h2>
+    <div class="snav">${cell(lighter,'light')}${cell(darker,'dark')}</div></div>`;
 }
 
 /* ---------- COMPARE ---------- */
