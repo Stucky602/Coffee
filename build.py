@@ -6,8 +6,8 @@ BASE = pathlib.Path(__file__).parent
 profiles = json.loads((BASE / "data_profiles.json").read_text())["PROFILES"]
 methodology = json.loads((BASE / "data_methodology.json").read_text())["METHODOLOGY"]
 
-APP_VERSION = "v1"
-CACHE_C = "coffee-guide-v1"
+APP_VERSION = "v2"
+CACHE_C = "coffee-guide-v2"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -46,6 +46,10 @@ HTML = r"""<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1a120b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Coffee Guide">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Coffee — An Industry Guide</title>
 <style>
 :root{
@@ -174,6 +178,12 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .prose{color:var(--ink2);font-size:14.5px;max-width:70ch}
 .machine{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--heat3);
   border-radius:10px;padding:16px 18px;color:var(--ink2);font-size:14.5px;max-width:74ch}
+.curvechart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px 8px;margin-top:16px}
+.clegend{display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:6px 4px 4px;font-size:12px;color:var(--ink2)}
+.clegend span{display:flex;align-items:center;gap:7px}
+.clegend .ln{width:16px;height:2.6px;border-radius:2px;display:inline-block}
+.clegend .ln.dash{background:repeating-linear-gradient(90deg,#7a6a52 0 4px,transparent 4px 7px);height:2px}
+.clegend .hint{color:var(--ink3);font-size:11.5px;flex:1;min-width:200px}
 
 /* methodology detail */
 .msection{margin-top:22px;max-width:74ch}
@@ -304,6 +314,102 @@ function radar(vals, size, accent, opts){
   return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
 }
 
+/* ---------- ROAST CURVE RENDERER ---------- */
+// Parses "a–b" range strings to a midpoint number.
+function midRange(s){
+  if(s==null)return 0;
+  const m=String(s).replace('%','').split(/[–\-]/).map(x=>parseFloat(x)).filter(x=>!isNaN(x));
+  return m.length?m.reduce((a,b)=>a+b,0)/m.length:0;
+}
+// "m:ss" -> seconds
+function mmssToSec(s){const p=String(s).split(':').map(Number);return p.length===2?p[0]*60+p[1]:midRange(s)*60;}
+// Build BT + RoR sample points for a profile from its curve data. Returns {bt:[[t,temp]],ror:[[t,ror]],marks}
+function buildCurve(c){
+  const totalSec=midRange(c.totalTime.split('–').map(x=>{const p=x.split(':').map(Number);return p[0]*60+(p[1]||0);}).join('–'));
+  // total time as seconds: parse both ends as mm:ss then midpoint
+  const ends=c.totalTime.split('–').map(x=>{const p=x.trim().split(':').map(Number);return p[0]*60+(p[1]||0);});
+  const total=ends.reduce((a,b)=>a+b,0)/ends.length;
+  const dtr=midRange(c.dtr)/100;
+  const fcTime=total*(1-dtr);           // first crack occurs so that remaining = dtr
+  const charge=midRange(c.chargeC);
+  const tp=midRange(c.tpC);
+  const tpTime=Math.min(60, total*0.09);// turning point ~ first ~9% or 60s
+  const dryEnd=midRange(c.dryEndC);
+  const dryTime=total*0.48;             // yellowing ~ 48% of roast
+  const fcTemp=midRange(c.fcC);
+  const drop=midRange(c.dropC);
+  // BT anchor points (time, temp)
+  const bt=[[0,charge],[tpTime,tp],[dryTime,dryEnd],[fcTime,fcTemp],[total,drop]];
+  // Smooth-sample BT with monotone-ish interpolation between anchors
+  const btPts=[];
+  const steps=90;
+  for(let i=0;i<=steps;i++){
+    const t=total*i/steps;
+    // find segment
+    let a=bt[0],b=bt[1];
+    for(let k=0;k<bt.length-1;k++){if(t>=bt[k][0]&&t<=bt[k+1][0]){a=bt[k];b=bt[k+1];break;}}
+    const span=(b[0]-a[0])||1; let f=(t-a[0])/span;
+    f=f<0?0:f>1?1:f;
+    // ease so the turning-point dip and the decelerating climb feel real
+    const ef=a===bt[0]?(1-Math.pow(1-f,1.7)):(f*f*(3-2*f)*0.4+f*0.6);
+    btPts.push([t, a[1]+(b[1]-a[1])*ef]);
+  }
+  // RoR = derivative of BT, degrees per 30s, smoothed
+  const ror=[];
+  for(let i=1;i<btPts.length;i++){
+    const dt=btPts[i][0]-btPts[i-1][0];
+    const dT=btPts[i][1]-btPts[i-1][1];
+    ror.push([btPts[i][0], dt>0?(dT/dt)*30:0]);
+  }
+  // smooth RoR (moving avg) and clamp negatives near the turn
+  const sm=[];
+  for(let i=0;i<ror.length;i++){
+    let s=0,n=0;for(let k=Math.max(0,i-4);k<=Math.min(ror.length-1,i+4);k++){s+=ror[k][1];n++;}
+    sm.push([ror[i][0], Math.max(0,s/n)]);
+  }
+  return {bt:btPts,ror:sm,total,marks:{tpTime,tp,dryTime,dryEnd,fcTime,fcTemp,drop,charge}};
+}
+function roastCurve(c,accent,w,h){
+  w=w||620;h=h||300;
+  const cv=buildCurve(c);
+  const L=44,R=44,T=18,B=34;
+  const iw=w-L-R, ih=h-T-B;
+  const total=cv.total;
+  // BT temp scale
+  const temps=cv.bt.map(p=>p[1]);
+  const tmin=Math.min(...temps)-10, tmax=Math.max(...temps)+8;
+  const rorMax=Math.max(...cv.ror.map(p=>p[1]),1)*1.15;
+  const X=t=>L+iw*(t/total);
+  const Ybt=v=>T+ih*(1-(v-tmin)/(tmax-tmin));
+  const Yror=v=>T+ih*(1-v/rorMax);
+  const mm=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+  let g='';
+  // phase shading
+  const phases=[[0,cv.marks.dryTime,'Drying','#2a1c10'],[cv.marks.dryTime,cv.marks.fcTime,'Maillard','#33230f'],[cv.marks.fcTime,total,'Development','#3d2913']];
+  phases.forEach(ph=>{g+=`<rect x="${X(ph[0]).toFixed(1)}" y="${T}" width="${(X(ph[1])-X(ph[0])).toFixed(1)}" height="${ih}" fill="${ph[3]}" opacity="0.55"/>`;
+    const mx=(X(ph[0])+X(ph[1]))/2;g+=`<text x="${mx.toFixed(1)}" y="${T+13}" fill="#8f7c66" font-size="10.5" font-family="ui-sans-serif" text-anchor="middle" letter-spacing="0.5">${ph[2]}</text>`;});
+  // gridlines (time)
+  for(let s=0;s<=total;s+=120){g+=`<line x1="${X(s).toFixed(1)}" y1="${T}" x2="${X(s).toFixed(1)}" y2="${T+ih}" stroke="#3a2a1c" stroke-width="1" opacity="0.5"/><text x="${X(s).toFixed(1)}" y="${h-14}" fill="#8f7c66" font-size="10" text-anchor="middle" font-family="ui-monospace">${mm(s)}</text>`;}
+  // RoR line (secondary, thin, muted)
+  let rorPath=cv.ror.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Yror(p[1]).toFixed(1)).join(' ');
+  g+=`<path d="${rorPath}" fill="none" stroke="#7a6a52" stroke-width="1.6" stroke-dasharray="4 3" opacity="0.85"/>`;
+  // BT line (primary, accent)
+  let btPath=cv.bt.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Ybt(p[1]).toFixed(1)).join(' ');
+  g+=`<path d="${btPath}" fill="none" stroke="${accent}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // landmark markers
+  const mk=(t,v,lab,below)=>{const x=X(t),y=Ybt(v);const ly=below?y+16:y-9;return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6" fill="${accent}" stroke="#160e08" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${ly.toFixed(1)}" fill="#f0e6d8" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" font-weight="600">${lab}</text>`;};
+  g+=mk(cv.marks.tpTime,cv.marks.tp,'TP',true);
+  // if first crack is within ~8% of total time from the drop, push 1C label below to avoid Drop collision
+  const fcClose=(total-cv.marks.fcTime)/total < 0.13;
+  g+=mk(cv.marks.fcTime,cv.marks.fcTemp,'1C',fcClose);
+  g+=mk(total,cv.marks.drop,'Drop');
+  // axis labels
+  g+=`<text x="${L-8}" y="${Ybt(tmax)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmax)}°C</text>`;
+  g+=`<text x="${L-8}" y="${Ybt(tmin)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmin)}°C</text>`;
+  g+=`<text x="${w-R+8}" y="${T+ih-4}" fill="#7a6a52" font-size="10" text-anchor="start" font-family="ui-monospace">RoR</text>`;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
+}
+
 /* ---------- ROUTING ---------- */
 let state={view:'home'};
 function setNav(n){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===n));}
@@ -414,7 +520,9 @@ function profileDetail(id){
         ${stat('Dev. Ratio (DTR)',c.dtr,'',true)}
       </div>
       <p class="prose" style="margin-top:12px;font-size:13px;color:var(--ink3)">Temperatures are typical bean-temp ranges and vary by roaster; the phase relationships and DTR transfer across machines better than absolute numbers do.</p>
-    </div>
+      <div class="curvechart">${roastCurve(p.curve,p.accent,620,300)}
+        <div class="clegend"><span><i class="ln" style="background:${p.accent}"></i>Bean temp</span><span><i class="ln dash"></i>Rate of rise</span><span class="hint">Idealized from this profile's data — your machine's curve will differ in absolute temps, not in shape.</span></div>
+      </div></div>
 
     <div class="block"><h2>Phase Walkthrough</h2>
       ${p.phases.map((ph,i)=>`<div class="phase"><div class="n">${i+1}</div><div class="c"><h4>${esc(ph.h)}</h4><p>${esc(ph.body)}</p></div></div>`).join('')}
@@ -500,11 +608,66 @@ function methDetail(id){
 }
 
 go('home');
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+}
 </script>
 </body>
 </html>"""
 
 out = HTML.replace("__DATA__", DATA_JSON)
 (BASE / "index.html").write_text(out, encoding="utf-8")
+
+# --- PWA manifest ---
+manifest = {
+    "name": "Coffee — An Industry Guide",
+    "short_name": "Coffee Guide",
+    "description": "A working roasting reference for coffee professionals.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#160e08",
+    "theme_color": "#1a120b",
+    "icons": [
+        {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+    ],
+}
+(BASE / "manifest.webmanifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+# --- App icon (simple roasted-bean mark, SVG scales to any size) ---
+icon = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" rx="96" fill="#160e08"/>
+<defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#C9A34E"/><stop offset="1" stop-color="#95602F"/></linearGradient></defs>
+<ellipse cx="256" cy="256" rx="132" ry="168" fill="url(#h)"/>
+<path d="M256 96 C 210 180, 302 332, 256 416" fill="none" stroke="#160e08" stroke-width="26" stroke-linecap="round"/>
+</svg>'''
+(BASE / "icon.svg").write_text(icon, encoding="utf-8")
+
+# --- Service worker: cache the shell for offline field use ---
+sw = f'''const CACHE="{CACHE_C}";
+const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"];
+self.addEventListener("install",e=>{{
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{{}}));
+}});
+self.addEventListener("activate",e=>{{
+  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+}});
+self.addEventListener("fetch",e=>{{
+  if(e.request.method!=="GET")return;
+  e.respondWith(
+    caches.match(e.request).then(hit=>hit||fetch(e.request).then(res=>{{
+      const copy=res.clone();
+      caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{{}});
+      return res;
+    }}).catch(()=>caches.match("./index.html")))
+  );
+}});
+'''
+(BASE / "sw.js").write_text(sw, encoding="utf-8")
+
 print(f"Built index.html — {len(out):,} bytes")
 print(f"Profiles: {len(profiles)} | Methodology pages: {len(methodology)}")
+print("Also wrote: manifest.webmanifest, icon.svg, sw.js")

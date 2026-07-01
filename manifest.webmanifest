@@ -1,0 +1,18 @@
+{
+  "name": "Coffee \u2014 An Industry Guide",
+  "short_name": "Coffee Guide",
+  "description": "A working roasting reference for coffee professionals.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#160e08",
+  "theme_color": "#1a120b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
