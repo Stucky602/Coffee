@@ -4,10 +4,12 @@ import json, pathlib
 
 BASE = pathlib.Path(__file__).parent
 profiles = json.loads((BASE / "data_profiles.json").read_text())["PROFILES"]
-methodology = json.loads((BASE / "data_methodology.json").read_text())["METHODOLOGY"]
+_meth_raw = json.loads((BASE / "data_methodology.json").read_text())
+methodology = _meth_raw["METHODOLOGY"]
+glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v3"
-CACHE_C = "coffee-guide-v3"
+APP_VERSION = "v4"
+CACHE_C = "coffee-guide-v4"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -34,6 +36,7 @@ FLAVOR_AXES = [
 DATA_JSON = json.dumps({
     "PROFILES": profiles,
     "METHODOLOGY": methodology,
+    "GLOSSARY": glossary,
     "PROFILE_GROUPS": PROFILE_GROUPS,
     "METH_GROUPS": METH_GROUPS,
     "FLAVOR_AXES": FLAVOR_AXES,
@@ -123,6 +126,48 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
   padding:8px 10px;border-radius:9px;font-family:inherit;cursor:pointer}
 .empty{text-align:center;color:var(--ink3);font-size:14px;padding:44px 20px;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:16px}
+
+/* start here */
+.starthero{padding:40px 0 8px}
+.starthero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--heat2);margin-bottom:14px}
+.starthero h1{font-size:clamp(26px,4.5vw,40px);letter-spacing:-.03em;line-height:1.05}
+.starthero .lede{color:var(--ink2);font-size:16.5px;max-width:66ch;margin:18px 0 0;line-height:1.55}
+.block2{margin-top:44px}
+.block2 .bh{font-size:20px;letter-spacing:-.01em}
+.block2 .bsub{color:var(--ink3);font-size:14px;margin:5px 0 18px}
+.block2 .bsub b{color:var(--heat1);font-weight:600}
+.journey{display:flex;flex-direction:column}
+.jstep{display:flex;gap:16px;position:relative;padding-bottom:20px}
+.jstep .jdot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;color:#160e08;z-index:2}
+.jstep .jline{position:absolute;left:15.5px;top:32px;bottom:0;width:2px;background:var(--line)}
+.jstep .jbody{padding-top:4px}
+.jstep .jbody h4{font-size:16px;margin-bottom:3px}
+.jstep .jbody p{color:var(--ink2);font-size:14.5px;margin:0;max-width:64ch}
+.tradeoff{display:flex;flex-wrap:wrap;align-items:stretch;gap:14px}
+.tside{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.tside.light{border-left:3px solid var(--heat1)}
+.tside.dark{border-left:3px solid var(--heat5)}
+.tside .tlabel{font-weight:700;font-size:14.5px;margin-bottom:10px}
+.tside.light .tlabel{color:var(--heat1)}
+.tside.dark .tlabel{color:#c98a5a}
+.tside ul{margin:0;padding-left:18px}
+.tside li{color:var(--ink2);font-size:14px;margin-bottom:6px}
+.tarrow{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;color:var(--ink3);padding:0 4px}
+.glist{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.grow{display:grid;grid-template-columns:180px 1fr;gap:18px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+.grow:last-child{border-bottom:none}
+.grow .gterm{font-weight:650;font-size:14.5px;color:var(--heat1)}
+.grow .gdef{color:var(--ink2);font-size:14px;line-height:1.5}
+.startcta{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;text-align:center}
+.startcta p{font-size:16px;margin:0 0 16px;color:var(--ink)}
+.ctarow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ctarow button{background:var(--heat3);border:1px solid var(--heat3);color:#fff;font-size:14px;
+  font-weight:600;padding:11px 18px;border-radius:10px}
+.ctarow button.ghost{background:none;border-color:var(--line);color:var(--ink2)}
+.ctarow button:hover{opacity:.9}
+@media(max-width:560px){.grow{grid-template-columns:1fr;gap:5px}.tarrow{display:none}}
 
 /* profile grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
@@ -255,6 +300,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
     </div>
     <nav class="navtabs">
       <button data-nav="home" onclick="go('home')">Overview</button>
+      <button data-nav="start" onclick="go('start')">Start Here</button>
       <button data-nav="profiles" onclick="go('profiles')">Roast Profiles</button>
       <button data-nav="compare" onclick="go('compare')">Compare</button>
       <button data-nav="learn" onclick="go('learn')">Roasting Knowledge</button>
@@ -264,6 +310,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 </header>
 <nav class="mobnav">
   <button data-nav="home" onclick="go('home')">Overview</button>
+  <button data-nav="start" onclick="go('start')">Start</button>
   <button data-nav="profiles" onclick="go('profiles')">Profiles</button>
   <button data-nav="compare" onclick="go('compare')">Compare</button>
   <button data-nav="learn" onclick="go('learn')">Learn</button>
@@ -277,7 +324,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 <script id="appdata" type="application/json">__DATA__</script>
 <script>
 const D = JSON.parse(document.getElementById('appdata').textContent);
-const {PROFILES,METHODOLOGY,PROFILE_GROUPS,METH_GROUPS,FLAVOR_AXES,APP_VERSION}=D;
+const {PROFILES,METHODOLOGY,GLOSSARY,PROFILE_GROUPS,METH_GROUPS,FLAVOR_AXES,APP_VERSION}=D;
 document.getElementById('verlabel').textContent=APP_VERSION;
 document.getElementById('footver').textContent=APP_VERSION;
 const app=document.getElementById('app');
@@ -432,19 +479,87 @@ function roastCurve(c,accent,w,h){
 let state={view:'home'};
 function setNav(n){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===n));}
 function go(view,arg){state={view,arg};render();window.scrollTo(0,0);
-  const top=['home','profiles','compare','learn'].includes(view)?view:
+  const top=['home','start','profiles','compare','learn'].includes(view)?view:
     (view==='profile'?'profiles':view==='meth'?'learn':'home');
   setNav(top);}
 
 function render(){
   const v=state.view;
   if(v==='home')return home();
+  if(v==='start')return startHere();
   if(v==='profiles')return profileList();
   if(v==='profile')return profileDetail(state.arg);
   if(v==='compare')return compare();
   if(v==='learn')return learnList();
   if(v==='meth')return methDetail(state.arg);
   home();
+}
+
+/* ---------- START HERE ---------- */
+function startHere(){
+  const journey=[
+    {k:'Green',c:'#7d8f5a',d:"Raw coffee beans — actually fruit seeds — dense, grassy, about 10-12% water. Not drinkable yet."},
+    {k:'Charge',c:'#C9A34E',d:"You tip the green beans into the hot roaster. The clock starts. The beans immediately cool the drum down."},
+    {k:'Drying',c:'#B07B3E',d:"Beans shed moisture and turn from green to yellow. They smell grassy, then like hay, then like baking bread."},
+    {k:'Maillard',c:'#95602F',d:"Yellow to light brown. The browning chemistry that crusts bread kicks in. Most of the flavor is built right here."},
+    {k:'First crack',c:'#6E3E1E',d:"A popcorn-like POP around 196°C. Beans nearly double in size. The roaster's key landmark — light roasts drop just after."},
+    {k:'Development',c:'#5A2F16',d:"From first crack to the drop. Sharpness mellows into sweetness. Go longer and darker for bolder, roastier coffee."},
+    {k:'Drop',c:'#3a2412',d:"You dump the beans into the cooling tray to stop the roast. Done. How dark you let it get before dropping is the whole game."},
+  ];
+  app.innerHTML=`<div class="wrap">
+    <div class="starthero">
+      <div class="eyebrow">Start Here</div>
+      <h1>New to roasting? Read this first.</h1>
+      <p class="lede">Roasting is how raw, grassy green coffee seeds become the brown, aromatic beans you grind and brew. You apply heat over roughly 8 to 17 minutes, the beans dry out, brown, and crack open, and you decide exactly when to stop. Stop early for bright, fruity, light coffee; go longer for bold, dark, roasty coffee. That's the whole craft — everything else is detail.</p>
+    </div>
+
+    <div class="block2"><h2 class="bh">The journey, green to cup</h2>
+    <p class="bsub">Every roast, on every machine, moves through these stages in order. This is the map.</p>
+    <div class="journey">${journey.map((s,i)=>`
+      <div class="jstep">
+        <div class="jdot" style="background:${s.c}">${i+1}</div>
+        ${i<journey.length-1?'<div class="jline"></div>':''}
+        <div class="jbody"><h4>${s.k}</h4><p>${s.d}</p></div>
+      </div>`).join('')}
+    </div></div>
+
+    <div class="block2"><h2 class="bh">The one trade-off to understand</h2>
+    <p class="bsub">If you remember nothing else, remember this.</p>
+    <div class="tradeoff">
+      <div class="tside light"><div class="tlabel">Stop earlier / lighter</div><ul><li>Brighter, more acidic, fruitier</li><li>Origin character shines through</li><li>More delicate, more aromatic</li></ul></div>
+      <div class="tarrow">→ darker →</div>
+      <div class="tside dark"><div class="tlabel">Stop later / darker</div><ul><li>Bolder, heavier body, more bitter</li><li>Roast flavor takes over origin</li><li>Smoky, toasty, lower acidity</li></ul></div>
+    </div>
+    <p class="bsub" style="margin-top:14px">The <b>drop</b> — when you pull the beans out — is where you commit to that choice. That's why you saw the word everywhere.</p>
+    </div>
+
+    <div class="block2"><h2 class="bh">Every term, in plain English</h2>
+    <p class="bsub">The jargon the rest of the app uses. Filter to jump to one.</p>
+    <div class="searchwrap" style="max-width:340px;margin-bottom:16px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input id="glsearch" type="search" placeholder="Filter terms…" autocomplete="off">
+    </div>
+    <div class="glist" id="glist">${glossaryRows(GLOSSARY)}</div>
+    </div>
+
+    <div class="startcta">
+      <p>Ready to see it in action?</p>
+      <div class="ctarow">
+        <button onclick="go('profiles')">Browse roast profiles →</button>
+        <button class="ghost" onclick="go('learn')">Go deeper on the fundamentals →</button>
+      </div>
+    </div>
+    <div style="height:40px"></div>
+  </div>`;
+  const gs=document.getElementById('glsearch');
+  if(gs)gs.oninput=e=>{
+    const q=e.target.value.toLowerCase().trim();
+    const rows=GLOSSARY.filter(g=>!q||(g.term+' '+g.def).toLowerCase().includes(q));
+    document.getElementById('glist').innerHTML=rows.length?glossaryRows(rows):`<div class="empty">No term matches that.</div>`;
+  };
+}
+function glossaryRows(rows){
+  return rows.map(g=>`<div class="grow"><div class="gterm">${esc(g.term)}</div><div class="gdef">${esc(g.def)}</div></div>`).join('');
 }
 
 /* ---------- HOME ---------- */
