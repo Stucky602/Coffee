@@ -111,6 +111,34 @@
     {
       "term": "Break the crust",
       "def": "During cupping, a crust of grounds floats on top of the steeping coffee. At four minutes you break it with three spoon stirs while smelling — this releases a concentrated burst of aromatics trapped underneath, a key evaluation moment."
+    },
+    {
+      "term": "BBP (Between-Batch Protocol)",
+      "def": "The routine that resets a roaster to identical starting conditions before every batch — letting the drum fall to a set point, then coming back up to charge temperature — so a profile reproduces consistently across a production day."
+    },
+    {
+      "term": "Extraction yield",
+      "def": "The percentage of a coffee’s dry mass that dissolves into the brewed cup. The Golden Cup ideal is 18–22%. Below that tastes sour and weak (under-extracted); above it tastes bitter and dry (over-extracted)."
+    },
+    {
+      "term": "TDS (Total Dissolved Solids)",
+      "def": "The concentration of dissolved coffee in the liquid, as a percentage — how strong the cup is. Filter coffee runs ~1.15–1.35%; espresso is far more concentrated at ~8–12%."
+    },
+    {
+      "term": "Brew ratio",
+      "def": "The weight relationship between dry coffee and water (or, for espresso, dose to yield). Filter is typically 1:16–1:17; espresso is 1:2 (e.g. 18g in, 36g out). It links extraction yield and TDS."
+    },
+    {
+      "term": "Microfoam",
+      "def": "Steamed milk with tiny, uniform bubbles that looks glossy and pours like wet paint. Made by stretching (aerating cold milk) then texturing (a whirlpool that shreds bubbles), stopping around 60–65°C."
+    },
+    {
+      "term": "One-way valve",
+      "def": "The small valve on a coffee bag that lets carbon dioxide escape as the beans degas while blocking oxygen from getting in — protecting freshness without letting the bag balloon."
+    },
+    {
+      "term": "Weight loss",
+      "def": "The percentage of mass a coffee sheds during roasting, mostly water and CO2 — typically about 15–20%. Roasters track it batch to batch as a consistency check."
     }
   ],
   "METHODOLOGY": {
@@ -963,6 +991,522 @@
         {
           "label": "Perfect Daily Grind — CVA & the Q programme",
           "link": "https://perfectdailygrind.com/2025/05/cva-q-grader-programme-coffee-industry/"
+        }
+      ]
+    },
+    "ops_warmup": {
+      "name": "Warm-Up & Seasoning",
+      "sub": "Starting the day right",
+      "group": "ops",
+      "accent": "#C9A34E",
+      "sections": [
+        {
+          "h": "Why the first batch misbehaves",
+          "body": "Almost every roaster admits the first batches of a session are the hardest to get right, and the usual culprit is an under-warmed machine. A temperature probe reads the charge temperature quickly, but it doesn't reflect the thermal energy stored in the whole roaster — the drum walls, the back plate, the air system. Charge into a roaster that's read-hot but mass-cold and the beans pull more heat than expected, forcing you to compensate mid-roast and changing the entire profile."
+        },
+        {
+          "h": "How long to warm up",
+          "body": "Give the machine real time to reach thermal equilibrium. For most drum roasters that's 30 to 90 minutes depending on mass — a light Loring settles fast, a heavy Probat takes far longer. One good check: it's warmed up when the gap between bean-probe and exhaust temperatures is small (roughly within 10°C). Some roasters deliberately heat the drum well above charge temperature and let it cool back down once or twice before the first load, to soak the mass evenly."
+        },
+        {
+          "h": "Seasoning a new drum",
+          "body": "A brand-new roaster needs seasoning before it makes coffee you'd sell. Running batches (often sacrificial or blended-off) conditions the metal and builds the thin, stable oil layer that the machine roasts on from then on. Until it's seasoned, a new drum behaves differently batch to batch. Never rush warm-up or seasoning — rushed thermal prep shows up directly in the cup."
+        }
+      ],
+      "keypoints": [
+        "The first batches suffer mostly from an under-warmed machine, not a bad profile.",
+        "Warm up 30–90 min to thermal equilibrium (mass-dependent); check probe-vs-exhaust gap ~within 10°C.",
+        "Season a new drum with break-in batches before selling what it makes.",
+        "Never rush warm-up or seasoning — it shows up in the cup."
+      ],
+      "refs": [
+        {
+          "label": "Perfect Daily Grind — common roaster mistakes (warm-up)",
+          "link": "https://perfectdailygrind.com/2019/11/common-mistakes-that-roasters-make-how-to-avoid-them/"
+        },
+        {
+          "label": "CoffeeNavigated — preheat & thermal mass",
+          "link": "http://coffeenavigated.net/roasting-coffee/"
+        }
+      ]
+    },
+    "ops_bbp": {
+      "name": "Between-Batch Protocol",
+      "sub": "Consistency across a production day",
+      "group": "ops",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "The problem it solves",
+          "body": "Your fifth batch roasts differently than your first because the whole machine keeps absorbing heat as the day goes on. A Between-Batch Protocol (BBP) is the routine that resets the roaster to the same starting conditions before every charge, so a profile you dialed in the morning still reproduces in the afternoon. If your starting temperatures aren't identical, the roast will never record — or taste — the same."
+        },
+        {
+          "h": "How it works",
+          "body": "After dropping a batch, the drum is hot and needs to shed energy back down to a consistent charge point. When switching to a smaller batch, aim for a slightly lower bottom point (say 40°C lower) to give the extra thermal energy time to fade. A common approach: let the drum fall to a set bottom temperature, then bring gas back so bean temp reaches charge temperature in about 60 to 90 seconds — enough time for the metal to cool and re-warm evenly."
+        },
+        {
+          "h": "Charge on the rising temperature",
+          "body": "A key detail: charge while the temperature is rising back to your target, not while it's still falling. Charging on a falling temperature can mean the drum metal is still too hot even though the probe reads right, risking scorching. Coming up to the charge point on the rise gives a more honest, repeatable starting state."
+        },
+        {
+          "h": "It's the first question to ask",
+          "body": "When a roaster says a profile won't reproduce, the first thing an expert asks is whether the BBP was the same. Room conditions, seasonal green temperature, and exhaust temperature all feed into it. A disciplined BBP is what separates a roastery that hits its profiles from one that's always chasing them."
+        }
+      ],
+      "keypoints": [
+        "BBP resets the machine to identical starting conditions before every charge.",
+        "Let the drum fall to a set bottom point (lower for smaller batches), then ~60–90s back to charge temp.",
+        "Charge on the rising temperature, not the falling one, to avoid a too-hot drum.",
+        "A profile that won't reproduce is usually a BBP problem first."
+      ],
+      "refs": [
+        {
+          "label": "Cropster — Between Batch Protocol explained",
+          "link": "https://www.cropster.com/news/article/between-batch-protocol-for-coffee-roasters-the-whats-whys-and-hows-from-experts/"
+        },
+        {
+          "label": "Perfect Daily Grind — BBP & charge stability",
+          "link": "https://perfectdailygrind.com/2019/11/common-mistakes-that-roasters-make-how-to-avoid-them/"
+        }
+      ]
+    },
+    "ops_batchsize": {
+      "name": "Batch Size & Capacity",
+      "sub": "How much to load",
+      "group": "ops",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "The capacity window",
+          "body": "Most roasters are rated for a maximum batch, but running at 100% is usually a mistake. The practical window is roughly 50 to 85% of drum capacity. Below about half, the beans are too thin in the drum for probes to read reliably and the roast can move too fast; above about 85%, you may not have enough heat available and the beans crowd the sensors. Many production roasters settle around 70–85% for their standard batch and test to find their machine's sweet spot."
+        },
+        {
+          "h": "Batch size changes everything downstream",
+          "body": "Batch size is the master variable that ripples through the whole roast — it sets how much heat you need, how the probes read, and how the curve behaves. A bigger batch needs more energy and a higher charge temperature to carry the same profile; a smaller batch needs less. Change the batch size and you're effectively re-developing the profile, not just scaling it."
+        },
+        {
+          "h": "Why not just max it out",
+          "body": "Roasting at full capacity leaves no thermal headroom. If the roast falls behind early, you have nowhere to add energy, and you can't recover the curve. Running at 70–85% keeps reserve heat available to steer the roast — which is exactly why experienced roasters rarely fill the drum."
+        }
+      ],
+      "keypoints": [
+        "Practical batch window is ~50–85% of drum capacity; ~70–85% is a common production zone.",
+        "Too small: probes misread, roast races. Too full: no heat headroom, probes buried.",
+        "Batch size sets heat demand, probe behavior, and curve shape — change it and re-develop.",
+        "Leaving headroom lets you steer the roast; a full drum can't be recovered."
+      ],
+      "refs": [
+        {
+          "label": "Genuine Origin — batch size & capacity (65–85%)",
+          "link": "https://blog.genuineorigin.com/2025/11/guide-to-roast-profiles/"
+        },
+        {
+          "label": "HowToCoffeePro — controlling the roast",
+          "link": "https://howtocoffeepro.teachable.com/courses/1206490/lectures/26941587"
+        }
+      ]
+    },
+    "ops_fire": {
+      "name": "Fire Safety",
+      "sub": "The risk you never ignore",
+      "group": "ops",
+      "accent": "#6E3E1E",
+      "sections": [
+        {
+          "h": "Where fires start",
+          "body": "Roaster fires almost always begin in one of a few places: the drum itself (beans left too long, especially on a power loss mid-roast), the chaff collector or cyclone, or the ductwork. The fuel is the byproducts of roasting — chaff, coffee dust, condensed coffee oils, and creosote — all of which are flammable and all of which accumulate exactly where hot air flows. Blocked chimneys and ducts are among the highest-risk conditions because reduced airflow both worsens buildup and can turn a small ignition into a forge-like blaze once the blower feeds it air."
+        },
+        {
+          "h": "Prevention is cleaning",
+          "body": "Fire prevention in a roastery is mostly a cleaning schedule. Empty the chaff bin every roast day (when half full or less, not topped out). Wipe trays after roasting. Weekly, deep-clean the cooling tray and its underside. Periodically disassemble and scrub the ductwork and cyclone where oil and creosote build up invisibly. A dirty roaster isn't just a flavor problem — coffee oils baked onto internal surfaces are a genuine fire load."
+        },
+        {
+          "h": "When a fire happens",
+          "body": "Thermal events will happen despite good habits — a power failure at first crack leaves beans sitting motionless on a hot drum. Plan your immediate actions in advance and document them. General principles: keep the drum rotating so beans don't sit and ignite, dump or spray as your machine's design allows, and know where your extinguisher is. Never leave roasting beans unattended — the batch that gets away from a distracted roaster is the classic cause. Keep gas valves closed when not roasting, and have gas detection and a clear, marked fire plan."
+        }
+      ],
+      "keypoints": [
+        "Fires start in the drum, chaff cyclone, or ductwork; fuel is chaff, dust, oil, creosote.",
+        "Blocked ducts/chimneys are top risk — poor airflow worsens buildup and feeds flames.",
+        "Prevention is a cleaning schedule: chaff bin daily, trays after each roast, ducts/cyclone periodically.",
+        "Have a documented fire plan; keep the drum turning, never leave beans unattended, know your extinguisher."
+      ],
+      "refs": [
+        {
+          "label": "Genio Roasters — fire prevention in roasteries",
+          "link": "https://genioroasters.com/community/docs/safety-and-essentials/fire-prevention-in-coffee-roasteries"
+        },
+        {
+          "label": "Daily Coffee News — cleaning & maintenance",
+          "link": "https://dailycoffeenews.com/2020/03/09/managing-the-nitty-gritty-cleaning-and-maintenance-in-the-roastery/"
+        },
+        {
+          "label": "Scott Rao — roaster fires & cleaning",
+          "link": "https://www.scottrao.com/blog/fire"
+        }
+      ]
+    },
+    "ops_decaf": {
+      "name": "Roasting Decaf",
+      "sub": "The bean that lies about its color",
+      "group": "ops",
+      "accent": "#5A2F16",
+      "sections": [
+        {
+          "h": "Why decaf is different",
+          "body": "Decaffeination weakens the bean's internal structure and lowers its density and moisture, so decaf behaves like a different coffee in the drum. It's already darker than regular green before you even start, and it heats faster. This makes decaf one of the classic traps for a roaster used to regular coffee — everything your eyes tell you is slightly wrong."
+        },
+        {
+          "h": "Don't trust the color",
+          "body": "The single biggest decaf mistake is trusting color as a roast-level indicator. Decaf turns dark brown very quickly, well before it's actually developed, and the surface stays wrinkled rather than smoothing out. If you drop when it looks right, you'll drop underdeveloped. You have to roast to development cues and the clock, not to the shade — decaf that looks like a Full City may only be a City in actual development."
+        },
+        {
+          "h": "How to adjust",
+          "body": "Come in gentler. Use a lower charge temperature because the beans are lighter and more fragile and scorch easily. First crack lands at roughly the same time as regular coffee, but the roast runs faster after first crack — second crack can arrive surprisingly quickly, so watch the back half closely. Most decaf is best dropped around the end of first crack to somewhat beyond, and generally kept out of a hard second crack, which turns it bitter. Cool it fast and rest it 24–48 hours like any coffee."
+        }
+      ],
+      "keypoints": [
+        "Decaf is less dense, lower moisture, structurally weaker — it roasts faster and starts darker.",
+        "Never judge decaf by color: it goes dark brown before it's developed and stays wrinkled.",
+        "Lower the charge temp (fragile, scorch-prone); the roast races after first crack, so watch for a fast second crack.",
+        "Drop around end of first crack to slightly beyond; avoid a hard second crack; rest 24–48h."
+      ],
+      "refs": [
+        {
+          "label": "Sweet Maria's — roasting decaf, key things to know",
+          "link": "https://library.sweetmarias.com/roasting-decaf-coffee/"
+        },
+        {
+          "label": "Perfect Daily Grind — what roasters need to know about decaf",
+          "link": "https://perfectdailygrind.com/2017/11/what-roasters-need-to-know-about-decaf-coffee/"
+        },
+        {
+          "label": "Green Coffee Collective — roasting decaf tips",
+          "link": "https://greencoffeecollective.com/blogs/learn/expert-tips-for-perfectly-roasting-decaf-coffee"
+        }
+      ]
+    },
+    "ops_degassing": {
+      "name": "Degassing, Storage & Packaging",
+      "sub": "After the drop",
+      "group": "ops",
+      "accent": "#7A4A28",
+      "sections": [
+        {
+          "h": "What degassing is",
+          "body": "Roasting fills the bean with carbon dioxide, and after the drop that gas slowly escapes — degassing. It's strongest in the first 12–24 hours and continues for days or weeks. Brew coffee that's still actively off-gassing and you'll see it fizz and bubble as water hits the grounds; those bubbles block even saturation and give you an uneven, flat extraction. This is why fresh-roasted coffee needs to rest before it brews its best."
+        },
+        {
+          "h": "Rest windows",
+          "body": "Rest depends on roast level and use. Rough guides from roasters: dark roasts are ready fastest (about 1–3 days), mediums around 3–5 days, and espresso often wants longer — many roasteries rest decaf and espresso 7–12 days. Darker and more porous beans degas faster; denser, lighter, washed coffees hold gas longer. But you can also rest too long — some CO2 is valuable — so the honest answer is to cup at several rest points and find the window for your coffee and setup."
+        },
+        {
+          "h": "The one-way valve",
+          "body": "Packaging faces a paradox: you need to let CO2 out so the bag doesn't balloon, while keeping oxygen out so the coffee doesn't stale. The one-way degassing valve solves it — it opens to vent gas when internal pressure builds, then closes to block outside air. It's why most fresh coffee bags have that little valve, and why packaging coffee that's still degassing into a valve bag actually helps keep it fresh."
+        },
+        {
+          "h": "Storage",
+          "body": "Oxygen, light, heat, and moisture are the enemies. Store roasted coffee in airtight, opaque packaging in a cool, dry place. Whole beans keep far longer than ground — ground coffee goes stale in a week or two. Warm storage speeds both degassing and staling; every exposure to air accelerates oxidation, so reseal promptly and minimize headspace."
+        }
+      ],
+      "keypoints": [
+        "Roasting traps CO2; it off-gasses hardest in the first 12–24h, then for days/weeks.",
+        "Rough rest: dark ~1–3 days, medium ~3–5, espresso/decaf often 7–12; cup to find your window.",
+        "One-way valves vent CO2 while blocking oxygen — the key to fresh packaging.",
+        "Store airtight, opaque, cool, dry; whole beans keep far longer than ground."
+      ],
+      "refs": [
+        {
+          "label": "Roastar — degassing valve guide",
+          "link": "https://www.roastar.com/blog/what-you-really-need-to-know-about-degassing-valves"
+        },
+        {
+          "label": "Methodical Coffee — degassing, rest & flavor",
+          "link": "https://methodicalcoffee.com/blogs/coffee-culture/freshly-roasted-coffee-explained-degassing-rest-and-flavor"
+        },
+        {
+          "label": "Home Grounds — degassing coffee",
+          "link": "https://www.homegrounds.co/degassing-coffee/"
+        }
+      ]
+    },
+    "ops_logging": {
+      "name": "Roast Logging & Software",
+      "sub": "Data makes it repeatable",
+      "group": "ops",
+      "accent": "#8A5A34",
+      "sections": [
+        {
+          "h": "Why log at all",
+          "body": "Some roasters work purely by sight, smell, and sound — real skills worth having. But roasting is as much science as art, and the roasters who hit their profiles consistently are the ones capturing data. Without records, dialing in a coffee becomes an endless loop of pushing the same boulder uphill. A logged roast is one you can reproduce, diagnose, and improve; an unlogged one is a lucky batch you may never see again."
+        },
+        {
+          "h": "What to log",
+          "body": "At minimum: green and lot, charge weight and out weight (for weight loss), charge temperature, turning point, times and temps for drying end, first crack, and drop, total time, and resulting DTR — plus the gas and airflow moves you made and a tasting note once you've cupped it. The goal is enough that a different roaster on your team could reproduce the batch from the log alone."
+        },
+        {
+          "h": "The software landscape",
+          "body": "Two names dominate. Artisan is free, open-source roast-logging software that connects to most machines and probes and plots BT and RoR live — the standard entry point. Cropster is the commercial industry platform, adding production planning, inventory, QC, and between-batch protocol tooling; it's what many mid-to-large roasteries run. Both do the core job: turn each roast into data you can see, compare, and repeat."
+        }
+      ],
+      "keypoints": [
+        "Logged roasts are reproducible and diagnosable; unlogged ones are lucky batches.",
+        "Log green/lot, weights (loss %), charge, TP, drying end, first crack, drop, total time, DTR, gas/air moves, tasting note.",
+        "Artisan: free, open-source, connects to most machines — the standard starting point.",
+        "Cropster: commercial platform adding planning, inventory, QC, BBP — common in larger roasteries."
+      ],
+      "refs": [
+        {
+          "label": "Genuine Origin — data-driven roast profiles",
+          "link": "https://blog.genuineorigin.com/2025/11/guide-to-roast-profiles/"
+        },
+        {
+          "label": "Cropster — roasting platform & BBP",
+          "link": "https://www.cropster.com/news/article/between-batch-protocol-for-coffee-roasters-the-whats-whys-and-hows-from-experts/"
+        }
+      ]
+    },
+    "brew_extraction": {
+      "name": "Extraction Theory",
+      "sub": "What brewing actually does",
+      "group": "brew",
+      "accent": "#C9A34E",
+      "sections": [
+        {
+          "h": "Brewing is dissolving",
+          "body": "Every brew method does the same fundamental thing: hot water dissolves flavor compounds out of ground coffee. How much dissolves is the extraction yield — the percentage of the coffee's dry mass that ends up in your cup. How concentrated the result is, is the total dissolved solids (TDS) — the fraction of the liquid that's dissolved coffee. Extraction yield and TDS are different things, linked by your brew ratio, and nearly all of brewing is managing these two numbers."
+        },
+        {
+          "h": "The ideal window",
+          "body": "Decades of research (the SCA Golden Cup standard, rooted in Lockhart's 1950s work) put the sweet spot at 18–22% extraction yield. Below 18% the coffee is under-extracted: sour, grassy, weak, because you haven't pulled the sugars and desirable compounds yet. Above 22% it's over-extracted: bitter, dry, astringent, because you've started pulling the harsh stuff. The art is landing inside that window. For strength, filter coffee typically targets a TDS around 1.15–1.35%, while espresso is far more concentrated at roughly 8–12%."
+        },
+        {
+          "h": "The four levers",
+          "body": "Four variables control extraction. Grind size sets surface area — finer extracts faster. Water temperature — hotter extracts faster (brewing runs ~90–96°C). Contact time — longer extracts more. And agitation — stirring or turbulence speeds extraction by moving fresh water past the grounds. When a cup is wrong, you're almost always adjusting one of these four to move extraction up or down."
+        },
+        {
+          "h": "The diagnostic that never changes",
+          "body": "Across every method, one rule holds: sour means under-extracted, bitter means over-extracted. Sour cup → extract more (grind finer, hotter water, longer time). Bitter cup → extract less (grind coarser, cooler, shorter). This single sour-vs-bitter axis is the most useful thing a barista or roaster can internalize."
+        }
+      ],
+      "keypoints": [
+        "Extraction yield = % of coffee mass dissolved; TDS = concentration; brew ratio links them.",
+        "Golden Cup window: 18–22% extraction. Under = sour/weak, over = bitter/dry.",
+        "Strength: filter TDS ~1.15–1.35%, espresso ~8–12%.",
+        "Four levers: grind, temperature, time, agitation. Sour → extract more; bitter → extract less."
+      ],
+      "refs": [
+        {
+          "label": "SCA — towards a new brewing chart (Golden Cup)",
+          "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
+        },
+        {
+          "label": "Coffee Brews Hub — science of extraction",
+          "link": "https://coffeebrewshub.com/blog/science-of-coffee-extraction"
+        }
+      ]
+    },
+    "brew_espresso": {
+      "name": "Dialing In Espresso",
+      "sub": "Dose, yield, time",
+      "group": "brew",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "The standard shot",
+          "body": "The modern specialty default is a 1:2 ratio by weight: 18g of ground coffee in, 36g of liquid espresso out, pulled in about 25–30 seconds at 9 bar of pressure and roughly 90–96°C. That 1:2 exists because, with a good grind, most espresso lands cleanly inside the 18–22% extraction window there. It's the starting point for any new bag or setup — always measured by weight, because crema makes volume unreliable."
+        },
+        {
+          "h": "The dial-in order",
+          "body": "Dialing in has a sequence, and following it prevents most frustration. First fix your dose and ratio (18g → 36g). Pull a shot and time it. Then adjust grind to hit the target time: if the shot runs too fast (under ~25s), grind finer to slow it; too slow (over ~35s), grind coarser. Only once grind and time are in range do you taste and fine-tune. Most home espresso problems come from changing the ratio when grind was the real variable."
+        },
+        {
+          "h": "Reading the shot",
+          "body": "Once it's pulling near 1:2 in 25–30s, taste drives the rest. Sour or sharp means under-extracted — grind finer, or nudge the ratio longer (18g → 40g). Bitter or harsh means over-extracted — grind coarser. Roast level shifts the targets: light roasts are dense and hard to extract, wanting higher temperature (93–96°C) and sometimes a longer ratio; dark roasts extract easily and prefer lower temperature (88–91°C) and often a shorter ratio."
+        },
+        {
+          "h": "Ristretto and lungo",
+          "body": "Change the ratio and you change the shot's character. A ristretto (1:1 to 1:1.5) is short and concentrated — syrupy, sweet, less bitter, favored for milk drinks. A lungo (1:3 and up) is long and dilute — lighter and more aromatic, sometimes good for very light roasts. The 1:2 normale sits balanced between them and is the default for a reason."
+        }
+      ],
+      "keypoints": [
+        "Standard: 1:2 by weight (18g → 36g), 25–30s, 9 bar, ~90–96°C. Weigh everything.",
+        "Dial-in order: fix dose/ratio → adjust grind to hit time → then taste and fine-tune.",
+        "Sour = grind finer / longer ratio; bitter = grind coarser. Light roast hotter, dark roast cooler.",
+        "Ristretto (1:1–1:1.5) concentrated/sweet; lungo (1:3+) light/dilute; 1:2 is the balanced default."
+      ],
+      "refs": [
+        {
+          "label": "Podium Coffee Club — espresso brew ratio",
+          "link": "https://podiumcoffeeclub.com/blogs/blog/espresso-brew-ratio"
+        },
+        {
+          "label": "Espresso Aficionados — dialling in basics",
+          "link": "https://espressoaf.com/guides/beginner.html"
+        },
+        {
+          "label": "Routes Coffee — key espresso parameters",
+          "link": "https://routescoffee.co.uk/mastering-espresso-key-parameters-every-barista-should-know/"
+        }
+      ]
+    },
+    "brew_grind": {
+      "name": "Grind & Burrs",
+      "sub": "The most important variable",
+      "group": "brew",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "Why grind matters most",
+          "body": "Grind size is the single most powerful lever in brewing because it sets the surface area water works on. Finer grounds expose more surface, so water dissolves compounds faster; coarser grounds slow extraction down. This is why grind is the primary thing you adjust to move a cup in or out of the ideal window — it changes extraction more than any other single control."
+        },
+        {
+          "h": "Match grind to method",
+          "body": "Each method wants a grind matched to its contact time. Espresso is fine (25–30 second shot). Drip and pour-over are medium (4–6 minute brew). French press is coarse (a 4-minute steep). The logic is consistent: short, intense methods need fine grounds to extract enough quickly; long, gentle methods need coarse grounds so they don't over-extract."
+        },
+        {
+          "h": "Burrs beat blades",
+          "body": "A burr grinder crushes beans between two shaped surfaces to a consistent, adjustable size. A blade grinder chops randomly, producing a chaotic mix of dust and boulders. That inconsistency is fatal to good coffee: the dust over-extracts (bitter) while the boulders under-extract (sour) in the same cup. A quality burr grinder is the single most important piece of brewing gear — more than the machine — because consistent particle size is what makes extraction predictable."
+        },
+        {
+          "h": "Fresh grind, and the CO2 effect",
+          "body": "Grind immediately before brewing; ground coffee stales in hours as aromatics escape and oxidation accelerates. Freshness also affects the shot mechanically: very fresh beans still full of CO2 create more resistance and run slower, while degassed beans run faster — which is part of why the same grind setting behaves differently across a bag's life."
+        }
+      ],
+      "keypoints": [
+        "Grind sets surface area — finer extracts faster, coarser slower; it's the primary extraction lever.",
+        "Match to method: espresso fine, drip/pour-over medium, French press coarse.",
+        "Burr grinders give consistent size; blades make dust + boulders that over- and under-extract at once.",
+        "Grind fresh; CO2 in fresh beans adds resistance, so grind behaves differently as a bag ages."
+      ],
+      "refs": [
+        {
+          "label": "Coffee Brews Hub — grind & extraction",
+          "link": "https://coffeebrewshub.com/blog/science-of-coffee-extraction"
+        },
+        {
+          "label": "Complete Home Barista — extraction chart & grind",
+          "link": "https://completehomebarista.com/guides/espresso-extraction-chart-explained/"
+        }
+      ]
+    },
+    "brew_methods": {
+      "name": "Brew Methods",
+      "sub": "Filter, immersion, espresso",
+      "group": "brew",
+      "accent": "#6E3E1E",
+      "sections": [
+        {
+          "h": "Three families",
+          "body": "Most brewing falls into three families. Percolation (filter) — water passes through a bed of grounds once and drains away: pour-over (V60, Chemex), drip machines. Immersion — grounds steep in water for a set time, then separate: French press, cupping, cold brew. Pressure — hot water forced through a compacted puck: espresso and its stovetop cousin the moka pot. Each family extracts differently and suits different grind sizes and ratios."
+        },
+        {
+          "h": "Filter / pour-over",
+          "body": "The specialty workhorse for showcasing origin clarity. The SCA ratio guide is 1:16 to 1:17 — roughly 60g of coffee per liter of water — at 90–96°C, medium grind, over about 4–6 minutes total. Pour-over rewards technique: an even bloom (a short pre-wet that lets fresh coffee degas) and steady pouring produce even extraction. It's the method that best highlights a light roast's acidity and aromatics."
+        },
+        {
+          "h": "Immersion",
+          "body": "The most forgiving family, because contact time is fixed and even. French press uses a coarse grind and a ~4-minute steep, then you press the grounds down; it gives a heavy, full body since no paper filter removes oils. Cold brew steeps a coarse grind in cold water for many hours (often around 1:8), producing a low-acid, smooth concentrate. Immersion is hard to mess up, which makes it a good place to taste a coffee honestly."
+        },
+        {
+          "h": "Matching roast to method",
+          "body": "The roast and the method should suit each other. Light and medium-light roasts shine in filter and pour-over, where their acidity and clarity come through. Fuller and darker roasts, and purpose-built espresso profiles, come alive under pressure where body and sweetness concentrate. This is exactly the 'use for' guidance on each roast profile in this app — the brew method is the other half of that decision."
+        }
+      ],
+      "keypoints": [
+        "Three families: percolation/filter (pour-over, drip), immersion (French press, cold brew), pressure (espresso, moka).",
+        "Filter: SCA 1:16–1:17 (~60g/L), 90–96°C, medium grind, ~4–6 min; bloom for even extraction.",
+        "Immersion: fixed even contact time, forgiving; French press = full body, cold brew = low-acid concentrate.",
+        "Light/medium roasts favor filter; darker and espresso profiles favor pressure."
+      ],
+      "refs": [
+        {
+          "label": "Coffee Brews Hub — ratios & methods",
+          "link": "https://coffeebrewshub.com/blog/science-of-coffee-extraction"
+        },
+        {
+          "label": "SCA — brewing control chart",
+          "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
+        }
+      ]
+    },
+    "brew_milk": {
+      "name": "Milk & Steaming",
+      "sub": "Microfoam and the milk drink",
+      "group": "brew",
+      "accent": "#5A2F16",
+      "sections": [
+        {
+          "h": "What you're making",
+          "body": "Great milk drinks depend on microfoam — steamed milk with bubbles so tiny and uniform it looks glossy and pours like wet paint. It's not the stiff, dry froth of a cheap frother; it's a smooth emulsion of air and milk proteins that integrates into the espresso and makes latte art possible. The SCA describes excellent milk foam as smooth, glossy, and moist with no visible bubbles."
+        },
+        {
+          "h": "The two phases",
+          "body": "Steaming has two stages. First stretch (aeration): the steam tip sits just below the surface so it draws air in — you hear a steady 'tss-tss.' This is done while the milk is still cold, adding roughly 20–30% volume for a latte (more for a cappuccino). Then texture (emulsification): sink the wand deeper and tilt the pitcher to create a whirlpool that shreds big bubbles into microfoam and heats evenly. Stop aerating once the milk warms, or the foam turns stiff and dry."
+        },
+        {
+          "h": "The temperature window",
+          "body": "Aim for about 60–65°C (140–150°F). Milk's lactose tastes sweetest here because heat converts some of it to simpler sugars — properly steamed milk is noticeably sweeter than cold milk. Above ~65°C whey proteins denature and the foam gets thin and unstable; above ~70°C the milk scalds and turns flat and sulphurous. A common no-thermometer check: pull off when the pitcher is almost too hot to hold. And don't re-steam milk — once its proteins are stretched, they won't rebuild."
+        },
+        {
+          "h": "Alternative milks",
+          "body": "Plant milks behave differently. Oat is the most barista-friendly — 'barista editions' add stabilizers (like dipotassium phosphate) that stop curdling against acidic espresso and help it foam. Soy froths aggressively and needs a shorter stretch. Almond is trickier for stable foam. In all cases the barista-formulated versions steam far better than the standard cartons, and plant milks generally want a shorter aeration phase and slightly lower temperatures."
+        }
+      ],
+      "keypoints": [
+        "Target microfoam: glossy, wet-paint texture — an emulsion of air and proteins, not stiff froth.",
+        "Two phases: stretch (aerate cold milk, +20–30% for a latte) then texture (whirlpool to shred bubbles).",
+        "Sweet spot ~60–65°C; above ~65°C foam destabilizes, above ~70°C it scalds. Don't re-steam.",
+        "Barista-edition oat/soy (added stabilizers) steam best; plant milks want shorter aeration."
+      ],
+      "refs": [
+        {
+          "label": "Complete Hospitality Training — milk texturing 101",
+          "link": "https://cht.edu.au/news/milk-texturing-101-microfoam-temperature/"
+        },
+        {
+          "label": "How-to-Brew — SCA milk texturing guide",
+          "link": "https://how-to-brew.coffee/espresso-brewing/guide-to-milk-texturing-and-steaming/"
+        },
+        {
+          "label": "ScienceDirect — steam frothing & microfoam",
+          "link": "https://www.sciencedirect.com/science/article/abs/pii/S0958694622001601"
+        }
+      ]
+    },
+    "brew_water": {
+      "name": "Water Chemistry",
+      "sub": "The 98% ingredient",
+      "group": "brew",
+      "accent": "#7A4A28",
+      "sections": [
+        {
+          "h": "Why water matters",
+          "body": "A cup of coffee is about 98% water, so water isn't a neutral background — it's the solvent doing the extracting, and its mineral content directly changes what and how much it pulls from the grounds. Two identical coffees brewed with different water taste genuinely different. This is why serious cafés treat water as an ingredient to be specified, not whatever comes from the tap."
+        },
+        {
+          "h": "The two numbers that matter",
+          "body": "Coffee water is characterized mainly by two things. Total hardness — the dissolved minerals (mostly magnesium and calcium) that actively grab and extract flavor compounds; too little and coffee tastes flat and empty, too much and it can taste harsh or chalky. And alkalinity (buffering capacity, largely bicarbonate) — which neutralizes acidity; too high and it flattens the bright, pleasant acids that make specialty coffee sing, too low and the cup can taste sharp. The SCA also points to a near-neutral pH (roughly 6.5–7.5) as a target range."
+        },
+        {
+          "h": "Practical takeaways",
+          "body": "You don't need a chemistry lab, but you should know your water. Very hard tap water over-buffers acidity and scales your machine; distilled or zero-mineral water extracts poorly and tastes hollow. Many cafés filter, blend, or build water to a target. There's a practical safety angle too: hardness minerals are what form limescale inside espresso machines and boilers, so water treatment protects both flavor and equipment."
+        }
+      ],
+      "keypoints": [
+        "Coffee is ~98% water; the water is the solvent and shapes extraction directly.",
+        "Two key numbers: hardness (minerals that extract flavor) and alkalinity (buffer that neutralizes acidity).",
+        "Too-hard/high-alkalinity water flattens acidity; distilled/zero-mineral extracts hollow. SCA target pH ~6.5–7.5.",
+        "Know and treat your water — it protects both flavor and machines (limescale)."
+      ],
+      "refs": [
+        {
+          "label": "How-to-Brew — SCA water pH guidance",
+          "link": "https://how-to-brew.coffee/espresso-brewing/guide-to-milk-texturing-and-steaming/"
+        },
+        {
+          "label": "SCA — brewing control chart & standards",
+          "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
         }
       ]
     }
