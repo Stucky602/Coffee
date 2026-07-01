@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v10"
-CACHE_C = "coffee-guide-v10"
+APP_VERSION = "v11"
+CACHE_C = "coffee-guide-v11"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -19,15 +19,28 @@ PROFILE_GROUPS = [
     ("purpose", "Purpose-Built"),
 ]
 METH_GROUPS = [
+    ("green", "Green Buying & QC"),
     ("read", "Reading the Roast"),
     ("science", "Roast Science"),
     ("practice", "In Practice"),
     ("origin", "Roasting by Origin"),
-    ("green", "Green Buying & QC"),
     ("cupping", "Cupping & Quality"),
     ("ops", "Roastery Operations"),
     ("brew", "Brewing & Barista"),
 ]
+
+# Per-group metadata for the Learn hub: one-line description + accent color.
+# Ordered to follow the bean's journey: buy green → roast → taste → run the shop → brew.
+METH_GROUP_META = {
+    "green":   {"desc": "Grading defects, moisture and density, processing methods, and reading a green coffee before you buy it.", "accent": "#7d8f5a"},
+    "read":    {"desc": "The roast curve, rate of rise, the phases, first and second crack, and development time — how to read a roast as it happens.", "accent": "#C9A34E"},
+    "science": {"desc": "What's chemically happening inside the bean, how heat moves through the drum, and the machines that do it.", "accent": "#B07B3E"},
+    "practice":{"desc": "Roast defects and how to diagnose them, plus sample roasting and dialing in a profile.", "accent": "#95602F"},
+    "origin":  {"desc": "How coffee from eight origins behaves in the roaster and the target roast for each.", "accent": "#8A5A34"},
+    "cupping": {"desc": "Cupping mechanics, the modern CVA and legacy scoring, the flavor wheel, and the roaster's QC loop.", "accent": "#6E3E1E"},
+    "ops":     {"desc": "Running the roastery day: warm-up, between-batch protocol, fire safety, decaf, degassing, and logging.", "accent": "#7A4A28"},
+    "brew":    {"desc": "Behind the bar: extraction theory, dialing espresso, grind, brew methods, milk, and water.", "accent": "#5A2F16"},
+}
 
 FLAVOR_AXES = [
     ("acidity", "Acidity"),
@@ -44,6 +57,7 @@ DATA_JSON = json.dumps({
     "GLOSSARY": glossary,
     "PROFILE_GROUPS": PROFILE_GROUPS,
     "METH_GROUPS": METH_GROUPS,
+    "METH_GROUP_META": METH_GROUP_META,
     "FLAVOR_AXES": FLAVOR_AXES,
     "APP_VERSION": APP_VERSION,
 }, ensure_ascii=False)
@@ -194,6 +208,26 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .mcard .k{font-family:var(--mono);font-size:10.5px;color:var(--heat2);letter-spacing:.1em}
 .mcard h3{font-size:17px}
 .mcard .sub{color:var(--ink3);font-size:13px}
+.mgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+
+/* learn hub */
+.lcount,.hublist .lcount{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:12px}
+.hublist{display:flex;flex-direction:column;gap:12px}
+.hubgroup{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);transition:.16s}
+.hubgroup.open{background:var(--panel2);border-color:var(--ink3)}
+.hubhead{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:none;border:none;
+  text-align:left;cursor:pointer;transition:.16s}
+.hubhead:hover{background:var(--panel2)}
+.hubbar{width:4px;align-self:stretch;border-radius:3px;background:var(--ga);flex-shrink:0;min-height:34px}
+.hubtxt{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.hubname{font-size:18px;font-weight:600;color:var(--ink1)}
+.hubdesc{font-size:13px;color:var(--ink3);line-height:1.45}
+.hubcount{font-family:var(--mono);font-size:12.5px;color:var(--ink2);background:var(--bg);border:1px solid var(--line);
+  border-radius:20px;padding:3px 10px;flex-shrink:0;line-height:1;align-self:center}
+.hubchev{font-family:var(--mono);font-size:18px;color:var(--ink3);width:16px;text-align:center;flex-shrink:0;
+  align-self:center;line-height:1}
+.hubcards{padding:4px 18px 18px}
 
 /* detail */
 .detail{padding-bottom:60px}
@@ -292,6 +326,9 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .refs a{color:var(--ink2);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line);
   transition:.14s}
 .refs a:hover{color:var(--heat1);border-color:var(--heat3)}
+.siblings{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+.siblings h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:14px}
 
 /* compare */
 .cmpmodebar{display:flex;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:16px}
@@ -339,7 +376,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
       <button data-nav="start" onclick="go('start')">Start Here</button>
       <button data-nav="profiles" onclick="go('profiles')">Roast Profiles</button>
       <button data-nav="compare" onclick="go('compare')">Compare</button>
-      <button data-nav="learn" onclick="go('learn')">Roasting Knowledge</button>
+      <button data-nav="learn" onclick="go('learn')">Learn</button>
     </nav>
     <span class="ver" id="verlabel"></span>
   </div>
@@ -360,7 +397,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 <script id="appdata" type="application/json">__DATA__</script>
 <script>
 const D = JSON.parse(document.getElementById('appdata').textContent);
-const {PROFILES,METHODOLOGY,GLOSSARY,PROFILE_GROUPS,METH_GROUPS,FLAVOR_AXES,APP_VERSION}=D;
+const {PROFILES,METHODOLOGY,GLOSSARY,PROFILE_GROUPS,METH_GROUPS,METH_GROUP_META,FLAVOR_AXES,APP_VERSION}=D;
 document.getElementById('verlabel').textContent=APP_VERSION;
 document.getElementById('footver').textContent=APP_VERSION;
 const app=document.getElementById('app');
@@ -618,12 +655,22 @@ function home(){
     }</div>
     <div style="margin-top:16px"><button class="back" style="margin:0" onclick="go('profiles')">See all ${nP} profiles →</button></div>
 
-    <div class="seclead"><span class="no">02</span><div><h2>Roasting Knowledge</h2><p>The curve, the chemistry, the machine, and the craft of profiling.</p></div></div>
-    <div class="grid" style="margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">${
-      Object.entries(METHODOLOGY).slice(0,6).map(([id,m])=>methCard(id,m)).join('')
+    <div class="seclead"><span class="no">02</span><div><h2>Learn the Craft</h2><p>Green buying, the roast curve, cupping, running a roastery, and brewing — the whole chain.</p></div></div>
+    <div class="grid mgrid" style="margin-top:16px">${
+      homeLearnSample().map(([id,m])=>methCard(id,m,true)).join('')
     }</div>
-    <div style="margin:16px 0 50px"><button class="back" style="margin:0" onclick="go('learn')">All roasting knowledge →</button></div>
+    <div style="margin:16px 0 50px"><button class="back" style="margin:0" onclick="go('learn')">Explore all ${nM} topics →</button></div>
   </div>`;
+}
+// Pick one representative topic from six different groups so the home sample spans the chain.
+function homeLearnSample(){
+  const want=['green','read','origin','cupping','ops','brew'];
+  const out=[];
+  for(const g of want){
+    const hit=Object.entries(METHODOLOGY).find(([id,m])=>m.group===g);
+    if(hit)out.push(hit);
+  }
+  return out;
 }
 
 function profileCard(id,p){
@@ -637,9 +684,10 @@ function profileCard(id,p){
     <div class="oneline">${esc(p.oneLine)}</div>
   </div>`;
 }
-function methCard(id,m){
+function methCard(id,m,showGroup){
+  const tag=showGroup?`<span class="k">${METH_GROUPS.find(g=>g[0]===m.group)?.[1]||''}</span>`:'';
   return `<div class="mcard" onclick="go('meth','${id}')">
-    <span class="k">${METH_GROUPS.find(g=>g[0]===m.group)?.[1]||''}</span>
+    ${tag}
     <h3>${esc(m.name)}</h3>
     <div class="sub">${esc(m.sub)}</div>
   </div>`;
@@ -863,16 +911,63 @@ function drawCmpCurve(lg,leg){
 }
 
 /* ---------- LEARN LIST ---------- */
+/* ---------- LEARN HUB ---------- */
+let learnQuery='', learnOpen=null;
 function learnList(){
-  let html=`<div class="wrap"><div class="seclead"><span class="no">03</span><div><h2>Roasting Knowledge</h2><p>The fundamentals behind every profile.</p></div></div>`;
-  for(const [gid,glabel] of METH_GROUPS){
-    const items=Object.entries(METHODOLOGY).filter(([id,m])=>m.group===gid);
-    if(!items.length)continue;
-    html+=`<div class="grouplabel">${glabel}</div><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">${items.map(([id,m])=>methCard(id,m)).join('')}</div>`;
-  }
-  html+=`<div style="height:50px"></div></div>`;
-  app.innerHTML=html;
+  app.innerHTML=`<div class="wrap">
+    <div class="seclead"><span class="no">03</span><div><h2>Learn</h2><p>The full craft, green to cup — ${Object.keys(METHODOLOGY).length} deep-dives across ${METH_GROUPS.length} areas.</p></div></div>
+    <div class="filterbar">
+      <div class="searchwrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input id="lsearch" type="search" placeholder="Search all topics — defect, DTR, espresso, water…" value="${esc(learnQuery)}" autocomplete="off">
+      </div>
+    </div>
+    <div id="lresults"></div>
+    <div style="height:50px"></div></div>`;
+  const si=document.getElementById('lsearch');
+  si.oninput=e=>{learnQuery=e.target.value;drawLearn();};
+  drawLearn();
+  const s2=document.getElementById('lsearch'); if(learnQuery){s2.focus();s2.setSelectionRange(learnQuery.length,learnQuery.length);}
 }
+function matchMeth(m,q){
+  q=q.toLowerCase().trim(); if(!q)return true;
+  const secText=(m.sections||[]).map(s=>s.h+' '+s.body).join(' ');
+  const kp=(m.keypoints||[]).join(' ');
+  const glabel=METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'';
+  return (m.name+' '+m.sub+' '+glabel+' '+secText+' '+kp).toLowerCase().includes(q);
+}
+function drawLearn(){
+  const box=document.getElementById('lresults'); if(!box)return;
+  const q=learnQuery.trim();
+  if(q){
+    // flat, cross-group search results
+    const hits=Object.entries(METHODOLOGY).filter(([id,m])=>matchMeth(m,q));
+    if(!hits.length){box.innerHTML=`<div class="empty">No topic matches that. Try "crack", "grind", "moisture", or "defect".</div>`;return;}
+    box.innerHTML=`<div class="lcount">${hits.length} topic${hits.length>1?'s':''}</div>
+      <div class="grid mgrid">${hits.map(([id,m])=>methCard(id,m,true)).join('')}</div>`;
+    return;
+  }
+  // hub view: group tiles, click to expand into cards
+  box.innerHTML=`<div class="hublist">${METH_GROUPS.map(([gid,glabel])=>{
+    const items=Object.entries(METHODOLOGY).filter(([id,m])=>m.group===gid);
+    if(!items.length)return '';
+    const meta=METH_GROUP_META[gid]||{desc:'',accent:'#B07B3E'};
+    const open=learnOpen===gid;
+    return `<div class="hubgroup ${open?'open':''}">
+      <button class="hubhead" onclick="toggleHub('${gid}')" style="--ga:${meta.accent}">
+        <span class="hubbar"></span>
+        <span class="hubtxt">
+          <span class="hubname">${esc(glabel)}</span>
+          <span class="hubdesc">${esc(meta.desc)}</span>
+        </span>
+        <span class="hubcount">${items.length}</span>
+        <span class="hubchev">${open?'−':'+'}</span>
+      </button>
+      ${open?`<div class="grid mgrid hubcards">${items.map(([id,m])=>methCard(id,m,false)).join('')}</div>`:''}
+    </div>`;
+  }).join('')}</div>`;
+}
+function toggleHub(gid){learnOpen=learnOpen===gid?null:gid;drawLearn();}
 
 /* ---------- METH DETAIL ---------- */
 function refsBlock(refs){
@@ -883,11 +978,17 @@ function refsBlock(refs){
 }
 function methDetail(id){
   const m=METHODOLOGY[id]; if(!m)return go('learn');
+  const glabel=METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'';
+  const siblings=Object.entries(METHODOLOGY).filter(([sid,sm])=>sm.group===m.group&&sid!==id);
+  const sibBlock=siblings.length?`<div class="siblings">
+    <h4>More in ${esc(glabel)}</h4>
+    <div class="grid mgrid">${siblings.map(([sid,sm])=>methCard(sid,sm,false)).join('')}</div>
+  </div>`:'';
   app.innerHTML=`<div class="wrap detail">
-    <button class="back" onclick="go('learn')">← All knowledge</button>
+    <button class="back" onclick="go('learn')">← All topics</button>
     <div class="dhead" style="border-bottom:none;padding-bottom:6px">
       <div class="txt">
-        <div class="lvl" style="color:${m.accent}">${esc(METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'')}</div>
+        <div class="lvl" style="color:${m.accent}">${esc(glabel)}</div>
         <h1>${esc(m.name)}</h1>
         <div class="sub">${esc(m.sub)}</div>
       </div>
@@ -895,6 +996,7 @@ function methDetail(id){
     ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
+    ${sibBlock}
     <div style="height:40px"></div>
   </div>`;
 }
