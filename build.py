@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v4"
-CACHE_C = "coffee-guide-v4"
+APP_VERSION = "v5"
+CACHE_C = "coffee-guide-v5"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -201,6 +201,10 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .dhead .lvl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .dhead h1{font-size:34px;letter-spacing:-.03em;margin:6px 0 2px}
 .dhead .sub{color:var(--ink3);font-size:15px}
+.dhead .aka{margin-top:9px;font-size:12.5px;color:var(--ink3);display:flex;flex-wrap:wrap;
+  align-items:center;gap:6px}
+.dhead .aka span{background:var(--panel2);border:1px solid var(--line);border-radius:20px;
+  padding:2px 9px;color:var(--ink2);font-size:12px}
 .dhead .oneline{color:var(--ink2);font-size:15.5px;margin:14px 0 0;max-width:56ch;line-height:1.5}
 .dhead .usefor{margin-top:14px;font-size:13.5px;color:var(--ink2)}
 .dhead .usefor b{color:var(--heat1);font-weight:600}
@@ -636,7 +640,7 @@ function profileList(){
 function setProfLevel(l){profLevel=l;document.querySelectorAll('#plevels button').forEach(b=>b.classList.toggle('on',b.dataset.lv===l));drawProfResults();}
 function matchProf(p,q){
   if(!q)return true; q=q.toLowerCase().trim();
-  const hay=[p.name,p.sub,p.level,p.oneLine,p.useFor,p.agtron].join(' ').toLowerCase();
+  const hay=[p.name,p.sub,p.level,p.oneLine,p.useFor,p.agtron,(p.aka||[]).join(' ')].join(' ').toLowerCase();
   // flavor descriptors that score high (>=4) for this profile
   const strong=FLAVOR_AXES.filter(a=>(p.flavor[a[0]]||0)>=4).map(a=>a[1]).join(' ').toLowerCase();
   // synonym map: search word -> flavor axis that must score high
@@ -685,6 +689,7 @@ function profileDetail(id){
         <div class="lvl" style="color:${p.accent}">${esc(p.level)} · Agtron ${esc(p.agtron)}</div>
         <h1>${esc(p.name)}</h1>
         <div class="sub">${esc(p.sub)}</div>
+        ${p.aka&&p.aka.length?`<div class="aka">also called ${p.aka.map(a=>`<span>${esc(a)}</span>`).join('')}</div>`:''}
         <div class="oneline">${esc(p.oneLine)}</div>
         <div class="usefor"><b>Use for —</b> ${esc(p.useFor)}</div>
       </div>
