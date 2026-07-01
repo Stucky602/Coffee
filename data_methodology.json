@@ -70,7 +70,7 @@
     },
     {
       "term": "Agtron",
-      "def": "A numbered scale for measuring roast color, from high numbers (very light) to low numbers (very dark). A standardized way to say how dark a roast is instead of vague words like \"medium.\""
+      "def": "A numbered scale for measuring roast color, from high numbers (very light) to low numbers (very dark). A standardized way to say how dark a roast is instead of vague words like \"medium.\" Note: the mapping of roast-level names to Agtron numbers varies by region and roaster — this guide uses the prevailing US specialty convention."
     },
     {
       "term": "Roast level",
@@ -78,7 +78,7 @@
     },
     {
       "term": "Cupping",
-      "def": "The industry's standard tasting method: brewing coffees the same controlled way and tasting them side by side to evaluate flavor. How roasters judge whether a roast worked and connect a curve to a cup."
+      "def": "The industry's standard tasting method: brewing coffees the same controlled way and tasting them side by side to evaluate flavor. How roasters judge whether a roast worked and connect a curve to a cup. The modern SCA framework for this is the Coffee Value Assessment (CVA), which replaced the 2004 cupping protocol in November 2024."
     },
     {
       "term": "Degassing / resting",
@@ -87,6 +87,30 @@
     {
       "term": "Washed / natural / honey",
       "def": "Three ways the coffee fruit is processed after picking, before it's shipped as green. Washed is clean and bright, natural is fruity and heavier, honey sits in between. The process changes how the green behaves in the roaster and how it tastes."
+    },
+    {
+      "term": "CVA (Coffee Value Assessment)",
+      "def": "The SCA framework that replaced the 2004 cupping protocol in November 2024. Instead of one 100-point score, it evaluates coffee across four separate assessments — physical, descriptive, affective, and extrinsic — for a higher-resolution picture of quality and value."
+    },
+    {
+      "term": "Affective vs descriptive",
+      "def": "The key split in the CVA. Descriptive assessment objectively records what a coffee tastes like (intensity, flavor descriptors) with no judgment. Affective assessment records how much a taster likes those attributes. Two cuppers can describe a coffee identically but value it differently."
+    },
+    {
+      "term": "Flavor wheel",
+      "def": "The 2016 SCA/World Coffee Research reference chart for describing coffee flavor, organized from broad categories at the center (fruity, floral, roasted, nutty/cocoa, etc.) to specific notes at the edge. Used center-outward to build a shared tasting vocabulary."
+    },
+    {
+      "term": "Q Grader",
+      "def": "A professionally certified, calibrated coffee taster — coffee’s equivalent of a sommelier. The program moved from CQI to the SCA in 2025 and is evolving onto the CVA framework."
+    },
+    {
+      "term": "Slurp",
+      "def": "In cupping, you slurp the coffee off the spoon loudly and forcefully. The hard slurp aerates the liquid and sprays it across the entire palate at once, so you perceive the full range of flavors and aromatics."
+    },
+    {
+      "term": "Break the crust",
+      "def": "During cupping, a crust of grounds floats on top of the steeping coffee. At four minutes you break it with three spoon stirs while smelling — this releases a concentrated burst of aromatics trapped underneath, a key evaluation moment."
     }
   ],
   "METHODOLOGY": {
@@ -113,6 +137,16 @@
         "BT tells you position; RoR tells you trajectory.",
         "Read spacing and slope between landmarks, not absolute temps.",
         "A smooth, declining RoR is the near-universal marker of a clean roast."
+      ],
+      "refs": [
+        {
+          "label": "Scott Rao — roast curve & RoR principles",
+          "link": "https://www.scottrao.com/blog"
+        },
+        {
+          "label": "Coffee roasting (overview)",
+          "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
+        }
       ]
     },
     "ror": {
@@ -138,6 +172,16 @@
         "RoR = degrees of bean-temp change per interval; the curve's slope.",
         "Target a smooth, continuously declining RoR from turning point to drop.",
         "Prevent the first-crack crash-and-flick by managing energy before the crack, not after."
+      ],
+      "refs": [
+        {
+          "label": "Scott Rao — Development Time Ratio & declining RoR",
+          "link": "https://www.scottrao.com/blog/2016/8/25/development-time-ratio"
+        },
+        {
+          "label": "CoffeeNavigated — RoR, stalling & crash/flick",
+          "link": "http://coffeenavigated.net/roasting-coffee/"
+        }
       ]
     },
     "phases": {
@@ -163,6 +207,16 @@
         "Drying (~10–12% moisture off) → Maillard/browning (flavor built) → development (from first crack to drop).",
         "Maillard is where most flavor complexity forms.",
         "Development balances the trade between underdeveloped (sour/grassy) and overdeveloped (flat/roasty)."
+      ],
+      "refs": [
+        {
+          "label": "Curiosity Coffee — phases & Maillard onset (~150°C)",
+          "link": "https://curiositycoffee.com/blogs/learn/what-is-first-crack"
+        },
+        {
+          "label": "Coffee roasting (overview)",
+          "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
+        }
       ]
     },
     "cracks": {
@@ -188,6 +242,16 @@
         "First crack (~196–205°C): the reference point development time is measured from.",
         "Second crack (~224–230°C): the gateway into dark, roast-forward territory.",
         "Sound — timing and evenness — is a real diagnostic, not just a landmark."
+      ],
+      "refs": [
+        {
+          "label": "MTPak — guide to first & second crack (196°C / 224°C)",
+          "link": "https://mtpak.coffee/2021/02/coffee-roasting-basics-guide-to-first-second-crack/"
+        },
+        {
+          "label": "Sweet Maria's — First Crack FAQ",
+          "link": "https://library.sweetmarias.com/first-crack-faq-what-is-first-crack-what-is-second-crack/"
+        }
       ]
     },
     "dtr": {
@@ -213,6 +277,16 @@
         "DTR = (first-crack-to-drop time) ÷ (total time), as a percent.",
         "Rough bands: ~10–15% light, ~18–22% specialty medium, 25%+ dark.",
         "A comparison tool, not a quality guarantee — always read it with RoR behavior."
+      ],
+      "refs": [
+        {
+          "label": "Scott Rao — Development Time Ratio (20–25%)",
+          "link": "https://www.scottrao.com/blog/2016/8/25/development-time-ratio"
+        },
+        {
+          "label": "Daily Coffee News — Rao on development time",
+          "link": "https://dailycoffeenews.com/2014/08/12/roast-development-time-and-the-prerequisite-for-any-successful-roast/"
+        }
       ]
     },
     "chemistry": {
@@ -243,6 +317,16 @@
         "Caramelization drives sweetness that tips to bitterness if pushed.",
         "Acids degrade with roast — lighter keeps origin brightness, darker turns low-acid/bitter.",
         "Roasting produces CO2 (needs degassing rest) and, when dark, surface oils."
+      ],
+      "refs": [
+        {
+          "label": "Sweet Maria's — roast chemistry & degassing",
+          "link": "https://library.sweetmarias.com/first-crack-faq-what-is-first-crack-what-is-second-crack/"
+        },
+        {
+          "label": "Coffee roasting (overview)",
+          "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
+        }
       ]
     },
     "heat": {
@@ -268,6 +352,12 @@
         "Conduction (drum contact), convection (hot air), radiation (infrared) — all present, balance defines the machine.",
         "Convection-forward = even and bright; conduction-heavy = body but scorch-prone.",
         "Airflow simultaneously delivers heat, clears smoke, and shapes heat exchange."
+      ],
+      "refs": [
+        {
+          "label": "Perfect Daily Grind — 4 variables that affect roasting",
+          "link": "https://perfectdailygrind.com/2020/04/4-variables-that-affect-roasting/"
+        }
       ]
     },
     "roasters": {
@@ -293,6 +383,12 @@
         "Drum: conductive body, stable thermal mass, the commercial default.",
         "Fluid-bed: convective, fast, clean and bright, less forgiving.",
         "Modern hybrids add convective control to drum platforms for the best of both."
+      ],
+      "refs": [
+        {
+          "label": "Genuine Origin — roast profiles 101 (roaster types, charge)",
+          "link": "https://blog.genuineorigin.com/2025/11/guide-to-roast-profiles/"
+        }
       ]
     },
     "defects": {
@@ -323,6 +419,16 @@
         "Baked: flat/hollow, correct-looking color — stalled RoR.",
         "Scorched/tipped: surface and tip burns — heat delivered too fast early.",
         "Roasty/over-developed: ashy/flat — pushed too dark for the intent."
+      ],
+      "refs": [
+        {
+          "label": "Scott Rao — baked/underdeveloped & DTR context",
+          "link": "https://www.scottrao.com/blog/2016/8/25/development-time-ratio"
+        },
+        {
+          "label": "Perfect Daily Grind — charge temp, scorching & tipping",
+          "link": "https://perfectdailygrind.com/2017/09/coffee-roasting-guide-how-to-control-charge-temperature/"
+        }
       ]
     },
     "profiling": {
@@ -337,7 +443,7 @@
         },
         {
           "h": "Sample roast, then cup",
-          "body": "You roast small sample batches at a few different profiles — vary charge, development time, drop point — then cup them side by side (the SCA cupping protocol is the industry-standard tasting method). Cupping is how you connect a curve to a flavor. You're building a map from roast decisions to cup outcomes for this specific coffee."
+          "body": "You roast small sample batches at a few different profiles — vary charge, development time, drop point — then cup them side by side. Cupping is the standardized side-by-side tasting method the industry uses to connect a curve to a flavor. The SCA replaced its long-standing 2004 cupping protocol with the Coffee Value Assessment (CVA) in November 2024, though the legacy 100-point form is still in daily use in many labs. Either way, you're building a map from roast decisions to cup outcomes for this specific coffee."
         },
         {
           "h": "Scale to production",
@@ -353,6 +459,16 @@
         "Sample roast several profiles, then cup side by side to map curve → cup.",
         "Re-develop at production scale using sample cups as the flavor target.",
         "Change one variable at a time, document, and lock a repeatable profile."
+      ],
+      "refs": [
+        {
+          "label": "SCA — Coffee Value Assessment",
+          "link": "https://sca.coffee/value-assessment"
+        },
+        {
+          "label": "Liberty Beans — density testing & sample roasting",
+          "link": "https://libertybeanscoffee.com/uncategorized/secret-coffee-roasting-strategies/"
+        }
       ]
     },
     "origin_intro": {
@@ -383,6 +499,16 @@
         "Dense/high-grown beans want more heat and favor lighter roasts; soft/low-grown beans scorch easily and take dark well.",
         "Washed coffees bake if rushed into first crack; naturals can spike and defect if over-energized.",
         "Weigh equal volumes to compare density before building a profile — then confirm by cupping."
+      ],
+      "refs": [
+        {
+          "label": "Perfect Daily Grind — roasting different origins",
+          "link": "https://perfectdailygrind.com/2017/07/how-to-roast-coffee-from-different-origins/"
+        },
+        {
+          "label": "Green Coffee Beans Wholesale — roast level & origin",
+          "link": "https://www.ictcoffee.com/news/the-relationship-between-roast-level-and-origin-character/"
+        }
       ]
     },
     "origin_ethiopia": {
@@ -408,6 +534,12 @@
         "Very high-grown and dense, but highly variable lot to lot — expect to dial in by trial.",
         "Avoid an aggressive start; it bakes washed lots at first crack and spikes naturals into defects.",
         "Roast light to medium with a restrained drop; the goal is preserving florals and bright acidity."
+      ],
+      "refs": [
+        {
+          "label": "Perfect Daily Grind — Ethiopian coffee: a roaster's guide",
+          "link": "https://perfectdailygrind.com/2019/11/ethiopian-coffee-a-roasters-guide/"
+        }
       ]
     },
     "origin_colombia": {
@@ -433,6 +565,12 @@
         "Moderate-to-high altitude, washed, medium density — balanced and forgiving.",
         "Takes a standard well-managed curve and holds up across roast levels.",
         "A great calibration/reference origin; City+ showcases its caramel-balance signature."
+      ],
+      "refs": [
+        {
+          "label": "One Hundred Coffee — origin & roasting profiles",
+          "link": "https://onehundredcoffee.com/roasting/testing-different-coffee-beans-how-origin-affects-roasting-profiles/"
+        }
       ]
     },
     "origin_brazil": {
@@ -458,6 +596,16 @@
         "Low-grown, soft, low-density, often natural — nutty/chocolatey with body and low acidity.",
         "Use a lower charge temp and slower rate of rise to avoid scorching; consider extending the roast.",
         "Shines medium to medium-dark; an espresso-blend backbone and a good 'stretching' candidate."
+      ],
+      "refs": [
+        {
+          "label": "Perfect Daily Grind — roasting natural & honey processed",
+          "link": "https://perfectdailygrind.com/2017/10/how-to-roast-natural-honey-processed-coffee/"
+        },
+        {
+          "label": "Liberty Beans — 'stretching' the Maillard phase",
+          "link": "https://libertybeanscoffee.com/uncategorized/secret-coffee-roasting-strategies/"
+        }
       ]
     },
     "origin_sumatra": {
@@ -483,6 +631,339 @@
         "Earthy, herbal, heavy-bodied, low-acid — a signature of wet-hulled Indonesian processing.",
         "Tolerates firmer heat in the Maillard stage to build body; won't lose its character the way delicate origins do.",
         "Traditionally taken medium-dark to dark, where roast character complements the earthy depth."
+      ],
+      "refs": [
+        {
+          "label": "God of Beans — origin characteristics & density",
+          "link": "https://godofbeans.com/choosing-green-beans-for-home-roasting-a-beginners-guide"
+        }
+      ]
+    },
+    "cupping_intro": {
+      "name": "What Cupping Is",
+      "sub": "The industry's tasting method",
+      "group": "cupping",
+      "accent": "#C9A34E",
+      "sections": [
+        {
+          "h": "The idea",
+          "body": "Cupping is the standardized way the coffee industry tastes and evaluates coffee. Every cup is brewed identically — same dose, same water, same time — so differences you taste come from the coffee, not the brewing. It's how green buyers judge lots, how roasters check whether a roast worked, and how competitions are scored. If you want to evaluate coffee the way professionals do, cupping is the method."
+        },
+        {
+          "h": "Why roasters cup",
+          "body": "For a roaster, cupping closes the loop. You design a profile, roast it, then cup it to find out if the curve produced the cup you wanted. Cupping side by side — this profile against that one, this batch against a reference — is how a curve decision becomes a flavor judgment. Without cupping, you're roasting blind."
+        },
+        {
+          "h": "A system in transition",
+          "body": "The reference framework changed recently. In November 2024 the SCA adopted the Coffee Value Assessment (CVA) as its official standard, replacing the 2004 cupping protocol and its single 100-point score that had defined specialty coffee for two decades. Many labs still run the legacy form daily, so working professionals need to understand both — which is why this section covers each."
+        }
+      ],
+      "keypoints": [
+        "Cupping = brewing every cup identically so differences reflect the coffee, not the brew.",
+        "For roasters it closes the loop: curve → roast → cup → judgment.",
+        "The SCA replaced the 2004 protocol with the CVA in Nov 2024; both are still in use."
+      ],
+      "refs": [
+        {
+          "label": "SCA — Coffee Value Assessment",
+          "link": "https://sca.coffee/value-assessment"
+        },
+        {
+          "label": "Green Coffee Collective — cupping protocol",
+          "link": "https://greencoffeecollective.com/pages/glossary/cupping-protocol"
+        }
+      ]
+    },
+    "cupping_mechanics": {
+      "name": "Cupping Mechanics",
+      "sub": "The physical protocol, step by step",
+      "group": "cupping",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "The recipe",
+          "body": "The SCA standard is 8.25g of coffee per 150ml of water — a ratio of about 1:18. Measure to 0.1g precision and adjust the coffee weight to your actual cup volume to hold the ratio. Water is clean and 93°C (200°F). Prepare at least 5 cups per coffee so you can judge uniformity across the lot."
+        },
+        {
+          "h": "Grind and fragrance",
+          "body": "Grind coarse — slightly coarser than paper-filter drip, spec'd as 70–75% of grounds passing a US #20 sieve (about 850µm). Grind immediately before pouring; aromatics escape within minutes. Purge the grinder with 5–10g of the next sample first to avoid cross-contamination. Within 15 minutes, smell the dry grounds and note the fragrance."
+        },
+        {
+          "h": "Pour, steep, break",
+          "body": "Pour 93°C water directly over the grounds to saturate them all, and start a 4-minute timer. A crust of grounds forms on top; smell the wet aroma as it steeps. At 4 minutes, break the crust by stirring three times with a spoon while putting your nose close — the crust-break releases a burst of trapped aromatics and is a critical moment. Rinse the spoon between cups. Then skim the foam and floating grounds off the surface in one clean motion."
+        },
+        {
+          "h": "Taste as it cools",
+          "body": "Begin tasting once the coffee cools to roughly 71°C (around 8–10 minutes in). Load the spoon and slurp hard — the loud slurp aerates the liquid and sprays it across your whole palate. Evaluate flavor, aftertaste, acidity, sweetness, and mouthfeel, and keep tasting as the cup cools, because different attributes reveal themselves at different temperatures."
+        }
+      ],
+      "keypoints": [
+        "8.25g : 150ml (~1:18), water 93°C / 200°F, 5 cups per coffee for uniformity.",
+        "Grind coarse (70–75% through a #20 sieve), fresh; smell dry fragrance first.",
+        "4-minute steep, then break the crust with 3 stirs while smelling; skim.",
+        "Taste ~71°C by slurping hard to aerate; re-taste as the cup cools."
+      ],
+      "refs": [
+        {
+          "label": "SCA Protocols & Best Practices (PDF)",
+          "link": "https://www.scribd.com/document/469338504/1594883668193-SCA-Protocols-Best-Practices-pdf"
+        },
+        {
+          "label": "Royal Coffee — how to run a cupping",
+          "link": "https://royalcoffee.com/how-to-set-up-and-run-a-coffee-cupping-a-step-by-step-guide/"
+        },
+        {
+          "label": "Podium Coffee Club — SCA protocol step by step",
+          "link": "https://podiumcoffeeclub.com/blogs/blog/sca-cupping-protocol"
+        }
+      ]
+    },
+    "cva_overview": {
+      "name": "The Coffee Value Assessment",
+      "sub": "The modern SCA framework",
+      "group": "cupping",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "What changed and why",
+          "body": "For two decades, coffee was scored on one 100-point number: 80+ meant specialty, and higher was better. The problem is that a single score tells you a coffee is 'very good' but not why, what it tastes like, or whether it suits your market. The CVA, adopted by the SCA in November 2024, replaces that one number with a high-resolution picture across four separate assessments — because describing a coffee and judging how much you like it are different questions that shouldn't be collapsed together."
+        },
+        {
+          "h": "The four assessments",
+          "body": "The CVA has four components, kept deliberately separate to reduce bias. Physical (CVA 102 territory) covers measurable facts like defect counts and moisture. Descriptive (103) objectively describes what the coffee smells and tastes like, using intensity ratings and flavor-wheel descriptors, with no quality judgment. Affective (104) records how much you value those attributes on a preference scale. Extrinsic (105) captures non-sensory value: origin story, traceability, certifications."
+        },
+        {
+          "h": "Descriptive vs affective — the key split",
+          "body": "This separation is the heart of the CVA. Descriptive asks 'what is in the cup?' — a group of cuppers might all agree a coffee is floral and bright. Affective asks 'do I value that?' — and here they can disagree completely. A Nordic roaster might prize a tea-like acidity that an Italian espresso blender finds too sharp. The CVA records both as valid: the description stays objective, the preference reflects each taster's context."
+        },
+        {
+          "h": "Where the score went",
+          "body": "The descriptive form has no total score by design. Only the affective form produces a number, via a calculator that converts the preference ratings to a 0–100 scale for buyers who still need a shorthand during the transition. This is a real shift in thinking: the CVA treats a coffee's value as multi-dimensional, not reducible to one figure."
+        }
+      ],
+      "keypoints": [
+        "CVA (Nov 2024) replaced the single 100-point score with four separate assessments.",
+        "Physical, Descriptive, Affective, Extrinsic — kept apart to reduce bias.",
+        "Descriptive = objective 'what's in the cup'; Affective = subjective 'how much I value it'.",
+        "Only the affective form yields a score, converted to 0–100 via calculator."
+      ],
+      "refs": [
+        {
+          "label": "SCA — adopts CVA as cupping standard",
+          "link": "https://sca.coffee/sca-news/sca-new-cva-cupping-standards"
+        },
+        {
+          "label": "Ethio Coffee — CVA guide for buyers",
+          "link": "https://www.ethiocoffee.co/insights/new-sca-coffee-value-assessment"
+        },
+        {
+          "label": "SCA — CVA in Action: Affective Assessment",
+          "link": "https://sca.coffee/sca-news/cva-in-action-affective"
+        }
+      ]
+    },
+    "cva_scoring": {
+      "name": "CVA Affective Scoring",
+      "sub": "How the 0–100 number is built",
+      "group": "cupping",
+      "accent": "#6E3E1E",
+      "sections": [
+        {
+          "h": "The eight sections",
+          "body": "The affective assessment scores eight sections for impression of quality: fragrance, aroma, flavor, aftertaste, acidity, sweetness, mouthfeel, and overall. Each is rated on a 9-point hedonic (liking) scale. The 9-point scale is a sensory-science standard because, unlike a 5- or 10-point scale, it has a true neutral midpoint. You're rating preference here, not intensity — 'how much do I like this acidity,' not 'how strong is it.'"
+        },
+        {
+          "h": "The formula",
+          "body": "The eight section scores are summed, then converted to a familiar 0–100 figure by a fixed formula: Cup Score = 0.65625 × (sum of the eight scores) + 52.75. From that, subtract 2 points for each non-uniform cup and 4 points for each defective cup in the set. The constants are chosen so the output lands in the range specialty cuppers are used to reading."
+        },
+        {
+          "h": "A worked example",
+          "body": "Say a coffee scores fragrance 7, aroma 7, flavor 6, aftertaste 5, acidity 4, sweetness 6, mouthfeel 7, overall 6. The sum is 48. Then 0.65625 × 48 + 52.75 = 84.25. With no non-uniform or defective cups, the final score is 84.25 — comfortably specialty. This app's digital cupping tool (in the Tools section, when built) runs exactly this math."
+        },
+        {
+          "h": "Reading the number",
+          "body": "One caution echoing the old form: the 0–100 output is a translation for convenience, not the point of the CVA. Two cuppers can land on the same 84 for very different reasons, which is exactly why the descriptive assessment exists alongside it. Use the score as shorthand, and the description for the real picture."
+        }
+      ],
+      "keypoints": [
+        "Eight sections (fragrance, aroma, flavor, aftertaste, acidity, sweetness, mouthfeel, overall), each 1–9.",
+        "Cup Score = 0.65625 × (sum of 8) + 52.75, minus 2/non-uniform cup and 4/defective cup.",
+        "Worked example: sum 48 → 84.25, a specialty score.",
+        "The number is a convenience translation; the descriptive assessment carries the real detail."
+      ],
+      "refs": [
+        {
+          "label": "SCA — CVA Affective Score Calculator",
+          "link": "https://sca.coffee/cuppingscore"
+        },
+        {
+          "label": "Royal NY — how to use the CVA form (worked example)",
+          "link": "https://www.royalny.com/blogs/how-to-use-the-sca-cva-form/"
+        },
+        {
+          "label": "Royal Coffee — what the numbers mean",
+          "link": "https://royalcoffee.com/scoring-specialty-coffee-what-do-the-numbers-mean/"
+        }
+      ]
+    },
+    "legacy_protocol": {
+      "name": "The Legacy 2004 Protocol",
+      "sub": "The 100-point form, still in use",
+      "group": "cupping",
+      "accent": "#5A2F16",
+      "sections": [
+        {
+          "h": "Why it still matters",
+          "body": "The 2004 SCA (then SCAA) cupping form defined specialty coffee for twenty years, and it's still found in hundreds of roasteries and cupping labs today. Even with the CVA now official, a working professional needs to read and speak the legacy form, because most existing coffee documentation, scoresheets, and habits are built on it."
+        },
+        {
+          "h": "How it scores",
+          "body": "The legacy form rates ten attributes — fragrance/aroma, flavor, aftertaste, acidity, body, balance, uniformity, clean cup, sweetness, and overall. Most attributes are scored from 6.00 to 10.00 in 0.25-point steps, reflecting quality. The individual scores are summed into a single total. A total of 80+ is the specialty threshold, with higher tiers above it — a coffee in the 90s is exceptional."
+        },
+        {
+          "h": "Defects",
+          "body": "Defects subtract from the total. A taint (a minor off-note, usually in aroma or flavor) costs 2 points; a fault (a strong negative that can make the coffee unpleasant) costs 4. In the CVA, this thinking moved to the physical form and the uniform/defective-cup deductions."
+        },
+        {
+          "h": "Legacy vs CVA at a glance",
+          "body": "The big difference: the legacy form blends description and quality judgment into one number, while the CVA splits them apart. The legacy form asks 'how good is this acidity?' on one scale; the CVA asks 'how intense is it?' (descriptive) and 'how much do I like it?' (affective) as two separate questions. The legacy 'body' also became the broader 'mouthfeel' in the CVA."
+        }
+      ],
+      "keypoints": [
+        "The 2004 form defined specialty for 20 years and is still in daily use.",
+        "Ten attributes scored 6.00–10.00 in 0.25 steps, summed; 80+ = specialty.",
+        "Taint = −2, Fault = −4 for defects.",
+        "Legacy blends description and quality into one score; the CVA splits them."
+      ],
+      "refs": [
+        {
+          "label": "Femobook — cupping protocols & scoring",
+          "link": "https://www.femobook.com/blogs/coffee-knowledge/coffee-cupping"
+        },
+        {
+          "label": "Daily Coffee News — SCA adopts new forms",
+          "link": "https://dailycoffeenews.com/2024/11/05/sca-officially-adopts-new-cupping-forms-and-standards/"
+        }
+      ]
+    },
+    "flavor_wheel": {
+      "name": "The Flavor Wheel",
+      "sub": "The shared vocabulary of taste",
+      "group": "cupping",
+      "accent": "#8A5A34",
+      "sections": [
+        {
+          "h": "What it is",
+          "body": "The Coffee Taster's Flavor Wheel, released by the SCA and World Coffee Research in 2016 (built on WCR's Sensory Lexicon), is the industry's reference for describing what coffee tastes and smells like. It maps hundreds of descriptors in a circle, organized from broad categories at the center to specific references at the outer edge. It's descriptive, not prescriptive — it helps you articulate what you taste without judging quality."
+        },
+        {
+          "h": "How it's built",
+          "body": "The center holds nine broad categories: floral, fruity, sour/fermented, green/vegetative, other, roasted, spices, nutty/cocoa, and sweet. Each branches outward into sub-groups and then specific notes. Fruity opens to berry, dried fruit, citrus, other fruit; berry opens further to blackberry, raspberry, blueberry, strawberry. The progressive narrowing is what makes it usable."
+        },
+        {
+          "h": "How to use it",
+          "body": "Work from the center outward. Start with the broadest impression — is this coffee fruity, nutty, roasted, floral? Once you've picked a core category, move out one ring to narrow it: fruity → berry. Then out again to the specific note: berry → blueberry. You can stop at any ring; the further out you go, the more precise the description. This is far easier than trying to jump straight to 'blueberry' from a blank page."
+        },
+        {
+          "h": "Why it matters for cupping",
+          "body": "The wheel gives cuppers a shared, calibrated vocabulary. When one taster says 'blackberry' and another says 'jammy dark fruit,' the wheel lets them locate a common reference instead of talking past each other. In the CVA descriptive assessment, the flavor-wheel categories are exactly the descriptors you check off — so the wheel and the modern form are built from the same map."
+        }
+      ],
+      "keypoints": [
+        "2016 SCA/WCR wheel: hundreds of descriptors, broad center → specific edge.",
+        "Nine center categories: floral, fruity, sour/fermented, green/vegetative, other, roasted, spices, nutty/cocoa, sweet.",
+        "Work center-outward, stopping at whatever precision you can honestly taste.",
+        "Descriptive not prescriptive; it's the vocabulary behind the CVA descriptive form."
+      ],
+      "refs": [
+        {
+          "label": "SCA/WCR Coffee Taster's Flavor Wheel (PDF)",
+          "link": "https://atlanticspecialtycoffee.com/wp-content/uploads/SCA_TasterWheel_English_8.5x11.pdf"
+        },
+        {
+          "label": "Green Coffee Collective — the flavour wheel",
+          "link": "https://greencoffeecollective.com/pages/glossary/sca-flavour-wheel"
+        },
+        {
+          "label": "Not Bad Coffee — interactive flavor wheel",
+          "link": "https://notbadcoffee.com/flavor-wheel-en/"
+        }
+      ]
+    },
+    "qc_loop": {
+      "name": "The Roaster's QC Loop",
+      "sub": "Cupping your own production",
+      "group": "cupping",
+      "accent": "#7A4A28",
+      "sections": [
+        {
+          "h": "Cup what you ship",
+          "body": "Cupping isn't only for buying green — it's how a roastery holds quality steady. The discipline is simple: cup your production batches, not just your samples. A profile that cupped beautifully as a sample roast can drift at production scale, and the only way you catch it is by tasting what actually went in the bag."
+        },
+        {
+          "h": "Cup against a reference",
+          "body": "The powerful move is comparative. Cup a new batch next to a retained reference of how that coffee should taste — your approved profile, or a saved sample. Side by side, drift is obvious that would be invisible cup-by-cup. This is the production version of the sample-roasting loop: the sample cup becomes the target you're checking each batch against."
+        },
+        {
+          "h": "Triangulate for consistency",
+          "body": "To check whether two batches are truly the same, cuppers use triangulation: three cups, two of one batch and one of the other, arranged blind. If you can reliably pick the odd one out, there's a real difference; if you can't, they're effectively identical. It's a rigorous, bias-resistant way to answer 'did this batch match the last one?'"
+        },
+        {
+          "h": "Close the loop with the curve",
+          "body": "When a cupping flags a problem, the fix lives back in the roast data. A baked, flat cup points at a stalled rate of rise; a sharp, grassy cup points at under-development. Cupping tells you what's wrong in the cup; the roast curve tells you where to fix it. A roastery that cups its production and reads its curves together has a real quality system, not just good intentions."
+        }
+      ],
+      "keypoints": [
+        "Cup production batches, not just samples — profiles drift at scale.",
+        "Cup against a retained reference; side-by-side makes drift obvious.",
+        "Triangulation (2 of one, 1 of the other, blind) tests whether batches truly match.",
+        "Cupping finds the flaw; the roast curve tells you where to fix it."
+      ],
+      "refs": [
+        {
+          "label": "Green Coffee Collective — cupping protocol & QC",
+          "link": "https://greencoffeecollective.com/pages/glossary/cupping-protocol"
+        },
+        {
+          "label": "Scott Rao — development & the cup",
+          "link": "https://www.scottrao.com/blog/2016/8/25/development-time-ratio"
+        }
+      ]
+    },
+    "q_grader": {
+      "name": "Q Graders & the Evolved Q",
+      "sub": "The credential landscape",
+      "group": "cupping",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "What a Q Grader is",
+          "body": "A Q Grader is a professionally certified coffee taster — the closest thing coffee has to a sommelier credential. Administered for years by the Coffee Quality Institute (CQI), the Q program trained and calibrated graders worldwide to score green coffee reliably on the 100-point scale, so a score in one country meant the same thing in another. There are roughly 10,000 certified Q Graders globally."
+        },
+        {
+          "h": "The transition",
+          "body": "In April 2025 the SCA took over management of the Q program from CQI, and announced that an 'evolved Q' credential will be based on the CVA rather than the legacy 100-point form. This is a significant shift: the standard that certifies the world's professional coffee tasters is moving onto the same CVA framework that replaced the cupping form. A transitional 'CVA for Cuppers' course is bridging existing graders across, and is scheduled to retire on November 30, 2026."
+        },
+        {
+          "h": "What it means practically",
+          "body": "For a roaster, you don't need to be a Q Grader to cup well or run quality control — the protocol is open and learnable. But the credential still signals calibrated, trusted palates for buying and competition, and understanding where it's headed (CVA-based) tells you which framework to invest your own training in. This is a live, moving area — check current SCA announcements for the latest status."
+        }
+      ],
+      "keypoints": [
+        "Q Grader = certified, calibrated professional coffee taster; ~10,000 worldwide.",
+        "SCA took over the Q program from CQI in April 2025; the 'evolved Q' is CVA-based.",
+        "The transitional 'CVA for Cuppers' course retires Nov 30, 2026.",
+        "You don't need the credential to cup well — the protocol is open — but it signals a trusted palate."
+      ],
+      "refs": [
+        {
+          "label": "Daily Coffee News — SCA takes over Q program",
+          "link": "https://dailycoffeenews.com/2025/04/25/the-specialty-coffee-association-is-taking-over-the-q-grader-program/"
+        },
+        {
+          "label": "Perfect Daily Grind — CVA & the Q programme",
+          "link": "https://perfectdailygrind.com/2025/05/cva-q-grader-programme-coffee-industry/"
+        }
       ]
     }
   }

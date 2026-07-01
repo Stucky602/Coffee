@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v7"
-CACHE_C = "coffee-guide-v7"
+APP_VERSION = "v8"
+CACHE_C = "coffee-guide-v8"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -23,6 +23,7 @@ METH_GROUPS = [
     ("science", "Roast Science"),
     ("practice", "In Practice"),
     ("origin", "Roasting by Origin"),
+    ("cupping", "Cupping & Quality"),
 ]
 
 FLAVOR_AXES = [
@@ -261,6 +262,12 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .clegend .ln{width:16px;height:2.6px;border-radius:2px;display:inline-block}
 .clegend .ln.dash{background:repeating-linear-gradient(90deg,#7a6a52 0 4px,transparent 4px 7px);height:2px}
 .clegend .hint{color:var(--ink3);font-size:11.5px;flex:1;min-width:200px}
+.curvehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.curvetitle{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.unittoggle{display:flex;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.unittoggle button{background:var(--panel);border:none;color:var(--ink3);font-size:12px;font-weight:600;
+  padding:5px 12px;font-family:var(--mono);transition:.14s}
+.unittoggle button.on{background:var(--heat3);color:#fff}
 
 /* methodology detail */
 .msection{margin-top:22px;max-width:74ch}
@@ -273,8 +280,20 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .keypoints li{color:var(--ink);font-size:14px;margin-bottom:9px;list-style:none;
   padding-left:20px;position:relative}
 .keypoints li:before{content:"→";position:absolute;left:0;color:var(--heat3)}
+.refs{margin-top:26px;max-width:74ch}
+.refs h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:10px}
+.refs ul{margin:0;padding:0;list-style:none}
+.refs li{margin-bottom:7px;padding-left:16px;position:relative}
+.refs li:before{content:"↗";position:absolute;left:0;color:var(--ink3);font-size:11px}
+.refs a{color:var(--ink2);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line);
+  transition:.14s}
+.refs a:hover{color:var(--heat1);border-color:var(--heat3)}
 
 /* compare */
+.cmpmodebar{display:flex;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:16px}
+.cmpmodebar button{background:var(--panel);border:none;color:var(--ink3);font-size:13px;font-weight:600;padding:8px 18px;transition:.14s}
+.cmpmodebar button.on{background:var(--heat3);color:#fff}
 .cmpbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 20px}
 .cmpbar button{background:var(--panel);border:1px solid var(--line);color:var(--ink3);
   font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px}
@@ -448,8 +467,8 @@ function buildCurve(c){
   }
   return {bt:btPts,ror:sm,total,marks:{tpTime,tp,dryTime,dryEnd,fcTime,fcTemp,drop,charge}};
 }
-function roastCurve(c,accent,w,h){
-  w=w||620;h=h||300;
+function roastCurve(c,accent,w,h,units){
+  w=w||620;h=h||300;units=units||'C';
   const cv=buildCurve(c);
   const L=44,R=44,T=18,B=34;
   const iw=w-L-R, ih=h-T-B;
@@ -462,6 +481,7 @@ function roastCurve(c,accent,w,h){
   const Ybt=v=>T+ih*(1-(v-tmin)/(tmax-tmin));
   const Yror=v=>T+ih*(1-v/rorMax);
   const mm=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+  const showT=cVal=>units==='F'?Math.round(cVal*9/5+32)+'°F':Math.round(cVal)+'°C';
   let g='';
   // phase shading
   const phases=[[0,cv.marks.dryTime,'Drying','#2a1c10'],[cv.marks.dryTime,cv.marks.fcTime,'Maillard','#33230f'],[cv.marks.fcTime,total,'Development','#3d2913']];
@@ -483,8 +503,8 @@ function roastCurve(c,accent,w,h){
   g+=mk(cv.marks.fcTime,cv.marks.fcTemp,'1C',fcClose);
   g+=mk(total,cv.marks.drop,'Drop');
   // axis labels
-  g+=`<text x="${L-8}" y="${Ybt(tmax)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmax)}°C</text>`;
-  g+=`<text x="${L-8}" y="${Ybt(tmin)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmin)}°C</text>`;
+  g+=`<text x="${L-8}" y="${Ybt(tmax)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${showT(tmax)}</text>`;
+  g+=`<text x="${L-8}" y="${Ybt(tmin)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${showT(tmin)}</text>`;
   g+=`<text x="${w-R+8}" y="${T+ih-4}" fill="#7a6a52" font-size="10" text-anchor="start" font-family="ui-monospace">RoR</text>`;
   return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
 }
@@ -584,7 +604,7 @@ function home(){
   <section class="hero">
     <div class="wrap">
       <h1>The roast is where green coffee <span class="grad">becomes flavor.</span></h1>
-      <p>A working reference for the roastery floor — ${nP} roast profiles broken down by curve, phase, flavor signature, and failure mode, plus ${nM} deep-dives on the fundamentals and on how each origin behaves in the roaster. Built for practitioners, not the shelf.</p>
+      <p>A working reference for the roastery floor — ${nP} roast profiles broken down by curve, phase, flavor signature, and failure mode, plus ${nM} deep-dives spanning the roasting fundamentals, how each origin behaves, and how to cup and grade what you roast. Built for practitioners, not the shelf.</p>
       <div class="heatbar">${heat}</div>
     </div>
   </section>
@@ -719,8 +739,12 @@ function profileDetail(id){
         ${stat('Total Time',c.totalTime,'')}
         ${stat('Dev. Ratio (DTR)',c.dtr,'',true)}
       </div>
-      <p class="prose" style="margin-top:12px;font-size:13px;color:var(--ink3)">Temperatures are typical bean-temp ranges and vary by roaster; the phase relationships and DTR transfer across machines better than absolute numbers do.</p>
-      <div class="curvechart">${roastCurve(p.curve,p.accent,620,300)}
+      <p class="prose" style="margin-top:12px;font-size:13px;color:var(--ink3)">Temperatures are typical bean-temp ranges and vary by roaster — charge temperature is the most roaster-specific number here, swinging widely with drum thermal mass and batch size. The phase relationships and DTR transfer across machines far better than absolute numbers do. Agtron ranges follow the prevailing US specialty convention.</p>
+      <div class="curvechart">
+        <div class="curvehead"><span class="curvetitle">Idealized Roast Curve</span>
+          <div class="unittoggle"><button id="unitC" class="on" onclick="setCurveUnits('${id}','C')">°C</button><button id="unitF" onclick="setCurveUnits('${id}','F')">°F</button></div>
+        </div>
+        <div id="curvesvg">${roastCurve(p.curve,p.accent,620,300,'C')}</div>
         <div class="clegend"><span><i class="ln" style="background:${p.accent}"></i>Bean temp</span><span><i class="ln dash"></i>Rate of rise</span><span class="hint">Idealized from this profile's data — your machine's curve will differ in absolute temps, not in shape.</span></div>
       </div></div>
 
@@ -740,6 +764,12 @@ function profileDetail(id){
     ${spectrumNav(id)}
     <div style="height:40px"></div>
   </div>`;
+}
+function setCurveUnits(id,u){
+  const p=PROFILES[id]; if(!p)return;
+  document.getElementById('curvesvg').innerHTML=roastCurve(p.curve,p.accent,620,300,u);
+  document.getElementById('unitC').classList.toggle('on',u==='C');
+  document.getElementById('unitF').classList.toggle('on',u==='F');
 }
 function spectrumNav(id){
   // walk the light→dark spectrum (exclude purpose-built, which aren't on the line)
@@ -761,17 +791,23 @@ function spectrumNav(id){
 
 /* ---------- COMPARE ---------- */
 let cmpSel=['nordic','cityplus','french'];
+let cmpMode='radar';
 const CMP_COLORS=['#C9A34E','#B07B3E','#8A5A34','#6E3E1E','#e08a5a'];
 function compare(){
   const ids=Object.keys(PROFILES);
   app.innerHTML=`<div class="wrap">
-    <div class="seclead"><span class="no">02</span><div><h2>Compare Profiles</h2><p>Overlay flavor signatures across the fixed six-axis scale. Pick up to four.</p></div></div>
+    <div class="seclead"><span class="no">02</span><div><h2>Compare Profiles</h2><p>Overlay flavor signatures or roast curves. Pick up to four.</p></div></div>
+    <div class="cmpmodebar">
+      <button id="modeRadar" class="${cmpMode==='radar'?'on':''}" onclick="setCmpMode('radar')">Flavor Radar</button>
+      <button id="modeCurve" class="${cmpMode==='curve'?'on':''}" onclick="setCmpMode('curve')">Roast Curve</button>
+    </div>
     <div class="cmpbar" id="cmpbar">${ids.map(id=>`<button data-id="${id}" onclick="toggleCmp('${id}')">${esc(PROFILES[id].name)}</button>`).join('')}</div>
     <div class="cmpwrap"><div class="lg" id="cmplg"></div><div class="cmplegend" id="cmpleg"></div></div>
     <div style="height:50px"></div>
   </div>`;
   drawCmp();
 }
+function setCmpMode(m){cmpMode=m;document.getElementById('modeRadar').classList.toggle('on',m==='radar');document.getElementById('modeCurve').classList.toggle('on',m==='curve');drawCmp();}
 function toggleCmp(id){
   if(cmpSel.includes(id))cmpSel=cmpSel.filter(x=>x!==id);
   else{if(cmpSel.length>=4)cmpSel.shift();cmpSel.push(id);}
@@ -785,6 +821,7 @@ function drawCmp(){
   });
   const lg=document.getElementById('cmplg'),leg=document.getElementById('cmpleg');
   if(!cmpSel.length){lg.innerHTML='<p class="cmphint">Select profiles to compare.</p>';leg.innerHTML='';return;}
+  if(cmpMode==='curve')return drawCmpCurve(lg,leg);
   // overlay: draw multi-shape radar manually
   const size=340,N=FLAVOR_AXES.length,cx=size/2,cy=size/2,pad=44,R=size/2-pad;
   let g='';
@@ -793,6 +830,33 @@ function drawCmp(){
   cmpSel.forEach((id,idx)=>{const col=CMP_COLORS[idx];const f=PROFILES[id].flavor;let pts=[];for(let i=0;i<N;i++){const a=-Math.PI/2+i*(2*Math.PI/N);const r=R*((f[FLAVOR_AXES[i][0]]||0)/5);pts.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}g+=`<polygon points="${pts.join(' ')}" fill="${col}" fill-opacity="0.13" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;});
   lg.innerHTML=`<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
   leg.innerHTML=cmpSel.map((id,i)=>`<div class="it"><i style="background:${CMP_COLORS[i]}"></i><span>${esc(PROFILES[id].name)} <span style="color:var(--ink3)">· ${esc(PROFILES[id].level)}</span></span></div>`).join('')+`<div class="cmphint">Tap a profile above to add or remove it.</div>`;
+}
+function drawCmpCurve(lg,leg){
+  // overlay BT curves on a shared time+temp axis
+  const w=560,h=340,L=48,R=20,T=20,B=40,iw=w-L-R,ih=h-T-B;
+  const curves=cmpSel.map(id=>({id,col:CMP_COLORS[cmpSel.indexOf(id)],cv:buildCurve(PROFILES[id].curve)}));
+  const maxTime=Math.max(...curves.map(c=>c.cv.total));
+  let allTemps=[];curves.forEach(c=>c.cv.bt.forEach(p=>allTemps.push(p[1])));
+  const tmin=Math.min(...allTemps)-10,tmax=Math.max(...allTemps)+8;
+  const X=t=>L+iw*(t/maxTime);
+  const Y=v=>T+ih*(1-(v-tmin)/(tmax-tmin));
+  const mm=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+  let g='';
+  // gridlines
+  for(let s=0;s<=maxTime;s+=120){g+=`<line x1="${X(s).toFixed(1)}" y1="${T}" x2="${X(s).toFixed(1)}" y2="${T+ih}" stroke="#3a2a1c" stroke-width="1" opacity="0.5"/><text x="${X(s).toFixed(1)}" y="${h-16}" fill="#8f7c66" font-size="10" text-anchor="middle" font-family="ui-monospace">${mm(s)}</text>`;}
+  g+=`<text x="${L-8}" y="${Y(tmax)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmax)}°C</text>`;
+  g+=`<text x="${L-8}" y="${Y(tmin)+4}" fill="#8f7c66" font-size="10" text-anchor="end" font-family="ui-monospace">${Math.round(tmin)}°C</text>`;
+  // each BT curve + drop dot
+  curves.forEach(c=>{
+    let path=c.cv.bt.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    g+=`<path d="${path}" fill="none" stroke="${c.col}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    // first crack + drop markers
+    const fc=c.cv.marks;
+    g+=`<circle cx="${X(fc.fcTime).toFixed(1)}" cy="${Y(fc.fcTemp).toFixed(1)}" r="3" fill="${c.col}" stroke="#160e08" stroke-width="1.2"/>`;
+    g+=`<circle cx="${X(c.cv.total).toFixed(1)}" cy="${Y(fc.drop).toFixed(1)}" r="3.4" fill="${c.col}" stroke="#160e08" stroke-width="1.2"/>`;
+  });
+  lg.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px">${g}</svg>`;
+  leg.innerHTML=cmpSel.map((id,i)=>{const cv=buildCurve(PROFILES[id].curve);return `<div class="it"><i style="background:${CMP_COLORS[i]}"></i><span>${esc(PROFILES[id].name)} <span style="color:var(--ink3)">· ${mm(cv.total)} · DTR ${esc(PROFILES[id].curve.dtr)}</span></span></div>`;}).join('')+`<div class="cmphint">Dots mark first crack and drop. Shorter, earlier-dropping curves are lighter roasts.</div>`;
 }
 
 /* ---------- LEARN LIST ---------- */
@@ -808,6 +872,12 @@ function learnList(){
 }
 
 /* ---------- METH DETAIL ---------- */
+function refsBlock(refs){
+  if(!refs||!refs.length)return '';
+  return `<div class="refs"><h4>Sources</h4><ul>${refs.map(r=>
+    `<li><a href="${esc(r.link)}" target="_blank" rel="noopener noreferrer">${esc(r.label)}</a></li>`
+  ).join('')}</ul></div>`;
+}
 function methDetail(id){
   const m=METHODOLOGY[id]; if(!m)return go('learn');
   app.innerHTML=`<div class="wrap detail">
@@ -821,6 +891,7 @@ function methDetail(id){
     </div>
     ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
+    ${refsBlock(m.refs)}
     <div style="height:40px"></div>
   </div>`;
 }
