@@ -6,8 +6,8 @@ BASE = pathlib.Path(__file__).parent
 profiles = json.loads((BASE / "data_profiles.json").read_text())["PROFILES"]
 methodology = json.loads((BASE / "data_methodology.json").read_text())["METHODOLOGY"]
 
-APP_VERSION = "v2"
-CACHE_C = "coffee-guide-v2"
+APP_VERSION = "v3"
+CACHE_C = "coffee-guide-v3"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -105,6 +105,24 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .grouplabel{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink3);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
 .grouplabel:after{content:"";flex:1;height:1px;background:var(--line)}
+.filterbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:22px 0 4px}
+.searchwrap{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:0 12px;flex:1;min-width:220px;color:var(--ink3)}
+.searchwrap:focus-within{border-color:var(--heat3)}
+.searchwrap input{background:none;border:none;outline:none;color:var(--ink);font-size:14px;
+  padding:10px 0;flex:1;font-family:inherit}
+.searchwrap input::placeholder{color:var(--ink3)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--ink3);font-size:12.5px;
+  font-weight:600;padding:7px 12px;border-radius:20px;transition:.14s}
+.chips button:hover{color:var(--ink2)}
+.chips button.on{background:var(--heat3);border-color:var(--heat3);color:#fff}
+.sortwrap{display:flex;align-items:center;gap:7px}
+.sortwrap label{font-size:12px;color:var(--ink3);font-weight:600}
+.sortwrap select{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-size:13px;
+  padding:8px 10px;border-radius:9px;font-family:inherit;cursor:pointer}
+.empty{text-align:center;color:var(--ink3);font-size:14px;padding:44px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:16px}
 
 /* profile grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
@@ -476,16 +494,68 @@ function methCard(id,m){
 }
 
 /* ---------- PROFILE LIST ---------- */
+let profQuery='', profLevel='all', profSort='spectrum';
 function profileList(){
-  let html=`<div class="wrap"><div class="seclead"><span class="no">01</span><div><h2>Roast Profiles</h2><p>Ten core profiles spanning the full roast spectrum.</p></div></div>`;
-  for(const [gid,glabel] of PROFILE_GROUPS){
-    const items=Object.entries(PROFILES).filter(([id,p])=>p.group===gid);
-    if(!items.length)continue;
-    html+=`<div class="grouplabel">${glabel}</div><div class="grid">${items.map(([id,p])=>profileCard(id,p)).join('')}</div>`;
-  }
-  html+=`<div style="height:50px"></div></div>`;
-  app.innerHTML=html;
+  app.innerHTML=`<div class="wrap"><div class="seclead"><span class="no">01</span><div><h2>Roast Profiles</h2><p>Ten core profiles spanning the full roast spectrum.</p></div></div>
+    <div class="filterbar">
+      <div class="searchwrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input id="psearch" type="search" placeholder="Search profiles — name, use, flavor…" value="${esc(profQuery)}" autocomplete="off">
+      </div>
+      <div class="chips" id="plevels"></div>
+      <div class="sortwrap"><label>Sort</label><select id="psort"></select></div>
+    </div>
+    <div id="presults"></div>
+    <div style="height:50px"></div></div>`;
+  const levels=['all',...PROFILE_GROUPS.map(g=>g[1])];
+  document.getElementById('plevels').innerHTML=levels.map(l=>`<button data-lv="${l}" class="${profLevel===l?'on':''}" onclick="setProfLevel('${l}')">${l==='all'?'All':l}</button>`).join('');
+  const sorts=[['spectrum','Roast spectrum'],['acidity','Most acidic'],['body','Most body'],['sweetness','Sweetest'],['bitterness','Most bitter'],['roast','Most roast'],['aroma','Most aromatic']];
+  document.getElementById('psort').innerHTML=sorts.map(s=>`<option value="${s[0]}" ${profSort===s[0]?'selected':''}>${s[1]}</option>`).join('');
+  document.getElementById('psort').onchange=e=>{profSort=e.target.value;drawProfResults();};
+  const si=document.getElementById('psearch');
+  si.oninput=e=>{profQuery=e.target.value;drawProfResults();};
+  drawProfResults();
+  // keep focus after redraw
+  const s2=document.getElementById('psearch'); if(profQuery){s2.focus();s2.setSelectionRange(profQuery.length,profQuery.length);}
 }
+function setProfLevel(l){profLevel=l;document.querySelectorAll('#plevels button').forEach(b=>b.classList.toggle('on',b.dataset.lv===l));drawProfResults();}
+function matchProf(p,q){
+  if(!q)return true; q=q.toLowerCase().trim();
+  const hay=[p.name,p.sub,p.level,p.oneLine,p.useFor,p.agtron].join(' ').toLowerCase();
+  // flavor descriptors that score high (>=4) for this profile
+  const strong=FLAVOR_AXES.filter(a=>(p.flavor[a[0]]||0)>=4).map(a=>a[1]).join(' ').toLowerCase();
+  // synonym map: search word -> flavor axis that must score high
+  const SYN={bright:'acidity',acidic:'acidity',fruity:'acidity',juicy:'acidity',citrus:'acidity',lively:'acidity',
+    sweet:'sweetness',caramel:'sweetness',
+    bold:'body','full-bodied':'body',heavy:'body',rich:'body',
+    bitter:'bitterness',dark:'bitterness',
+    roasty:'roast',smoky:'roast',toasty:'roast',
+    floral:'aroma',aromatic:'aroma',fragrant:'aroma',complex:'aroma'};
+  if(SYN[q] && (p.flavor[SYN[q]]||0)>=4)return true;
+  return (hay+' '+strong).includes(q);
+}
+function drawProfResults(){
+  const box=document.getElementById('presults'); if(!box)return;
+  let entries=Object.entries(PROFILES).filter(([id,p])=>matchProf(p,profQuery));
+  if(profLevel!=='all')entries=entries.filter(([id,p])=>PROFILE_GROUPS.find(g=>g[1]===profLevel)?.[0]===p.group);
+  if(profSort==='spectrum'){
+    const order=PROFILE_GROUPS.map(g=>g[0]);
+    // grouped view, spectrum order
+    let html='';
+    for(const [gid,glabel] of PROFILE_GROUPS){
+      const items=entries.filter(([id,p])=>p.group===gid);
+      if(!items.length)continue;
+      html+=`<div class="grouplabel">${glabel}</div><div class="grid">${items.map(([id,p])=>profileCard(id,p)).join('')}</div>`;
+    }
+    box.innerHTML=html||emptyState();
+  }else{
+    // flat, sorted by chosen flavor axis descending
+    entries.sort((a,b)=>(b[1].flavor[profSort]||0)-(a[1].flavor[profSort]||0));
+    const label=FLAVOR_AXES.find(a=>a[0]===profSort)?.[1]||'';
+    box.innerHTML=entries.length?`<div class="grouplabel">Sorted by ${label.toLowerCase()} — highest first</div><div class="grid">${entries.map(([id,p])=>profileCard(id,p)).join('')}</div>`:emptyState();
+  }
+}
+function emptyState(){return `<div class="empty">No profiles match that. Try a roast level, a flavor like “bright” or “bitter,” or clear the search.</div>`;}
 
 /* ---------- PROFILE DETAIL ---------- */
 function profileDetail(id){
