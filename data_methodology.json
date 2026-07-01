@@ -1,27 +1,93 @@
 {
   "GLOSSARY": [
-    {"term": "Green coffee", "def": "Raw, unroasted coffee beans. They're actually the seed of a fruit (the coffee cherry). Green beans are dense, grassy-smelling, and hold about 10 to 12 percent water. They taste like nothing you'd want to drink until they're roasted."},
-    {"term": "Charge", "def": "The moment you drop the green beans into the hot roaster to start the roast. \"Charge temperature\" is how hot the roaster is at that instant."},
-    {"term": "Turning point (TP)", "def": "Right after charge, the cold beans pull heat out of the roaster, so the temperature reading drops for a bit, then bottoms out and starts climbing again. That lowest point is the turning point. From here the beans are heating up for the rest of the roast."},
-    {"term": "Drying phase", "def": "The first stretch of the roast. The beans shed their moisture and turn from green to yellow. They smell grassy, then like hay, then like baking bread. Usually the longest phase."},
-    {"term": "Maillard phase (browning)", "def": "The middle stretch, from yellow to first crack. Named after the Maillard reaction, the same browning chemistry that crusts bread and sears a steak. This is where most of coffee's flavor and aroma are built."},
-    {"term": "First crack (1C)", "def": "An audible popping sound, like popcorn or knuckles cracking, around 196°C / 385°F. Steam and pressure inside the bean rupture its structure and it nearly doubles in size. This is the roaster's most important landmark. No coffee is drinkable if dropped before it, and light roasts are dropped shortly after."},
-    {"term": "Development", "def": "The final phase, measured from first crack to drop. This is where sharp acidity mellows into sweetness and roast character builds. Too short and the coffee tastes grassy and sour; too long and it goes flat, then roasty."},
-    {"term": "Second crack (2C)", "def": "A second, quieter, faster crackle around 224°C / 435°F, more like crisp cereal than popcorn. Oils start migrating to the bean's surface. This is the gateway to dark roasts. Push past it and coffee turns smoky, then bitter, then toward burnt."},
-    {"term": "Drop", "def": "The moment you dump the beans out of the roaster into the cooling tray to stop the roast. \"Drop temperature\" is how hot the beans are at that instant, and it's one of the biggest levers on how light or dark the final roast is. This is the term you'll see most, and it just means: roast's done, get them out and cool them fast."},
-    {"term": "Bean temperature (BT)", "def": "The temperature of the beans during the roast, read by a probe in the roaster. The main number a roaster watches. Note: absolute readings vary by machine and probe, so roasters care more about the shape of the curve than the exact degrees."},
-    {"term": "Rate of rise (RoR)", "def": "How fast the bean temperature is climbing at any moment, in degrees per interval. It's the slope of the roast curve. A healthy roast has an RoR that smoothly declines from the turning point to the drop. It shouldn't spike up or flatten out."},
-    {"term": "Roast curve", "def": "The graph a roaster lives by: bean temperature plotted over time, usually with the RoR overlaid. Reading the curve is how you steer a roast and how you repeat a good one."},
-    {"term": "Development Time Ratio (DTR)", "def": "The share of the total roast that happened after first crack, as a percent. If a 12-minute roast hit first crack at 9:36, that's 2:24 of development, or 20 percent. A quick shorthand for how far a roast was pushed. Light roasts run lower (~10 to 15%), darker ones higher."},
-    {"term": "Drum roaster", "def": "The industry-standard machine: a rotating metal drum tumbles the beans over a gas flame. Gives coffee body and is stable and forgiving. Most commercial roasting happens on a drum."},
-    {"term": "Fluid-bed (air) roaster", "def": "A machine that roasts beans on a stream of hot air, like popcorn. Fast, even, and very clean and bright in the cup. Easier to learn on, but less forgiving because it moves quickly."},
-    {"term": "Airflow", "def": "How much air the roaster pulls through the beans. It does three jobs at once: delivers heat, clears smoke and chaff so they don't taint the flavor, and shapes how fast the beans gain or shed heat. A key control a roaster adjusts throughout."},
-    {"term": "Chaff", "def": "The papery skin that flakes off the beans as they roast and expand. Roasters clear it with airflow because burnt chaff tastes bad and, in quantity, is a fire hazard."},
-    {"term": "Agtron", "def": "A numbered scale for measuring roast color, from high numbers (very light) to low numbers (very dark). A standardized way to say how dark a roast is instead of vague words like \"medium.\""},
-    {"term": "Roast level", "def": "How light or dark a coffee is roasted, from light through medium to dark. It's shorthand: two coffees at the same color can still taste different depending on how they got there."},
-    {"term": "Cupping", "def": "The industry's standard tasting method: brewing coffees the same controlled way and tasting them side by side to evaluate flavor. How roasters judge whether a roast worked and connect a curve to a cup."},
-    {"term": "Degassing / resting", "def": "Roasting fills the beans with CO2 that escapes over the following days. Fresh-roasted coffee is usually rested at least 12 to 24 hours before brewing so it's not fizzing with gas, which throws off extraction."},
-    {"term": "Washed / natural / honey", "def": "Three ways the coffee fruit is processed after picking, before it's shipped as green. Washed is clean and bright, natural is fruity and heavier, honey sits in between. The process changes how the green behaves in the roaster and how it tastes."}
+    {
+      "term": "Green coffee",
+      "def": "Raw, unroasted coffee beans. They're actually the seed of a fruit (the coffee cherry). Green beans are dense, grassy-smelling, and hold about 10 to 12 percent water. They taste like nothing you'd want to drink until they're roasted."
+    },
+    {
+      "term": "Charge",
+      "def": "The moment you drop the green beans into the hot roaster to start the roast. \"Charge temperature\" is how hot the roaster is at that instant."
+    },
+    {
+      "term": "Turning point (TP)",
+      "def": "Right after charge, the cold beans pull heat out of the roaster, so the temperature reading drops for a bit, then bottoms out and starts climbing again. That lowest point is the turning point. From here the beans are heating up for the rest of the roast."
+    },
+    {
+      "term": "Drying phase",
+      "def": "The first stretch of the roast. The beans shed their moisture and turn from green to yellow. They smell grassy, then like hay, then like baking bread. Usually the longest phase."
+    },
+    {
+      "term": "Maillard phase (browning)",
+      "def": "The middle stretch, from yellow to first crack. Named after the Maillard reaction, the same browning chemistry that crusts bread and sears a steak. This is where most of coffee's flavor and aroma are built."
+    },
+    {
+      "term": "First crack (1C)",
+      "def": "An audible popping sound, like popcorn or knuckles cracking, around 196°C / 385°F. Steam and pressure inside the bean rupture its structure and it nearly doubles in size. This is the roaster's most important landmark. No coffee is drinkable if dropped before it, and light roasts are dropped shortly after."
+    },
+    {
+      "term": "Development",
+      "def": "The final phase, measured from first crack to drop. This is where sharp acidity mellows into sweetness and roast character builds. Too short and the coffee tastes grassy and sour; too long and it goes flat, then roasty."
+    },
+    {
+      "term": "Second crack (2C)",
+      "def": "A second, quieter, faster crackle around 224°C / 435°F, more like crisp cereal than popcorn. Oils start migrating to the bean's surface. This is the gateway to dark roasts. Push past it and coffee turns smoky, then bitter, then toward burnt."
+    },
+    {
+      "term": "Drop",
+      "def": "The moment you dump the beans out of the roaster into the cooling tray to stop the roast. \"Drop temperature\" is how hot the beans are at that instant, and it's one of the biggest levers on how light or dark the final roast is. This is the term you'll see most, and it just means: roast's done, get them out and cool them fast."
+    },
+    {
+      "term": "Bean temperature (BT)",
+      "def": "The temperature of the beans during the roast, read by a probe in the roaster. The main number a roaster watches. Note: absolute readings vary by machine and probe, so roasters care more about the shape of the curve than the exact degrees."
+    },
+    {
+      "term": "Rate of rise (RoR)",
+      "def": "How fast the bean temperature is climbing at any moment, in degrees per interval. It's the slope of the roast curve. A healthy roast has an RoR that smoothly declines from the turning point to the drop. It shouldn't spike up or flatten out."
+    },
+    {
+      "term": "Roast curve",
+      "def": "The graph a roaster lives by: bean temperature plotted over time, usually with the RoR overlaid. Reading the curve is how you steer a roast and how you repeat a good one."
+    },
+    {
+      "term": "Development Time Ratio (DTR)",
+      "def": "The share of the total roast that happened after first crack, as a percent. If a 12-minute roast hit first crack at 9:36, that's 2:24 of development, or 20 percent. A quick shorthand for how far a roast was pushed. Light roasts run lower (~10 to 15%), darker ones higher."
+    },
+    {
+      "term": "Drum roaster",
+      "def": "The industry-standard machine: a rotating metal drum tumbles the beans over a gas flame. Gives coffee body and is stable and forgiving. Most commercial roasting happens on a drum."
+    },
+    {
+      "term": "Fluid-bed (air) roaster",
+      "def": "A machine that roasts beans on a stream of hot air, like popcorn. Fast, even, and very clean and bright in the cup. Easier to learn on, but less forgiving because it moves quickly."
+    },
+    {
+      "term": "Airflow",
+      "def": "How much air the roaster pulls through the beans. It does three jobs at once: delivers heat, clears smoke and chaff so they don't taint the flavor, and shapes how fast the beans gain or shed heat. A key control a roaster adjusts throughout."
+    },
+    {
+      "term": "Chaff",
+      "def": "The papery skin that flakes off the beans as they roast and expand. Roasters clear it with airflow because burnt chaff tastes bad and, in quantity, is a fire hazard."
+    },
+    {
+      "term": "Agtron",
+      "def": "A numbered scale for measuring roast color, from high numbers (very light) to low numbers (very dark). A standardized way to say how dark a roast is instead of vague words like \"medium.\""
+    },
+    {
+      "term": "Roast level",
+      "def": "How light or dark a coffee is roasted, from light through medium to dark. It's shorthand: two coffees at the same color can still taste different depending on how they got there."
+    },
+    {
+      "term": "Cupping",
+      "def": "The industry's standard tasting method: brewing coffees the same controlled way and tasting them side by side to evaluate flavor. How roasters judge whether a roast worked and connect a curve to a cup."
+    },
+    {
+      "term": "Degassing / resting",
+      "def": "Roasting fills the beans with CO2 that escapes over the following days. Fresh-roasted coffee is usually rested at least 12 to 24 hours before brewing so it's not fizzing with gas, which throws off extraction."
+    },
+    {
+      "term": "Washed / natural / honey",
+      "def": "Three ways the coffee fruit is processed after picking, before it's shipped as green. Washed is clean and bright, natural is fruity and heavier, honey sits in between. The process changes how the green behaves in the roaster and how it tastes."
+    }
   ],
   "METHODOLOGY": {
     "curve": {
@@ -30,9 +96,18 @@
       "group": "read",
       "accent": "#C9A34E",
       "sections": [
-        {"h": "What the curve is", "body": "A roast curve plots bean temperature (BT) over time. Overlaid on it is the rate of rise (RoR) — the slope of that temperature line, how fast the bean is heating at any moment. Together they are the roaster's dashboard: the BT line tells you where you are, the RoR tells you where you're going."},
-        {"h": "The landmarks", "body": "Every curve has the same anchors: charge (beans hit the drum, temp plunges), turning point (the low, where the bean stops giving up heat and starts absorbing it), drying end (yellowing), first crack, and drop. You read a roast by the spacing and slope between these anchors, not by any single number."},
-        {"h": "Why the shape matters more than the numbers", "body": "Absolute bean temps are machine-specific — your probe, your drum mass, your placement. What transfers between roasters is the shape: a smooth, continuously declining RoR from turning point to drop. That shape is the closest thing roasting has to a universal quality signal."}
+        {
+          "h": "What the curve is",
+          "body": "A roast curve plots bean temperature (BT) over time. Overlaid on it is the rate of rise (RoR) — the slope of that temperature line, how fast the bean is heating at any moment. Together they are the roaster's dashboard: the BT line tells you where you are, the RoR tells you where you're going."
+        },
+        {
+          "h": "The landmarks",
+          "body": "Every curve has the same anchors: charge (beans hit the drum, temp plunges), turning point (the low, where the bean stops giving up heat and starts absorbing it), drying end (yellowing), first crack, and drop. You read a roast by the spacing and slope between these anchors, not by any single number."
+        },
+        {
+          "h": "Why the shape matters more than the numbers",
+          "body": "Absolute bean temps are machine-specific — your probe, your drum mass, your placement. What transfers between roasters is the shape: a smooth, continuously declining RoR from turning point to drop. That shape is the closest thing roasting has to a universal quality signal."
+        }
       ],
       "keypoints": [
         "BT tells you position; RoR tells you trajectory.",
@@ -46,9 +121,18 @@
       "group": "read",
       "accent": "#B07B3E",
       "sections": [
-        {"h": "Definition", "body": "RoR is the change in bean temperature over a fixed interval — degrees per 30 seconds or per minute. It's the first derivative of the roast curve. High early (the bean absorbs energy fast), then it should decline steadily as the roast progresses and the temperature gap between drum and bean shrinks."},
-        {"h": "Why it should always decline", "body": "A healthy roast has a RoR that glides smoothly downward from turning point to drop. It shouldn't rise (a spike overheats the surface), and it shouldn't flat-line (a stall bakes the bean). The single most-watched thing in modern profile roasting is keeping that RoR curve smooth and descending."},
-        {"h": "Crash and flick", "body": "Two classic RoR faults cluster around first crack. A crash is a sudden RoR drop as first crack's endothermic reaction pulls energy — the bean momentarily stops climbing. A flick is the RoR rebounding upward right after. Both correlate with muddy, baked-tasting cups. Managing gas and airflow before first crack to prevent the crash is a core roasting skill."}
+        {
+          "h": "Definition",
+          "body": "RoR is the change in bean temperature over a fixed interval — degrees per 30 seconds or per minute. It's the first derivative of the roast curve. High early (the bean absorbs energy fast), then it should decline steadily as the roast progresses and the temperature gap between drum and bean shrinks."
+        },
+        {
+          "h": "Why it should always decline",
+          "body": "A healthy roast has a RoR that glides smoothly downward from turning point to drop. It shouldn't rise (a spike overheats the surface), and it shouldn't flat-line (a stall bakes the bean). The single most-watched thing in modern profile roasting is keeping that RoR curve smooth and descending."
+        },
+        {
+          "h": "Crash and flick",
+          "body": "Two classic RoR faults cluster around first crack. A crash is a sudden RoR drop as first crack's endothermic reaction pulls energy — the bean momentarily stops climbing. A flick is the RoR rebounding upward right after. Both correlate with muddy, baked-tasting cups. Managing gas and airflow before first crack to prevent the crash is a core roasting skill."
+        }
       ],
       "keypoints": [
         "RoR = degrees of bean-temp change per interval; the curve's slope.",
@@ -62,9 +146,18 @@
       "group": "read",
       "accent": "#95602F",
       "sections": [
-        {"h": "Drying phase", "body": "From charge to roughly the point the bean turns yellow. Free and bound moisture (green coffee is ~10–12% water) is driven off. The bean is endothermic and pale. Rushing this phase scorches the surface before the core is ready; dragging it risks a baked, flat roast. Typically the longest single phase."},
-        {"h": "Maillard / browning phase", "body": "From yellowing to first crack. The Maillard reaction — amino acids plus reducing sugars — plus caramelization generate hundreds of aroma and flavor compounds and the brown color. This is where most flavor complexity is built. Its length and heat shape sweetness, body, and acidity balance."},
-        {"h": "Development phase", "body": "From first crack to drop. Also called post-crack development. Here acidity mellows, sweetness rounds, and roast character grows. Too short and the coffee is grassy/sour/underdeveloped; too long and it goes flat then roasty. Measured as a ratio of total time — see DTR."}
+        {
+          "h": "Drying phase",
+          "body": "From charge to roughly the point the bean turns yellow. Free and bound moisture (green coffee is ~10–12% water) is driven off. The bean is endothermic and pale. Rushing this phase scorches the surface before the core is ready; dragging it risks a baked, flat roast. Typically the longest single phase."
+        },
+        {
+          "h": "Maillard / browning phase",
+          "body": "From yellowing to first crack. The Maillard reaction — amino acids plus reducing sugars — plus caramelization generate hundreds of aroma and flavor compounds and the brown color. This is where most flavor complexity is built. Its length and heat shape sweetness, body, and acidity balance."
+        },
+        {
+          "h": "Development phase",
+          "body": "From first crack to drop. Also called post-crack development. Here acidity mellows, sweetness rounds, and roast character grows. Too short and the coffee is grassy/sour/underdeveloped; too long and it goes flat then roasty. Measured as a ratio of total time — see DTR."
+        }
       ],
       "keypoints": [
         "Drying (~10–12% moisture off) → Maillard/browning (flavor built) → development (from first crack to drop).",
@@ -78,9 +171,18 @@
       "group": "read",
       "accent": "#6E3E1E",
       "sections": [
-        {"h": "First crack", "body": "Around 196–205°C bean temp, the bean fractures audibly — a popcorn-like snap — as built-up steam and CO2 rupture the cell structure and the bean expands. First crack is the single most important landmark: development time is measured from here, and no coffee is drinkable roasted before it. The sound rolls through the batch; you note its start precisely."},
-        {"h": "Second crack", "body": "Roughly 224–230°C, a quieter, faster, higher-pitched crackle — more like crisp cereal — as the bean's cell walls fracture further and oils migrate to the surface. Second crack marks the transition into dark-roast territory. Roasts landing before it keep origin character; roasts taken into it become roast-forward."},
-        {"h": "Reading them by ear", "body": "Experienced roasters roast partly by sound. The timing, intensity, and evenness of first crack tell you about the batch's uniformity and moisture. A ragged, drawn-out first crack often signals uneven green or an uneven roast."}
+        {
+          "h": "First crack",
+          "body": "Around 196–205°C bean temp, the bean fractures audibly — a popcorn-like snap — as built-up steam and CO2 rupture the cell structure and the bean expands. First crack is the single most important landmark: development time is measured from here, and no coffee is drinkable roasted before it. The sound rolls through the batch; you note its start precisely."
+        },
+        {
+          "h": "Second crack",
+          "body": "Roughly 224–230°C, a quieter, faster, higher-pitched crackle — more like crisp cereal — as the bean's cell walls fracture further and oils migrate to the surface. Second crack marks the transition into dark-roast territory. Roasts landing before it keep origin character; roasts taken into it become roast-forward."
+        },
+        {
+          "h": "Reading them by ear",
+          "body": "Experienced roasters roast partly by sound. The timing, intensity, and evenness of first crack tell you about the batch's uniformity and moisture. A ragged, drawn-out first crack often signals uneven green or an uneven roast."
+        }
       ],
       "keypoints": [
         "First crack (~196–205°C): the reference point development time is measured from.",
@@ -94,9 +196,18 @@
       "group": "read",
       "accent": "#5A2F16",
       "sections": [
-        {"h": "The definition", "body": "DTR = (time from first crack to drop) ÷ (total roast time), expressed as a percent. If first crack hits at 9:00 and you drop at 11:15 on an 11:15 roast, development is 2:15 of 11:15 ≈ 20%. It's a normalized way to describe how much of the roast happened after first crack."},
-        {"h": "Typical ranges", "body": "Light filter roasts often run 10–15%. The specialty medium sweet spot sits around 18–22%. Darker roasts climb to 25%+ simply because there's more time past first crack. DTR is a guide, not a target to hit blindly — it's meaningful only alongside how the RoR behaved."},
-        {"h": "Its limits", "body": "DTR is popular because it's a single comparable number, but it can mislead. Two roasts with identical DTR can taste completely different if one crashed and one glided. Use DTR to describe and compare roasts, not to define quality on its own."}
+        {
+          "h": "The definition",
+          "body": "DTR = (time from first crack to drop) ÷ (total roast time), expressed as a percent. If first crack hits at 9:00 and you drop at 11:15 on an 11:15 roast, development is 2:15 of 11:15 ≈ 20%. It's a normalized way to describe how much of the roast happened after first crack."
+        },
+        {
+          "h": "Typical ranges",
+          "body": "Light filter roasts often run 10–15%. The specialty medium sweet spot sits around 18–22%. Darker roasts climb to 25%+ simply because there's more time past first crack. DTR is a guide, not a target to hit blindly — it's meaningful only alongside how the RoR behaved."
+        },
+        {
+          "h": "Its limits",
+          "body": "DTR is popular because it's a single comparable number, but it can mislead. Two roasts with identical DTR can taste completely different if one crashed and one glided. Use DTR to describe and compare roasts, not to define quality on its own."
+        }
       ],
       "keypoints": [
         "DTR = (first-crack-to-drop time) ÷ (total time), as a percent.",
@@ -110,10 +221,22 @@
       "group": "science",
       "accent": "#7A4A28",
       "sections": [
-        {"h": "Maillard & Strecker", "body": "The Maillard reaction between amino acids and reducing sugars is the engine of roast flavor, producing melanoidins (brown color, body) and a huge range of aromatics. Strecker degradation, a branch of it, generates key aldehydes behind malty, nutty, and savory notes. Most of the cup's complexity is Maillard chemistry."},
-        {"h": "Caramelization", "body": "Sugars break down under heat independent of amino acids, producing sweet, caramel, and eventually bitter compounds as it goes further. Caramelization and Maillard overlap through browning; how you balance heat and time between them shapes the sweetness-versus-roast character trade."},
-        {"h": "Acids", "body": "Chlorogenic acids degrade with roast, producing quinic and caffeic acids that shift perceived acidity and bitterness. Lighter roasts retain more of the bright origin acids; darker roasts break them down, which is why dark roasts read low-acid and bitter."},
-        {"h": "Degassing & oils", "body": "Roasting generates large volumes of CO2 trapped in the bean, released over days after roast (degassing) — freshly roasted coffee needs rest before brewing. At darker levels, cell walls fracture enough that oils migrate to the surface, the visible sheen on dark roasts."}
+        {
+          "h": "Maillard & Strecker",
+          "body": "The Maillard reaction between amino acids and reducing sugars is the engine of roast flavor, producing melanoidins (brown color, body) and a huge range of aromatics. Strecker degradation, a branch of it, generates key aldehydes behind malty, nutty, and savory notes. Most of the cup's complexity is Maillard chemistry."
+        },
+        {
+          "h": "Caramelization",
+          "body": "Sugars break down under heat independent of amino acids, producing sweet, caramel, and eventually bitter compounds as it goes further. Caramelization and Maillard overlap through browning; how you balance heat and time between them shapes the sweetness-versus-roast character trade."
+        },
+        {
+          "h": "Acids",
+          "body": "Chlorogenic acids degrade with roast, producing quinic and caffeic acids that shift perceived acidity and bitterness. Lighter roasts retain more of the bright origin acids; darker roasts break them down, which is why dark roasts read low-acid and bitter."
+        },
+        {
+          "h": "Degassing & oils",
+          "body": "Roasting generates large volumes of CO2 trapped in the bean, released over days after roast (degassing) — freshly roasted coffee needs rest before brewing. At darker levels, cell walls fracture enough that oils migrate to the surface, the visible sheen on dark roasts."
+        }
       ],
       "keypoints": [
         "Maillard + Strecker chemistry builds most of the cup's flavor and color.",
@@ -128,9 +251,18 @@
       "group": "science",
       "accent": "#8A5A34",
       "sections": [
-        {"h": "The three modes", "body": "Conduction is heat from direct contact — bean against hot drum metal. Convection is heat carried by hot air/gas moving through the bean mass. Radiation is infrared energy from hot surfaces. Every roaster uses all three, but the balance between them defines how a machine roasts and tastes."},
-        {"h": "Why the balance matters", "body": "Convection-dominant roasting (lots of moving hot air) heats evenly and quickly and is easy to control — favored for clean, bright modern profiles. Conduction-heavy roasting (hot drum, less airflow) can build body and a heavier cup but risks scorching if unmanaged. Adjusting airflow is largely adjusting the convection-to-conduction balance in real time."},
-        {"h": "Airflow as a control", "body": "Airflow does three jobs at once: it delivers convective heat, it clears smoke and chaff (which otherwise taint flavor), and it influences how fast the bean sheds or gains heat. Learning a roaster is largely learning how its airflow interacts with its gas."}
+        {
+          "h": "The three modes",
+          "body": "Conduction is heat from direct contact — bean against hot drum metal. Convection is heat carried by hot air/gas moving through the bean mass. Radiation is infrared energy from hot surfaces. Every roaster uses all three, but the balance between them defines how a machine roasts and tastes."
+        },
+        {
+          "h": "Why the balance matters",
+          "body": "Convection-dominant roasting (lots of moving hot air) heats evenly and quickly and is easy to control — favored for clean, bright modern profiles. Conduction-heavy roasting (hot drum, less airflow) can build body and a heavier cup but risks scorching if unmanaged. Adjusting airflow is largely adjusting the convection-to-conduction balance in real time."
+        },
+        {
+          "h": "Airflow as a control",
+          "body": "Airflow does three jobs at once: it delivers convective heat, it clears smoke and chaff (which otherwise taint flavor), and it influences how fast the bean sheds or gains heat. Learning a roaster is largely learning how its airflow interacts with its gas."
+        }
       ],
       "keypoints": [
         "Conduction (drum contact), convection (hot air), radiation (infrared) — all present, balance defines the machine.",
@@ -144,9 +276,18 @@
       "group": "science",
       "accent": "#95602F",
       "sections": [
-        {"h": "Drum roasters", "body": "A rotating drum tumbles beans against a heated metal surface with gas heat below and airflow drawn through. The industry workhorse. Strong conductive component gives body; thermal mass makes them stable and forgiving but slower to respond. The default for most commercial specialty and dark roasting."},
-        {"h": "Fluid-bed (air) roasters", "body": "A stream of hot air both heats and levitates the beans. Almost purely convective: fast, even, very clean and bright in the cup, highly responsive. Popular for sample roasting and light, clarity-focused profiles. Less thermal mass means less forgiving of a mistake — the roast moves quickly."},
-        {"h": "Hybrids & recirculation", "body": "Many modern machines blur the line: drums with heavily managed airflow, recirculating-air roasters that reuse heat for efficiency and emissions control. The trend is toward more convective control on a drum platform — body of a drum, evenness of air."}
+        {
+          "h": "Drum roasters",
+          "body": "A rotating drum tumbles beans against a heated metal surface with gas heat below and airflow drawn through. The industry workhorse. Strong conductive component gives body; thermal mass makes them stable and forgiving but slower to respond. The default for most commercial specialty and dark roasting."
+        },
+        {
+          "h": "Fluid-bed (air) roasters",
+          "body": "A stream of hot air both heats and levitates the beans. Almost purely convective: fast, even, very clean and bright in the cup, highly responsive. Popular for sample roasting and light, clarity-focused profiles. Less thermal mass means less forgiving of a mistake — the roast moves quickly."
+        },
+        {
+          "h": "Hybrids & recirculation",
+          "body": "Many modern machines blur the line: drums with heavily managed airflow, recirculating-air roasters that reuse heat for efficiency and emissions control. The trend is toward more convective control on a drum platform — body of a drum, evenness of air."
+        }
       ],
       "keypoints": [
         "Drum: conductive body, stable thermal mass, the commercial default.",
@@ -160,10 +301,22 @@
       "group": "practice",
       "accent": "#5A2F16",
       "sections": [
-        {"h": "Underdeveloped", "body": "Dropped too early / too fast past first crack. Grassy, sour, sharp, hay-like; may taste thin. Cause is insufficient development — either too little time or a roast so fast the interior never caught up. The most common defect in beginners chasing light roasts."},
-        {"h": "Baked", "body": "The roast lost momentum — RoR crashed or flat-lined — and dragged through the finish. Tastes flat, hollow, papery, lifeless, with muted aroma. Insidious because the color can look correct. Prevented by maintaining a smooth declining RoR and never stalling."},
-        {"h": "Scorched & tipped", "body": "Scorching is surface burn from too much conductive heat / too hot a charge — dark blotches on the bean face. Tipping is small burnt spots at the bean's ends (the tips) from excessive early heat. Both come from delivering energy faster than the bean can absorb it evenly."},
-        {"h": "Roasty / over-developed", "body": "Pushed too far — too dark, too far into second crack for the intent. Ashy, carbony, flat, origin character erased. In dark roasts this is a matter of degree; in a roast meant to be bright, even a little is a defect."}
+        {
+          "h": "Underdeveloped",
+          "body": "Dropped too early / too fast past first crack. Grassy, sour, sharp, hay-like; may taste thin. Cause is insufficient development — either too little time or a roast so fast the interior never caught up. The most common defect in beginners chasing light roasts."
+        },
+        {
+          "h": "Baked",
+          "body": "The roast lost momentum — RoR crashed or flat-lined — and dragged through the finish. Tastes flat, hollow, papery, lifeless, with muted aroma. Insidious because the color can look correct. Prevented by maintaining a smooth declining RoR and never stalling."
+        },
+        {
+          "h": "Scorched & tipped",
+          "body": "Scorching is surface burn from too much conductive heat / too hot a charge — dark blotches on the bean face. Tipping is small burnt spots at the bean's ends (the tips) from excessive early heat. Both come from delivering energy faster than the bean can absorb it evenly."
+        },
+        {
+          "h": "Roasty / over-developed",
+          "body": "Pushed too far — too dark, too far into second crack for the intent. Ashy, carbony, flat, origin character erased. In dark roasts this is a matter of degree; in a roast meant to be bright, even a little is a defect."
+        }
       ],
       "keypoints": [
         "Underdeveloped: grassy/sour — too little development.",
@@ -178,16 +331,158 @@
       "group": "practice",
       "accent": "#C9A34E",
       "sections": [
-        {"h": "Start with the green", "body": "Before designing a profile you assess the green: density, moisture, screen size, process (washed/natural/honey), and origin. Dense, high-grown, washed coffees take and want more heat; softer, lower-density or natural coffees roast faster and scorch more easily. The green dictates the starting approach."},
-        {"h": "Sample roast, then cup", "body": "You roast small sample batches at a few different profiles — vary charge, development time, drop point — then cup them side by side (the SCA cupping protocol is the industry-standard tasting method). Cupping is how you connect a curve to a flavor. You're building a map from roast decisions to cup outcomes for this specific coffee."},
-        {"h": "Scale to production", "body": "A profile developed on a sample roaster rarely transfers one-to-one to a production drum — thermal mass and batch size change everything. You re-develop at production scale, using the sample cups as your flavor target, then lock the profile once it's repeatable batch to batch."},
-        {"h": "Iterate and document", "body": "Good roasting is disciplined iteration: change one variable, cup the result, keep notes. A repeatable, documented profile that any roaster on the team can hit is the real deliverable — not a single lucky great batch."}
+        {
+          "h": "Start with the green",
+          "body": "Before designing a profile you assess the green: density, moisture, screen size, process (washed/natural/honey), and origin. Dense, high-grown, washed coffees take and want more heat; softer, lower-density or natural coffees roast faster and scorch more easily. The green dictates the starting approach."
+        },
+        {
+          "h": "Sample roast, then cup",
+          "body": "You roast small sample batches at a few different profiles — vary charge, development time, drop point — then cup them side by side (the SCA cupping protocol is the industry-standard tasting method). Cupping is how you connect a curve to a flavor. You're building a map from roast decisions to cup outcomes for this specific coffee."
+        },
+        {
+          "h": "Scale to production",
+          "body": "A profile developed on a sample roaster rarely transfers one-to-one to a production drum — thermal mass and batch size change everything. You re-develop at production scale, using the sample cups as your flavor target, then lock the profile once it's repeatable batch to batch."
+        },
+        {
+          "h": "Iterate and document",
+          "body": "Good roasting is disciplined iteration: change one variable, cup the result, keep notes. A repeatable, documented profile that any roaster on the team can hit is the real deliverable — not a single lucky great batch."
+        }
       ],
       "keypoints": [
         "Assess the green first — density, moisture, and process set the approach.",
         "Sample roast several profiles, then cup side by side to map curve → cup.",
         "Re-develop at production scale using sample cups as the flavor target.",
         "Change one variable at a time, document, and lock a repeatable profile."
+      ]
+    },
+    "origin_intro": {
+      "name": "Roasting by Origin",
+      "sub": "Why green dictates the roast",
+      "group": "origin",
+      "accent": "#C9A34E",
+      "sections": [
+        {
+          "h": "The green sets the ceiling",
+          "body": "A roaster doesn't impose a profile on a coffee so much as respond to it. Density, moisture, screen size, altitude, variety, and processing all arrive baked into the green, and they decide how much heat the bean wants and how it behaves through the roast. The best profile you can build is capped by the green you start with."
+        },
+        {
+          "h": "Density is the master variable",
+          "body": "Higher-altitude coffees are denser — they grow slower and pack in more sugars and acids. Dense beans need more heat energy to roast through and reward it with complexity, but they also tolerate (and often want) a higher charge temperature with disciplined development. Softer, lower-grown beans have more internal air pockets, transfer heat slower, scorch more easily, and take darker roasts more readily. Many roasters weigh identical volumes of two greens to compare density before designing a profile."
+        },
+        {
+          "h": "Processing changes the handling",
+          "body": "Washed coffees are cleaner and brighter and generally shine light — but a washed coffee hit with too much early energy tends to bake at first crack, over-developing some beans while others stay under. Naturals carry fruit-forward, fermented notes and can spike in temperature before first crack if pushed, inviting defects. Honey sits between. A dense natural Ethiopian and a soft Brazilian natural want opposite charge temps and rates of rise."
+        },
+        {
+          "h": "The practical rule",
+          "body": "Denser / higher-grown / washed → more heat capacity, favors lighter roasts, needs curve discipline. Softer / lower-grown / natural → lower charge temp, slower rate of rise, extend the roast to avoid scorching, takes darker levels well. Everything past that is dialing in the specific lot by cupping."
+        }
+      ],
+      "keypoints": [
+        "The green's density, moisture, altitude, and processing cap what any roast can achieve.",
+        "Dense/high-grown beans want more heat and favor lighter roasts; soft/low-grown beans scorch easily and take dark well.",
+        "Washed coffees bake if rushed into first crack; naturals can spike and defect if over-energized.",
+        "Weigh equal volumes to compare density before building a profile — then confirm by cupping."
+      ]
+    },
+    "origin_ethiopia": {
+      "name": "Ethiopia",
+      "sub": "High, dense, floral, fickle",
+      "group": "origin",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Ethiopian specialty grows very high (often 1,800–2,200m), making it dense and demanding. It's also famously variable — thousands of local varieties, mixed screen sizes, and often unknown genetics in a single lot. Expect trial and error to find the profile. The reward is some of the world's finest, most aromatic Arabica: florals, citrus, berry, wine."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Steer away from sudden, intense heat. A hard, energetic start can push out gingery or spice notes but risks torching the delicate florals that define the origin. On washed Ethiopians, too much early energy causes a big energy loss at first crack — baking — which over-develops some beans while others stay under before you have to dump for a light color. On naturals, an aggressive start can spike bean temperature before first crack and invite roast defects."
+        },
+        {
+          "h": "Target",
+          "body": "Light to medium. Washed Ethiopians commonly want a restrained drop with a modest development window and a smoothly declining rate of rise. Too little development gives showy aromatics over a hollow mid-palate; too much turns bright citrus into dull marmalade and wilts the florals. The whole game is preserving the top-end."
+        }
+      ],
+      "keypoints": [
+        "Very high-grown and dense, but highly variable lot to lot — expect to dial in by trial.",
+        "Avoid an aggressive start; it bakes washed lots at first crack and spikes naturals into defects.",
+        "Roast light to medium with a restrained drop; the goal is preserving florals and bright acidity."
+      ]
+    },
+    "origin_colombia": {
+      "name": "Colombia",
+      "sub": "Balanced and forgiving",
+      "group": "origin",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Colombian coffee, especially from regions like Huila, grows at moderate-to-high altitude (roughly 1,200–1,800m) and is typically washed. It's known for balanced acidity, caramel sweetness, and medium body. Medium density makes it versatile and one of the more forgiving origins to roast — a good coffee to learn a new machine on."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Its balance and medium density mean it doesn't punish small mistakes the way a dense Ethiopian or a soft Brazilian can. It takes a standard, well-managed curve well and holds up across roast levels, from a bright-ish medium that keeps its caramel sweetness to a fuller medium-dark for blends and espresso."
+        },
+        {
+          "h": "Target",
+          "body": "Versatile — anywhere from light-medium to medium-dark depending on intent. City+ is a natural home that showcases the caramel-and-balance signature. Push toward Full City for espresso body. Because it's forgiving, it's a strong reference coffee for calibrating a roaster before tackling trickier origins."
+        }
+      ],
+      "keypoints": [
+        "Moderate-to-high altitude, washed, medium density — balanced and forgiving.",
+        "Takes a standard well-managed curve and holds up across roast levels.",
+        "A great calibration/reference origin; City+ showcases its caramel-balance signature."
+      ]
+    },
+    "origin_brazil": {
+      "name": "Brazil",
+      "sub": "Low, soft, nutty, espresso backbone",
+      "group": "origin",
+      "accent": "#6E3E1E",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Brazilian coffee grows comparatively low (often 800–1,200m, some near 900m), making it softer and lower in density with lower acidity. It's frequently natural-processed and known for nutty, chocolatey, smooth character with natural sweetness and body — which is why it's the backbone of so many espresso blends and commercial coffee."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Because it's soft and low-density, use a lower charge temperature and a slower rate of rise — its air-pocketed structure transfers heat slowly, so a hot, fast start scorches the exterior before the core catches up. Many roasters extend the roast slightly for these coffees. Brazil rewards a touch more development time but demands good curve discipline; flick the rate of rise late and you trade nut-butter creaminess for a drying finish."
+        },
+        {
+          "h": "Target",
+          "body": "Medium to medium-dark. Brazil's sweetness and body caramelize beautifully in that range and stand up to milk, making it a workhorse espresso base. It also takes darker roasts more readily than a dense high-grown coffee. This is a classic candidate for 'stretching' — deliberately extending the Maillard phase to build deeper sweetness."
+        }
+      ],
+      "keypoints": [
+        "Low-grown, soft, low-density, often natural — nutty/chocolatey with body and low acidity.",
+        "Use a lower charge temp and slower rate of rise to avoid scorching; consider extending the roast.",
+        "Shines medium to medium-dark; an espresso-blend backbone and a good 'stretching' candidate."
+      ]
+    },
+    "origin_sumatra": {
+      "name": "Sumatra / Indonesia",
+      "sub": "Earthy, heavy-bodied, dark-friendly",
+      "group": "origin",
+      "accent": "#5A2F16",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Indonesian coffees from Sumatra and Sulawesi are known for earthy, spicy, herbal character with full body and low acidity — a signature partly created by the region's distinctive wet-hulled processing. These flavors become more pronounced in darker roasts, which is where the origin is traditionally taken."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Sumatra can handle more aggressive heat application during the middle (Maillard) stage to develop its full body — a head roaster's approach that would obliterate a delicate Ethiopian. Its low acidity and heavy body mean the earthy, herbal signature holds up rather than being lost, so it tolerates and often benefits from a firmer hand than high-grown washed coffees."
+        },
+        {
+          "h": "Target",
+          "body": "Medium-dark to dark. Sumatra's earthy depth and body are traditionally showcased at Full City and beyond, where the roast character complements rather than erases the origin. It's a natural fit for darker blends and for drinkers who want a heavy, low-acid, brooding cup."
+        }
+      ],
+      "keypoints": [
+        "Earthy, herbal, heavy-bodied, low-acid — a signature of wet-hulled Indonesian processing.",
+        "Tolerates firmer heat in the Maillard stage to build body; won't lose its character the way delicate origins do.",
+        "Traditionally taken medium-dark to dark, where roast character complements the earthy depth."
       ]
     }
   }
