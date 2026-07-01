@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v9"
-CACHE_C = "coffee-guide-v9"
+APP_VERSION = "v10"
+CACHE_C = "coffee-guide-v10"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -23,6 +23,7 @@ METH_GROUPS = [
     ("science", "Roast Science"),
     ("practice", "In Practice"),
     ("origin", "Roasting by Origin"),
+    ("green", "Green Buying & QC"),
     ("cupping", "Cupping & Quality"),
     ("ops", "Roastery Operations"),
     ("brew", "Brewing & Barista"),
@@ -606,7 +607,7 @@ function home(){
   <section class="hero">
     <div class="wrap">
       <h1>The roast is where green coffee <span class="grad">becomes flavor.</span></h1>
-      <p>A working reference for the coffee professional — ${nP} roast profiles broken down by curve, phase, flavor signature, and failure mode, plus ${nM} deep-dives spanning the roasting fundamentals, origin behavior, cupping and grading, running a roastery, and brewing behind the bar. Built for practitioners, not the shelf.</p>
+      <p>A working reference for the coffee professional — ${nP} roast profiles broken down by curve, phase, flavor signature, and failure mode, plus ${nM} deep-dives spanning the whole chain: buying and grading green, roasting fundamentals, origin behavior, cupping and quality, running a roastery, and brewing behind the bar. Built for practitioners, not the shelf.</p>
       <div class="heatbar">${heat}</div>
     </div>
   </section>

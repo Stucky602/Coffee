@@ -139,6 +139,38 @@
     {
       "term": "Weight loss",
       "def": "The percentage of mass a coffee sheds during roasting, mostly water and CO2 — typically about 15–20%. Roasters track it batch to batch as a consistency check."
+    },
+    {
+      "term": "Green coffee",
+      "def": "Raw, unroasted coffee beans — the seeds of the coffee cherry after processing and drying, ready to be shipped, graded, and roasted. Naturally pale green; they turn brown only when roasted."
+    },
+    {
+      "term": "Defect (green grading)",
+      "def": "A physical flaw in green coffee. Category 1 (primary) defects like full black or full sour beans are severe; Category 2 (secondary) like broken or insect-damaged beans are milder. Specialty allows zero Cat-1 and ≤5 full Cat-2 in a 350g sample."
+    },
+    {
+      "term": "Water activity",
+      "def": "A 0–1 measure of how much water in a bean is available for microbial growth (distinct from total moisture). Green coffee below ~0.70 is shelf-stable; above it, mold risk rises. A better storage-safety predictor than moisture alone."
+    },
+    {
+      "term": "Screen size",
+      "def": "A grading of bean size in 64ths of an inch — a screen 18 bean is 18/64 inch (~7.1mm). Specialty commonly runs screen 14–18. Uniform size means even roasting; it underlies grades like Kenya AA and Colombia Supremo."
+    },
+    {
+      "term": "Processing method",
+      "def": "How a coffee cherry is turned into a green bean after harvest. Washed = clean/bright; natural = sweet/fruity/heavy; honey = in between; anaerobic = intense/experimental; wet-hulled (giling basah) = earthy/low-acid, Indonesian. It shapes flavor as much as origin."
+    },
+    {
+      "term": "Quaker",
+      "def": "An underdeveloped bean that stays pale and doesn’t roast properly, usually from an unripe cherry. It tastes papery and flat. Specialty roasted coffee permits no quakers in a 100g sample."
+    },
+    {
+      "term": "Robusta",
+      "def": "Coffea canephora — the hardy, lower-altitude coffee species. Higher yield and caffeine (~2.2–2.7%), cheaper, heavier and more bitter than arabica. Common in commodity blends, instant coffee, and as an espresso crema-and-caffeine booster."
+    },
+    {
+      "term": "European Preparation (EP)",
+      "def": "An extra green-sorting standard applied before export — typically no more than 8 defects per 300g and no beans below screen 15. It signals cleaner, more uniform green, though not guaranteed cup quality."
     }
   ],
   "METHODOLOGY": {
@@ -664,6 +696,118 @@
         {
           "label": "God of Beans — origin characteristics & density",
           "link": "https://godofbeans.com/choosing-green-beans-for-home-roasting-a-beginners-guide"
+        }
+      ]
+    },
+    "origin_kenya": {
+      "name": "Kenya",
+      "sub": "Blackcurrant and bright acidity",
+      "group": "origin",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Kenyan coffee has a flavor fingerprint professionals recognize instantly: intense, wine-like acidity with blackcurrant and berry, sometimes a savory tomato edge, and remarkable clarity. It comes from the SL28 and SL34 varieties (selected by Scott Laboratories in the 1930s), high-altitude red volcanic soil around Mt. Kenya (Nyeri, Kirinyaga, Embu), and a distinctive double-washed processing with extended fermentation. Kenya's rigorous auction system means specialty lots are consistently excellent — and consistently expensive. These are dense, high-grown beans."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Kenya is a light-to-medium coffee — its whole appeal is that bright, complex acidity and blackcurrant character, and dark roasting destroys exactly the compounds that make it special. Treat it as a dense, high-grown bean that takes and wants heat, but watch the back half: dense Kenyans carry significant exothermic energy after first crack, and if you're not planning for it you can lose control of the rate of rise. Aim to protect acidity and clarity — drop it before the origin character bakes out."
+        },
+        {
+          "h": "Target",
+          "body": "Light to medium (City to City+), stopping around or shortly after first crack. The goal is to showcase the blackcurrant, berry, and vivid acidity — this is a pour-over and filter coffee first, where that clarity sings. A note on grades: Kenya AA refers to bean size, not quality; read the estate and processing alongside it."
+        }
+      ],
+      "keypoints": [
+        "SL28/SL34, volcanic soil, double-washed: blackcurrant, berry, wine-like acidity, savory edge, high clarity.",
+        "Dense and high-grown — takes heat, but carries strong exothermic energy after first crack; plan the RoR.",
+        "Roast light-to-medium (City–City+); dark roasting destroys the distinctive compounds.",
+        "AA is bean size, not quality — read estate + processing. A filter/pour-over coffee first."
+      ],
+      "refs": [
+        {
+          "label": "Roast Coffee Co — Kenyan coffee guide",
+          "link": "https://www.roastcc.com/learn/kenyan-coffee-guide"
+        },
+        {
+          "label": "Coffee Guide — Kenya SL28, AA grade & flavor",
+          "link": "https://coffee-guide.jp/en/beans/kenya-coffee-beans-complete-guide"
+        },
+        {
+          "label": "Hacea Coffee — roasting SL28/SL34 & exothermic energy",
+          "link": "https://haceacoffee.com/blogs/roasting/roast-approach-costa-rica-hacienda-sonora-sl28-sl34-natural"
+        }
+      ]
+    },
+    "origin_guatemala": {
+      "name": "Guatemala",
+      "sub": "High-grown, balanced, complex",
+      "group": "origin",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Guatemala's high-altitude microclimates, volcanic soil, and steady rainfall make it one of Central America's finest origins. Most Guatemalan coffee is traditionally washed, though naturals and honeys are growing. The regions each have a character: Antigua is prized for a well-balanced, chocolatey, full-bodied cup; Huehuetenango, high and dry, gives brighter, more complex, fruit-and-citrus-forward coffees. Common varieties include Bourbon, Caturra, Catuai, and Typica. High-grown lots are dense — you'll often see 'SHB' (Strictly Hard Bean) marking the highest elevations."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Guatemala is versatile, which is part of its appeal. Washed high-grown lots take a medium roast beautifully, developing the chocolate, caramel, and gentle fruit that make Antigua a crowd-pleaser and espresso-friendly. Huehuetenango's brighter, more acidic profile rewards a slightly lighter hand to keep its complexity and citrus alive. As dense high-grown coffee, it wants adequate energy through the roast; SHB lots especially."
+        },
+        {
+          "h": "Target",
+          "body": "Medium is the sweet spot for most Guatemalans (City+ to Full City), balancing body and sweetness — Antigua in particular shines here and works well in espresso. Push Huehuetenango a touch lighter to preserve its brighter, fruitier complexity for filter. A dependable, flexible origin that suits a range of menus."
+        }
+      ],
+      "keypoints": [
+        "High-altitude volcanic origin, mostly washed; Antigua = balanced/chocolatey, Huehuetenango = brighter/complex.",
+        "Dense high-grown beans (look for SHB = Strictly Hard Bean); wants adequate roast energy.",
+        "Medium roast suits most (City+–Full City); Antigua great for espresso, Huehue lighter for filter clarity.",
+        "Versatile, dependable origin — Bourbon, Caturra, Catuai, Typica common."
+      ],
+      "refs": [
+        {
+          "label": "Leaderboard Coffee — Guatemala origin guide",
+          "link": "https://leaderboard.coffee/en-us/blogs/news/an-origin-region-varietal-guide-season-12"
+        },
+        {
+          "label": "Haiku Brew — Guatemala regions & flavors",
+          "link": "https://haikubrew.com/blogs/coffee-education/top-10-coffee-growing-regions-and-their-unique-flavors"
+        }
+      ]
+    },
+    "origin_costarica": {
+      "name": "Costa Rica",
+      "sub": "Clean, sweet, honey-process country",
+      "group": "origin",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "What you're working with",
+          "body": "Costa Rica is small — under 1% of world supply — but punches far above its weight on quality, backed by strict national standards (historically Arabica-only) and a thriving micro-mill culture. Tarrazú is the flagship region, with the Central and West Valleys close behind, all high-grown on volcanic soil. Costa Rica is the home of refined honey processing — you'll see it split into white, yellow, red, and black honey by mucilage retained — alongside washed and a growing number of naturals. 'SHB' (Strictly Hard Bean) marks the highest, densest lots."
+        },
+        {
+          "h": "How to roast it",
+          "body": "Classic washed Costa Ricans are clean, bright, and balanced — a medium roast brings out their caramel sweetness and crisp acidity. Honey-processed lots carry more sweetness and body, and reward a careful medium that lets that syrupy character show without baking it. As dense, high-grown SHB coffee, it takes energy well; with the honeys and naturals, mind the extra sugars during development so you don't scorch or bake."
+        },
+        {
+          "h": "Target",
+          "body": "Medium (City+ to Full City) for most — enough to develop the sweetness and body Costa Rica is loved for while keeping its clean acidity. Washed lots can go slightly lighter for filter clarity; honey and natural lots shine at a balanced medium that plays up their fruit and syrupy body. A reliably clean, sweet, crowd-pleasing origin."
+        }
+      ],
+      "keypoints": [
+        "Small but high-quality; strict standards, micro-mill culture; Tarrazú flagship, volcanic high-grown.",
+        "Home of refined honey processing (white→black by mucilage), plus washed and growing naturals.",
+        "Dense SHB lots take energy well; watch extra sugars in honey/natural lots during development.",
+        "Medium roast (City+–Full City) for sweetness + body; washed slightly lighter for filter clarity."
+      ],
+      "refs": [
+        {
+          "label": "Leaderboard Coffee — Costa Rica regions & processing",
+          "link": "https://leaderboard.coffee/en-us/blogs/news/an-origin-region-varietal-guide-season-12"
+        },
+        {
+          "label": "Tectonic Coffee — Tarrazú & SL28 in Costa Rica",
+          "link": "https://tectoniccoffee.com/blogs/news/how-kenyan-coffee-found-a-second-home-in-costa-rica"
         }
       ]
     },
@@ -1507,6 +1651,254 @@
         {
           "label": "SCA — brewing control chart & standards",
           "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
+        }
+      ]
+    },
+    "green_intro": {
+      "name": "Buying Green Coffee",
+      "sub": "Where quality actually starts",
+      "group": "green",
+      "accent": "#C9A34E",
+      "sections": [
+        {
+          "h": "The roaster can't fix the green",
+          "body": "Everything in this guide up to now assumes you already have good green coffee. But a great roaster can only enhance a high-quality bean — they can't rescue a mediocre one. If the green is defective, flat, or dull, no amount of Maillard reaction or careful development will save it; you're just polishing a flawed gem. Specialty starts at the bean level, not the bag, which is why green buying and QC is the foundation under everything else."
+        },
+        {
+          "h": "Buy on data, verify with your palate",
+          "body": "The professional approach is two-sided. Every lot worth considering comes with data: a cupping score, a defect report, moisture and often water-activity readings. You use that to filter. Then you verify with your own senses — blind cup the sample, ideally next to a control coffee, roasted on a standard grading profile that shows the bean rather than your house style. Scores are signals, not trophies; a number gets you to the cupping table, but your palate makes the call."
+        },
+        {
+          "h": "What this section covers",
+          "body": "Green QC breaks into a few skills: physically grading a sample for defects, measuring its moisture, density, and water activity, understanding how processing method shapes the cup, knowing the difference between the two coffee species, and reading the country grading systems on a listing. Each has its own page here. Together they're how a buyer decides what's worth roasting — and worth paying for."
+        }
+      ],
+      "keypoints": [
+        "A roaster enhances good green but can't fix bad green — specialty starts at the bean.",
+        "Buy on data (score, defect report, moisture), then verify by blind cupping against a control.",
+        "Scores are signals, not trophies; your palate makes the final call.",
+        "Green QC = defect grading + physical measurement + processing + species + country grades."
+      ],
+      "refs": [
+        {
+          "label": "Green Coffee Collective — grading explained",
+          "link": "https://greencoffeecollective.com/blogs/learn/green-coffee-grading-explained"
+        },
+        {
+          "label": "Ebru Coffee — how specialty is graded",
+          "link": "https://ebrucoffeeco.com/blogs/culture/how-specialty-coffee-is-graded"
+        }
+      ]
+    },
+    "green_grading": {
+      "name": "Green Grading & Defects",
+      "sub": "Counting what's wrong",
+      "group": "green",
+      "accent": "#B07B3E",
+      "sections": [
+        {
+          "h": "The sample and the setup",
+          "body": "The SCA green grading protocol works on a 350g representative sample — ideally pulled from across at least 10% of a lot's bags so it reflects the whole shipment. You assess color and smell, then hand-sort the beans against a matte black surface under full-spectrum light (4000K, ~1200 Lux), pulling out every defect. Carefully grading a 350g sample takes an experienced grader 20–30 minutes, so it's real work — six samples can eat an afternoon."
+        },
+        {
+          "h": "Two categories of defect",
+          "body": "Defects split into Category 1 (primary) — severe faults like full black beans, full sour beans, and foreign matter (stones, sticks) — and Category 2 (secondary) — milder issues like partial black, insect damage, broken/chipped/cut beans, immature (quaker) beans, and shells. If a single bean has two defects, you count only the more severe one. The categories exist because the SCA system weights defects by how much they actually hurt the cup."
+        },
+        {
+          "h": "The equivalence math",
+          "body": "Not every defective bean counts as a full defect. The system uses equivalences: one full black (Cat 1) equals three partial blacks (Cat 2); you need five broken/chipped/cut beans to make one full Category 2 defect. So ten broken beans = two full defects. You tally everything into a single 'full defect' count for the sample. If your sample is smaller than 350g, sort it anyway and scale the count — multiply a 100g count by 3.5 — accepting it's an approximation."
+        },
+        {
+          "h": "The specialty bar",
+          "body": "To qualify as specialty grade, a 350g sample must have zero Category 1 defects and no more than five full Category 2 defects. That's a strict bar: a single full black or full sour bean disqualifies the lot. Roasted specialty coffee also permits no quakers (underdeveloped beans) in a 100g sample. This physical inspection sits alongside the cup score — a coffee needs to pass both to be truly specialty. (Note: the SCA has also used water activity below 0.70 as a heritage requirement, and the CVA now folds physical grading into its framework.)"
+        }
+      ],
+      "keypoints": [
+        "350g representative sample, sorted under 4000K/1200 Lux on matte black; ~20–30 min per sample.",
+        "Cat 1 (primary): full black/sour, foreign matter. Cat 2 (secondary): partial black, insect, broken, quaker, shells.",
+        "Equivalences: 1 full black = 3 partial; 5 broken = 1 full Cat-2. Tally to a single full-defect count.",
+        "Specialty = 0 Cat-1 and ≤5 full Cat-2 in 350g; no quakers in roasted. Scale small samples (×3.5 for 100g)."
+      ],
+      "refs": [
+        {
+          "label": "SCA — grounding green grading in sensory science",
+          "link": "https://sca.coffee/sca-news/25/issue-24-grounding-green-grading"
+        },
+        {
+          "label": "Cropster — master green grading",
+          "link": "https://www.cropster.com/blog-post/green-grading-coffee/"
+        },
+        {
+          "label": "Ethio Coffee — green QC & defects",
+          "link": "https://www.ethiocoffee.co/insights/green-coffee-quality-control-defects-grading"
+        }
+      ]
+    },
+    "green_measure": {
+      "name": "Density, Moisture & Water Activity",
+      "sub": "The three physical numbers",
+      "group": "green",
+      "accent": "#95602F",
+      "sections": [
+        {
+          "h": "Moisture content",
+          "body": "Moisture is the headline physical number. Specialty green should sit around 10–12%. Too high (above ~12.5%) and the coffee risks mold during the long, humid sea freight and in storage. Too low (below ~9%) and it's likely over-dried or aged, tending to taste flat. Contractual specs of 10–12% protect both buyer and seller, and you verify moisture at both pre-shipment and arrival, because it can drift in transit. A calibrated meter, sampled from several spots, does the job."
+        },
+        {
+          "h": "Water activity",
+          "body": "Water activity is often confused with moisture but measures something different: not how much water is present, but how much is available for microbial growth, on a 0–1 scale. Green coffee is considered shelf-stable roughly between 0.50 and 0.70; above ~0.70 the mold and microbial risk climbs sharply. Two coffees with identical moisture can differ in water activity depending on how tightly the water is bound in the bean. This matters most for lots you'll store more than a few months — it's the better predictor of storage safety."
+        },
+        {
+          "h": "Density",
+          "body": "Density reflects how hard and compact the bean is, which tracks with growing altitude — high-grown coffee matures slowly and comes out denser. It matters to the roaster because heat moves differently through dense material: dense beans generally take and want more energy. Buyers use density to confirm altitude claims and to benchmark a new arrival against previous ones. A simple farm-level version is the float test — healthy dense beans sink, low-density floaters (often defective or under-developed) rise."
+        },
+        {
+          "h": "Screen size",
+          "body": "Screen size grades beans by physical size, measured in 64ths of an inch — a screen 18 bean is 18/64 inch, about 7.1mm. Green is passed through a stack of calibrated screens to sort by size; specialty coffee commonly falls in the screen 14–18 range. Size isn't quality directly, but uniform size means even roasting, which is why it's specified. This is also the basis of some country grades (Kenya's AA, Colombia's Supremo)."
+        }
+      ],
+      "keypoints": [
+        "Moisture ~10–12%; >12.5% risks mold in freight, <9% is over-dried/flat. Check pre-ship and on arrival.",
+        "Water activity (0–1) measures water available to microbes; <0.70 is shelf-stable — key for long storage.",
+        "Density tracks altitude/hardness and affects roast energy; float test separates dense (sink) from defective (float).",
+        "Screen size = 64ths of an inch (screen 18 ≈ 7.1mm); specialty ~14–18; uniform size = even roasting."
+      ],
+      "refs": [
+        {
+          "label": "Green Coffee Collective — physical measurements",
+          "link": "https://greencoffeecollective.com/blogs/learn/green-coffee-beans-physical-measurement"
+        },
+        {
+          "label": "Ethio Coffee — moisture & water activity in QC",
+          "link": "https://www.ethiocoffee.co/insights/green-coffee-quality-control-defects-grading"
+        }
+      ]
+    },
+    "green_processing": {
+      "name": "Processing Methods",
+      "sub": "How the cherry becomes the bean",
+      "group": "green",
+      "accent": "#6E3E1E",
+      "sections": [
+        {
+          "h": "Why processing matters",
+          "body": "How a coffee cherry is turned into a green bean after harvest shapes the cup as profoundly as origin or variety. 'Washed,' 'natural,' and 'honey' aren't marketing words — they're descriptions of physical process, and knowing them lets you predict roughly what a coffee will taste like before you ever roast it. The same farm can produce dramatically different cups depending on how the lot was processed."
+        },
+        {
+          "h": "Washed and natural",
+          "body": "Washed (wet) process removes all the fruit and mucilage before drying — often via fermentation, then washing clean. The result is a clean, bright, transparent cup where the origin and terroir show clearly with defined acidity. It's the default reference for cupping because it hides nothing. Natural (dry) process is the oldest method: the whole cherry dries around the bean, 'raisining' onto it. This gives bold, sweet, fruity cups (think blueberry, jammy notes) with heavier body and lower perceived acidity — but drying is harder to control, so defect risk is higher."
+        },
+        {
+          "h": "Honey and the middle ground",
+          "body": "Honey (pulped natural) process is the hybrid: the skin is removed but some sticky mucilage is left on the bean during drying. It lands between washed and natural — more sweetness and body than washed, more clarity than natural. It's often graded by how much mucilage stays on: white (most removed, lightest/cleanest), yellow, red, and black (least removed, richest, sweetest, and slowest/riskiest to dry)."
+        },
+        {
+          "h": "Anaerobic and wet-hulled",
+          "body": "Two more you'll see on listings. Anaerobic ferments the coffee sealed off from oxygen (often 48–72 hours), producing intense, complex, sometimes polarizing flavors — the experimental frontier. Wet-hulled (giling basah), used almost only in Indonesia, hulls the parchment off while the bean is still wet (around 30–35% moisture), then finishes drying exposed. It's what gives Sumatran coffee its signature earthy, full-bodied, very-low-acid, sometimes savory character. Each method carries a different defect and mold risk when drying is done poorly."
+        }
+      ],
+      "keypoints": [
+        "Processing shapes the cup as much as origin; the terms describe physical process, not marketing.",
+        "Washed = clean, bright, transparent (cupping reference). Natural = sweet, fruity, heavy body, higher defect risk.",
+        "Honey = hybrid; graded white→black by mucilage left on (light/clean → rich/sweet/riskier).",
+        "Anaerobic = sealed-oxygen ferment, intense/experimental. Wet-hulled (giling basah) = Indonesian, earthy, low-acid."
+      ],
+      "refs": [
+        {
+          "label": "We Are Coffee Co — processing methods explained",
+          "link": "https://www.wearecoffeeco.com/blogs/news/coffee-processing-methods-explained"
+        },
+        {
+          "label": "The Way to Coffee — washed/natural/honey/experimental",
+          "link": "https://www.thewaytocoffee.com/coffee-processing/"
+        },
+        {
+          "label": "Craft Coffee Guru — honey process detail",
+          "link": "https://www.craftcoffeeguru.com/honey-processed-coffee/"
+        }
+      ]
+    },
+    "green_species": {
+      "name": "Arabica vs Robusta",
+      "sub": "The two coffees that matter",
+      "group": "green",
+      "accent": "#5A2F16",
+      "sections": [
+        {
+          "h": "Two species, two worlds",
+          "body": "Of 80-plus coffee species, only two matter commercially. Coffea arabica is about 70% of the world market and essentially all of specialty coffee. Coffea canephora — robusta — is the rest, dominant in commodity blends, instant coffee, and as an espresso crema-booster. They're genuinely different plants producing genuinely different cups, and knowing which you're buying frames every other expectation."
+        },
+        {
+          "h": "Arabica",
+          "body": "Arabica grows at higher altitude (roughly 800–2200m), matures slowly in cool conditions, and rewards that with higher sugars, more aromatic complexity, and pronounced, pleasant acidity — the fruit, floral, and nuanced flavors specialty is built on. The tradeoffs: it's more susceptible to disease (especially leaf rust) and pests, yields less, and costs more. Its caffeine content is relatively low, around 1.2–1.5%. Nearly every origin and variety in this app's profiles is arabica."
+        },
+        {
+          "h": "Robusta",
+          "body": "Robusta is the hardy one — it grows at lower elevations in warmer, tougher conditions, resists disease and pests, and yields more, which makes it roughly 30–50% cheaper. Its caffeine is nearly double arabica's, around 2.2–2.7% (the plant evolved caffeine partly as a natural pesticide). The cup is heavier, more bitter, earthier, and less complex — traditionally seen as lower quality, though a small movement of 'fine robusta' aims to change that. The higher caffeine and crema are why robusta shows up in traditional Italian espresso blends."
+        },
+        {
+          "h": "What it means for buying",
+          "body": "For a specialty roaster, the working assumption is arabica, and the interesting decisions live inside it — origin, variety, altitude, processing. Robusta enters the conversation deliberately: for a traditional espresso blend wanting body, crema, and a caffeine kick, or at the commodity end. The species tells you which set of expectations to bring to the cup before you taste."
+        }
+      ],
+      "keypoints": [
+        "Only two species matter: arabica (~70% of market, ~all of specialty) and robusta (commodity, instant, crema).",
+        "Arabica: higher altitude (800–2200m), complex/acidic, disease-prone, lower yield, ~1.2–1.5% caffeine, pricier.",
+        "Robusta: hardy/low-altitude, heavier/bitter/earthier, high yield, ~2.2–2.7% caffeine, 30–50% cheaper.",
+        "Specialty defaults to arabica; robusta is a deliberate choice for espresso body/crema/caffeine or commodity."
+      ],
+      "refs": [
+        {
+          "label": "Old Chicago Coffee — caffeine by type",
+          "link": "https://oldchicagocoffee.com/coffee-bean-caffeine-content-by-type-explained/"
+        },
+        {
+          "label": "DQ Coffee — arabica vs robusta",
+          "link": "https://dqcoffee.vn/how-to-distinguish-coffee-arabica-and-robusta/?lang=en"
+        }
+      ]
+    },
+    "green_grades": {
+      "name": "Country Grading Systems",
+      "sub": "Reading the label",
+      "group": "green",
+      "accent": "#7A4A28",
+      "sections": [
+        {
+          "h": "Why every country is different",
+          "body": "The SCA green grading system is universal, but every producing country also has its own grading scheme, shaped by its coffee history, trade infrastructure, and the coffee it grows. That's why a green listing often shows both a country grade and an SCA cup score — they measure different things. The country grade tells you about physical sorting (size or defect count); the cup score tells you how it tastes. You need both to read a coffee."
+        },
+        {
+          "h": "Defect-count and size systems",
+          "body": "Two broad approaches exist. Defect-count systems grade by how many defects appear in a sample: Ethiopia runs G1 (fewest defects, best) through G5, counted per 300g; Brazil grades on defects (per 300g) combined with screen size. Size systems grade by bean dimension: Kenya's famous AA/AB/PB grades are pure screen size (AA is the largest, not necessarily the best-tasting), and Colombia grades by screen too (Supremo largest, then Excelso)."
+        },
+        {
+          "h": "Size is not quality",
+          "body": "The most important trap: bean-size grades don't directly mean quality. Kenya AA tells you the beans are large and will roast evenly, but a well-processed AB from a top estate can out-cup a mediocre AA. Always read the estate/producer name and processing method alongside the grade, and trust the cup score over the size letter. A Grade 2 Ethiopian cupping 86 will beat a Grade 1 cupping 80."
+        },
+        {
+          "h": "Preparation marks and certifications",
+          "body": "You'll also see preparation standards like 'EP' (European Preparation) — an extra sorting pass, typically meaning no more than 8 defects per 300g and no beans below screen 15. It signals cleaner, more uniform green, though not guaranteed cup quality. And a key clarification: certifications like Organic or Fair Trade are about process and ethics, not cup quality — a Fair Trade coffee can score 78 and a certification-free microlot can score 89. Certifications describe how a coffee was grown and traded; specialty is about what's in the cup."
+        }
+      ],
+      "keypoints": [
+        "Every origin has its own grade system; listings show country grade AND SCA score because they measure different things.",
+        "Defect-count systems: Ethiopia G1–G5, Brazil (defects + screen), per 300g. Size systems: Kenya AA/AB/PB, Colombia Supremo/Excelso.",
+        "Bean size ≠ quality — read estate + processing, and trust the cup score over the size letter.",
+        "EP = extra sorting (≤8 defects/300g, no beans below screen 15); Organic/Fair Trade are ethics/process, not cup quality."
+      ],
+      "refs": [
+        {
+          "label": "Green Coffee Collective — grading systems by country",
+          "link": "https://greencoffeecollective.com/blogs/learn/green-coffee-grading-explained"
+        },
+        {
+          "label": "FAO Annex 7 — green coffee classification",
+          "link": "https://www.fao.org/4/x6939e/x6939e13.htm"
+        },
+        {
+          "label": "StoneX — coffee grading overview",
+          "link": "https://www.stonex.com/en/financial-glossary/coffee-grading/"
         }
       ]
     }
