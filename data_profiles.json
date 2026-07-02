@@ -63,9 +63,19 @@
           "d": "Sharp / sour, no sweetness",
           "cause": "Sucrose never caramelized at all.",
           "avoid": "This is partly inherent to the style — pick a naturally sweet, bright green so the acidity reads as pleasant, not just sour."
+        },
+        {
+          "d": "Tipping (scorched bean tips)",
+          "cause": "Charge temperature too high for such a short, hot roast — the bean tips burn before the body develops.",
+          "avoid": "Lower the charge temp and moderate early heat; the tips scorch when energy outruns the bean's ability to conduct it inward."
+        },
+        {
+          "d": "Uneven roast (mottled color)",
+          "cause": "Batch too large or airflow too weak to move heat evenly in a fast roast, so beans roast at different rates.",
+          "avoid": "Small batches and strong, even convection — a fast light roast has no time to self-equalize."
         }
       ],
-      "machine": "Needs a very responsive, convection-forward machine and small batches — fluid-bed or modern drum with strong airflow. There's almost no development window, so control at the drop is everything."
+      "machine": "Needs a very responsive, convection-forward machine and small batches — fluid-bed or a modern drum with strong airflow. Because the roast is over so fast, you have almost no time to correct a curve that's running away, so control and repeatability matter more than thermal mass. Underpowered or high-mass drums tend to bake or tip this roast because they can't shed and add heat quickly enough. Keep batches small so the beans roast evenly in the short window."
     },
     "newengland": {
       "name": "New England",
@@ -131,9 +141,14 @@
           "d": "Sour",
           "cause": "Acids not resolved in the short development.",
           "avoid": "Nudge development slightly longer or pick a sweeter green; brightness is the goal, sourness is the miss."
+        },
+        {
+          "d": "Bready / cereal, no clarity",
+          "cause": "Enough development to lose the green notes but not enough to build sweetness or acidity — stuck in the middle.",
+          "avoid": "Commit to the level: either keep it bright and clean or take it to City, but don't stall in between."
         }
       ],
-      "machine": "Forgiving for a light roast. Works on drum or fluid-bed; drum adds a little body, air keeps it crisp and bright. A good light roast to learn on before attempting Nordic or cinnamon."
+      "machine": "Forgiving for a light roast. Works on drum or fluid-bed; a drum adds a little body while air keeps it crisp and bright. Good for learning to read a light-roast curve because it tolerates minor timing errors better than Nordic or Cinnamon. Moderate batch sizes are fine. Watch that your machine has enough airflow to finish the drying phase cleanly."
     },
     "nordic": {
       "name": "Nordic",
@@ -194,9 +209,19 @@
           "d": "Sharp / sour",
           "cause": "Underdeveloped acids never resolved into sweetness.",
           "avoid": "Nudge DTR up slightly or extend Maillard by a few seconds; sourness is the Nordic failure mode, brightness is the goal."
+        },
+        {
+          "d": "Vegetal / peapod",
+          "cause": "Drying phase rushed — surface browns while the core is still under-dried, leaving raw vegetal notes.",
+          "avoid": "Give the drying phase enough time and even heat; on dense high-grown coffee this phase can't be shortcut."
+        },
+        {
+          "d": "Astringent finish",
+          "cause": "Uneven extraction potential from an uneven roast — mixed development across the batch.",
+          "avoid": "Even, responsive heat and small batches; Nordic exposes every inconsistency because there's nowhere to hide."
         }
       ],
-      "machine": "Demands responsive convection and tight control — fluid-bed and modern drum roasters with strong airflow shine here. Small batches only; large batches can't shed heat fast enough to hold the profile this light.",
+      "machine": "Demands responsive convection and tight control — fluid-bed and modern high-airflow drums shine here. This is the most control-hungry roast on the light end: the whole point is preserving delicate acidity and florals, and a machine that can't move heat precisely will bake or scorch them. Small batches are non-negotiable, and consistent charge temperature (a disciplined between-batch protocol) matters because there's no development buffer to absorb variation.",
       "aka": [
         "Scandinavian",
         "Light Nordic"
@@ -266,9 +291,14 @@
           "d": "Sour / underdeveloped",
           "cause": "Overcorrecting toward light and dropping too early.",
           "avoid": "Give it enough development to resolve acids; blonde should read mellow-bright, not sour."
+        },
+        {
+          "d": "Peanutty / flat",
+          "cause": "Rushed Maillard — not enough time in the browning phase to build sweetness before dropping light.",
+          "avoid": "Stretch the Maillard phase a little even when finishing light; sweetness is built there, not at the drop."
         }
       ],
-      "machine": "Forgiving across machines. The real 'trick' of a blonde roast is honestly just a clean, approachable light-to-light-medium roast — the distinctive thing about it is the name and the marketing, not a unique technique."
+      "machine": "Forgiving across machines. The real trick of a blonde roast is honestly just a clean, approachable light-to-light-medium roast — no special hardware needed. Any reasonably controllable drum or fluid-bed handles it. The engineering effort goes into consistency and avoiding under-development, not into machine choice."
     },
     "city": {
       "name": "City",
@@ -329,9 +359,14 @@
           "d": "Underdeveloped",
           "cause": "Dropped too soon after first crack onset.",
           "avoid": "Give at least ~1:15–1:45 of development past first crack for this level."
+        },
+        {
+          "d": "Muted acidity",
+          "cause": "Slightly too much development for the origin, dulling the brightness you kept it light to preserve.",
+          "avoid": "If the coffee's appeal is its acidity, drop toward the earlier end of the City window."
         }
       ],
-      "machine": "Forgiving across roaster types. Drum roasters give it a touch more body; fluid-bed keeps it brighter. A good all-rounder profile to learn a new machine on.",
+      "machine": "Forgiving across roaster types — a genuine all-rounder and a great profile to learn a new machine on. Drum roasters lend it a touch more body; fluid-bed keeps it brighter. Batch size is not especially critical. If you're commissioning or characterizing an unfamiliar roaster, City is the profile that will show you the machine's honest behavior without punishing small mistakes.",
       "aka": [
         "Light City",
         "Half City"
@@ -401,9 +436,19 @@
           "d": "Baked",
           "cause": "Stalled RoR through the moderate development.",
           "avoid": "Keep momentum — the middle of the spectrum still bakes if the rate of rise flatlines."
+        },
+        {
+          "d": "Papery / stale-tasting",
+          "cause": "Over-long drying or a baked stretch flattens the cup into cardboard.",
+          "avoid": "Keep the roast moving with a steady declining rate of rise; don't let it coast."
+        },
+        {
+          "d": "Roasty without depth",
+          "cause": "Pushed a touch dark to hide green notes rather than developing properly.",
+          "avoid": "Fix development with time and a clean curve, not with extra color."
         }
       ],
-      "machine": "The most forgiving roast on the spectrum. Works on essentially any machine, which is why it became the mass-market default. A fine profile for dialing in a new roaster before pushing to the extremes."
+      "machine": "The most forgiving roast on the spectrum — it works on essentially any machine, which is exactly why it became the mass-market default. Drum, fluid-bed, high mass, low mass: all produce an acceptable American roast. Batch size and airflow are non-critical within reason. The engineering challenge here is volume and consistency at scale, not coaxing character out of the roast."
     },
     "cityplus": {
       "name": "City+",
@@ -464,9 +509,14 @@
           "d": "Roasty edge",
           "cause": "Drifted too close to second crack.",
           "avoid": "Hold drop temp comfortably below second-crack territory; City+ should never taste toasty."
+        },
+        {
+          "d": "Slightly baked, hollow middle",
+          "cause": "Rate of rise sagged through the Maillard phase, hollowing out the body.",
+          "avoid": "Protect a gentle, continuous RoR decline through Maillard — the sweet spot depends on it."
         }
       ],
-      "machine": "The universal reference profile. Works on nearly anything, which is exactly why it's the benchmark — dial your machine here first, then move lighter or darker from a known-good center.",
+      "machine": "The universal reference profile — works on nearly anything, which is why it's the industry benchmark. Dial your machine here first: if City+ comes out clean and sweet, the roaster is behaving. Drum adds body, fluid-bed adds clarity, but both land in a usable place. Moderate batches. It's the profile against which you diagnose a machine's quirks before attempting anything more demanding.",
       "aka": [
         "City Plus",
         "Medium"
@@ -531,9 +581,19 @@
           "d": "Baked / flat",
           "cause": "Long roast with a stalled RoR through the back half.",
           "avoid": "Maintain momentum — a long roast still needs a declining, never-flat rate-of-rise."
+        },
+        {
+          "d": "Oily too soon",
+          "cause": "Dropped just into second crack and rested warm — oils migrate to the surface faster than expected.",
+          "avoid": "Drop at the very start of second crack if you don't want surface oil, and cool fast."
+        },
+        {
+          "d": "Muddled / no origin character",
+          "cause": "Development pushed far enough to erase the bean's identity without gaining a clean dark-roast profile.",
+          "avoid": "Decide the goal: preserve some origin (drop earlier) or commit to a clean dark roast (later), not a muddy middle."
         }
       ],
-      "machine": "Drum roasters excel here; the conductive heat and thermal mass build the body this style is known for. Batch size is more forgiving than light roasts since you're not preserving fragile top-end.",
+      "machine": "Drum roasters excel here — conductive heat and thermal mass build the body this style is known for, and a heavier drum carries momentum smoothly into second crack. Batch size matters more than at lighter levels because you're managing the approach to second crack: too full and you may lack the heat headroom to steer it, too empty and it can race. Airflow needs to clear the smoke that begins at second crack without stripping heat.",
       "aka": [
         "Full City"
       ]
@@ -597,9 +657,14 @@
           "d": "Uneven surface oil",
           "cause": "Inconsistent heat let some beans out-roast others.",
           "avoid": "Ensure even development into second crack; blotchy oiling signals an uneven batch, not just a dark roast."
+        },
+        {
+          "d": "Bitter, drying finish",
+          "cause": "Development stretched too long into second crack, extracting harsh compounds.",
+          "avoid": "Once into second crack, time is short — small delays read as big jumps in bitterness."
         }
       ],
-      "machine": "Drum roasters own this territory. Watch airflow — you want to clear smoke and chaff without stripping so much heat that you stall right at the critical second-crack transition.",
+      "machine": "Drum roasters own this territory. Watch airflow closely — you want to clear smoke and chaff without stripping so much heat that development stalls right when the roast is most sensitive. Thermal mass helps carry even heat through early second crack. Batch consistency becomes important: as you darken, small differences in charge temperature and batch size translate into visible differences in surface oil and color.",
       "aka": [
         "Full City Plus"
       ]
@@ -663,9 +728,14 @@
           "d": "Baked-then-burnt",
           "cause": "Slow approach that stalled, then a hard finish to reach color.",
           "avoid": "Reach dark color through steady momentum, not by stalling and then blasting heat to catch up."
+        },
+        {
+          "d": "Uneven oil sheen",
+          "cause": "Inconsistent heat or airflow late in the roast leaves some beans oily and others dry.",
+          "avoid": "Even heat and steady airflow through second crack; batch-to-batch consistency matters more as you darken."
         }
       ],
-      "machine": "Drum roasters with good airflow control. At this darkness, smoke management and even heat are the whole game; batch-to-batch consistency comes from controlling airflow, not chasing bean temp.",
+      "machine": "Drum roasters with good airflow control. At this darkness, smoke management and even heat are the whole game, and batch-to-batch consistency starts to dominate — the same beans a minute apart look and taste noticeably different. Adequate extraction and evacuation of smoke keeps the cup from turning acrid. Fluid-bed machines can struggle to hold even heat this deep into second crack.",
       "aka": [
         "Viennese",
         "Light French",
@@ -737,9 +807,14 @@
           "d": "Ashy",
           "cause": "Pushed too close to the French/Italian end.",
           "avoid": "Hold the drop in the mid-second-crack range; Continental should keep some caramel body under the roast."
+        },
+        {
+          "d": "Flat / one-dimensional",
+          "cause": "So much development that only roast character remains, with no sweetness or complexity left underneath.",
+          "avoid": "Even at this darkness, a clean curve into second crack preserves a little sweetness beneath the roast."
         }
       ],
-      "machine": "Drum roaster with good airflow control. Historically some New Orleans versions blend in chicory — a separate ingredient, not a roasting technique. Smoke management is the main craft at this darkness."
+      "machine": "Drum roaster with good airflow control. Historically some New Orleans versions blend in chicory — a separate ingredient added after roasting, not a roast technique. Mechanically this is a dark-roast discipline: even heat through a sustained second crack, aggressive smoke clearance, and tight repeatability. High-mass drums help hold steady heat; airflow keeps smoke off the beans."
     },
     "french": {
       "name": "French",
@@ -800,9 +875,14 @@
           "d": "Flat, no sweetness",
           "cause": "All fermentable sugar cooked off with nothing balancing the bitterness.",
           "avoid": "Start from a sweeter, denser green; thin coffees turn hollow and purely bitter at this level."
+        },
+        {
+          "d": "Uncontrolled second crack",
+          "cause": "Too much heat entering second crack sends it racing — seconds separate a French roast from charcoal.",
+          "avoid": "Ease heat before second crack so you can steer the final seconds precisely; this is the danger zone."
         }
       ],
-      "machine": "Drum roasters, close supervision, aggressive airflow. Fire safety is real at this level — chaff and oil plus high heat. Never walk away from a French roast, and clean the roaster diligently.",
+      "machine": "Drum roasters, close supervision, and aggressive airflow. Fire safety becomes a genuine operational concern at this level — chaff and accumulated oils plus high heat are a real ignition risk, so cleaning discipline is part of running this roast. The craft is easing heat before second crack so you can steer the final seconds; a machine you can't throttle quickly will overshoot into charcoal. Never leave it unattended.",
       "aka": [
         "Dark Roast",
         "Turkish (loosely)"
@@ -867,9 +947,14 @@
           "d": "Roaster fire",
           "cause": "Accumulated oil and chaff igniting at extreme heat.",
           "avoid": "Meticulous roaster cleaning and constant supervision; this is the highest fire-risk common roast."
+        },
+        {
+          "d": "Thin body despite darkness",
+          "cause": "So much mass burned off that the cup is dark but hollow — bitterness without weight.",
+          "avoid": "Manage heat so darkness comes from development, not from simply torching the bean to nothing."
         }
       ],
-      "machine": "Drum roasters with rigorous cleaning and fire protocols. At Italian darkness the discipline is entirely about safety and repeatability — the flavor ceiling is fixed, so consistency and not burning the shop down are the job.",
+      "machine": "Drum roasters with rigorous cleaning and fire protocols. At Italian darkness the discipline is almost entirely about safety and repeatability rather than flavor nuance. Keep the drum clean (oil and chaff buildup is a fire load), manage airflow to evacuate heavy smoke, and watch the roast continuously. Thermal mass helps hold even heat, but the operator's attention is the real safety system.",
       "aka": [
         "Espresso Roast (traditional)"
       ]
@@ -937,9 +1022,14 @@
           "d": "Roaster fire",
           "cause": "Oil and chaff plus extreme heat, with dumping into the cooling tray adding oxygen.",
           "avoid": "Meticulous cleaning, constant supervision, and fire protocols. This is the highest fire-risk roast there is."
+        },
+        {
+          "d": "Acrid smoke taint",
+          "cause": "Smoke not cleared fast enough at extreme darkness settles back onto the beans.",
+          "avoid": "Aggressive, clean airflow to evacuate smoke continuously; at this level smoke management is flavor management."
         }
       ],
-      "machine": "Drum roaster with rigorous cleaning and active fire safety. At Spanish darkness the entire job is safety and repeatability — the flavor ceiling is fixed and low, so the craft is consistency and not burning down the roastery."
+      "machine": "Drum roaster with rigorous cleaning and active fire safety — this is the darkest common roast and the highest-risk. The entire job is safety and repeatability: continuous supervision, aggressive clean airflow to clear dense smoke, and a spotless machine, because oil and chaff at this heat are a serious fire hazard. Flavor is almost entirely roast character by now; the engineering is about doing it safely and identically every time."
     },
     "espresso": {
       "name": "Espresso",
@@ -1000,9 +1090,14 @@
           "d": "Hollow / ashy shot",
           "cause": "Over-roasted chasing body, tipped into roast character.",
           "avoid": "Build body through development time, not a darker drop; more time at a moderate color beats a darker roast."
+        },
+        {
+          "d": "Harsh crema, bitter finish",
+          "cause": "Roasted too dark or developed too long for the intended shot, so extraction turns harsh under pressure.",
+          "avoid": "Design the roast for the machine and ratio; espresso concentrates every flaw, so aim for even development over color."
         }
       ],
-      "machine": "Any roaster, but repeatability is critical because espresso amplifies variation. The skill is profile design — targeting extraction behavior and solubility, not a color number. Cup it as a shot, not just on a filter table."
+      "machine": "Any roaster, but repeatability is critical because espresso amplifies every variation into the shot. The skill is profile design — targeting even development so the coffee extracts cleanly under nine bars of pressure. Whatever machine you use, lock down a disciplined between-batch protocol and consistent charge temperature; a shot exposes drift that a filter brew would forgive. Log everything and cup against a reference."
     },
     "omni": {
       "name": "Omni",
@@ -1063,9 +1158,14 @@
           "d": "Sour as espresso",
           "cause": "Erred too far toward the filter end.",
           "avoid": "If the shot pulls sharp, add development; test it on the bar, not just the cupping table."
+        },
+        {
+          "d": "Muddy as filter",
+          "cause": "Compromise roast leaning espresso loses the clarity filter brewing needs.",
+          "avoid": "Accept that omni is a deliberate trade-off; if one method matters more, roast for it and let omni go."
         }
       ],
-      "machine": "Any well-controlled roaster. The real work is profile design and disciplined cupping across both methods — you validate an omni by pulling shots and brewing filter from the same batch and confirming both are good."
+      "machine": "Any well-controlled roaster. The real work is profile design and disciplined cupping across both filter and espresso — you validate the roast by brewing it both ways and confirming it's acceptable in each. Consistency and record-keeping matter more than the specific machine, because you're chasing a narrow window that satisfies two extraction methods at once."
     }
   }
 }

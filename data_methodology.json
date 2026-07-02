@@ -296,6 +296,10 @@
         {
           "h": "Reading them by ear",
           "body": "Experienced roasters roast partly by sound. The timing, intensity, and evenness of first crack tell you about the batch's uniformity and moisture. A ragged, drawn-out first crack often signals uneven green or an uneven roast."
+        },
+        {
+          "h": "Reading the cracks by ear",
+          "body": "Experienced roasters navigate largely by sound. First crack is lower, louder, and slower — a sharp, irregular snapping like popcorn or breaking twigs, as steam pressure ruptures the bean's structure around 196°C. It builds, peaks, and fades over a minute or more. Second crack is different: higher-pitched, faster, quieter, and more continuous — a fine crackle like Rice Krispies or crumpling foil, as the now-brittle cell walls fracture and oils are forced to the surface around 224°C. The gap between them is where roast level is decided: drop between the cracks for light-to-medium, drop into or past second crack for dark. Because a hot drum can race from first crack toward second faster than you expect, roasters ease heat after first crack to keep the final approach under control."
         }
       ],
       "keypoints": [
@@ -370,6 +374,10 @@
         {
           "h": "Degassing & oils",
           "body": "Roasting generates large volumes of CO2 trapped in the bean, released over days after roast (degassing) — freshly roasted coffee needs rest before brewing. At darker levels, cell walls fracture enough that oils migrate to the surface, the visible sheen on dark roasts."
+        },
+        {
+          "h": "Where the flavors come from",
+          "body": "Three overlapping reactions build the cup. Maillard reactions — between amino acids and reducing sugars — start around 150°C and generate hundreds of aroma compounds plus the brown melanoidins that give body and color; this is where most of coffee's savory, nutty, bready complexity is made. Caramelization of sugars runs alongside it at higher temperatures, contributing sweetness and caramel notes while also consuming the sugars (roast too far and you burn away the very sweetness you want). And the beans lose their chlorogenic acids as they roast — high in light roasts (bright, sometimes harsh), broken down in darker roasts into compounds that read as bitter. The roaster's job is to time these reactions against each other: enough Maillard and caramelization to build sweetness and body, not so much that acidity and origin character are lost."
         }
       ],
       "keypoints": [
@@ -472,6 +480,10 @@
         {
           "h": "Roasty / over-developed",
           "body": "Pushed too far — too dark, too far into second crack for the intent. Ashy, carbony, flat, origin character erased. In dark roasts this is a matter of degree; in a roast meant to be bright, even a little is a defect."
+        },
+        {
+          "h": "From the cup back to the curve",
+          "body": "The most useful skill is running a flaw in the cup back to its cause in the roast. Flat, dull, cardboard-like, no sweetness or acidity → baked; the rate of rise stalled or flat-lined, usually in the Maillard phase. Sharp, sour, grassy, vegetal → underdeveloped; dropped too soon after first crack, or the drying phase was rushed. Harsh, ashy, &#39;burnt&#39; bitterness with a thin body → over-developed or scorched; too much heat, or pushed too far into second crack. Uneven, muddled, both sour and roasty at once → an uneven roast, often too large a batch or weak airflow, so beans developed at different rates. Because cupping tells you what&#39;s wrong and the roast log tells you where, a roaster who cups every batch against its curve can actually fix problems instead of guessing."
         }
       ],
       "keypoints": [
@@ -2046,6 +2058,10 @@
         {
           "h": "The specialty bar",
           "body": "To qualify as specialty grade, a 350g sample must have zero Category 1 defects and no more than five full Category 2 defects. That's a strict bar: a single full black or full sour bean disqualifies the lot. Roasted specialty coffee also permits no quakers (underdeveloped beans) in a 100g sample. This physical inspection sits alongside the cup score — a coffee needs to pass both to be truly specialty. (Note: the SCA has also used water activity below 0.70 as a heritage requirement, and the CVA now folds physical grading into its framework.)"
+        },
+        {
+          "h": "Sorting in practice",
+          "body": "On the bench you work methodically: spread the 350g sample on a black tray, and pick through it bean by bean, pulling defects into groups so you can count them. Graders develop a fast eye for the Category 1 faults first — a single full black or full sour bean ends the specialty conversation immediately, so those are worth spotting early. Category 2 defects get tallied and converted to full-defect equivalents. Colour, uniformity, smell, and the presence of foreign matter (stones, sticks, husk) all factor in. The same sample is then usually roast-graded too: a small sample roast reveals quakers — beans that stay stubbornly pale because they came from unripe cherries — which don't show reliably in the green."
         }
       ],
       "keypoints": [
@@ -2067,7 +2083,53 @@
           "label": "Ethio Coffee — green QC & defects",
           "link": "https://www.ethiocoffee.co/insights/green-coffee-quality-control-defects-grading"
         }
-      ]
+      ],
+      "visuals": {
+        "title": "What the defects look like",
+        "note": "Green graders learn to spot these by eye against a black tray. The signatures below are the common ones — the two Category 1 faults (full black, full sour) that disqualify a specialty lot outright, and the milder Category 2 defects you're allowed a few of.",
+        "beans": [
+          {
+            "kind": "healthy",
+            "label": "Healthy bean",
+            "cap": "Even color, intact, clean center crease."
+          },
+          {
+            "kind": "fullblack",
+            "label": "Full black — Cat 1",
+            "cap": "Dead/overripe or fermented; blackened through. Disqualifying."
+          },
+          {
+            "kind": "partialblack",
+            "label": "Partial black — Cat 2",
+            "cap": "Less than half black; 3 = one full defect."
+          },
+          {
+            "kind": "sour",
+            "label": "Full sour — Cat 1",
+            "cap": "Reddish-brown, overripe/over-fermented. Disqualifying."
+          },
+          {
+            "kind": "broken",
+            "label": "Broken / chipped — Cat 2",
+            "cap": "Milling damage; 5 = one full defect."
+          },
+          {
+            "kind": "insect",
+            "label": "Insect damage — Cat 2",
+            "cap": "Small bore holes from the coffee borer beetle."
+          },
+          {
+            "kind": "quaker",
+            "label": "Quaker",
+            "cap": "Underdeveloped, pale after roasting. Not allowed in roasted specialty."
+          },
+          {
+            "kind": "shell",
+            "label": "Shell — Cat 2",
+            "cap": "Malformed hollow bean; roasts unevenly."
+          }
+        ]
+      }
     },
     "green_measure": {
       "name": "Density, Moisture & Water Activity",

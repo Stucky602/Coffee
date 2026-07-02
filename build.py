@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v12"
-CACHE_C = "coffee-guide-v12"
+APP_VERSION = "v13"
+CACHE_C = "coffee-guide-v13"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -347,6 +347,14 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .prose{color:var(--ink2);font-size:14.5px;max-width:70ch}
 .machine{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--heat3);
   border-radius:10px;padding:16px 18px;color:var(--ink2);font-size:14.5px;max-width:74ch}
+.pairintro{color:var(--ink2);font-size:14.5px;line-height:1.55;max-width:72ch;margin-bottom:14px}
+.opairgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.opair{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 15px;
+  cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:4px}
+.opair:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-2px)}
+.opair-name{font-size:15.5px;font-weight:650;color:var(--ink1)}
+.opair-tags{font-size:12px;color:var(--ink3)}
+.pairnote{font-size:12.5px;color:var(--ink3);margin-top:12px;font-style:italic}
 .snav{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px}
 .snav-cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
   cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:3px}
@@ -392,6 +400,13 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .siblings{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
 .siblings h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink3);margin-bottom:14px}
+.beangal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:14px}
+.beanfig{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.beanfig svg{display:block}
+.beanfig figcaption{display:flex;flex-direction:column;gap:2px}
+.beanfig figcaption b{font-size:13.5px;color:var(--ink1)}
+.beanfig figcaption span{font-size:11.5px;color:var(--ink3);line-height:1.4}
 
 /* compare */
 .cmpmodebar{display:flex;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:16px}
@@ -894,8 +909,51 @@ function profileDetail(id){
     <div class="block"><h2>Machine Considerations</h2>
       <div class="machine">${esc(p.machine)}</div>
     </div>
+    ${originPairing(p)}
     ${spectrumNav(id)}
     <div style="height:40px"></div>
+  </div>`;
+}
+// Map roast-level strings to a numeric band 0(lightest)..4(darkest) for matching profiles<->origins.
+function roastBand(level){
+  const m={'Light':0,'Light–Medium':1,'Light-Medium':1,'Medium':2,'Medium–Dark':3,'Medium-Dark':3,'Dark':4};
+  return m[level]!=null?m[level]:null;
+}
+// Which origins suit this profile's roast level? Match on band overlap (±0 for exact, allow the origin's
+// recommended band to sit within one step of the profile). Purpose profiles (espresso/omni) show versatile origins.
+function originPairing(p){
+  const origins=Object.entries(METHODOLOGY).filter(([id,m])=>m.group==='origin'&&id!=='origin_intro'&&m.roastLevel);
+  if(!origins.length)return '';
+  let picks;
+  let intro;
+  if(p.group==='purpose'){
+    // espresso/omni: origins that make classic espresso bases (medium→dark bands) + a note
+    picks=origins.filter(([id,m])=>{const b=roastBand(m.roastLevel);return b!=null&&b>=2;});
+    intro=p.name==='Espresso'
+      ? "Classic espresso leans on origins that hold up sweet and full under pressure — chocolatey, nutty, lower-acid coffees. Lighter, floral origins can make a stunning single-origin espresso too, but these are the traditional blend backbone."
+      : "An omni profile wants forgiving, balanced origins that taste good both as filter and espresso — nothing too extreme in either direction.";
+  }else{
+    const pb=roastBand(p.level);
+    if(pb==null)return '';
+    // origin fits if its recommended band is within one step of the profile band
+    picks=origins.filter(([id,m])=>{const b=roastBand(m.roastLevel);return b!=null&&Math.abs(b-pb)<=1;});
+    // prefer exact-band matches first
+    picks.sort((a,b)=>Math.abs(roastBand(a[1].roastLevel)-pb)-Math.abs(roastBand(b[1].roastLevel)-pb));
+    intro= pb<=1
+      ? "Light roasting lives or dies on the green. These origins have the acidity, clarity, and aromatic complexity that a light roast is meant to reveal — roast a flat commodity coffee this light and there's nothing to show."
+      : pb===2
+      ? "A medium roast balances origin character against developed sweetness, so it suits a wide range of origins — from brighter high-grown coffees to sweeter, rounder ones."
+      : "Dark roasting trades origin character for body, sweetness, and roast depth, so it pairs best with origins whose appeal is chocolate, nuttiness, and heavy body rather than delicate acidity — and with coffees priced to be roasted dark.";
+  }
+  if(!picks.length)return '';
+  const chips=picks.map(([id,m])=>`<button class="opair" onclick="go('origin','${id}')">
+    <span class="opair-name">${esc(m.name)}</span>
+    <span class="opair-tags">${(m.flavorTags||[]).slice(0,2).map(t=>esc(t)).join(' · ')}</span>
+  </button>`).join('');
+  return `<div class="block"><h2>Origins That Shine Here</h2>
+    <p class="pairintro">${intro}</p>
+    <div class="opairgrid">${chips}</div>
+    <div class="pairnote">Roast level is a starting point, not a rule — any coffee can be roasted any way. Tap an origin for how it behaves in the roaster.</div>
   </div>`;
 }
 function setCurveUnits(id,u){
@@ -1176,6 +1234,34 @@ function drawLearn(){
 function toggleHub(gid){learnOpen=learnOpen===gid?null:gid;drawLearn();}
 
 /* ---------- METH DETAIL ---------- */
+/* ---------- DEFECT BEAN ILLUSTRATIONS (inline SVG, zero-byte, offline) ---------- */
+function beanSVG(kind){
+  const W=90,H=64,cx=W/2,cy=H/2,stroke="#5a4632",green="#9aaf6e";
+  const crease=`<path d="M${cx} ${cy-24} C ${cx-7} ${cy-10}, ${cx+7} ${cy+10}, ${cx} ${cy+24}" stroke="#3a2c1e" stroke-width="2.4" fill="none"/>`;
+  const body=(f,st)=>`<ellipse cx="${cx}" cy="${cy}" rx="26" ry="30" fill="${f}" stroke="${st||stroke}" stroke-width="2"/>`;
+  let inner;
+  switch(kind){
+    case 'healthy': inner=body(green)+crease; break;
+    case 'fullblack': inner=body('#241a12','#160f0a')+`<path d="M${cx} ${cy-24} C ${cx-7} ${cy-10}, ${cx+7} ${cy+10}, ${cx} ${cy+24}" stroke="#0e0906" stroke-width="2.4" fill="none"/>`; break;
+    case 'partialblack': inner=body(green)+`<path d="M${cx} ${cy-30} A26 30 0 0 1 ${cx} ${cy+30} Z" fill="#241a12"/>`+crease; break;
+    case 'sour': inner=body('#8a5a3a')+`<circle cx="${cx-8}" cy="${cy-6}" r="6" fill="#5f3218" opacity="0.75"/><circle cx="${cx+6}" cy="${cy+9}" r="7" fill="#5f3218" opacity="0.6"/><circle cx="${cx+5}" cy="${cy-11}" r="4" fill="#5f3218" opacity="0.6"/>`+crease; break;
+    case 'broken': inner=`<path d="M${cx-3} ${cy-30} A26 30 0 1 0 ${cx+19} ${cy+23} L${cx} ${cy} Z" fill="${green}" stroke="${stroke}" stroke-width="2" stroke-linejoin="round"/>`+crease; break;
+    case 'insect': inner=body(green)+`<circle cx="${cx-6}" cy="${cy-8}" r="3.2" fill="#241a12"/><circle cx="${cx+7}" cy="${cy+4}" r="2.6" fill="#241a12"/><circle cx="${cx-2}" cy="${cy+13}" r="2.2" fill="#241a12"/>`+crease; break;
+    case 'quaker': inner=body('#cbb083')+crease; break;
+    case 'shell': inner=`<path d="M${cx} ${cy-30} A26 30 0 0 1 ${cx} ${cy+30} A14 26 0 0 0 ${cx} ${cy-30} Z" fill="${green}" stroke="${stroke}" stroke-width="2"/>`; break;
+    case 'immature': inner=body('#b7c48a')+`<path d="M${cx} ${cy-24} C ${cx-6} ${cy-10}, ${cx+6} ${cy+10}, ${cx} ${cy+24}" stroke="#6a7a48" stroke-width="2" fill="none"/>`; break;
+    default: inner=body(green)+crease;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:110px" role="img">${inner}</svg>`;
+}
+// Render a labelled gallery of bean illustrations for a defect page.
+function beanGallery(items){
+  if(!items||!items.length)return '';
+  return `<div class="beangal">${items.map(it=>`<figure class="beanfig">
+    ${beanSVG(it.kind)}
+    <figcaption><b>${esc(it.label)}</b><span>${esc(it.cap)}</span></figcaption>
+  </figure>`).join('')}</div>`;
+}
 function refsBlock(refs){
   if(!refs||!refs.length)return '';
   return `<div class="refs"><h4>Sources</h4><ul>${refs.map(r=>
@@ -1200,6 +1286,7 @@ function methDetail(id){
       </div>
     </div>
     ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${m.visuals?`<div class="msection"><h3>${esc(m.visuals.title||'Defect Reference')}</h3>${m.visuals.note?`<p>${esc(m.visuals.note)}</p>`:''}${beanGallery(m.visuals.beans)}</div>`:''}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
     ${sibBlock}
