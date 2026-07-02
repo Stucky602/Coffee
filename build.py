@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v46"
-CACHE_C = "coffee-guide-v46"
+APP_VERSION = "v47"
+CACHE_C = "coffee-guide-v47"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -191,12 +191,29 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .hero{padding:52px 0 30px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
 .hero .wrap{position:relative;z-index:2}
 .hero h1{font-size:clamp(30px,5.5vw,52px);line-height:1.02;letter-spacing:-.03em;max-width:15ch}
-.hero h1 .grad{background:linear-gradient(100deg,var(--heat1),var(--heat4));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .grad{background:linear-gradient(100deg,var(--heat1),var(--heat2),var(--heat1),var(--heat4));
+  background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 9s ease-in-out infinite}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+/* heat haze rising behind the hero title */
+.hero::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:150%;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(60% 40% at 18% 120%, rgba(201,163,78,.10), transparent 70%),
+    radial-gradient(50% 45% at 62% 130%, rgba(176,123,62,.09), transparent 70%),
+    radial-gradient(45% 40% at 88% 120%, rgba(110,62,30,.08), transparent 70%);
+  filter:blur(6px);animation:haze 14s ease-in-out infinite alternate}
+@keyframes haze{0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(-2%,-3%,0) scale(1.06)}
+  100%{transform:translate3d(2%,-1%,0) scale(1.03)}}
 .hero p{color:var(--ink2);font-size:16.5px;max-width:60ch;margin:18px 0 0}
 .hero .lede{font-size:17.5px;line-height:1.55;max-width:64ch}
-.heatbar{display:flex;height:6px;margin-top:28px;border-radius:4px;overflow:hidden;max-width:520px}
+.heatbar{display:flex;height:6px;margin-top:28px;border-radius:4px;overflow:hidden;max-width:520px;position:relative;
+  box-shadow:0 0 18px rgba(201,163,78,.22)}
 .heatbar i{flex:1}
+.heatbar::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 20%,rgba(255,240,214,.55) 50%,transparent 80%);
+  background-size:220% 100%;mix-blend-mode:screen;animation:heatsweep 4.5s ease-in-out infinite}
+@keyframes heatsweep{0%{background-position:180% 0}60%,100%{background-position:-80% 0}}
 .hero .beans{position:absolute;inset:0;z-index:1;opacity:.5}
 
 /* home section directory */
@@ -205,7 +222,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .secdir{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
 .secard{display:flex;gap:16px;text-align:left;background:var(--panel);border:1px solid var(--line);
   border-radius:16px;padding:20px;cursor:pointer;transition:.16s;align-items:flex-start}
-.secard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-2px)}
+.secard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 1px rgba(201,163,78,.12),0 6px 22px rgba(201,163,78,.10)}
 .secard-ic{flex-shrink:0;width:44px;height:44px;border-radius:11px;display:flex;align-items:center;
   justify-content:center;background:var(--bg);border:1px solid var(--line);color:var(--heat2)}
 .secard-body{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -286,7 +303,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .pcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;
   cursor:pointer;transition:.16s;position:relative;overflow:hidden}
-.pcard:hover{transform:translateY(-2px);border-color:var(--ink3)}
+.pcard:hover{transform:translateY(-3px);border-color:var(--ink3);box-shadow:0 10px 28px rgba(0,0,0,.35),0 6px 22px rgba(201,163,78,.10)}
 .pcard .swatch{position:absolute;top:0;left:0;width:4px;height:100%}
 .pcard .lvl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
 .pcard h3{font-size:19px;margin:5px 0 2px}
@@ -348,7 +365,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .origrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-top:4px}
 .origcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;cursor:pointer;
   transition:.16s;display:flex;flex-direction:column;gap:9px}
-.origcard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-2px)}
+.origcard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.35),0 6px 22px rgba(201,163,78,.10)}
 .origcard-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .origcard-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
 .origcard-roast{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
@@ -504,7 +521,10 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .beanfig figcaption{display:flex;flex-direction:column;gap:2px}
 .beanfig figcaption b{font-size:13.5px;color:var(--ink1)}
 .beanfig figcaption span{font-size:11.5px;color:var(--ink3);line-height:1.4}
-.diagram{margin:20px 0 8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px}
+.diagram{margin:20px 0 8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;
+  position:relative;overflow:hidden;animation:diareveal .5s cubic-bezier(.2,.7,.3,1) both;transition:border-color .3s,box-shadow .3s}
+.diagram:hover{border-color:var(--heat3);box-shadow:0 0 24px rgba(201,163,78,.08)}
+@keyframes diareveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .diagram svg{display:block}
 .diagram figcaption{font-size:12.5px;color:var(--ink3);line-height:1.5;margin-top:10px;max-width:70ch}
 
@@ -539,6 +559,26 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
   .mobnav button{flex:1;background:none;border:none;color:var(--ink3);font-size:13px;
     font-weight:600;padding:11px 0;border-bottom:2px solid transparent}
   .mobnav button.on{color:var(--heat1);border-bottom-color:var(--heat1)}
+}
+/* the roast-curve bean-temp line draws itself in, like a live roast being plotted */
+.rc-bt{stroke-dasharray:1400;stroke-dashoffset:1400;animation:rcdraw 1.6s cubic-bezier(.4,.6,.3,1) .15s forwards}
+@keyframes rcdraw{to{stroke-dashoffset:0}}
+/* content view fade-in on navigation */
+#app{animation:viewfade .34s ease both}
+@keyframes viewfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* subtle staggered entrance for grids of cards */
+.grid>*,.origrid>*,.secdir>*{animation:cardrise .42s cubic-bezier(.2,.7,.3,1) both}
+.grid>*:nth-child(2),.origrid>*:nth-child(2),.secdir>*:nth-child(2){animation-delay:.03s}
+.grid>*:nth-child(3),.origrid>*:nth-child(3),.secdir>*:nth-child(3){animation-delay:.06s}
+.grid>*:nth-child(4),.origrid>*:nth-child(4),.secdir>*:nth-child(4){animation-delay:.09s}
+.grid>*:nth-child(n+5),.origrid>*:nth-child(n+5){animation-delay:.12s}
+@keyframes cardrise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* gentle glow pulse on the live stat counters / accent dots */
+@keyframes emberpulse{0%,100%{opacity:.55}50%{opacity:1}}
+/* RESPECT reduced-motion: disable all non-essential motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
@@ -744,7 +784,7 @@ function roastCurve(c,accent,w,h,units){
   g+=`<path d="${rorPath}" fill="none" stroke="#7a6a52" stroke-width="1.6" stroke-dasharray="4 3" opacity="0.85"/>`;
   // BT line (primary, accent)
   let btPath=cv.bt.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Ybt(p[1]).toFixed(1)).join(' ');
-  g+=`<path d="${btPath}" fill="none" stroke="${accent}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g+=`<path class="rc-bt" d="${btPath}" fill="none" stroke="${accent}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
   // landmark markers
   const mk=(t,v,lab,below)=>{const x=X(t),y=Ybt(v);const ly=below?y+16:y-9;return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6" fill="${accent}" stroke="#160e08" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${ly.toFixed(1)}" fill="#f0e6d8" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" font-weight="600">${lab}</text>`;};
   g+=mk(cv.marks.tpTime,cv.marks.tp,'TP',true);
