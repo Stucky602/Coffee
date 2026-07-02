@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v14"
-CACHE_C = "coffee-guide-v14"
+APP_VERSION = "v16"
+CACHE_C = "coffee-guide-v16"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -19,6 +19,7 @@ PROFILE_GROUPS = [
     ("purpose", "Purpose-Built"),
 ]
 METH_GROUPS = [
+    ("culture", "Coffee, the Bigger Picture"),
     ("green", "Green Buying & QC"),
     ("read", "Reading the Roast"),
     ("science", "Roast Science"),
@@ -31,6 +32,7 @@ METH_GROUPS = [
 # Per-group metadata for the Learn hub: one-line description + accent color.
 # Ordered to follow the bean's journey: buy green → roast → taste → run the shop → brew.
 METH_GROUP_META = {
+    "culture": {"desc": "The story and economics of coffee — the waves of coffee history, how the trade and prices work, direct trade and sustainability, and the art of blending.", "accent": "#c98a2e"},
     "green":   {"desc": "Grading defects, moisture and density, processing methods, and reading a green coffee before you buy it.", "accent": "#7d8f5a"},
     "read":    {"desc": "The roast curve, rate of rise, the phases, first and second crack, and development time — how to read a roast as it happens.", "accent": "#C9A34E"},
     "science": {"desc": "What's chemically happening inside the bean, how heat moves through the drum, and the machines that do it.", "accent": "#B07B3E"},
@@ -75,7 +77,7 @@ HTML = r"""<!DOCTYPE html>
 <style>
 :root{
   --bg:#160e08; --panel:#1f1610; --panel2:#281c13; --line:#3a2a1c;
-  --ink:#f0e6d8; --ink2:#c9b8a4; --ink3:#8f7c66;
+  --ink:#f0e6d8; --ink1:#f0e6d8; --ink2:#c9b8a4; --ink3:#8f7c66;
   --heat1:#C9A34E; --heat2:#B07B3E; --heat3:#95602F; --heat4:#6E3E1E; --heat5:#43220F;
   --accent:#C9A34E;
   --mono:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
@@ -85,7 +87,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
   font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased;line-height:1.5}
 a,a:visited{color:inherit}
-button{font-family:inherit;cursor:pointer}
+button{font-family:inherit;cursor:pointer;color:inherit}
 h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-0.01em}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
@@ -102,13 +104,73 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
   padding:4px 8px;border-radius:5px;font-weight:700}
 .brand .nm{font-size:16px;font-weight:700;letter-spacing:-.02em}
 .brand .nm b{color:var(--heat1)}
-.ver{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3);
+.ver{font-family:var(--mono);font-size:11px;color:var(--ink3);
   border:1px solid var(--line);padding:3px 8px;border-radius:20px}
-.navtabs{display:flex;gap:2px}
+.navtabs{display:flex;gap:2px;margin-left:auto}
 .navtabs button{background:none;border:none;color:var(--ink3);font-size:13.5px;
   font-weight:600;padding:8px 12px;border-radius:7px;transition:.15s}
 .navtabs button:hover{color:var(--ink2)}
 .navtabs button.on{color:var(--ink);background:var(--panel2)}
+.searchbtn{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);width:36px;height:36px;
+  border-radius:9px;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+.searchbtn:hover{color:var(--ink);border-color:var(--ink3)}
+/* search overlay */
+.searchoverlay{position:fixed;inset:0;z-index:100;background:rgba(10,8,6,.72);backdrop-filter:blur(6px);
+  display:flex;justify-content:center;align-items:flex-start;padding:8vh 16px 16px}
+.searchpanel{width:100%;max-width:640px;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 24px 70px rgba(0,0,0,.6);overflow:hidden;max-height:82vh;display:flex;flex-direction:column}
+.searchtop{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);color:var(--ink3)}
+.searchtop input{flex:1;background:none;border:none;outline:none;color:var(--ink);font-size:17px;font-family:inherit}
+.searchtop input::placeholder{color:var(--ink3)}
+.searchclose{background:var(--bg);border:1px solid var(--line);color:var(--ink3);font-family:var(--mono);
+  font-size:11px;padding:4px 9px;border-radius:7px;flex-shrink:0}
+.searchresults{overflow-y:auto;padding:10px}
+.searchhint{color:var(--ink3);font-size:14px;line-height:1.6;padding:24px 14px;text-align:center}
+.searchhint b{color:var(--ink2);font-weight:600}
+.searchgroup{margin-bottom:12px}
+.searchglabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);padding:8px 12px 6px}
+.searchitem{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:none;border:none;
+  padding:10px 12px;border-radius:9px;transition:.12s}
+.searchitem:hover{background:var(--panel2)}
+.searchitem .si-name{font-size:15px;font-weight:600;color:var(--ink1)}
+.searchitem .si-meta{font-size:11.5px;color:var(--ink3);font-family:var(--mono)}
+.searchitem .si-def{font-size:12.5px;color:var(--ink3);line-height:1.4}
+.searchmore{font-size:12px;color:var(--ink3);padding:6px 12px;font-style:italic}
+/* glossary inline term links + popover */
+.termref{border-bottom:1px dotted var(--heat2);cursor:help;color:inherit}
+.termref:hover{border-bottom-color:var(--heat1);color:var(--heat1)}
+.termpop{position:absolute;z-index:200;background:var(--panel2);border:1px solid var(--heat3);border-radius:12px;
+  padding:13px 15px;box-shadow:0 14px 40px rgba(0,0,0,.55);animation:popin .12s ease}
+@keyframes popin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.termpop-term{font-size:14px;font-weight:700;color:var(--heat1);margin-bottom:5px}
+.termpop-def{font-size:13px;color:var(--ink2);line-height:1.5}
+/* guided path */
+.pathlist{display:flex;flex-direction:column;gap:8px}
+.pathstep{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--panel);
+  border:1px solid var(--line);border-radius:11px;padding:13px 15px;cursor:pointer;transition:.15s}
+.pathstep:hover{border-color:var(--heat3);background:var(--panel2);transform:translateX(3px)}
+.pathnum{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--heat3);
+  color:var(--heat1);font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.pathtxt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.pathname{font-size:15px;font-weight:650;color:var(--ink1)}
+.pathwhy{font-size:12.5px;color:var(--ink3);line-height:1.4}
+.patharrow{color:var(--ink3);font-size:16px;flex-shrink:0}
+.pathnav{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.pathnav-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--heat2);display:block;margin-bottom:10px}
+.pathnav-next{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;background:linear-gradient(100deg,var(--panel2),var(--panel));
+  border:1px solid var(--heat3);border-radius:12px;padding:15px 18px;cursor:pointer;transition:.15s}
+.pathnav-next:hover{border-color:var(--heat1);transform:translateY(-2px)}
+.pathnav-next span:first-child{font-size:16px;font-weight:700;color:var(--heat1)}
+.pathnav-why{font-size:12.5px;color:var(--ink3)}
+.pathnav-done{font-size:14px;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 18px;font-style:italic}
+/* related concept chips */
+.related{margin-top:28px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.related-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.relchips{display:flex;flex-wrap:wrap;gap:8px}
+.relchip{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);font-size:13px;font-weight:600;
+  padding:6px 13px;border-radius:20px;cursor:pointer;transition:.14s}
+.relchip:hover{border-color:var(--heat3);color:var(--heat1)}
 
 /* hero */
 .hero{padding:52px 0 30px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -247,10 +309,9 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .hubcards{padding:4px 18px 18px}
 
 /* origins tab */
-.originmapwrap{margin:18px 0 8px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#12100c}
-.mapcap{font-size:12.5px;color:var(--ink3);padding:10px 14px;border-top:1px solid var(--line);text-align:center}
-.mapdot text{pointer-events:none}
-.mapdot:hover circle:last-of-type{r:9}
+.regionmap{margin:20px auto 8px;text-align:center}
+.regionmap svg{margin:0 auto}
+.regionmap figcaption{text-align:left}
 .originnote{color:var(--ink2);font-size:15px;line-height:1.6;max-width:70ch;margin:20px 0 8px}
 .origrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-top:4px}
 .origcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;cursor:pointer;
@@ -291,6 +352,10 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .back{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);font-size:13px;
   padding:7px 14px;border-radius:8px;margin:22px 0 20px;font-weight:600}
 .back:hover{color:var(--ink)}
+/* sticky back on detail pages — follows the scroll, pins below the nav */
+.back.sticky{position:sticky;top:calc(72px + env(safe-area-inset-top,0px));z-index:20;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);backdrop-filter:blur(6px);background:rgba(42,33,26,.92)}
+@media(max-width:640px){.back.sticky{top:calc(112px + env(safe-area-inset-top,0px))}}
 .dhead{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;
   border-bottom:1px solid var(--line);padding-bottom:24px}
 .dhead .txt{flex:1;min-width:260px}
@@ -460,9 +525,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
       <button data-nav="compare" onclick="go('compare')">Compare</button>
       <button data-nav="learn" onclick="go('learn')">Learn</button>
     </nav>
+    <button class="searchbtn" onclick="openSearch()" aria-label="Search everything">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    </button>
     <span class="ver" id="verlabel"></span>
   </div>
 </header>
+<div id="searchoverlay" class="searchoverlay" style="display:none">
+  <div class="searchpanel">
+    <div class="searchtop">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input id="globalsearch" type="search" placeholder="Search profiles, origins, topics, terms…" autocomplete="off">
+      <button class="searchclose" onclick="closeSearch()" aria-label="Close search">Esc</button>
+    </div>
+    <div id="searchresults" class="searchresults"></div>
+  </div>
+</div>
 <nav class="mobnav">
   <button data-nav="home" onclick="go('home')">Overview</button>
   <button data-nav="profiles" onclick="go('profiles')">Profiles</button>
@@ -480,6 +558,19 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 <script>
 const D = JSON.parse(document.getElementById('appdata').textContent);
 const {PROFILES,METHODOLOGY,GLOSSARY,PROFILE_GROUPS,METH_GROUPS,METH_GROUP_META,FLAVOR_AXES,APP_VERSION}=D;
+// Guided beginner path: an ordered spine through the fundamentals.
+const PATH=[
+  {id:'waves',label:'The Waves of Coffee',why:"Where specialty coffee came from and what it values."},
+  {id:'green_intro',label:'Buying Green Coffee',why:"It all starts with the bean — why the green caps everything."},
+  {id:'green_processing',label:'Processing Methods',why:"How the cherry becomes the bean, and why it shapes flavor."},
+  {id:'curve',label:'Reading the Roast Curve',why:"The roaster's core instrument."},
+  {id:'phases',label:'The Phases of a Roast',why:"Drying, Maillard, development — the three acts."},
+  {id:'cracks',label:'First & Second Crack',why:"The audible landmarks that set roast level."},
+  {id:'dtr',label:'Development Time Ratio',why:"The lever between under- and over-developed."},
+  {id:'chemistry',label:'Roasting Chemistry',why:"What's actually happening inside the bean."},
+  {id:'cupping_intro',label:'Cupping',why:"How the industry tastes and scores coffee."},
+  {id:'brew_extraction',label:'Extraction Theory',why:"The one idea behind every brew method."},
+];
 document.getElementById('verlabel').textContent=APP_VERSION;
 document.getElementById('footver').textContent=APP_VERSION;
 const app=document.getElementById('app');
@@ -694,6 +785,16 @@ function startHere(){
     <p class="bsub" style="margin-top:14px">The <b>drop</b> — when you pull the beans out — is where you commit to that choice. That's why you saw the word everywhere.</p>
     </div>
 
+    <div class="block2"><h2 class="bh">A path through the fundamentals</h2>
+    <p class="bsub">New here and want a route, not a pile of topics? Read these in order — each builds on the last.</p>
+    <div class="pathlist">${PATH.map((step,i)=>`
+      <button class="pathstep" onclick="go('meth','${step.id}')">
+        <span class="pathnum">${i+1}</span>
+        <span class="pathtxt"><span class="pathname">${esc(step.label)}</span><span class="pathwhy">${esc(step.why)}</span></span>
+        <span class="patharrow">→</span>
+      </button>`).join('')}
+    </div></div>
+
     <div class="block2"><h2 class="bh">Every term, in plain English</h2>
     <p class="bsub">The jargon the rest of the app uses. Filter to jump to one.</p>
     <div class="searchwrap" style="max-width:340px;margin-bottom:16px">
@@ -864,7 +965,7 @@ function profileDetail(id){
   const stat=(lab,val,unit,hi)=>`<div class="stat ${hi?'hi':''}"><div class="lab">${lab}</div><div class="val">${val}${unit?`<small>${unit}</small>`:''}</div></div>`;
   const dual=(cv,fv)=>`${cv}<small>°C</small> · ${fv}<small>°F</small>`;
   app.innerHTML=`<div class="wrap detail">
-    <button class="back" onclick="go('profiles')">← All profiles</button>
+    <button class="back sticky" onclick="go('profiles')">← All profiles</button>
     <div class="dhead">
       <div class="txt">
         <div class="lvl" style="color:${p.accent}">${esc(p.level)} · Agtron ${esc(p.agtron)}</div>
@@ -1054,22 +1155,15 @@ function drawCmpCurve(lg,leg){
 }
 
 /* ---------- ORIGINS TAB ---------- */
-// Equirectangular projection helper: lng/lat -> x/y in a mapW x mapH box.
-function projXY(lng,lat,mapW,mapH){
-  const x=(lng+180)/360*mapW;
-  const y=(90-lat)/180*mapH;
-  return [x,y];
-}
 function originList(){
   const origins=Object.entries(METHODOLOGY).filter(([id,m])=>m.group==='origin'&&id!=='origin_intro');
   const intro=METHODOLOGY['origin_intro'];
-  // group by continent for the card sections
   const byCont={};
   origins.forEach(([id,m])=>{(byCont[m.continent]=byCont[m.continent]||[]).push([id,m]);});
   const contOrder=['Africa','Central America','South America','Asia'];
   app.innerHTML=`<div class="wrap">
     <div class="seclead"><span class="no">◍</span><div><h2>Roasting by Origin</h2><p>Where the coffee comes from shapes the cup before you ever light the burner. ${origins.length} origins, how each behaves, and the roast that shows it best.</p></div></div>
-    ${originMap(origins)}
+    ${beltStrip(origins.length)}
     <div class="originnote">${esc(intro.sections[0].body)}</div>
     ${contOrder.filter(c=>byCont[c]).map(cont=>`
       <div class="grouplabel">${cont}</div>
@@ -1080,36 +1174,43 @@ function originList(){
     <div style="height:50px"></div>
   </div>`;
 }
-function originMap(origins){
-  const mapW=1000, mapH=500;
-  // Simplified continent silhouettes (very rough, evocative not accurate) as filled blobs.
-  // We draw a subtle world backdrop + the Bean Belt band + a dot per origin.
-  const beltTop=projXY(0,23.5,mapW,mapH)[1];
-  const beltBot=projXY(0,-23.5,mapW,mapH)[1];
-  let dots='';
-  origins.forEach(([id,m])=>{
-    if(m.lng==null)return;
-    const [x,y]=projXY(m.lng,m.lat,mapW,mapH);
-    dots+=`<g class="mapdot" onclick="go('origin','${id}')" style="cursor:pointer">
-      <circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="18" fill="var(--heat3)" opacity="0.18"/>
-      <circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="7" fill="var(--heat1)" stroke="#160e08" stroke-width="2"/>
-      <text x="${x.toFixed(0)}" y="${(y-16).toFixed(0)}" fill="#f0e6d8" font-size="19" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">${esc(m.country.replace(/ \(.*\)/,''))}</text>
-    </g>`;
+// Compact "bean belt" context strip (not an interactive map — just the equatorial-band idea, done well).
+function beltStrip(n){
+  const W=760,H=120,cy=60;
+  let g=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="12"/>`;
+  // band
+  g+=`<rect x="0" y="${cy-26}" width="${W}" height="52" fill="var(--heat5)" opacity="0.12"/>`;
+  g+=`<line x1="0" y1="${cy-26}" x2="${W}" y2="${cy-26}" stroke="var(--heat4)" stroke-dasharray="6 5" opacity="0.55"/>`;
+  g+=`<line x1="0" y1="${cy+26}" x2="${W}" y2="${cy+26}" stroke="var(--heat4)" stroke-dasharray="6 5" opacity="0.55"/>`;
+  g+=`<line x1="0" y1="${cy}" x2="${W}" y2="${cy}" stroke="var(--heat3)" stroke-width="1" opacity="0.35"/>`;
+  g+=`<text x="16" y="${cy-32}" fill="var(--heat3)" font-size="12" font-family="ui-monospace" opacity="0.8">Tropic of Cancer</text>`;
+  g+=`<text x="16" y="${cy+42}" fill="var(--heat3)" font-size="12" font-family="ui-monospace" opacity="0.8">Tropic of Capricorn</text>`;
+  g+=`<text x="16" y="${cy+4}" fill="var(--heat3)" font-size="11" font-family="ui-monospace" opacity="0.6">equator</text>`;
+  // a scatter of bean dots inside the band representing the growing world
+  const xs=[120,175,205,235,265,300,430,470,620,700];
+  xs.forEach((x,i)=>{const yy=cy+((i*13)%34-17)*0.7;g+=`<circle cx="${x}" cy="${yy.toFixed(0)}" r="5" fill="var(--heat1)" opacity="0.9"/>`;});
+  g+=`<text x="${W-16}" y="${cy+4}" fill="var(--heat2)" font-size="13" font-family="ui-monospace" text-anchor="end" letter-spacing="2" opacity="0.75">THE BEAN BELT</text>`;
+  return `<figure class="diagram" style="margin-top:14px"><svg viewBox="0 0 ${W} ${H}" width="100%" role="img">${g}</svg><figcaption>Coffee grows only in a warm band circling the equator, between the Tropics of Cancer and Capricorn — every origin below sits inside it. Each origin page has a map of its own growing regions.</figcaption></figure>`;
+}
+// Per-origin regional locator: stylized country silhouette with growing regions plotted as dots.
+function originRegionMap(m){
+  const rm=m.regionMap; if(!rm)return '';
+  const W=300,H=230,accent=m.accent||'#B07B3E';
+  let g=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="12"/>`;
+  // country silhouette
+  g+=`<path d="${rm.shape}" fill="${accent}" opacity="0.16" stroke="${accent}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  // region dots + labels
+  (rm.regions||[]).forEach(r=>{
+    const [name,x,y]=r;
+    g+=`<circle cx="${x}" cy="${y}" r="4.5" fill="${accent}" stroke="#12100c" stroke-width="1.5"/>`;
+    g+=`<circle cx="${x}" cy="${y}" r="10" fill="${accent}" opacity="0.18"/>`;
+    // label placed to the right unless near the right edge
+    const rightEdge=x>W-90;
+    g+=`<text x="${rightEdge?x-9:x+9}" y="${y+3.5}" fill="#f0e6d8" font-size="11.5" font-weight="600" text-anchor="${rightEdge?'end':'start'}" font-family="ui-sans-serif" paint-order="stroke" stroke="#12100c" stroke-width="2.5">${esc(name)}</text>`;
   });
-  return `<div class="originmapwrap">
-    <svg viewBox="0 0 ${mapW} ${mapH}" width="100%" style="display:block">
-      <rect x="0" y="0" width="${mapW}" height="${mapH}" fill="#12100c"/>
-      <!-- bean belt band -->
-      <rect x="0" y="${beltTop.toFixed(0)}" width="${mapW}" height="${(beltBot-beltTop).toFixed(0)}" fill="var(--heat5)" opacity="0.08"/>
-      <line x1="0" y1="${beltTop.toFixed(0)}" x2="${mapW}" y2="${beltTop.toFixed(0)}" stroke="var(--heat4)" stroke-width="1" stroke-dasharray="6 5" opacity="0.5"/>
-      <line x1="0" y1="${beltBot.toFixed(0)}" x2="${mapW}" y2="${beltBot.toFixed(0)}" stroke="var(--heat4)" stroke-width="1" stroke-dasharray="6 5" opacity="0.5"/>
-      <text x="14" y="${(beltTop-8).toFixed(0)}" fill="var(--heat3)" font-size="15" font-family="ui-monospace" opacity="0.8">Tropic of Cancer</text>
-      <text x="14" y="${(beltBot+22).toFixed(0)}" fill="var(--heat3)" font-size="15" font-family="ui-monospace" opacity="0.8">Tropic of Capricorn</text>
-      <text x="${(mapW-14).toFixed(0)}" y="${((beltTop+beltBot)/2+5).toFixed(0)}" fill="var(--heat2)" font-size="16" font-family="ui-monospace" text-anchor="end" opacity="0.7" letter-spacing="2">THE BEAN BELT</text>
-      ${dots}
-    </svg>
-    <div class="mapcap">Coffee grows in a band around the equator — the Bean Belt. Tap a dot for the origin.</div>
-  </div>`;
+  // country name watermark
+  g+=`<text x="16" y="26" fill="${accent}" font-size="13" font-weight="700" font-family="ui-monospace" letter-spacing="1" opacity="0.7">${esc((m.country||m.name).toUpperCase())}</text>`;
+  return `<figure class="diagram regionmap"><svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:420px" role="img" aria-label="Map of coffee growing regions in ${esc((m.country||m.name))}">${g}</svg><figcaption>${esc(rm.note)}</figcaption></figure>`;
 }
 function originCard(id,m){
   const tags=(m.flavorTags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('');
@@ -1138,7 +1239,7 @@ function originDetail(id){
   ].filter(f=>f[1]);
   const siblings=Object.entries(METHODOLOGY).filter(([sid,sm])=>sm.group==='origin'&&sid!==id&&sid!=='origin_intro');
   app.innerHTML=`<div class="wrap detail">
-    <button class="back" onclick="go('origins')">← All origins</button>
+    <button class="back sticky" onclick="go('origins')">← All origins</button>
     <div class="odhead">
       <div class="odtxt">
         <div class="lvl" style="color:${m.accent}">${esc(m.continent)}</div>
@@ -1155,7 +1256,8 @@ function originDetail(id){
       </div>
     </div>
     <div class="factstrip">${facts.map(f=>`<div class="fact"><div class="fl">${esc(f[0])}</div><div class="fv">${esc(f[1])}</div></div>`).join('')}</div>
-    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${originRegionMap(m)}
+    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>`).join('')}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
     ${siblings.length?`<div class="siblings"><h4>More origins</h4><div class="origrid">${siblings.map(([sid,sm])=>originCard(sid,sm)).join('')}</div></div>`:''}
@@ -1165,12 +1267,12 @@ function originDetail(id){
 // Generic meth-style render used by the origin intro page.
 function methLike(m,backView,backLabel){
   app.innerHTML=`<div class="wrap detail">
-    <button class="back" onclick="go('${backView}')">${esc(backLabel)}</button>
+    <button class="back sticky" onclick="go('${backView}')">${esc(backLabel)}</button>
     <div class="dhead" style="border-bottom:none;padding-bottom:6px"><div class="txt">
       <div class="lvl" style="color:${m.accent}">Roasting by Origin</div>
       <h1>${esc(m.name)}</h1><div class="sub">${esc(m.sub)}</div>
     </div></div>
-    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>`).join('')}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
     <div style="height:40px"></div>
@@ -1243,7 +1345,8 @@ function toggleHub(gid){learnOpen=learnOpen===gid?null:gid;drawLearn();}
 const DIA={bg:'#1b140e',line:'#3a2e24',ink:'#c9b8a4',ink3:'#8f7c66',
   dry:'#C9A34E',mail:'#B07B3E',dev:'#8A5A34',accent:'#e0864a',ror:'#7a9a6a',hot:'#d0553a'};
 function diaWrap(vb,inner,cap){
-  return `<figure class="diagram"><svg viewBox="0 0 ${vb}" width="100%" role="img" preserveAspectRatio="xMidYMid meet">${inner}</svg>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
+  const lbl=cap?` aria-label="${esc(cap.replace(/"/g,''))}"`:'';
+  return `<figure class="diagram"><svg viewBox="0 0 ${vb}" width="100%" role="img"${lbl} preserveAspectRatio="xMidYMid meet">${inner}</svg>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
 }
 // 1. Annotated roast curve: BT rising S-curve + declining RoR, phase bands, TP/1C/2C/Drop, crash/flick callouts.
 function diaRoastCurve(opts){
@@ -1427,6 +1530,161 @@ function diaCVA(){
   g+=`<text x="${W/2}" y="${T+172}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">minus 2 per non-uniform cup, 4 per defective cup</text>`;
   return diaWrap(`${W} ${H}`,g,'How the CVA affective score is built from eight liking ratings.');
 }
+// 11. Processing methods: three cherries showing how much fruit stays on through drying.
+function diaProcessing(){
+  const W=760,H=210,cy=90;
+  const cols=[
+    ['Washed','#b8c48a','all fruit removed before drying','clean · bright · transparent',190],
+    ['Honey','#d09a4a','skin off, sticky mucilage left on','sweet · rounded · in-between',380],
+    ['Natural','#a0433a','whole cherry dried on the bean','fruity · heavy · wild',570],
+  ];
+  let g='';
+  cols.forEach(c=>{const cx=c[4];
+    // seed
+    g+=`<ellipse cx="${cx}" cy="${cy}" rx="26" ry="32" fill="#9aaf6e" stroke="#5a4632" stroke-width="2"/>`;
+    g+=`<path d="M${cx} ${cy-26} C ${cx-6} ${cy-10}, ${cx+6} ${cy+10}, ${cx} ${cy+26}" stroke="#3a2c1e" stroke-width="2" fill="none"/>`;
+    // fruit layer amount
+    if(c[0]==='Natural'){g+=`<ellipse cx="${cx}" cy="${cy}" rx="38" ry="46" fill="${c[1]}" opacity="0.4"/>`;g+=`<ellipse cx="${cx}" cy="${cy}" rx="38" ry="46" fill="none" stroke="${c[1]}" stroke-width="2.5"/>`;}
+    if(c[0]==='Honey'){g+=`<ellipse cx="${cx}" cy="${cy}" rx="31" ry="38" fill="${c[1]}" opacity="0.45"/>`;}
+    g+=`<text x="${cx}" y="${cy+70}" fill="${c[1]}" font-size="16" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${c[0]}</text>`;
+    g+=`<text x="${cx}" y="${cy+90}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${c[2]}</text>`;
+    g+=`<text x="${cx}" y="${cy-56}" fill="${DIA.ink}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">${c[3]}</text>`;
+  });
+  return diaWrap(`${W} ${H}`,g,'The more fruit that stays on the bean during drying, the sweeter, fruitier, and heavier the cup — and the higher the risk of drying defects.');
+}
+// 12. Milk steaming: two phases on a temperature track.
+function diaMilk(){
+  const W=760,H=190,L=30,R=30,iw=W-L-R,cy=70;
+  let g='';
+  // temperature track
+  g+=`<line x1="${L}" y1="${cy}" x2="${W-R}" y2="${cy}" stroke="${DIA.line}" stroke-width="3"/>`;
+  const X=t=>L+iw*(t/70);
+  // stretch zone (cold→~37) and texture zone (37→65)
+  g+=`<rect x="${X(4)}" y="${cy-24}" width="${X(37)-X(4)}" height="48" rx="6" fill="${DIA.dry}" opacity="0.2"/>`;
+  g+=`<rect x="${X(37)}" y="${cy-24}" width="${X(65)-X(37)}" height="48" rx="6" fill="${DIA.mail}" opacity="0.3"/>`;
+  g+=`<text x="${X(20)}" y="${cy-32}" fill="${DIA.dry}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">1 · STRETCH</text>`;
+  g+=`<text x="${X(20)}" y="${cy+4}" fill="${DIA.ink}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">tip near surface</text>`;
+  g+=`<text x="${X(20)}" y="${cy+18}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">add air · &quot;tss tss&quot;</text>`;
+  g+=`<text x="${X(51)}" y="${cy-32}" fill="${DIA.mail}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">2 · TEXTURE</text>`;
+  g+=`<text x="${X(51)}" y="${cy+4}" fill="${DIA.ink}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">wand deep · whirlpool</text>`;
+  g+=`<text x="${X(51)}" y="${cy+18}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">shred bubbles to microfoam</text>`;
+  // temp ticks
+  [[4,'cold'],[37,'~37°C'],[60,'60°C'],[65,'65°C']].forEach(t=>{g+=`<line x1="${X(t[0])}" y1="${cy+24}" x2="${X(t[0])}" y2="${cy+30}" stroke="${DIA.ink3}"/><text x="${X(t[0])}" y="${cy+44}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-monospace">${t[1]}</text>`;});
+  // danger zone
+  g+=`<text x="${X(68)}" y="${cy-32}" fill="${DIA.hot}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">70°C+</text>`;
+  g+=`<text x="${W/2}" y="${cy+78}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">Stretch first while the milk is cold, then texture. Stop by 65°C — past 70°C the milk scalds and the foam collapses.</text>`;
+  return diaWrap(`${W} ${H}`,g,'The two phases of steaming milk, on a temperature track.');
+}
+// 13. Brew method families.
+function diaBrewFamilies(){
+  const W=760,H=210;
+  const fam=[['Percolation','#C9A34E','water passes through once','V60 · Chemex · drip',150],['Immersion','#7a9a6a','grounds steep, then separate','French press · cold brew',380],['Pressure','#d0553a','forced through a puck','espresso · moka',610]];
+  let g='';
+  fam.forEach(f=>{const cx=f[4],cy=80;
+    if(f[0]==='Percolation'){g+=`<path d="M${cx-30} ${cy-30} L${cx+30} ${cy-30} L${cx+16} ${cy+20} L${cx-16} ${cy+20} Z" fill="none" stroke="${f[1]}" stroke-width="2.5"/>`;for(let i=0;i<3;i++)g+=`<line x1="${cx-10+i*10}" y1="${cy+24}" x2="${cx-12+i*10}" y2="${cy+40}" stroke="${f[1]}" stroke-width="2"/>`;}
+    if(f[0]==='Immersion'){g+=`<rect x="${cx-26}" y="${cy-28}" width="52" height="58" rx="4" fill="${f[1]}" opacity="0.18" stroke="${f[1]}" stroke-width="2.5"/>`;for(let i=0;i<8;i++)g+=`<circle cx="${cx-16+((i*11)%36)}" cy="${cy-14+((i*9)%34)}" r="2.6" fill="${f[1]}"/>`;}
+    if(f[0]==='Pressure'){g+=`<rect x="${cx-26}" y="${cy-20}" width="52" height="22" rx="3" fill="${f[1]}" opacity="0.3" stroke="${f[1]}" stroke-width="2.5"/>`;g+=`<path d="M${cx} ${cy-30} L${cx} ${cy-22}" stroke="${f[1]}" stroke-width="3" marker-end="url(#dp)"/>`;for(let i=0;i<3;i++)g+=`<line x1="${cx-8+i*8}" y1="${cy+6}" x2="${cx-9+i*8}" y2="${cy+24}" stroke="${f[1]}" stroke-width="2"/>`;}
+    g+=`<text x="${cx}" y="${cy+64}" fill="${f[1]}" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${f[0]}</text>`;
+    g+=`<text x="${cx}" y="${cy+82}" fill="${DIA.ink}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${f[2]}</text>`;
+    g+=`<text x="${cx}" y="${cy+98}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${f[3]}</text>`;
+  });
+  g=`<defs><marker id="dp" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto"><path d="M0 0 L4 6 L8 0 z" fill="${DIA.hot}"/></marker></defs>`+g;
+  return diaWrap(`${W} ${H}`,g,'Almost every brewing method is one of three families — how the water and grounds meet.');
+}
+// 14. Water balance: hardness vs alkalinity target box.
+function diaWater(){
+  const W=520,H=360,L=64,R=30,T=30,B=54,iw=W-L-R,ih=H-T-B;
+  let g='';
+  g+=`<rect x="${L}" y="${T}" width="${iw}" height="${ih}" fill="none" stroke="${DIA.line}"/>`;
+  // target sweet-spot box
+  const bx=L+iw*0.35,bw=iw*0.4,by=T+ih*0.28,bh=ih*0.4;
+  g+=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" fill="${DIA.ror}" opacity="0.22" stroke="${DIA.ror}" stroke-width="2" rx="6"/>`;
+  g+=`<text x="${(bx+bw/2).toFixed(0)}" y="${(by+bh/2).toFixed(0)}" fill="${DIA.ror}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">target</text>`;
+  g+=`<text x="${(bx+bw/2).toFixed(0)}" y="${(by+bh/2+16).toFixed(0)}" fill="${DIA.ink}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">balanced water</text>`;
+  // axes labels
+  g+=`<text x="${(L+iw/2).toFixed(0)}" y="${H-16}" fill="${DIA.ink}" font-size="12.5" text-anchor="middle" font-family="ui-sans-serif">Hardness (minerals that extract) →</text>`;
+  g+=`<text x="20" y="${(T+ih/2).toFixed(0)}" fill="${DIA.ink}" font-size="12.5" text-anchor="middle" font-family="ui-sans-serif" transform="rotate(-90 20 ${(T+ih/2).toFixed(0)})">Alkalinity (buffer) →</text>`;
+  // corner annotations
+  g+=`<text x="${L+8}" y="${T+18}" fill="${DIA.ink3}" font-size="10.5" font-family="ui-sans-serif">flat, chalky</text>`;
+  g+=`<text x="${W-R-8}" y="${T+18}" fill="${DIA.ink3}" font-size="10.5" text-anchor="end" font-family="ui-sans-serif">harsh, scaly</text>`;
+  g+=`<text x="${L+8}" y="${T+ih-8}" fill="${DIA.ink3}" font-size="10.5" font-family="ui-sans-serif">hollow, sour</text>`;
+  g+=`<text x="${W-R-8}" y="${T+ih-8}" fill="${DIA.ink3}" font-size="10.5" text-anchor="end" font-family="ui-sans-serif">bright but sharp</text>`;
+  return diaWrap(`${W} ${H}`,g,'Coffee water is a balance of two things: enough hardness to extract flavor, low enough alkalinity to let acidity through.');
+}
+// 15. Roaster types.
+function diaRoasters(){
+  const W=760,H=200;
+  const t=[['Drum','#B07B3E','rotating metal drum over heat','body · dark roasts · workhorse',150],['Fluid-bed','#C9A34E','beans levitated on hot air','fast · clean · bright roasts',400],['Hybrid','#8A5A34','recirculated air + drum','blends both approaches',630]];
+  let g='';
+  t.forEach(r=>{const cx=r[4],cy=80;
+    if(r[0]==='Drum'){g+=`<circle cx="${cx}" cy="${cy}" r="34" fill="none" stroke="${r[1]}" stroke-width="3"/>`;for(let i=0;i<5;i++){const a=i/5*6.28;g+=`<ellipse cx="${(cx+Math.cos(a)*16).toFixed(0)}" cy="${(cy+Math.sin(a)*14).toFixed(0)}" rx="5" ry="3.5" fill="${r[1]}"/>`;}g+=`<path d="M${cx-40} ${cy+40} q40 14 80 0" stroke="${DIA.hot}" stroke-width="2.5" fill="none"/>`;}
+    if(r[0]==='Fluid-bed'){for(let i=0;i<7;i++){g+=`<ellipse cx="${cx-22+((i*13)%44)}" cy="${cy-20+((i*17)%40)}" rx="5" ry="3.5" fill="${r[1]}"/>`;}for(let i=0;i<4;i++)g+=`<path d="M${cx-24+i*16} ${cy+38} q4 -14 0 -28" stroke="${DIA.dry}" stroke-width="2" fill="none" marker-end="url(#ru)"/>`;}
+    if(r[0]==='Hybrid'){g+=`<circle cx="${cx}" cy="${cy}" r="30" fill="none" stroke="${r[1]}" stroke-width="2.5" stroke-dasharray="5 4"/>`;g+=`<path d="M${cx-34} ${cy} q34 -30 68 0" stroke="${DIA.dry}" stroke-width="2" fill="none"/>`;for(let i=0;i<4;i++){const a=i/4*6.28;g+=`<ellipse cx="${(cx+Math.cos(a)*13).toFixed(0)}" cy="${(cy+Math.sin(a)*13).toFixed(0)}" rx="4.5" ry="3" fill="${r[1]}"/>`;}}
+    g+=`<text x="${cx}" y="${cy+62}" fill="${r[1]}" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${r[0]}</text>`;
+    g+=`<text x="${cx}" y="${cy+80}" fill="${DIA.ink}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${r[2]}</text>`;
+    g+=`<text x="${cx}" y="${cy+96}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${r[3]}</text>`;
+  });
+  g=`<defs><marker id="ru" markerWidth="7" markerHeight="7" refX="3" refY="1" orient="auto"><path d="M0 6 L3 0 L6 6 z" fill="${DIA.dry}"/></marker></defs>`+g;
+  return diaWrap(`${W} ${H}`,g,'The three main roaster architectures and what each is good at.');
+}
+// 16. The waves of coffee as a timeline.
+function diaWaves(){
+  const W=760,H=250,L=20,R=20,T=30,iw=W-L-R,axisY=H-56;
+  const waves=[['1st','1800s+','Commodity','cheap · instant · no origin','#8f7c66',.13],
+    ['2nd','1960s+','Experience','café · espresso · Starbucks','#B07B3E',.34],
+    ['3rd','2000s+','Craft','single origin · light · direct trade','#C9A34E',.62],
+    ['4th','now','Science + home','precision · at-home · community','#e0864a',.88]];
+  let g='';
+  g+=`<line x1="${L}" y1="${axisY}" x2="${W-R}" y2="${axisY}" stroke="${DIA.line}" stroke-width="2"/>`;
+  // rising steps to suggest growth in quality-focus
+  waves.forEach((w,i)=>{const x=L+iw*w[5];const barH=40+i*34;const y=axisY-barH;
+    g+=`<rect x="${(x-52).toFixed(0)}" y="${y.toFixed(0)}" width="104" height="${barH}" rx="6" fill="${w[4]}" opacity="0.2" stroke="${w[4]}" stroke-width="1.5"/>`;
+    g+=`<text x="${x.toFixed(0)}" y="${(y+22).toFixed(0)}" fill="${w[4]}" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
+    g+=`<text x="${x.toFixed(0)}" y="${(y+40).toFixed(0)}" fill="${DIA.ink}" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
+    if(barH>60)g+=`<text x="${x.toFixed(0)}" y="${(y+58).toFixed(0)}" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
+    g+=`<circle cx="${x.toFixed(0)}" cy="${axisY}" r="5" fill="${w[4]}"/>`;
+    g+=`<text x="${x.toFixed(0)}" y="${axisY+22}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${w[1]}</text>`;
+  });
+  g+=`<text x="${W-R}" y="${axisY+40}" fill="${DIA.ink3}" font-size="11" text-anchor="end" font-family="ui-sans-serif" font-style="italic">rising focus on the bean itself →</text>`;
+  return diaWrap(`${W} ${H}`,g,'The waves overlap rather than replace each other — each is a shift in how people relate to coffee.');
+}
+// 17. Supply chain: cherry to cup with value flow.
+function diaSupplyChain(){
+  const W=760,H=200,cy=70,L=20;
+  const steps=[['Farmer','grows & picks','#7d8f5a'],['Mill','processes green','#95602F'],['Exporter','+ Importer','#B07B3E'],['Roaster','roasts & sells','#8A5A34'],['Café / You','brews','#e0864a']];
+  const gap=(W-40)/steps.length;
+  let g='';
+  steps.forEach((s,i)=>{const cx=L+gap*i+gap/2;
+    g+=`<circle cx="${cx.toFixed(0)}" cy="${cy}" r="30" fill="${s[2]}" opacity="0.2" stroke="${s[2]}" stroke-width="2"/>`;
+    g+=`<text x="${cx.toFixed(0)}" y="${cy-2}" fill="${s[2]}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[0].split(' ')[0]}</text>`;
+    g+=`<text x="${cx.toFixed(0)}" y="${cy+50}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;
+    if(i<steps.length-1)g+=`<path d="M${(cx+32).toFixed(0)} ${cy} L${(cx+gap-32).toFixed(0)} ${cy}" stroke="${DIA.ink3}" stroke-width="2" marker-end="url(#asc)"/>`;
+  });
+  g=`<defs><marker id="asc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${DIA.ink3}"/></marker></defs>`+g;
+  // value bar beneath
+  g+=`<text x="${W/2}" y="${cy+96}" fill="${DIA.ink}" font-size="12.5" text-anchor="middle" font-family="ui-sans-serif">Every link adds cost and takes margin — historically the farmer did the most work for the least return.</text>`;
+  g+=`<text x="${W/2}" y="${cy+116}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Direct trade shortens the chain and pushes more value back to the farm.</text>`;
+  return diaWrap(`${W} ${H}`,g,'The path from coffee cherry to your cup.');
+}
+// 18. Blend construction: components → blend.
+function diaBlend(){
+  const W=760,H=200,cx2=590,cy=80,L=40;
+  const comps=[['Base','body & sweetness','#8A5A34',30],['Bright','acidity & lift','#C9A34E',86],['Accent','aromatics','#e0864a',142]];
+  let g='';
+  comps.forEach(c=>{g+=`<circle cx="${L+30}" cy="${c[3]}" r="15" fill="${c[2]}" opacity="0.85"/>`;
+    g+=`<text x="${L+54}" y="${c[3]-2}" fill="${c[2]}" font-size="13.5" font-weight="700" font-family="ui-sans-serif">${c[0]}</text>`;
+    g+=`<text x="${L+54}" y="${c[3]+14}" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">${c[1]}</text>`;
+    // arrow to blend
+    g+=`<path d="M${L+150} ${c[3]} Q${L+260} ${c[3]}, ${cx2-46} ${cy}" stroke="${c[2]}" stroke-width="2" fill="none" opacity="0.6"/>`;
+  });
+  // the blend cup
+  g+=`<circle cx="${cx2}" cy="${cy}" r="40" fill="none" stroke="${DIA.accent}" stroke-width="2.5"/>`;
+  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 1 ${cx2} ${cy+40} Z" fill="#8A5A34" opacity="0.5"/>`;
+  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 0 ${cx2} ${cy+40} Z" fill="#C9A34E" opacity="0.4"/>`;
+  g+=`<text x="${cx2}" y="${cy+64}" fill="${DIA.ink}" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">The blend</text>`;
+  g+=`<text x="${W/2}" y="${H-16}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">Dial the ratio by cupping the components together until the cup is balanced.</text>`;
+  return diaWrap(`${W} ${H}`,g,'A blend is built from components that each play a role.');
+}
 function diagram(kind){
   switch(kind){
     case 'roastcurve':return diaRoastCurve();
@@ -1439,6 +1697,14 @@ function diagram(kind){
     case 'grind':return diaGrind();
     case 'flavorwheel':return diaFlavorWheel();
     case 'cva':return diaCVA();
+    case 'processing':return diaProcessing();
+    case 'milk':return diaMilk();
+    case 'brewfamilies':return diaBrewFamilies();
+    case 'water':return diaWater();
+    case 'roasters':return diaRoasters();
+    case 'waves':return diaWaves();
+    case 'supplychain':return diaSupplyChain();
+    case 'blend':return diaBlend();
     default:return '';
   }
 }
@@ -1459,7 +1725,7 @@ function beanSVG(kind){
     case 'immature': inner=body('#b7c48a')+`<path d="M${cx} ${cy-24} C ${cx-6} ${cy-10}, ${cx+6} ${cy+10}, ${cx} ${cy+24}" stroke="#6a7a48" stroke-width="2" fill="none"/>`; break;
     default: inner=body(green)+crease;
   }
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:110px" role="img">${inner}</svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:110px" role="img" aria-label="Illustration of a ${esc(kind)} coffee bean">${inner}</svg>`;
 }
 // Render a labelled gallery of bean illustrations for a defect page.
 function beanGallery(items){
@@ -1475,6 +1741,23 @@ function refsBlock(refs){
     `<li><a href="${esc(r.link)}" target="_blank" rel="noopener noreferrer">${esc(r.label)}</a></li>`
   ).join('')}</ul></div>`;
 }
+// If this page is a step on the guided path, show a "next" nudge.
+// If this page is a step on the guided path, show a "next" nudge.
+function relatedBlock(rel){
+  if(!rel||!rel.length)return '';
+  const chips=rel.map(id=>{const m=METHODOLOGY[id];if(!m)return '';return `<button class="relchip" onclick="go('meth','${id}')">${esc(m.name)}</button>`;}).join('');
+  return `<div class="related"><span class="related-label">Related</span><div class="relchips">${chips}</div></div>`;
+}
+function pathNav(id){
+  const i=PATH.findIndex(s=>s.id===id);
+  if(i<0)return '';
+  const next=i<PATH.length-1?PATH[i+1]:null;
+  return `<div class="pathnav">
+    <span class="pathnav-label">Guided path · step ${i+1} of ${PATH.length}</span>
+    ${next?`<button class="pathnav-next" onclick="go('meth','${next.id}')"><span>Next: ${esc(next.label)}</span><span class="pathnav-why">${esc(next.why)}</span></button>`
+      :`<div class="pathnav-done">That's the path — you've got the fundamentals. Explore anything from here.</div>`}
+  </div>`;
+}
 function methDetail(id){
   const m=METHODOLOGY[id]; if(!m)return go('learn');
   const glabel=METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'';
@@ -1484,7 +1767,7 @@ function methDetail(id){
     <div class="grid mgrid">${siblings.map(([sid,sm])=>methCard(sid,sm,false)).join('')}</div>
   </div>`:'';
   app.innerHTML=`<div class="wrap detail">
-    <button class="back" onclick="go('learn')">← All topics</button>
+    <button class="back sticky" onclick="go('learn')">← All topics</button>
     <div class="dhead" style="border-bottom:none;padding-bottom:6px">
       <div class="txt">
         <div class="lvl" style="color:${m.accent}">${esc(glabel)}</div>
@@ -1492,14 +1775,148 @@ function methDetail(id){
         <div class="sub">${esc(m.sub)}</div>
       </div>
     </div>
-    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>${i===0&&m.diagram?diagram(m.diagram):''}`).join('')}
+    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>${i===0&&m.diagram?diagram(m.diagram):''}`).join('')}
     ${m.visuals?`<div class="msection"><h3>${esc(m.visuals.title||'Defect Reference')}</h3>${m.visuals.note?`<p>${esc(m.visuals.note)}</p>`:''}${beanGallery(m.visuals.beans)}</div>`:''}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
+    ${relatedBlock(m.related)}
     ${refsBlock(m.refs)}
+    ${pathNav(id)}
     ${sibBlock}
     <div style="height:40px"></div>
   </div>`;
 }
+
+/* ---------- GLOBAL SEARCH ---------- */
+function openSearch(){
+  const ov=document.getElementById('searchoverlay');
+  ov.style.display='flex';
+  document.body.style.overflow='hidden';
+  const inp=document.getElementById('globalsearch');
+  inp.value='';
+  document.getElementById('searchresults').innerHTML=searchEmptyState();
+  setTimeout(()=>inp.focus(),30);
+  inp.oninput=()=>runGlobalSearch(inp.value);
+}
+function closeSearch(){
+  document.getElementById('searchoverlay').style.display='none';
+  document.body.style.overflow='';
+}
+function searchEmptyState(){
+  return `<div class="searchhint">Search across everything — try <b>first crack</b>, <b>Ethiopia</b>, <b>espresso ratio</b>, <b>mucilage</b>, or <b>direct trade</b>.</div>`;
+}
+function goFromSearch(view,arg){closeSearch();go(view,arg);}
+function runGlobalSearch(q){
+  const box=document.getElementById('searchresults');
+  q=q.toLowerCase().trim();
+  if(!q){box.innerHTML=searchEmptyState();return;}
+  const results={profiles:[],origins:[],learn:[],glossary:[]};
+  // profiles
+  Object.entries(PROFILES).forEach(([id,p])=>{
+    const hay=[p.name,p.sub,p.level,p.oneLine,p.useFor,(p.aka||[]).join(' ')].join(' ').toLowerCase();
+    if(hay.includes(q))results.profiles.push([id,p.name,p.level]);
+  });
+  // origins + learn (both in METHODOLOGY)
+  Object.entries(METHODOLOGY).forEach(([id,m])=>{
+    if(id==='origin_intro')return;
+    const secText=(m.sections||[]).map(s=>s.h+' '+s.body).join(' ');
+    const kp=(m.keypoints||[]).join(' ');
+    const hay=(m.name+' '+m.sub+' '+secText+' '+kp).toLowerCase();
+    if(hay.includes(q)){
+      if(m.group==='origin')results.origins.push([id,m.name,m.roastLevel||'']);
+      else{const gl=METH_GROUPS.find(g=>g[0]===m.group);results.learn.push([id,m.name,gl?gl[1]:'']);}
+    }
+  });
+  // glossary
+  GLOSSARY.forEach(g=>{
+    if((g.term+' '+g.def).toLowerCase().includes(q))results.glossary.push(g);
+  });
+  const total=results.profiles.length+results.origins.length+results.learn.length+results.glossary.length;
+  if(!total){box.innerHTML=`<div class="searchhint">No matches for "${esc(q)}". Try a broader term.</div>`;return;}
+  let html='';
+  const section=(title,items,render)=>{
+    if(!items.length)return '';
+    return `<div class="searchgroup"><div class="searchglabel">${title} · ${items.length}</div>${items.slice(0,8).map(render).join('')}${items.length>8?`<div class="searchmore">+${items.length-8} more — keep typing to narrow</div>`:''}</div>`;
+  };
+  html+=section('Roast Profiles',results.profiles,r=>`<button class="searchitem" onclick="goFromSearch('profile','${r[0]}')"><span class="si-name">${esc(r[1])}</span><span class="si-meta">${esc(r[2])}</span></button>`);
+  html+=section('Origins',results.origins,r=>`<button class="searchitem" onclick="goFromSearch('origin','${r[0]}')"><span class="si-name">${esc(r[1])}</span><span class="si-meta">${esc(r[2])}</span></button>`);
+  html+=section('Learn',results.learn,r=>`<button class="searchitem" onclick="goFromSearch('meth','${r[0]}')"><span class="si-name">${esc(r[1])}</span><span class="si-meta">${esc(r[2])}</span></button>`);
+  html+=section('Glossary',results.glossary,g=>`<button class="searchitem gloss" onclick="goFromSearch('start')"><span class="si-name">${esc(g.term)}</span><span class="si-def">${esc(g.def.slice(0,90))}${g.def.length>90?'…':''}</span></button>`);
+  box.innerHTML=html;
+}
+// keyboard: Esc closes, "/" opens
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeSearch();
+  if(e.key==='/'&&document.getElementById('searchoverlay').style.display==='none'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();openSearch();}
+});
+document.getElementById('searchoverlay').addEventListener('click',e=>{if(e.target.id==='searchoverlay')closeSearch();});
+
+/* ---------- GLOSSARY TOOLTIPS ---------- */
+// Build a lookup of glossary terms (lowercased) -> definition, plus a regex to find them.
+let GLOSS_MAP={}, GLOSS_RE=null;
+(function buildGloss(){
+  GLOSSARY.forEach(g=>{GLOSS_MAP[g.term.toLowerCase()]=g.def;});
+  // Alias triggers: extra words that should surface an existing definition, keyed to the fullest term.
+  const findDef=frag=>{const g=GLOSSARY.find(x=>x.term.toLowerCase().includes(frag));return g?g.def:null;};
+  const ALIASES={
+    'maillard':findDef('maillard'),'caramelization':findDef('maillard'),'browning':findDef('maillard'),
+    'first crack':findDef('first crack'),'second crack':findDef('second crack'),
+    'rate of rise':findDef('rate of rise'),'development time ratio':findDef('development time ratio'),
+    'drum roaster':findDef('drum'),'fluid-bed':findDef('fluid-bed'),'fluid bed':findDef('fluid-bed'),
+    'washed':findDef('washed'),'natural process':findDef('washed'),'honey process':findDef('washed'),
+    'mucilage':"The sticky, sugary fruit layer clinging to the coffee seed under the skin. How much of it is left on during drying defines washed vs honey vs natural processing.",
+    'chlorogenic acids':"Acids abundant in green coffee that break down as it roasts — high in light roasts (bright, sometimes harsh), broken into bitter-tasting compounds in darker roasts.",
+    'chlorogenic':"Acids abundant in green coffee that break down as it roasts — high in light roasts, broken into bitter compounds when darker.",
+    'endothermic':"A reaction that absorbs heat. First crack is endothermic — the beans briefly pull in energy, which can crash the rate of rise if unmanaged.",
+    'exothermic':"A reaction that releases heat. Dense coffees can turn exothermic after first crack, adding energy the roaster didn't put in.",
+    'microlot':"A small, separated batch of coffee from a specific plot, day, or process — kept apart because it's distinctive enough to be worth more.",
+    'single origin':"Coffee from one place — one country, region, farm, or lot — sold unblended to showcase that origin's character.",
+    'direct trade':"A roaster buying green coffee straight from a specific producer, usually above market price, for quality and traceability. A relationship, not a certification.",
+    'c-price':"The benchmark futures-market price for commodity-grade Arabica. Volatile; acts as the reference floor that specialty premiums are quoted against.",
+    'agtron':findDef('agtron'),'degassing':findDef('degassing'),'quaker':findDef('quaker'),'robusta':findDef('robusta'),
+    'water activity':findDef('water activity'),'screen size':findDef('screen size'),'extraction yield':findDef('extraction'),'tds':findDef('tds'),
+  };
+  Object.entries(ALIASES).forEach(([k,v])=>{if(v&&!GLOSS_MAP[k])GLOSS_MAP[k]=v;});
+  const terms=Object.keys(GLOSS_MAP).sort((a,b)=>b.length-a.length)
+    .map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  const B=String.fromCharCode(92)+'b'; // word boundary, escaping-safe
+  GLOSS_RE=new RegExp(B+'('+terms.join('|')+')'+B,'i');
+})();
+// Given a plain-text body, wrap the FIRST occurrence of any glossary term in a tappable span.
+// Only links one term per body paragraph to avoid clutter. Skips if term equals the page title.
+function linkTerms(text, skipTerm){
+  if(!GLOSS_RE)return esc(text);
+  // We escape first, then inject markup around a matched term.
+  const m=GLOSS_RE.exec(text);
+  if(!m)return esc(text);
+  const term=m[1];
+  if(skipTerm && term.toLowerCase()===skipTerm.toLowerCase())return esc(text);
+  const idx=m.index;
+  const before=esc(text.slice(0,idx));
+  const hit=esc(text.slice(idx,idx+term.length));
+  const after=esc(text.slice(idx+term.length));
+  const key=term.toLowerCase().replace(/"/g,'');
+  return `${before}<span class="termref" onclick="showTerm(event,'${key}')">${hit}</span>${after}`;
+}
+function showTerm(ev,key){
+  ev.stopPropagation();
+  const def=GLOSS_MAP[key]; if(!def)return;
+  closeTermPop();
+  const pop=document.createElement('div');
+  pop.className='termpop';
+  pop.id='termpop';
+  pop.innerHTML=`<div class="termpop-term"></div><div class="termpop-def">${esc(def)}</div>`;
+  // capitalize term nicely
+  pop.querySelector('.termpop-term').textContent=key.replace(/\b\w/g,c=>c.toUpperCase());
+  document.body.appendChild(pop);
+  const r=ev.target.getBoundingClientRect();
+  const pw=Math.min(300,window.innerWidth-24);
+  pop.style.width=pw+'px';
+  let left=r.left+window.scrollX; if(left+pw>window.scrollX+window.innerWidth-12)left=window.scrollX+window.innerWidth-pw-12;
+  pop.style.left=Math.max(12,left)+'px';
+  pop.style.top=(r.bottom+window.scrollY+8)+'px';
+  setTimeout(()=>document.addEventListener('click',closeTermPop,{once:true}),10);
+}
+function closeTermPop(){const p=document.getElementById('termpop');if(p)p.remove();}
 
 go('home');
 

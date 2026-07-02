@@ -174,6 +174,206 @@
     }
   ],
   "METHODOLOGY": {
+    "waves": {
+      "name": "The Waves of Coffee",
+      "sub": "How coffee culture evolved",
+      "group": "culture",
+      "accent": "#c98a2e",
+      "diagram": "waves",
+      "sections": [
+        {
+          "h": "Why \"waves\"?",
+          "body": "The coffee industry describes its modern history in “waves” — major shifts in how people relate to coffee — borrowing the metaphor from the waves of feminism. The term was popularized by coffee professional Trish Rothgeb in a 2002–03 article. Each wave isn't a clean start-and-stop era so much as a shift in values that overlaps with the ones before and after it. Knowing the waves gives you a vocabulary for where a roaster, a café, or a coffee sits on the spectrum from cheap-and-consistent to craft-and-transparent."
+        },
+        {
+          "h": "First wave — coffee as commodity",
+          "body": "The first wave, taking off through the 1800s and into the 20th century, was about making coffee cheap, convenient, and available to everyone. This is the world of canned pre-ground coffee, instant coffee, and diner drip — Folgers, Maxwell House, Nescafé. Consumers didn't differentiate by origin or variety; the goals were low price and consistent (if unremarkable) taste. Innovations like vacuum packing and instant coffee were the wins of this era. Quality and provenance simply weren't part of the conversation."
+        },
+        {
+          "h": "Second wave — coffee as experience",
+          "body": "The second wave began in the 1960s with roasters like Peet's Coffee (founded 1966 by Alfred Peet) and was carried worldwide by Starbucks, which grew explosively from the 1980s on. It shifted attention from mere caffeine to the café experience: espresso drinks (lattes, cappuccinos, macchiatos), Italian-style machines, comfortable “third place” shops, and — for the first time — coffee labeled by country of origin. The focus, though, was still on the drink and the ambiance more than the bean itself, and roasts tended to run dark, often masking origin character."
+        },
+        {
+          "h": "Third wave — coffee as craft",
+          "body": "The third wave, named around 1999–2003 and still the dominant force in specialty today, turned the focus to the coffee itself — not the shop, not the syrup. Its hallmarks: single-origin beans with the farm, altitude, variety, and processing printed on the bag; lighter roasts to reveal origin character; manual brewing (pour-over, AeroPress); direct trade relationships with farmers; and treating coffee with the seriousness of fine wine. The “Big Three” US third-wave roasters — Intelligentsia, Stumptown, and Counter Culture — all built on direct trade. Note that “third wave” and “specialty” aren't synonyms: specialty is a quality grade (80+ points), while the third wave is a movement and a relationship between drinker and coffee."
+        },
+        {
+          "h": "Fourth wave — and beyond",
+          "body": "The fourth wave is still crystallizing and people define it differently. Common threads: coffee as science (refractometers, water recipes, precise brew control, even AI-assisted roasting and brewing), specialty coffee moving into the home (accelerated by the pandemic and by Gen Z learning on TikTok), and a push — voiced by Rothgeb herself — toward community and accessibility, tearing down the sometimes-exclusive feel of third-wave shops. Some frame it as specialty going both “upmarket” (ever-rarer competition lots) and “down” market (approachable, affordable specialty for everyone). Whether it's a true fourth wave or just the third wave maturing is a genuine industry debate — and there's already talk of a fifth."
+        }
+      ],
+      "keypoints": [
+        "“Waves” = shifts in how people relate to coffee; term popularized by Trish Rothgeb (2002–03).",
+        "1st: commodity — cheap, convenient, consistent (instant, canned, diner). No origin awareness.",
+        "2nd: experience — the café, espresso drinks, Starbucks/Peet's; origin first appears on labels; often dark roasts.",
+        "3rd: craft — single origin, light roasts, direct trade, manual brewing, coffee-as-wine. Not the same as “specialty” (a grade).",
+        "4th: science + home + community/accessibility; still being defined."
+      ],
+      "refs": [
+        {
+          "label": "Wikipedia — Third-wave coffee",
+          "link": "https://en.wikipedia.org/wiki/Third-wave_coffee"
+        },
+        {
+          "label": "Perfect Daily Grind — third wave vs specialty",
+          "link": "https://perfectdailygrind.com/2017/04/what-is-third-wave-coffee-how-is-it-different-to-specialty/"
+        },
+        {
+          "label": "Driven Coffee — the waves explained",
+          "link": "https://www.drivencoffee.com/blogs/blog/coffee-waves-explained"
+        }
+      ],
+      "related": [
+        "supply_chain",
+        "sustainability",
+        "blending"
+      ]
+    },
+    "supply_chain": {
+      "name": "The Coffee Trade & Economics",
+      "sub": "C-price, premiums, and who gets paid",
+      "group": "culture",
+      "accent": "#B07B3E",
+      "diagram": "supplychain",
+      "sections": [
+        {
+          "h": "The journey from cherry to cup",
+          "body": "Coffee passes through many hands: a farmer grows and picks the cherry; a mill processes and dries it into green; an exporter and importer move it across borders; a roaster buys the green, roasts it, and sells it; a café or you brews it. Each link adds cost and takes margin, and historically the person who did the most work — the farmer — captured the least value. Understanding this chain is the key to understanding why coffee costs what it does and why “where did this come from” is a loaded question in specialty."
+        },
+        {
+          "h": "The C-price: coffee as a traded commodity",
+          "body": "Most of the world's coffee is traded as a commodity on the futures market — the “C market,” which sets a global benchmark price (the “C-price”) for standard, commodity-grade Arabica. Like any commodity, it swings with global supply and demand, weather, and speculation, and it can fall below what it costs a farmer to grow. The C-price pertains to mid-grade Arabica — the stuff in a generic supermarket blend — but it still matters to specialty, because it acts as the reference floor that premiums are quoted against."
+        },
+        {
+          "h": "How specialty prices work",
+          "body": "Specialty coffee is largely traded outside the commodity system, or as a premium on top of the C-price. Rather than the C-price setting the specialty price, it acts as a baseline against which quality premiums are measured — a high-scoring Ethiopian might sell for a large multiple of the C-price, while low-grade lots trade at a discount. The idea is a pricing mechanism that rewards quality: the better the coffee a farmer produces, the more a roaster will pay. Initiatives like the Specialty Coffee Transaction Guide exist to make these premiums transparent. A wrinkle: when the commodity C-price spikes, the gap between commodity and specialty narrows, which can paradoxically reduce farmers' incentive to do the extra work of producing specialty."
+        },
+        {
+          "h": "Fair Trade vs direct trade",
+          "body": "Two models try to get more value to farmers. Fair Trade is a certification that guarantees a minimum price (a floor above the C-price) plus a social premium, routed through cooperatives — it provides a safety net but is a blunt instrument and the premium is modest. Direct trade is a relationship, not a certification: a roaster (or importer) buys straight from a specific farm or producer, often paying well above both the C-price and Fair Trade, in exchange for quality, traceability, and a long-term partnership. Direct trade is a cornerstone of the third wave, but “direct trade” is an unregulated term — its integrity depends entirely on the roaster actually doing what they claim."
+        }
+      ],
+      "keypoints": [
+        "Cherry → mill → exporter → importer → roaster → café/you; each link takes margin, farmer historically got least.",
+        "The C-market sets a global benchmark C-price for commodity-grade Arabica; it's volatile and can fall below cost of production.",
+        "Specialty trades as a premium above the C-price; the C-price is the reference floor, not the specialty price itself.",
+        "Fair Trade = certified minimum-price floor via co-ops. Direct trade = a relationship paying above market for quality + traceability (unregulated term)."
+      ],
+      "refs": [
+        {
+          "label": "Green Coffee Collective — the coffee trade explained",
+          "link": "https://greencoffeecollective.com/blogs/learn/coffee-trade-explained"
+        },
+        {
+          "label": "Abyss — the C market explained",
+          "link": "https://abysscoffee.es/blogs/blog/the-c-market-understanding-coffee-prices-and-coffee-markets"
+        },
+        {
+          "label": "Perfect Daily Grind — high prices blurring specialty/commercial",
+          "link": "https://perfectdailygrind.com/2025/07/high-coffee-prices-divide-between-specialty-and-commercial/"
+        }
+      ],
+      "related": [
+        "sustainability",
+        "waves",
+        "green_grades"
+      ]
+    },
+    "sustainability": {
+      "name": "Sustainability & Certifications",
+      "sub": "What the labels really mean",
+      "group": "culture",
+      "accent": "#7d8f5a",
+      "sections": [
+        {
+          "h": "Why sustainability is existential for coffee",
+          "body": "Coffee isn't just an ethical talking point — it's a survival question for the crop. Arabica is fussy about climate, and warming temperatures are pushing suitable growing altitudes higher and shrinking the land where quality coffee can grow, while making leaf rust and pests worse. At the same time, decades of low commodity prices have left many farming families unable to invest in their farms or attract the next generation to keep farming. Sustainability in coffee spans three linked things: environmental (climate, soil, water, shade, biodiversity), economic (farmers earning a living), and social (labor conditions, community)."
+        },
+        {
+          "h": "Reading the certifications",
+          "body": "The common labels each cover part of the picture, and it's worth knowing what each does and doesn't guarantee. Fair Trade focuses on a price floor and social premium via cooperatives. Rainforest Alliance (which merged with UTZ) focuses on environmental protection and sustainable farming practices. Organic certifies the absence of synthetic pesticides and fertilizers. Bird-Friendly (Smithsonian) is among the strictest shade-grown-and-organic standards. A crucial caveat: none of these is a quality grade — a certified coffee can taste mediocre, and a superb microlot may carry no certification at all because certification costs money the farmer may not recoup."
+        },
+        {
+          "h": "Certifications vs direct relationships",
+          "body": "There's a real tension in specialty between certifications and direct relationships. Certifications provide third-party assurance and a recognizable label, but they cost farmers money and can be blunt. Many top specialty roasters argue that a genuine direct-trade relationship — paying well above market, visiting the farm, committing across seasons — does more for sustainability than any label, because it puts real money in the farmer's hands and rewards quality directly. Neither approach is automatically superior; a certification is only as good as its standard and enforcement, and a “direct” relationship is only as good as the roaster's actual conduct."
+        },
+        {
+          "h": "Where it's heading",
+          "body": "The frontier of sustainability talk includes regenerative farming (building soil health and sequestering carbon), carbon-neutral or “climate-positive” roasting, water reduction in processing (wet processing is water-intensive), and rethinking whether the specialty model's traditional reliance on low prices can survive. The honest challenge, as many in the industry frame it, is extending these gains to ordinary farmers and ordinary drinkers — not just the top of the market — so that producing coffee remains viable for the next generation."
+        }
+      ],
+      "keypoints": [
+        "Coffee sustainability = environmental (climate/soil/water/shade) + economic (farmer livelihoods) + social (labor). Climate change is shrinking viable growing land.",
+        "Labels cover parts: Fair Trade (price floor/social), Rainforest Alliance (environment), Organic (no synthetics), Bird-Friendly (strict shade+organic).",
+        "No certification is a quality grade — certified coffee can be mediocre; great microlots may be uncertified (certification costs money).",
+        "Many specialty roasters argue genuine direct relationships beat labels for farmer impact — but both depend on real standards/conduct."
+      ],
+      "refs": [
+        {
+          "label": "Blackout — specialty vs commodity trading",
+          "link": "https://www.blackoutcoffee.com/blogs/the-reading-room/coffee-and-the-market-specialty-coffee-vs-commodity-trading"
+        },
+        {
+          "label": "Craft Coffee Guru — waves, sustainability, certifications",
+          "link": "https://www.craftcoffeeguru.com/what-is-1st-2nd-and-3rd-wave-coffee/"
+        }
+      ],
+      "related": [
+        "supply_chain",
+        "waves",
+        "green_processing"
+      ]
+    },
+    "blending": {
+      "name": "Blending",
+      "sub": "Building a coffee from parts",
+      "group": "culture",
+      "accent": "#8A5A34",
+      "diagram": "blend",
+      "sections": [
+        {
+          "h": "Why blend at all?",
+          "body": "A blend combines beans from different origins (or varieties or processes) into one coffee. There are two big reasons roasters do it. Consistency: single origins vary crop to crop and season to season and eventually run out, but a well-designed blend can be kept tasting the same year-round by adjusting components — which is why espresso blends and “house” coffees are usually blends. And construction: blending lets a roaster build a cup that no single origin delivers on its own — pairing a bright, acidic coffee with a heavy, chocolatey one to get both structure and sweetness. There's also an economic dimension: blending a premium coffee with more affordable ones lets a roaster hit a price point while keeping quality acceptable."
+        },
+        {
+          "h": "Designing a blend",
+          "body": "Good blending is deliberate, not just mixing leftovers. Roasters usually think in roles: a base that provides body and sweetness (often a chocolatey Brazil or a balanced Central American), a bright component for acidity and lift (an East African or washed high-grown coffee), and sometimes an accent for aromatics or a specific note. They dial the ratio by cupping the components together at different proportions until the cup is balanced. Espresso blends in particular are engineered to taste good under pressure and to hold up when milk is added — a job single origins don't always do reliably."
+        },
+        {
+          "h": "Pre-blend vs post-blend roasting",
+          "body": "A key technical decision: do you mix the green beans and roast them together (pre-blend), or roast each component separately to its own ideal and combine them after (post-blend)? Pre-blending is faster — one batch — and some roasters believe the beans “interchange,” smoothing and integrating as they share heat and moisture. Its risk: different beans have different densities, sizes, and moisture, so they roast at different rates, and a single roast profile can leave some components under- and others over-developed. Post-blending gives you full control — each coffee roasted to its best — at the cost of more time and more batches. Neither is universally “right”; it comes down to the beans and the roaster's preference."
+        },
+        {
+          "h": "Single origin vs blend",
+          "body": "This isn't a quality ranking — they're different goals. Single origin showcases the distinct character of one place and is the third wave's showpiece, prized for transparency and expressive, sometimes wild flavors that change with the season. Blends prioritize a consistent, engineered, often more “complete” cup that customers can rely on every time. A great roastery does both: single origins to show off what a place can do, and blends to deliver a dependable daily cup and a solid espresso. Snobbery toward blends is misplaced — an artisanal blend of specialty beans is craft, not a compromise."
+        }
+      ],
+      "keypoints": [
+        "Blend = beans from different origins/varieties combined. Reasons: year-round consistency, building a cup no single origin gives, hitting a price point.",
+        "Design by roles: a base (body/sweetness) + a bright component (acidity) + optional accent; dial ratio by cupping together. Espresso blends engineered for pressure + milk.",
+        "Pre-blend (roast together) = fast, claimed “interchange,” but uneven if beans differ in density/size. Post-blend (roast separately, combine) = full control, more work.",
+        "Single origin vs blend = different goals not quality tiers: SO showcases a place; blends deliver consistency. Good roasteries do both."
+      ],
+      "refs": [
+        {
+          "label": "MTPak — pre-blend vs post-blend",
+          "link": "https://mtpak.coffee/2021/08/pre-blend-or-post-blend-roasted-coffee/"
+        },
+        {
+          "label": "Coffee Equipment Pros — art & business of blending",
+          "link": "https://coffeeequipmentpros.com/blogs/news/the-art-and-business-of-coffee-blending-pushing-boundaries-for-coffee-worth-remembering"
+        },
+        {
+          "label": "Rock Creek — artisanal blends",
+          "link": "https://rockcreekcoffee.com/blogs/blog/definition-of-artisanal-coffee-blends-and-their-benefits"
+        }
+      ],
+      "related": [
+        "waves",
+        "green_processing",
+        "profiling"
+      ]
+    },
     "curve": {
       "name": "Reading the Roast Curve",
       "sub": "The roaster's primary instrument",
@@ -216,7 +416,12 @@
           "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
         }
       ],
-      "diagram": "roastcurve"
+      "diagram": "roastcurve",
+      "related": [
+        "ror",
+        "phases",
+        "dtr"
+      ]
     },
     "ror": {
       "name": "Rate of Rise (RoR)",
@@ -260,7 +465,12 @@
           "link": "http://coffeenavigated.net/roasting-coffee/"
         }
       ],
-      "diagram": "roastcurve"
+      "diagram": "roastcurve",
+      "related": [
+        "curve",
+        "cracks",
+        "defects"
+      ]
     },
     "phases": {
       "name": "The Phases of a Roast",
@@ -304,7 +514,12 @@
           "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
         }
       ],
-      "diagram": "phasebar"
+      "diagram": "phasebar",
+      "related": [
+        "curve",
+        "cracks",
+        "chemistry"
+      ]
     },
     "cracks": {
       "name": "First & Second Crack",
@@ -344,7 +559,12 @@
           "link": "https://library.sweetmarias.com/first-crack-faq-what-is-first-crack-what-is-second-crack/"
         }
       ],
-      "diagram": "cracks"
+      "diagram": "cracks",
+      "related": [
+        "phases",
+        "ror",
+        "dtr"
+      ]
     },
     "dtr": {
       "name": "Development Time Ratio",
@@ -388,7 +608,12 @@
           "link": "https://dailycoffeenews.com/2014/08/12/roast-development-time-and-the-prerequisite-for-any-successful-roast/"
         }
       ],
-      "diagram": "dtr"
+      "diagram": "dtr",
+      "related": [
+        "phases",
+        "curve",
+        "defects"
+      ]
     },
     "chemistry": {
       "name": "Roasting Chemistry",
@@ -432,6 +657,11 @@
           "label": "Coffee roasting (overview)",
           "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
         }
+      ],
+      "related": [
+        "phases",
+        "heat",
+        "defects"
       ]
     },
     "heat": {
@@ -455,6 +685,10 @@
         {
           "h": "Airflow is the hidden third control",
           "body": "New roasters focus on gas and time and forget airflow, but on most drum roasters airflow is the lever that ties heat transfer together. Turning up the fan pulls more hot air through the bean mass (increasing convective heat) while also clearing chaff and smoke; turning it down lets the drum's conductive and radiant heat dominate. Too little airflow and smoke settles onto the beans and the roast can taste baked or ashy; too much and you strip heat away and stall development. Learning what your machine's airflow actually does — and it differs machine to machine — is a big step in controlling the roast."
+        },
+        {
+          "h": "Putting the three modes together",
+          "body": "In a real roast, conduction, convection, and radiation all act at once, and the roaster's controls change the balance between them. Early on, contact with the hot drum (conduction) and radiant heat dominate as the cool beans tumble against the metal. As the roast proceeds and airflow moves hot gases through the bean mass, convection carries more and more of the energy — which is why airflow is such a powerful lever. Turning up gas raises the heat available; turning up the fan shifts more of that heat into convection and pulls smoke and chaff away. Understanding which mode you're leaning on at each moment is what lets a roaster shape the curve deliberately instead of just “adding heat.”"
         }
       ],
       "keypoints": [
@@ -468,7 +702,12 @@
           "link": "https://perfectdailygrind.com/2020/04/4-variables-that-affect-roasting/"
         }
       ],
-      "diagram": "heat"
+      "diagram": "heat",
+      "related": [
+        "roasters",
+        "chemistry",
+        "curve"
+      ]
     },
     "roasters": {
       "name": "Roaster Types",
@@ -491,6 +730,10 @@
         {
           "h": "Matching machine to roast style",
           "body": "The three main roaster types have real tendencies. Drum roasters — a rotating metal drum over a heat source — lean on conductive and radiant heat and thermal mass, building body and handling dark roasts well; they're the workhorse of specialty roasting. Fluid-bed (air) roasters levitate the beans on hot air, giving fast, clean, convection-dominated roasts that suit bright light roasts and are easy to control, but can struggle to build body or hold steady heat deep into second crack. Hybrid and modern recirculating machines blend the two. None is 'best' — the right choice depends on the roast styles you want and the scale you need."
+        },
+        {
+          "h": "Reading a roaster’s spec sheet",
+          "body": "When roasters compare machines, a few specs tell most of the story. Drum capacity (in kg or lb) sets the batch range — and the usable range is roughly 40–100% of rated, not the headline number alone. The heat source (gas is most common and responsive; electric is cleaner but slower to react) affects control. Airflow adjustability determines how much you can shape convection and clear smoke. Build mass matters: heavier drums hold heat steadily but respond slowly, lighter ones react fast but swing. And instrumentation — bean-temp and environmental probes, data logging — determines how precisely you can read and reproduce a roast. The “best” machine is the one whose tendencies match the roasts you want to make."
         }
       ],
       "keypoints": [
@@ -503,6 +746,12 @@
           "label": "Genuine Origin — roast profiles 101 (roaster types, charge)",
           "link": "https://blog.genuineorigin.com/2025/11/guide-to-roast-profiles/"
         }
+      ],
+      "diagram": "roasters",
+      "related": [
+        "heat",
+        "curve",
+        "profiling"
       ]
     },
     "defects": {
@@ -547,6 +796,38 @@
           "label": "Perfect Daily Grind — charge temp, scorching & tipping",
           "link": "https://perfectdailygrind.com/2017/09/coffee-roasting-guide-how-to-control-charge-temperature/"
         }
+      ],
+      "visuals": {
+        "title": "What roast defects look like",
+        "note": "Roast defects show up in the bean's appearance as well as the cup. These are the common visual tells alongside the flavor signatures described above.",
+        "beans": [
+          {
+            "kind": "healthy",
+            "label": "Well-developed",
+            "cap": "Even color, smooth surface, fully developed."
+          },
+          {
+            "kind": "quaker",
+            "label": "Quaker",
+            "cap": "Pale, underdeveloped bean from an unripe cherry — stands out after roasting."
+          },
+          {
+            "kind": "immature",
+            "label": "Scorched tips",
+            "cap": "Dark burnt tips from charge heat too high for the bean to conduct inward."
+          },
+          {
+            "kind": "fullblack",
+            "label": "Charred",
+            "cap": "Taken too far — carbonized surface, ashy and bitter in the cup."
+          }
+        ]
+      },
+      "related": [
+        "ror",
+        "dtr",
+        "profiling",
+        "cupping_intro"
       ]
     },
     "profiling": {
@@ -570,6 +851,14 @@
         {
           "h": "Iterate and document",
           "body": "Good roasting is disciplined iteration: change one variable, cup the result, keep notes. A repeatable, documented profile that any roaster on the team can hit is the real deliverable — not a single lucky great batch."
+        },
+        {
+          "h": "Developing a profile from scratch",
+          "body": "Approaching a brand-new green coffee is a process, not a guess. Most roasters start with a sample roast on a neutral, middle-of-the-road profile — enough development to see the coffee clearly without imposing a style — then cup it to understand what the bean offers. From there they adjust deliberately: more or less development to balance acidity and sweetness, tweaks to the Maillard phase to build or restrain body, a lighter or darker drop to suit the coffee's character and the intended use. Each change is one variable at a time, logged and cupped, until the profile lands. Dense high-grown coffees and unusual processes take more iterations to dial in."
+        },
+        {
+          "h": "Roasting to a purpose, not a formula",
+          "body": "There's no single “correct” roast for a coffee — the right profile depends on what it's for. The same Ethiopian might be roasted light and bright for filter, or slightly developed for a sweeter espresso; a blend component is roasted to play its role, not to shine alone. Good profiling starts from the end use and the coffee's strengths and works backward. This is also where a roaster's style lives: two skilled roasters can make the same green taste different and both be “right,” because they're aiming at different targets. The craft is having a clear intention and the control to hit it repeatedly."
         }
       ],
       "keypoints": [
@@ -587,6 +876,12 @@
           "label": "Liberty Beans — density testing & sample roasting",
           "link": "https://libertybeanscoffee.com/uncategorized/secret-coffee-roasting-strategies/"
         }
+      ],
+      "related": [
+        "curve",
+        "dtr",
+        "defects",
+        "cupping_intro"
       ]
     },
     "origin_intro": {
@@ -675,7 +970,33 @@
         "Berry",
         "Tea-like"
       ],
-      "blurb": "The birthplace of coffee and its genetic homeland — dense, high-grown, wildly diverse, and some of the most aromatic Arabica on earth."
+      "blurb": "The birthplace of coffee and its genetic homeland — dense, high-grown, wildly diverse, and some of the most aromatic Arabica on earth.",
+      "regionMap": {
+        "note": "Coffee clusters in the southern and western highlands — Yirgacheffe, Guji and Sidamo in the south, Harrar to the east.",
+        "shape": "M60,60 L150,45 L235,60 L250,110 L215,165 L150,180 L80,165 L50,115 Z",
+        "regions": [
+          [
+            "Yirgacheffe",
+            120,
+            150
+          ],
+          [
+            "Guji",
+            150,
+            160
+          ],
+          [
+            "Sidamo",
+            135,
+            140
+          ],
+          [
+            "Harrar",
+            215,
+            110
+          ]
+        ]
+      }
     },
     "origin_colombia": {
       "name": "Colombia",
@@ -723,7 +1044,33 @@
         "Citrus",
         "Balanced"
       ],
-      "blurb": "The dependable all-rounder — a huge range of microclimates and near year-round harvest producing clean, sweet, balanced coffee."
+      "blurb": "The dependable all-rounder — a huge range of microclimates and near year-round harvest producing clean, sweet, balanced coffee.",
+      "regionMap": {
+        "note": "Follows the three Andean mountain ranges running north–south — Huila and Nariño in the south, Antioquia in the northwest.",
+        "shape": "M110,40 L160,45 L180,90 L205,150 L175,195 L120,185 L95,140 L85,90 Z",
+        "regions": [
+          [
+            "Antioquia",
+            120,
+            80
+          ],
+          [
+            "Tolima",
+            140,
+            120
+          ],
+          [
+            "Huila",
+            150,
+            150
+          ],
+          [
+            "Nariño",
+            135,
+            180
+          ]
+        ]
+      }
     },
     "origin_brazil": {
       "name": "Brazil",
@@ -775,7 +1122,33 @@
         "Low acid",
         "Heavy body"
       ],
-      "blurb": "The world’s largest producer and the backbone of espresso blends — lower-grown, nutty, chocolatey, and easy to roast."
+      "blurb": "The world’s largest producer and the backbone of espresso blends — lower-grown, nutty, chocolatey, and easy to roast.",
+      "regionMap": {
+        "note": "Concentrated in the southeastern states — Minas Gerais (Cerrado, Sul de Minas), São Paulo (Mogiana), and Bahia.",
+        "shape": "M90,50 L200,45 L245,90 L230,150 L175,195 L110,185 L70,130 L75,80 Z",
+        "regions": [
+          [
+            "Cerrado",
+            150,
+            95
+          ],
+          [
+            "Sul de Minas",
+            155,
+            130
+          ],
+          [
+            "Mogiana",
+            130,
+            140
+          ],
+          [
+            "Bahia",
+            185,
+            90
+          ]
+        ]
+      }
     },
     "origin_sumatra": {
       "name": "Sumatra / Indonesia",
@@ -823,7 +1196,28 @@
         "Cedar",
         "Full body"
       ],
-      "blurb": "The savory outlier — wet-hulled processing gives a heavy-bodied, low-acid, earthy cup unlike anywhere else on earth."
+      "blurb": "The savory outlier — wet-hulled processing gives a heavy-bodied, low-acid, earthy cup unlike anywhere else on earth.",
+      "regionMap": {
+        "note": "On the island of Sumatra in Indonesia — Gayo highlands in Aceh (north), Lintong and Mandheling further south.",
+        "shape": "M70,40 L120,55 L150,100 L180,150 L200,195 L165,200 L130,155 L95,105 L60,60 Z",
+        "regions": [
+          [
+            "Gayo (Aceh)",
+            95,
+            70
+          ],
+          [
+            "Lintong",
+            150,
+            130
+          ],
+          [
+            "Mandheling",
+            165,
+            155
+          ]
+        ]
+      }
     },
     "origin_kenya": {
       "name": "Kenya",
@@ -880,7 +1274,33 @@
         "Wine-like",
         "Bright"
       ],
-      "blurb": "The acidity benchmark — SL28/SL34 on volcanic soil, double-washed, giving intense blackcurrant and a wine-like sparkle."
+      "blurb": "The acidity benchmark — SL28/SL34 on volcanic soil, double-washed, giving intense blackcurrant and a wine-like sparkle.",
+      "regionMap": {
+        "note": "Grown on the fertile volcanic slopes around Mt. Kenya, just north of the capital — Nyeri, Kirinyaga, Embu.",
+        "shape": "M70,55 L200,50 L245,95 L220,165 L150,185 L80,160 L55,100 Z",
+        "regions": [
+          [
+            "Nyeri",
+            135,
+            105
+          ],
+          [
+            "Kirinyaga",
+            155,
+            115
+          ],
+          [
+            "Embu",
+            170,
+            120
+          ],
+          [
+            "Mt. Kenya",
+            150,
+            95
+          ]
+        ]
+      }
     },
     "origin_guatemala": {
       "name": "Guatemala",
@@ -933,7 +1353,33 @@
         "Gentle fruit",
         "Balanced"
       ],
-      "blurb": "High-grown and versatile — Antigua for balanced chocolate, Huehuetenango for brighter complexity."
+      "blurb": "High-grown and versatile — Antigua for balanced chocolate, Huehuetenango for brighter complexity.",
+      "regionMap": {
+        "note": "Across volcanic highlands — Antigua in the central highlands, Huehuetenango in the west, Atitlán by the lake.",
+        "shape": "M45,75 L120,60 L215,72 L255,105 L210,140 L120,150 L60,125 Z",
+        "regions": [
+          [
+            "Huehuetenango",
+            85,
+            95
+          ],
+          [
+            "Atitlán",
+            130,
+            115
+          ],
+          [
+            "Antigua",
+            150,
+            120
+          ],
+          [
+            "Cobán",
+            185,
+            95
+          ]
+        ]
+      }
     },
     "origin_costarica": {
       "name": "Costa Rica",
@@ -986,7 +1432,28 @@
         "Clean",
         "Sweet"
       ],
-      "blurb": "The home of refined honey processing — clean, sweet, crisp coffee from a country with strict quality standards."
+      "blurb": "The home of refined honey processing — clean, sweet, crisp coffee from a country with strict quality standards.",
+      "regionMap": {
+        "note": "Small country, high quality — Tarrazú south of the capital is the flagship, with the Central and West Valleys nearby.",
+        "shape": "M50,80 L120,68 L200,80 L245,110 L205,150 L125,158 L65,130 Z",
+        "regions": [
+          [
+            "West Valley",
+            110,
+            100
+          ],
+          [
+            "Central Valley",
+            140,
+            105
+          ],
+          [
+            "Tarrazú",
+            145,
+            130
+          ]
+        ]
+      }
     },
     "origin_panama": {
       "name": "Panama",
@@ -1043,7 +1510,28 @@
           "label": "Forbes — Central America coffee regions",
           "link": "https://www.forbes.com/sites/lmowery/2025/05/22/a-beginners-guide-to-central-americas-acclaimed-coffee-regions/"
         }
-      ]
+      ],
+      "regionMap": {
+        "note": "A tiny sliver of the country near the Costa Rican border — the highlands around Volcán Barú: Boquete and Volcán.",
+        "shape": "M40,95 L110,80 L180,90 L250,80 L260,120 L200,135 L120,130 L50,130 Z",
+        "regions": [
+          [
+            "Boquete",
+            80,
+            105
+          ],
+          [
+            "Volcán",
+            60,
+            112
+          ],
+          [
+            "Renacimiento",
+            48,
+            118
+          ]
+        ]
+      }
     },
     "origin_elsalvador": {
       "name": "El Salvador",
@@ -1096,7 +1584,28 @@
           "label": "Stone Street — guide to Central American coffee",
           "link": "https://stonestreetcoffee.com/blogs/brooklyn-coffee-academy/a-guide-to-central-american-coffee"
         }
-      ]
+      ],
+      "regionMap": {
+        "note": "Across the volcanic ranges of the west and center — the Apaneca-Ilamatepec range holds the best-known estates.",
+        "shape": "M45,90 L130,80 L215,88 L255,110 L215,140 L130,150 L55,138 Z",
+        "regions": [
+          [
+            "Apaneca-Ilamatepec",
+            95,
+            110
+          ],
+          [
+            "Alotepec",
+            160,
+            112
+          ],
+          [
+            "Chichontepec",
+            185,
+            118
+          ]
+        ]
+      }
     },
     "origin_honduras": {
       "name": "Honduras",
@@ -1149,7 +1658,38 @@
           "label": "Stone Street — guide to Central American coffee",
           "link": "https://stonestreetcoffee.com/blogs/brooklyn-coffee-academy/a-guide-to-central-american-coffee"
         }
-      ]
+      ],
+      "regionMap": {
+        "note": "Spread across six mountainous regions in the west and center — Copán, Montecillos, Opalaca, Agalta, Comayagua, El Paraíso.",
+        "shape": "M50,70 L140,55 L240,70 L255,120 L200,155 L120,160 L60,130 Z",
+        "regions": [
+          [
+            "Copán",
+            85,
+            95
+          ],
+          [
+            "Montecillos",
+            120,
+            105
+          ],
+          [
+            "Comayagua",
+            150,
+            110
+          ],
+          [
+            "Agalta",
+            195,
+            100
+          ],
+          [
+            "El Paraíso",
+            180,
+            130
+          ]
+        ]
+      }
     },
     "origin_nicaragua": {
       "name": "Nicaragua",
@@ -1202,7 +1742,28 @@
           "label": "Stone Street — guide to Central American coffee",
           "link": "https://stonestreetcoffee.com/blogs/brooklyn-coffee-academy/a-guide-to-central-american-coffee"
         }
-      ]
+      ],
+      "regionMap": {
+        "note": "Concentrated in the northern highlands — Jinotega and Matagalpa produce the bulk; Nueva Segovia sits near the Honduran border.",
+        "shape": "M75,50 L175,45 L215,90 L210,155 L160,190 L95,175 L70,120 Z",
+        "regions": [
+          [
+            "Nueva Segovia",
+            120,
+            75
+          ],
+          [
+            "Jinotega",
+            135,
+            105
+          ],
+          [
+            "Matagalpa",
+            150,
+            125
+          ]
+        ]
+      }
     },
     "cupping_intro": {
       "name": "What Cupping Is",
@@ -1221,6 +1782,14 @@
         {
           "h": "A system in transition",
           "body": "The reference framework changed recently. In November 2024 the SCA adopted the Coffee Value Assessment (CVA) as its official standard, replacing the 2004 cupping protocol and its single 100-point score that had defined specialty coffee for two decades. Many labs still run the legacy form daily, so working professionals need to understand both — which is why this section covers each."
+        },
+        {
+          "h": "Who cups, and why it matters to everyone",
+          "body": "Cupping isn't just a buyer's ritual — it's the shared language of the whole industry, and nearly every role leans on it. Green buyers cup to decide what to purchase and at what premium. Roasters cup to check that a roast delivered what the green promised, and to compare batches. Quality-control teams cup production coffee against a reference to catch drift before it reaches customers. Even baristas cup to understand what they're brewing. Because it's a controlled, repeatable tasting, cupping lets people in different countries and companies compare notes on the same coffee and actually mean the same thing — which is why the protocol is standardized down to the gram and the second."
+        },
+        {
+          "h": "What you’re actually assessing",
+          "body": "A cupping evaluates a coffee across several dimensions rather than a single “good/bad” verdict: fragrance (the smell of the dry grounds), aroma (the smell once wet), flavor and aftertaste, acidity, sweetness, body/mouthfeel, and overall balance and cleanliness. Crucially, it also checks uniformity — whether all the cups of the same coffee taste alike, which reveals whether the lot is consistent or hiding a few tainted beans. A trained cupper isn't chasing their personal preference; they're describing and scoring the coffee against a standard so the result is useful to someone who wasn't at the table."
         }
       ],
       "keypoints": [
@@ -1237,6 +1806,11 @@
           "label": "Green Coffee Collective — cupping protocol",
           "link": "https://greencoffeecollective.com/pages/glossary/cupping-protocol"
         }
+      ],
+      "related": [
+        "cupping_mechanics",
+        "flavor_wheel",
+        "cva_overview"
       ]
     },
     "cupping_mechanics": {
@@ -1260,6 +1834,10 @@
         {
           "h": "Taste as it cools",
           "body": "Begin tasting once the coffee cools to roughly 71°C (around 8–10 minutes in). Load the spoon and slurp hard — the loud slurp aerates the liquid and sprays it across your whole palate. Evaluate flavor, aftertaste, acidity, sweetness, and mouthfeel, and keep tasting as the cup cools, because different attributes reveal themselves at different temperatures."
+        },
+        {
+          "h": "Why the protocol is so rigid",
+          "body": "The strict recipe — same dose, same water, same grind, same timing — isn't fussiness, it's the whole point. Cupping exists to compare coffees, and a comparison is only valid if the only thing that changed is the coffee. Vary the grind or the water temperature between cups and you're now tasting your own inconsistency, not the beans. That's also why cuppers prepare five cups of each coffee: it checks that the lot itself is uniform, catching a single tainted or defective bean that one cup might hide. The rigidity is what makes the results mean something."
         }
       ],
       "keypoints": [
@@ -1281,6 +1859,11 @@
           "label": "Podium Coffee Club — SCA protocol step by step",
           "link": "https://podiumcoffeeclub.com/blogs/blog/sca-cupping-protocol"
         }
+      ],
+      "related": [
+        "cupping_intro",
+        "flavor_wheel",
+        "cva_scoring"
       ]
     },
     "cva_overview": {
@@ -1325,6 +1908,11 @@
           "label": "SCA — CVA in Action: Affective Assessment",
           "link": "https://sca.coffee/sca-news/cva-in-action-affective"
         }
+      ],
+      "related": [
+        "cva_scoring",
+        "legacy_protocol",
+        "cupping_intro"
       ]
     },
     "cva_scoring": {
@@ -1348,6 +1936,14 @@
         {
           "h": "Reading the number",
           "body": "One caution echoing the old form: the 0–100 output is a translation for convenience, not the point of the CVA. Two cuppers can land on the same 84 for very different reasons, which is exactly why the descriptive assessment exists alongside it. Use the score as shorthand, and the description for the real picture."
+        },
+        {
+          "h": "Working through the arithmetic",
+          "body": "The CVA affective score can feel opaque, so it helps to walk it once. You rate each of the eight sections on a 1–9 scale for how much you like it, then sum those eight numbers (so the raw sum ranges from 8 to 72). That sum is converted to a 0–100-style score with the formula: multiply the sum by 0.65625 and add 52.75. So a coffee whose eight sections sum to 48 scores 0.65625 × 48 + 52.75 = 84.25. Then you subtract penalties: 2 points for each cup that wasn't uniform and 4 points for each defective cup. The constants are chosen so the numbers land on roughly the same familiar scale as the old 100-point form, which eases the transition."
+        },
+        {
+          "h": "Liking, not judging",
+          "body": "The philosophical shift in CVA scoring is that each section asks how much you like the attribute, on a simple 1–9 impression, rather than asking you to judge it against an abstract ideal of “correctness.” This sounds subtle but it changes the exercise: it separates the affective question (do I like this?) from the descriptive one (what does it taste like?), which the CVA handles on a separate descriptive form. Keeping liking and description apart is meant to make scores more honest and more comparable, and to stop the two from contaminating each other — a cupper can note a coffee is intensely fruity (description) while still rating how pleasant they find that fruit (affective)."
         }
       ],
       "keypoints": [
@@ -1370,7 +1966,12 @@
           "link": "https://royalcoffee.com/scoring-specialty-coffee-what-do-the-numbers-mean/"
         }
       ],
-      "diagram": "cva"
+      "diagram": "cva",
+      "related": [
+        "cva_overview",
+        "cupping_mechanics",
+        "flavor_wheel"
+      ]
     },
     "legacy_protocol": {
       "name": "The Legacy 2004 Protocol",
@@ -1393,6 +1994,10 @@
         {
           "h": "Legacy vs CVA at a glance",
           "body": "The big difference: the legacy form blends description and quality judgment into one number, while the CVA splits them apart. The legacy form asks 'how good is this acidity?' on one scale; the CVA asks 'how intense is it?' (descriptive) and 'how much do I like it?' (affective) as two separate questions. The legacy 'body' also became the broader 'mouthfeel' in the CVA."
+        },
+        {
+          "h": "Why the old protocol still matters",
+          "body": "The SCA's 2004 cupping form — the 100-point scale most people picture when they think of coffee scores — was the industry standard for two decades and still appears everywhere, even after the CVA replaced it. Knowing it matters because an enormous body of coffee history, marketing, and record-keeping is written in its language: “88-point” coffees, competition results, and older green offers all reference it. It scored coffee across ten attributes (fragrance/aroma, flavor, aftertaste, acidity, body, balance, uniformity, clean cup, sweetness, and overall) each out of ten, summing to 100, with 80 as the specialty threshold. Understanding both systems lets you read old and new scores without confusion."
         }
       ],
       "keypoints": [
@@ -1410,6 +2015,10 @@
           "label": "Daily Coffee News — SCA adopts new forms",
           "link": "https://dailycoffeenews.com/2024/11/05/sca-officially-adopts-new-cupping-forms-and-standards/"
         }
+      ],
+      "related": [
+        "cva_overview",
+        "cva_scoring"
       ]
     },
     "flavor_wheel": {
@@ -1459,7 +2068,12 @@
           "link": "https://notbadcoffee.com/flavor-wheel-en/"
         }
       ],
-      "diagram": "flavorwheel"
+      "diagram": "flavorwheel",
+      "related": [
+        "cupping_mechanics",
+        "cupping_intro",
+        "q_grader"
+      ]
     },
     "qc_loop": {
       "name": "The Roaster's QC Loop",
@@ -1482,6 +2096,10 @@
         {
           "h": "Close the loop with the curve",
           "body": "When a cupping flags a problem, the fix lives back in the roast data. A baked, flat cup points at a stalled rate of rise; a sharp, grassy cup points at under-development. Cupping tells you what's wrong in the cup; the roast curve tells you where to fix it. A roastery that cups its production and reads its curves together has a real quality system, not just good intentions."
+        },
+        {
+          "h": "Building a QC routine that scales",
+          "body": "For a growing roastery, quality control has to become a system rather than a single skilled person's instinct, or it breaks the moment that person is out. A practical QC loop: keep an approved reference roast for each coffee, cup production batches against it on a schedule (daily for high-volume, per-batch for premium), log every result next to its roast curve, and set a clear rule for what happens when a batch drifts — re-roast, blend off, or reject. The goal is catching drift before customers do. As volume grows, this expands into approving green on arrival, checking moisture and color, and tracking trends over time so a slowly wandering machine gets caught early."
         }
       ],
       "keypoints": [
@@ -1499,6 +2117,11 @@
           "label": "Scott Rao — development & the cup",
           "link": "https://www.scottrao.com/blog/2016/8/25/development-time-ratio"
         }
+      ],
+      "related": [
+        "cupping_intro",
+        "defects",
+        "profiling"
       ]
     },
     "q_grader": {
@@ -1518,6 +2141,14 @@
         {
           "h": "What it means practically",
           "body": "For a roaster, you don't need to be a Q Grader to cup well or run quality control — the protocol is open and learnable. But the credential still signals calibrated, trusted palates for buying and competition, and understanding where it's headed (CVA-based) tells you which framework to invest your own training in. This is a live, moving area — check current SCA announcements for the latest status."
+        },
+        {
+          "h": "What a Q Grader actually is",
+          "body": "A Q Grader is a professional licensed to score coffee using the SCA/CQI system — essentially a certified, calibrated palate whose scores are trusted across the industry. Earning the credential means passing a battery of demanding exams (around 20 tests over several days) covering sensory skills: identifying tastes and their intensities, distinguishing organic acids, matching aromas from the Le Nez du Café kit, grading green and roasted defects, and cupping coffees consistently against the standard. The point isn't snobbery — it's calibration. A Q Grader in Colombia and one in Norway should score the same coffee within a tight range, which is what makes quality scores meaningful in global trade."
+        },
+        {
+          "h": "Why calibration matters more than talent",
+          "body": "The value of a Q Grader isn't a magically superior tongue — it's reliability. Anyone's palate drifts and differs; the certification exists to pull individual cuppers onto a common scale so their scores mean the same thing. This is why calibration cuppings (where a group scores the same coffees and compares) are a regular practice even among certified graders. For a producer, a calibrated third-party score is leverage: an objective quality number that justifies a premium. For a buyer, it's risk reduction. The whole specialty pricing system rests on the idea that quality can be measured consistently — and Q Graders are the human instruments that make that claim credible."
         }
       ],
       "keypoints": [
@@ -1535,6 +2166,11 @@
           "label": "Perfect Daily Grind — CVA & the Q programme",
           "link": "https://perfectdailygrind.com/2025/05/cva-q-grader-programme-coffee-industry/"
         }
+      ],
+      "related": [
+        "cva_overview",
+        "flavor_wheel",
+        "cupping_intro"
       ]
     },
     "ops_warmup": {
@@ -1554,6 +2190,14 @@
         {
           "h": "Seasoning a new drum",
           "body": "A brand-new roaster needs seasoning before it makes coffee you'd sell. Running batches (often sacrificial or blended-off) conditions the metal and builds the thin, stable oil layer that the machine roasts on from then on. Until it's seasoned, a new drum behaves differently batch to batch. Never rush warm-up or seasoning — rushed thermal prep shows up directly in the cup."
+        },
+        {
+          "h": "Why the warm-up matters",
+          "body": "You can't just switch on a cold roaster and charge your first batch — the machine has to reach thermal equilibrium first, or your early roasts will be inconsistent. A cold drum absorbs heat differently than a hot, saturated one, so a batch charged into an under-warmed machine behaves unpredictably and usually bakes. The warm-up brings the whole mass of the drum and surrounding metal up to a stable operating temperature so it responds the same way every time. Most roasters run the machine at temperature for a set period (often 20–40+ minutes) before the first charge, and treat the first batch of the day with extra caution even so."
+        },
+        {
+          "h": "Seasoning and the first batch",
+          "body": "Beyond the daily warm-up, many roasters run a “seasoning” or throwaway batch first — a low-value coffee roasted to bring the machine into its true rhythm and to leave a thin, stable layer that helps consistency. The first real batch of the day is notorious for running differently from the rest, because the machine is still settling, so experienced roasters either sacrifice it, cup it separately, or schedule their least-critical coffee first. The broader lesson is that repeatability starts before the coffee even goes in: a consistent warm-up and start-of-day routine removes a hidden variable that otherwise quietly changes every batch."
         }
       ],
       "keypoints": [
@@ -1571,6 +2215,10 @@
           "label": "CoffeeNavigated — preheat & thermal mass",
           "link": "http://coffeenavigated.net/roasting-coffee/"
         }
+      ],
+      "related": [
+        "ops_bbp",
+        "ops_batchsize"
       ]
     },
     "ops_bbp": {
@@ -1611,6 +2259,11 @@
           "label": "Perfect Daily Grind — BBP & charge stability",
           "link": "https://perfectdailygrind.com/2019/11/common-mistakes-that-roasters-make-how-to-avoid-them/"
         }
+      ],
+      "related": [
+        "ops_warmup",
+        "ops_logging",
+        "profiling"
       ]
     },
     "ops_batchsize": {
@@ -1630,6 +2283,14 @@
         {
           "h": "Why not just max it out",
           "body": "Roasting at full capacity leaves no thermal headroom. If the roast falls behind early, you have nowhere to add energy, and you can't recover the curve. Running at 70–85% keeps reserve heat available to steer the roast — which is exactly why experienced roasters rarely fill the drum."
+        },
+        {
+          "h": "Why batch size changes the roast",
+          "body": "Batch size isn't just how much coffee you make — it changes how the roast behaves. A roaster is designed around a rated capacity, and the same machine behaves differently at the top and bottom of its range. Too full (over capacity) and there isn't enough heat or airflow to move through the dense bean mass, so the roast slows, stalls, and bakes, and you may not be able to drive it into second crack cleanly. Too empty and the beans can't buffer the drum's heat, so the roast races and scorches, and the probe may not even be properly buried in beans to read accurately. Most roasters find a machine performs best somewhere in the middle of its rated range."
+        },
+        {
+          "h": "Scaling a profile across batch sizes",
+          "body": "A profile dialed in at one batch size won't transfer unchanged to another, which trips up new roasters. A larger batch has more thermal mass and needs more energy and usually more time; a smaller batch needs less gas and moves faster. If you change batch size, expect to re-tune your gas and airflow and to see your landmark times shift. This is why serious roasteries standardize batch sizes for production coffees — keeping the batch size fixed is one less variable, so the logged profile stays reproducible day to day. Change the batch, and you're effectively developing a new profile."
         }
       ],
       "keypoints": [
@@ -1647,6 +2308,10 @@
           "label": "HowToCoffeePro — controlling the roast",
           "link": "https://howtocoffeepro.teachable.com/courses/1206490/lectures/26941587"
         }
+      ],
+      "related": [
+        "ops_warmup",
+        "ops_fire"
       ]
     },
     "ops_fire": {
@@ -1666,6 +2331,10 @@
         {
           "h": "When a fire happens",
           "body": "Thermal events will happen despite good habits — a power failure at first crack leaves beans sitting motionless on a hot drum. Plan your immediate actions in advance and document them. General principles: keep the drum rotating so beans don't sit and ignite, dump or spray as your machine's design allows, and know where your extinguisher is. Never leave roasting beans unattended — the batch that gets away from a distracted roaster is the classic cause. Keep gas valves closed when not roasting, and have gas detection and a clear, marked fire plan."
+        },
+        {
+          "h": "Building a fire plan before you need one",
+          "body": "The time to decide what you'll do about a roaster fire is long before one happens, because a drum fire escalates in seconds. A basic plan every roastery should have written down and rehearsed: know where your extinguisher is and that it's rated for the fire type; know how your specific machine is meant to be handled in a thermal event (many manufacturers give explicit steps); keep the drum turning so beans don't sit and ignite; and never, ever open the drum to look, since the rush of oxygen can turn smoldering chaff into a flare. Pair the plan with the prevention routine — a clean machine rarely catches fire in the first place — and the darkest roasts become a managed risk rather than a gamble."
         }
       ],
       "keypoints": [
@@ -1687,6 +2356,10 @@
           "label": "Scott Rao — roaster fires & cleaning",
           "link": "https://www.scottrao.com/blog/fire"
         }
+      ],
+      "related": [
+        "ops_batchsize",
+        "roasters"
       ]
     },
     "ops_decaf": {
@@ -1706,6 +2379,10 @@
         {
           "h": "How to adjust",
           "body": "Come in gentler. Use a lower charge temperature because the beans are lighter and more fragile and scorch easily. First crack lands at roughly the same time as regular coffee, but the roast runs faster after first crack — second crack can arrive surprisingly quickly, so watch the back half closely. Most decaf is best dropped around the end of first crack to somewhat beyond, and generally kept out of a hard second crack, which turns it bitter. Cool it fast and rest it 24–48 hours like any coffee."
+        },
+        {
+          "h": "Reading decaf without the usual cues",
+          "body": "Because decaf lies about its color and its cracks are muffled, you have to lean harder on the cues that don't lie: time, temperature, and rate of rise. Trust your logged curve and your probe over what your eyes and ears tell you, since a decaf that looks like a Full City may only be developed to a City. Many roasters keep a separate reference profile for decaf entirely, built from cupping rather than appearance, and treat the visual darkness as almost meaningless. It's a good reminder that the roast is a process to be measured, not just watched."
         }
       ],
       "keypoints": [
@@ -1727,6 +2404,10 @@
           "label": "Green Coffee Collective — roasting decaf tips",
           "link": "https://greencoffeecollective.com/blogs/learn/expert-tips-for-perfectly-roasting-decaf-coffee"
         }
+      ],
+      "related": [
+        "chemistry",
+        "defects"
       ]
     },
     "ops_degassing": {
@@ -1771,6 +2452,10 @@
           "label": "Home Grounds — degassing coffee",
           "link": "https://www.homegrounds.co/degassing-coffee/"
         }
+      ],
+      "related": [
+        "ops_logging",
+        "brew_espresso"
       ]
     },
     "ops_logging": {
@@ -1790,6 +2475,14 @@
         {
           "h": "The software landscape",
           "body": "Two names dominate. Artisan is free, open-source roast-logging software that connects to most machines and probes and plots BT and RoR live — the standard entry point. Cropster is the commercial industry platform, adding production planning, inventory, QC, and between-batch protocol tooling; it's what many mid-to-large roasteries run. Both do the core job: turn each roast into data you can see, compare, and repeat."
+        },
+        {
+          "h": "What to log, and why",
+          "body": "A roast log is the roaster's black box — the record that turns a good batch from a happy accident into something you can reproduce. At minimum, log the coffee and batch size, charge temperature, the times and temperatures of your landmarks (turning point, dry end, first crack, drop), your gas and airflow settings and when you changed them, the total time and development time ratio, and the ambient conditions. Modern software (Artisan, Cropster) captures the temperature curve automatically; the human still records the decisions and the tasting result. Without a log you can't answer the only question that matters when a batch is great or terrible: what did I actually do?"
+        },
+        {
+          "h": "Closing the loop with the cup",
+          "body": "A log of numbers is only half the picture — its real power comes from pairing it with the cup. The discipline is to cup each batch (or a regular sample) and write the tasting result next to the curve that produced it. Over time this builds a library: you can see that the batches that stalled in Maillard taste flat, that dropping thirty seconds earlier kept more acidity, that a particular coffee wants more heat than you'd expect. This feedback loop — roast, log, cup, adjust — is how a roaster actually improves, and it's why logging without tasting (or tasting without logging) leaves most of the value on the table."
         }
       ],
       "keypoints": [
@@ -1807,6 +2500,11 @@
           "label": "Cropster — roasting platform & BBP",
           "link": "https://www.cropster.com/news/article/between-batch-protocol-for-coffee-roasters-the-whats-whys-and-hows-from-experts/"
         }
+      ],
+      "related": [
+        "ops_bbp",
+        "profiling",
+        "dtr"
       ]
     },
     "brew_extraction": {
@@ -1848,7 +2546,12 @@
           "link": "https://coffeebrewshub.com/blog/science-of-coffee-extraction"
         }
       ],
-      "diagram": "extraction"
+      "diagram": "extraction",
+      "related": [
+        "brew_grind",
+        "brew_espresso",
+        "brew_water"
+      ]
     },
     "brew_espresso": {
       "name": "Dialing In Espresso",
@@ -1893,7 +2596,12 @@
           "link": "https://routescoffee.co.uk/mastering-espresso-key-parameters-every-barista-should-know/"
         }
       ],
-      "diagram": "espresso"
+      "diagram": "espresso",
+      "related": [
+        "brew_extraction",
+        "brew_grind",
+        "brew_milk"
+      ]
     },
     "brew_grind": {
       "name": "Grind & Burrs",
@@ -1916,6 +2624,14 @@
         {
           "h": "Fresh grind, and the CO2 effect",
           "body": "Grind immediately before brewing; ground coffee stales in hours as aromatics escape and oxidation accelerates. Freshness also affects the shot mechanically: very fresh beans still full of CO2 create more resistance and run slower, while degassed beans run faster — which is part of why the same grind setting behaves differently across a bag's life."
+        },
+        {
+          "h": "Grinding fresh, and why it’s non-negotiable",
+          "body": "Grind timing matters as much as grind size. Coffee's aromatics are volatile and its huge new surface area oxidizes fast, so ground coffee goes stale in minutes to hours — far faster than whole beans, which hold for weeks. This is why every serious setup grinds immediately before brewing and never stockpiles grounds. It's also why pre-ground supermarket coffee, however good the bean, is already compromised. The practical rule: buy whole bean, grind only what you're about to brew, and if you taste a flat, hollow cup from good beans, stale grind is a prime suspect."
+        },
+        {
+          "h": "Burr grinders vs blade",
+          "body": "Not all grinders are equal, and the difference shows up in the cup. A blade grinder chops beans unevenly into a mix of dust and boulders, which extract at different rates — the dust over-extracts (bitter) while the boulders under-extract (sour) in the same brew, muddying everything. A burr grinder crushes beans between two surfaces set a fixed distance apart, producing far more uniform particles that extract evenly, and it lets you dial a repeatable, specific grind size for each method. For anyone serious about coffee, a burr grinder is the single highest-impact equipment upgrade — often more than the brewer itself."
         }
       ],
       "keypoints": [
@@ -1934,7 +2650,12 @@
           "link": "https://completehomebarista.com/guides/espresso-extraction-chart-explained/"
         }
       ],
-      "diagram": "grind"
+      "diagram": "grind",
+      "related": [
+        "brew_extraction",
+        "brew_espresso",
+        "brew_methods"
+      ]
     },
     "brew_methods": {
       "name": "Brew Methods",
@@ -1974,6 +2695,12 @@
           "label": "SCA — brewing control chart",
           "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
         }
+      ],
+      "diagram": "brewfamilies",
+      "related": [
+        "brew_extraction",
+        "brew_grind",
+        "brew_water"
       ]
     },
     "brew_milk": {
@@ -2018,6 +2745,11 @@
           "label": "ScienceDirect — steam frothing & microfoam",
           "link": "https://www.sciencedirect.com/science/article/abs/pii/S0958694622001601"
         }
+      ],
+      "diagram": "milk",
+      "related": [
+        "brew_espresso",
+        "brew_methods"
       ]
     },
     "brew_water": {
@@ -2058,6 +2790,11 @@
           "label": "SCA — brewing control chart & standards",
           "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
         }
+      ],
+      "diagram": "water",
+      "related": [
+        "brew_extraction",
+        "brew_methods"
       ]
     },
     "green_intro": {
@@ -2077,6 +2814,10 @@
         {
           "h": "What this section covers",
           "body": "Green QC breaks into a few skills: physically grading a sample for defects, measuring its moisture, density, and water activity, understanding how processing method shapes the cup, knowing the difference between the two coffee species, and reading the country grading systems on a listing. Each has its own page here. Together they're how a buyer decides what's worth roasting — and worth paying for."
+        },
+        {
+          "h": "How green coffee is bought",
+          "body": "Green coffee reaches a roaster through a few channels, and which one a roaster uses shapes everything downstream. Most buy through importers who hold green in climate-controlled warehouses and offer it by the bag — convenient, lower-commitment, and how most small roasters operate. Larger or more relationship-driven roasters buy through direct trade, contracting with a specific farm or cooperative, often visiting origin and committing before harvest. Either way, buying decisions rest on a sample: roasters request green samples, roast and cup them, and only then commit. Coffee is also seasonal — it's an agricultural product with a harvest calendar — so freshness of the crop (“current crop” vs “past crop”) is part of the buying conversation."
         }
       ],
       "keypoints": [
@@ -2094,6 +2835,11 @@
           "label": "Ebru Coffee — how specialty is graded",
           "link": "https://ebrucoffeeco.com/blogs/culture/how-specialty-coffee-is-graded"
         }
+      ],
+      "related": [
+        "green_grading",
+        "green_processing",
+        "supply_chain"
       ]
     },
     "green_grading": {
@@ -2188,7 +2934,12 @@
             "cap": "Malformed hollow bean; roasts unevenly."
           }
         ]
-      }
+      },
+      "related": [
+        "green_measure",
+        "green_processing",
+        "green_grades"
+      ]
     },
     "green_measure": {
       "name": "Density, Moisture & Water Activity",
@@ -2211,6 +2962,10 @@
         {
           "h": "Screen size",
           "body": "Screen size grades beans by physical size, measured in 64ths of an inch — a screen 18 bean is 18/64 inch, about 7.1mm. Green is passed through a stack of calibrated screens to sort by size; specialty coffee commonly falls in the screen 14–18 range. Size isn't quality directly, but uniform size means even roasting, which is why it's specified. This is also the basis of some country grades (Kenya's AA, Colombia's Supremo)."
+        },
+        {
+          "h": "Why buyers care about all four numbers",
+          "body": "None of these numbers is quality on its own, but together they de-risk a purchase. Moisture and water activity predict whether a lot will survive months in a warehouse or arrive moldy. Density confirms the altitude story a seller tells and hints at how the coffee will take heat in the roaster. Screen size predicts even roasting and underpins many country grades. A careful buyer reads them as a set: a high-altitude claim with low density is a red flag; specialty moisture with high water activity warns of storage risk. The cup score tells you how good it is today; these numbers tell you whether it'll still be good when you roast it."
         }
       ],
       "keypoints": [
@@ -2228,6 +2983,10 @@
           "label": "Ethio Coffee — moisture & water activity in QC",
           "link": "https://www.ethiocoffee.co/insights/green-coffee-quality-control-defects-grading"
         }
+      ],
+      "related": [
+        "green_grading",
+        "green_grades"
       ]
     },
     "green_processing": {
@@ -2251,6 +3010,10 @@
         {
           "h": "Anaerobic and wet-hulled",
           "body": "Two more you'll see on listings. Anaerobic ferments the coffee sealed off from oxygen (often 48–72 hours), producing intense, complex, sometimes polarizing flavors — the experimental frontier. Wet-hulled (giling basah), used almost only in Indonesia, hulls the parchment off while the bean is still wet (around 30–35% moisture), then finishes drying exposed. It's what gives Sumatran coffee its signature earthy, full-bodied, very-low-acid, sometimes savory character. Each method carries a different defect and mold risk when drying is done poorly."
+        },
+        {
+          "h": "Why processing is a lever, not a label",
+          "body": "For a buyer or roaster, processing is one of the few things that reliably predicts the cup before you taste it, so it's worth reading on every offer sheet. The same variety from the same farm can land anywhere from crisp and tea-like to jammy and wild depending only on how the cherry was handled after picking. It also carries risk information: naturals and honeys involve fruit sitting on the bean while it dries, which builds sweetness but invites fermentation faults and mold if the drying isn't carefully managed — so processing tells you something about both the flavor and the care that went into the lot."
         }
       ],
       "keypoints": [
@@ -2272,6 +3035,12 @@
           "label": "Craft Coffee Guru — honey process detail",
           "link": "https://www.craftcoffeeguru.com/honey-processed-coffee/"
         }
+      ],
+      "diagram": "processing",
+      "related": [
+        "green_grading",
+        "green_species",
+        "blending"
       ]
     },
     "green_species": {
@@ -2312,6 +3081,10 @@
           "label": "DQ Coffee — arabica vs robusta",
           "link": "https://dqcoffee.vn/how-to-distinguish-coffee-arabica-and-robusta/?lang=en"
         }
+      ],
+      "related": [
+        "green_processing",
+        "green_grades"
       ]
     },
     "green_grades": {
@@ -2356,6 +3129,11 @@
           "label": "StoneX — coffee grading overview",
           "link": "https://www.stonex.com/en/financial-glossary/coffee-grading/"
         }
+      ],
+      "related": [
+        "green_grading",
+        "green_species",
+        "supply_chain"
       ]
     }
   }
