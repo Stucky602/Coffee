@@ -191,6 +191,14 @@
         {
           "h": "Why the shape matters more than the numbers",
           "body": "Absolute bean temps are machine-specific — your probe, your drum mass, your placement. What transfers between roasters is the shape: a smooth, continuously declining RoR from turning point to drop. That shape is the closest thing roasting has to a universal quality signal."
+        },
+        {
+          "h": "Why the shape matters more than the numbers",
+          "body": "Two roasters with different machines will hit different absolute temperatures for the same coffee — one reads first crack at 196°C, another at 205°C, because their probes sit in different places and their drums store heat differently. What transfers between machines is the shape of the curve: a smooth, decelerating rise with a rate of rise that peaks early and then glides steadily down. When people talk about a 'good roast curve,' they mean that shape, not a specific temperature. Learn to read the shape and you can reproduce a roast on any machine; chase the numbers alone and you'll be lost the moment you change roasters."
+        },
+        {
+          "h": "How to actually use the curve live",
+          "body": "In practice you're watching two lines climb and making small heat and airflow adjustments to keep them behaving. The bean-temp line should always be rising toward the drop, never flattening. The rate-of-rise line should be descending smoothly. Your gas changes take 20–60 seconds to show up on the RoR, so you steer ahead of where you are, not where you want to be — like turning a ship. Most modern roasting is logged with software (Artisan, Cropster) that plots both lines in real time so you can compare each batch against a reference roast and reproduce your best results."
         }
       ],
       "keypoints": [
@@ -207,7 +215,8 @@
           "label": "Coffee roasting (overview)",
           "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
         }
-      ]
+      ],
+      "diagram": "roastcurve"
     },
     "ror": {
       "name": "Rate of Rise (RoR)",
@@ -226,6 +235,14 @@
         {
           "h": "Crash and flick",
           "body": "Two classic RoR faults cluster around first crack. A crash is a sudden RoR drop as first crack's endothermic reaction pulls energy — the bean momentarily stops climbing. A flick is the RoR rebounding upward right after. Both correlate with muddy, baked-tasting cups. Managing gas and airflow before first crack to prevent the crash is a core roasting skill."
+        },
+        {
+          "h": "The crash and the flick",
+          "body": "Two specific RoR faults cluster around first crack and ruin cups. A crash is a sudden drop in the rate of rise — first crack is endothermic (the beans briefly absorb energy) and if you haven't planned for it, the RoR can nosedive, giving a flat, baked, hollow cup. A flick (or 'spike') is the RoR rebounding upward right after — often from adding too much heat to fight the crash — which scorches the surface and adds harshness. The goal is a RoR that eases through first crack in a smooth continuous decline, with neither a cliff nor a bounce. Managing the heat before first crack, not after, is what prevents both."
+        },
+        {
+          "h": "Reading RoR as a prediction",
+          "body": "The power of the rate of rise is that it's a leading indicator — it tells you where the roast is going before it gets there. A RoR that's flattening warns you the roast is about to stall and bake, minutes before the cup would tell you. A RoR climbing late warns of a coming scorch. Because it forecasts rather than reports, experienced roasters watch the RoR line more than the temperature line itself; the temperature tells you where you are, the RoR tells you what's about to happen."
         }
       ],
       "keypoints": [
@@ -242,7 +259,8 @@
           "label": "CoffeeNavigated — RoR, stalling & crash/flick",
           "link": "http://coffeenavigated.net/roasting-coffee/"
         }
-      ]
+      ],
+      "diagram": "roastcurve"
     },
     "phases": {
       "name": "The Phases of a Roast",
@@ -261,6 +279,14 @@
         {
           "h": "Development phase",
           "body": "From first crack to drop. Also called post-crack development. Here acidity mellows, sweetness rounds, and roast character grows. Too short and the coffee is grassy/sour/underdeveloped; too long and it goes flat then roasty. Measured as a ratio of total time — see DTR."
+        },
+        {
+          "h": "What can go wrong in each phase",
+          "body": "Each phase has its own failure mode. Rush the drying phase and the outside of the bean races ahead of a still-damp core, so it browns unevenly and can taste grassy or vegetal. Rush or stall the Maillard phase and you starve the roast of sweetness and complexity — this is where most flavor is made, so a baked or too-fast Maillard shows up as a flat, dull cup. Mismanage development and you either drop underdeveloped (sour, sharp) or over-developed (ashy, bitter). Because the phases run in sequence, a mistake early cascades — you can't fix a rushed drying phase later in the roast."
+        },
+        {
+          "h": "The phases are proportions, not fixed times",
+          "body": "There's no universal 'right' length for each phase — a light Nordic roast and a dark French roast have very different phase balances. What matters is the relationship: enough drying to evenly prepare the bean, a Maillard phase long enough to build the sweetness you want, and a development phase sized to the roast level. Roasters often think in rough proportions of total time rather than absolute minutes, because that scales across batch sizes and machines better than a stopwatch does."
         }
       ],
       "keypoints": [
@@ -277,7 +303,8 @@
           "label": "Coffee roasting (overview)",
           "link": "https://en.wikipedia.org/wiki/Coffee_roasting"
         }
-      ]
+      ],
+      "diagram": "phasebar"
     },
     "cracks": {
       "name": "First & Second Crack",
@@ -316,7 +343,8 @@
           "label": "Sweet Maria's — First Crack FAQ",
           "link": "https://library.sweetmarias.com/first-crack-faq-what-is-first-crack-what-is-second-crack/"
         }
-      ]
+      ],
+      "diagram": "cracks"
     },
     "dtr": {
       "name": "Development Time Ratio",
@@ -335,6 +363,14 @@
         {
           "h": "Its limits",
           "body": "DTR is popular because it's a single comparable number, but it can mislead. Two roasts with identical DTR can taste completely different if one crashed and one glided. Use DTR to describe and compare roasts, not to define quality on its own."
+        },
+        {
+          "h": "Why higher DTR isn’t better",
+          "body": "It's tempting to treat development time ratio as a quality score where more is better, but it's a lever, not a target. Push DTR too high and you drift toward baked, flat, over-developed flavors; too low and you get sharp, underdeveloped, grassy cups. The right DTR depends entirely on the coffee and the roast level you're aiming for — a delicate light-roasted Ethiopian might sing at 12%, while a dark roast naturally runs higher. Use it to compare your own batches and reproduce results, not as a number to maximize."
+        },
+        {
+          "h": "Measuring it consistently",
+          "body": "DTR is only useful if you measure it the same way every time. The standard is the time from the first audible crack to the drop, divided by the total roast time from charge to drop. The trap is inconsistent crack-calling: if you mark first crack at the very first pop one day and at the rolling crack the next, your DTR numbers won't be comparable. Pick a consistent definition of 'first crack' and stick to it, and log it every batch — DTR's whole value is in comparison across roasts."
         }
       ],
       "keypoints": [
@@ -351,7 +387,8 @@
           "label": "Daily Coffee News — Rao on development time",
           "link": "https://dailycoffeenews.com/2014/08/12/roast-development-time-and-the-prerequisite-for-any-successful-roast/"
         }
-      ]
+      ],
+      "diagram": "dtr"
     },
     "chemistry": {
       "name": "Roasting Chemistry",
@@ -414,6 +451,10 @@
         {
           "h": "Airflow as a control",
           "body": "Airflow does three jobs at once: it delivers convective heat, it clears smoke and chaff (which otherwise taint flavor), and it influences how fast the bean sheds or gains heat. Learning a roaster is largely learning how its airflow interacts with its gas."
+        },
+        {
+          "h": "Airflow is the hidden third control",
+          "body": "New roasters focus on gas and time and forget airflow, but on most drum roasters airflow is the lever that ties heat transfer together. Turning up the fan pulls more hot air through the bean mass (increasing convective heat) while also clearing chaff and smoke; turning it down lets the drum's conductive and radiant heat dominate. Too little airflow and smoke settles onto the beans and the roast can taste baked or ashy; too much and you strip heat away and stall development. Learning what your machine's airflow actually does — and it differs machine to machine — is a big step in controlling the roast."
         }
       ],
       "keypoints": [
@@ -426,7 +467,8 @@
           "label": "Perfect Daily Grind — 4 variables that affect roasting",
           "link": "https://perfectdailygrind.com/2020/04/4-variables-that-affect-roasting/"
         }
-      ]
+      ],
+      "diagram": "heat"
     },
     "roasters": {
       "name": "Roaster Types",
@@ -445,6 +487,10 @@
         {
           "h": "Hybrids & recirculation",
           "body": "Many modern machines blur the line: drums with heavily managed airflow, recirculating-air roasters that reuse heat for efficiency and emissions control. The trend is toward more convective control on a drum platform — body of a drum, evenness of air."
+        },
+        {
+          "h": "Matching machine to roast style",
+          "body": "The three main roaster types have real tendencies. Drum roasters — a rotating metal drum over a heat source — lean on conductive and radiant heat and thermal mass, building body and handling dark roasts well; they're the workhorse of specialty roasting. Fluid-bed (air) roasters levitate the beans on hot air, giving fast, clean, convection-dominated roasts that suit bright light roasts and are easy to control, but can struggle to build body or hold steady heat deep into second crack. Hybrid and modern recirculating machines blend the two. None is 'best' — the right choice depends on the roast styles you want and the scale you need."
         }
       ],
       "keypoints": [
@@ -1323,7 +1369,8 @@
           "label": "Royal Coffee — what the numbers mean",
           "link": "https://royalcoffee.com/scoring-specialty-coffee-what-do-the-numbers-mean/"
         }
-      ]
+      ],
+      "diagram": "cva"
     },
     "legacy_protocol": {
       "name": "The Legacy 2004 Protocol",
@@ -1386,6 +1433,10 @@
         {
           "h": "Why it matters for cupping",
           "body": "The wheel gives cuppers a shared, calibrated vocabulary. When one taster says 'blackberry' and another says 'jammy dark fruit,' the wheel lets them locate a common reference instead of talking past each other. In the CVA descriptive assessment, the flavor-wheel categories are exactly the descriptors you check off — so the wheel and the modern form are built from the same map."
+        },
+        {
+          "h": "How to actually use it at the table",
+          "body": "The wheel works best as a decision tree, not a word bank. When you taste something, start at the center and ask the broadest question: is this fruity, nutty/cocoa, floral, roasted? Commit to one, then move outward one ring to narrow it — fruity becomes berry or citrus or dried fruit. Then, only if you can honestly taste it, move out again to the specific note — berry becomes blueberry. The discipline of working outward stops you from grabbing an impressive-sounding descriptor you don't actually taste, and it gives a whole cupping table a shared path to the same words."
         }
       ],
       "keypoints": [
@@ -1407,7 +1458,8 @@
           "label": "Not Bad Coffee — interactive flavor wheel",
           "link": "https://notbadcoffee.com/flavor-wheel-en/"
         }
-      ]
+      ],
+      "diagram": "flavorwheel"
     },
     "qc_loop": {
       "name": "The Roaster's QC Loop",
@@ -1795,7 +1847,8 @@
           "label": "Coffee Brews Hub — science of extraction",
           "link": "https://coffeebrewshub.com/blog/science-of-coffee-extraction"
         }
-      ]
+      ],
+      "diagram": "extraction"
     },
     "brew_espresso": {
       "name": "Dialing In Espresso",
@@ -1839,7 +1892,8 @@
           "label": "Routes Coffee — key espresso parameters",
           "link": "https://routescoffee.co.uk/mastering-espresso-key-parameters-every-barista-should-know/"
         }
-      ]
+      ],
+      "diagram": "espresso"
     },
     "brew_grind": {
       "name": "Grind & Burrs",
@@ -1879,7 +1933,8 @@
           "label": "Complete Home Barista — extraction chart & grind",
           "link": "https://completehomebarista.com/guides/espresso-extraction-chart-explained/"
         }
-      ]
+      ],
+      "diagram": "grind"
     },
     "brew_methods": {
       "name": "Brew Methods",
@@ -1982,6 +2037,10 @@
         {
           "h": "Practical takeaways",
           "body": "You don't need a chemistry lab, but you should know your water. Very hard tap water over-buffers acidity and scales your machine; distilled or zero-mineral water extracts poorly and tastes hollow. Many cafés filter, blend, or build water to a target. There's a practical safety angle too: hardness minerals are what form limescale inside espresso machines and boilers, so water treatment protects both flavor and equipment."
+        },
+        {
+          "h": "Building or fixing your water",
+          "body": "You don't need a lab, but you do need to know roughly what your water is. Very hard, high-alkalinity tap water buffers away the bright acidity that makes specialty coffee interesting and scales up your machine; very soft or distilled water extracts poorly and tastes hollow and flat. Common fixes: filtering to reduce hardness and off-flavors, blending tap with distilled to hit a target, or building water from distilled using mineral packs. A rough specialty target is moderate hardness with lower alkalinity and a near-neutral pH. Whatever you do, keep it consistent — changing your water changes every coffee you brew."
         }
       ],
       "keypoints": [

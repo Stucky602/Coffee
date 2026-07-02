@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v13"
-CACHE_C = "coffee-guide-v13"
+APP_VERSION = "v14"
+CACHE_C = "coffee-guide-v14"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -407,6 +407,9 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .beanfig figcaption{display:flex;flex-direction:column;gap:2px}
 .beanfig figcaption b{font-size:13.5px;color:var(--ink1)}
 .beanfig figcaption span{font-size:11.5px;color:var(--ink3);line-height:1.4}
+.diagram{margin:20px 0 8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px}
+.diagram svg{display:block}
+.diagram figcaption{font-size:12.5px;color:var(--ink3);line-height:1.5;margin-top:10px;max-width:70ch}
 
 /* compare */
 .cmpmodebar{display:flex;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;width:fit-content;margin-bottom:16px}
@@ -1235,6 +1238,210 @@ function toggleHub(gid){learnOpen=learnOpen===gid?null:gid;drawLearn();}
 
 /* ---------- METH DETAIL ---------- */
 /* ---------- DEFECT BEAN ILLUSTRATIONS (inline SVG, zero-byte, offline) ---------- */
+/* ---------- CONCEPT DIAGRAMS (inline SVG, zero-byte, offline, teaching-first) ---------- */
+// Shared palette pulled from the app's heat vars so diagrams match the aesthetic.
+const DIA={bg:'#1b140e',line:'#3a2e24',ink:'#c9b8a4',ink3:'#8f7c66',
+  dry:'#C9A34E',mail:'#B07B3E',dev:'#8A5A34',accent:'#e0864a',ror:'#7a9a6a',hot:'#d0553a'};
+function diaWrap(vb,inner,cap){
+  return `<figure class="diagram"><svg viewBox="0 0 ${vb}" width="100%" role="img" preserveAspectRatio="xMidYMid meet">${inner}</svg>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
+}
+// 1. Annotated roast curve: BT rising S-curve + declining RoR, phase bands, TP/1C/2C/Drop, crash/flick callouts.
+function diaRoastCurve(opts){
+  opts=opts||{};
+  const W=760,H=380,L=52,R=20,T=26,B=44,iw=W-L-R,ih=H-T-B;
+  const X=t=>L+iw*t, Y=v=>T+ih*(1-v);
+  // phase x-boundaries (fractions of time): drying .0-.45, maillard .45-.78, development .78-1
+  const dryEnd=.45,fcAt=.78;
+  const bands=[[0,dryEnd,DIA.dry,'Drying'],[dryEnd,fcAt,DIA.mail,'Maillard'],[fcAt,1,DIA.dev,'Development']];
+  let g='';
+  bands.forEach(bd=>{g+=`<rect x="${X(bd[0]).toFixed(0)}" y="${T}" width="${(X(bd[1])-X(bd[0])).toFixed(0)}" height="${ih}" fill="${bd[2]}" opacity="0.13"/>`;
+    g+=`<text x="${((X(bd[0])+X(bd[1]))/2).toFixed(0)}" y="${T+16}" fill="${bd[2]}" font-size="13" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">${bd[3]}</text>`;});
+  // axes
+  g+=`<line x1="${L}" y1="${T}" x2="${L}" y2="${T+ih}" stroke="${DIA.line}"/><line x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}" stroke="${DIA.line}"/>`;
+  g+=`<text x="14" y="${T+12}" fill="${DIA.ink3}" font-size="11" font-family="ui-monospace">temp</text>`;
+  g+=`<text x="${W-R}" y="${H-14}" fill="${DIA.ink3}" font-size="11" text-anchor="end" font-family="ui-monospace">time →</text>`;
+  // BT curve: quick dip to turning point then rising, decelerating S to drop
+  // sample points (t, v) — v is normalized temp
+  const bt=[[0,.62],[.06,.20],[.12,.24],[.25,.42],[.45,.60],[.62,.72],[.78,.82],[.9,.88],[1,.93]];
+  let btp=bt.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+  g+=`<path d="${btp}" fill="none" stroke="${DIA.accent}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  // RoR curve: rises after TP, peaks, declines gently
+  const ror=[[.06,.05],[.12,.55],[.2,.66],[.35,.6],[.55,.5],[.78,.4],[1,.3]];
+  let rp=ror.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+  g+=`<path d="${rp}" fill="none" stroke="${DIA.ror}" stroke-width="2.2" stroke-dasharray="5 4"/>`;
+  // markers
+  const dot=(t,v,lab,dy)=>`<circle cx="${X(t).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="4" fill="${DIA.accent}" stroke="${DIA.bg}" stroke-width="1.5"/><text x="${X(t).toFixed(1)}" y="${(Y(v)+(dy||-10)).toFixed(1)}" fill="#f0e6d8" font-size="11.5" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">${lab}</text>`;
+  g+=dot(.09,.22,'Turning point',18);
+  g+=dot(.45,.60,'Dry end',-10);
+  g+=dot(.78,.82,'First crack',-10);
+  g+=dot(1,.93,'Drop',-10);
+  // legend
+  g+=`<line x1="${L+8}" y1="${T+ih+30}" x2="${L+34}" y2="${T+ih+30}" stroke="${DIA.accent}" stroke-width="3"/><text x="${L+40}" y="${T+ih+34}" fill="${DIA.ink}" font-size="12" font-family="ui-sans-serif">Bean temp</text>`;
+  g+=`<line x1="${L+150}" y1="${T+ih+30}" x2="${L+176}" y2="${T+ih+30}" stroke="${DIA.ror}" stroke-width="2.2" stroke-dasharray="5 4"/><text x="${L+182}" y="${T+ih+34}" fill="${DIA.ink}" font-size="12" font-family="ui-sans-serif">Rate of rise (RoR)</text>`;
+  return diaWrap(`${W} ${H}`,g,opts.cap||'A healthy roast: bean temp climbs in a decelerating S-curve while the rate of rise peaks after the turning point and then glides steadily downward to the drop.');
+}
+// 2. Phase timeline bar with temps + what happens.
+function diaPhaseBar(){
+  const W=760,H=150,L=10,R=10,T=28,barH=46,iw=W-L-R;
+  const segs=[[.0,.45,DIA.dry,'Drying','green → yellow','~160°C'],[.45,.78,DIA.mail,'Maillard','yellow → brown','~160–196°C'],[.78,1,DIA.dev,'Development','1st crack → drop','196–205°C+']];
+  let g='';
+  segs.forEach(s=>{const x=L+iw*s[0],w=iw*(s[1]-s[0]);
+    g+=`<rect x="${x.toFixed(0)}" y="${T}" width="${w.toFixed(0)}" height="${barH}" fill="${s[2]}" opacity="0.85" rx="3"/>`;
+    g+=`<text x="${(x+w/2).toFixed(0)}" y="${(T+barH/2-2).toFixed(0)}" fill="#1b140e" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[3]}</text>`;
+    g+=`<text x="${(x+w/2).toFixed(0)}" y="${(T+barH/2+14).toFixed(0)}" fill="#1b140e" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" opacity="0.75">${s[4]}</text>`;
+    g+=`<text x="${(x+w/2).toFixed(0)}" y="${T-8}" fill="${s[2]}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${s[5]}</text>`;});
+  // proportion note
+  g+=`<text x="${L}" y="${T+barH+24}" fill="${DIA.ink3}" font-size="12" font-family="ui-sans-serif">Roughly the proportions of a balanced roast — most flavor is built in the Maillard phase; development sets the final roast level.</text>`;
+  return diaWrap(`${W} ${H}`,g,'The three phases of a roast, start to drop.');
+}
+// 3. DTR: total time bar with the development portion highlighted + percentage band.
+function diaDTR(){
+  const W=760,H=170,L=10,R=10,T=24,barH=40,iw=W-L-R;
+  const rows=[['Light / Nordic',.12],['Balanced City+',.20],['Dark',.25]];
+  let g='';
+  rows.forEach((r,i)=>{const y=T+i*46;
+    g+=`<rect x="${L}" y="${y}" width="${iw}" height="${barH}" fill="${DIA.mail}" opacity="0.2" rx="3"/>`;
+    const dx=L+iw*(1-r[1]);
+    g+=`<rect x="${dx.toFixed(0)}" y="${y}" width="${(iw*r[1]).toFixed(0)}" height="${barH}" fill="${DIA.dev}" opacity="0.9" rx="3"/>`;
+    g+=`<text x="${L+8}" y="${(y+barH/2+4).toFixed(0)}" fill="${DIA.ink}" font-size="12.5" font-weight="600" font-family="ui-sans-serif">${r[0]}</text>`;
+    g+=`<text x="${(dx+iw*r[1]/2).toFixed(0)}" y="${(y+barH/2+4).toFixed(0)}" fill="#1b140e" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-mono">${Math.round(r[1]*100)}%</text>`;
+  });
+  g+=`<text x="${L}" y="${T+3*46+6}" fill="${DIA.ink3}" font-size="11.5" font-family="ui-sans-serif">Dark portion = development time (first crack → drop) as a share of total roast time. Higher isn't better — it's a lever.</text>`;
+  return diaWrap(`${W} ${H}`,g,'Development Time Ratio across roast styles.');
+}
+// 4. Crack timeline on a temperature axis.
+function diaCracks(){
+  const W=760,H=180,L=20,R=20,T=40,iw=W-L-R,axisY=T+40;
+  const X=temp=>L+iw*((temp-150)/(240-150));
+  let g='';
+  g+=`<line x1="${L}" y1="${axisY}" x2="${W-R}" y2="${axisY}" stroke="${DIA.line}" stroke-width="2"/>`;
+  [150,175,196,224,240].forEach(t=>{g+=`<line x1="${X(t).toFixed(0)}" y1="${axisY-4}" x2="${X(t).toFixed(0)}" y2="${axisY+4}" stroke="${DIA.ink3}"/><text x="${X(t).toFixed(0)}" y="${axisY+20}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-monospace">${t}°C</text>`;});
+  // first crack marker
+  const fc=(temp,lab,sub,col)=>{const x=X(temp);return `<circle cx="${x.toFixed(0)}" cy="${axisY}" r="7" fill="${col}" stroke="${DIA.bg}" stroke-width="2"/><text x="${x.toFixed(0)}" y="${axisY-16}" fill="#f0e6d8" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${lab}</text><text x="${x.toFixed(0)}" y="${axisY-48}" fill="${col}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${sub}</text>`;};
+  g+=fc(196,'1st crack','popcorn · loud · slow',DIA.dry);
+  g+=fc(224,'2nd crack','crackle · quiet · fast',DIA.hot);
+  // light/med/dark drop zones
+  g+=`<text x="${X(200).toFixed(0)}" y="${axisY+42}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">↑ light–medium drop here</text>`;
+  g+=`<text x="${X(228).toFixed(0)}" y="${axisY+42}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">↑ dark drop here</text>`;
+  return diaWrap(`${W} ${H}`,g,'The two cracks are the roaster\u2019s audible landmarks — where you drop between or past them sets the roast level.');
+}
+// 5. Heat transfer in a drum (three modes).
+function diaHeat(){
+  const W=760,H=230,cx=250,cy=115,rd=78;
+  let g='';
+  // drum
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rd}" fill="none" stroke="${DIA.mail}" stroke-width="4"/>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rd+10}" fill="none" stroke="${DIA.line}" stroke-width="2" stroke-dasharray="3 4"/>`;
+  // beans
+  for(let i=0;i<7;i++){const a=i/7*Math.PI*2;g+=`<ellipse cx="${(cx+Math.cos(a)*38).toFixed(0)}" cy="${(cy+Math.sin(a)*30+10).toFixed(0)}" rx="9" ry="6" fill="${DIA.dev}"/>`;}
+  // conduction (drum wall arrow)
+  g+=`<path d="M${cx-rd+4} ${cy+40} Q${cx-40} ${cy+30} ${cx-20} ${cy+18}" stroke="${DIA.hot}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
+  // convection (hot air swirl)
+  g+=`<path d="M${cx-10} ${cy-50} Q${cx+30} ${cy-40} ${cx+20} ${cy-10}" stroke="${DIA.dry}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
+  // radiation (from wall)
+  g+=`<path d="M${cx+rd-6} ${cy} L${cx+30} ${cy}" stroke="${DIA.accent}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
+  // arrowhead marker
+  g=`<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${DIA.ink}"/></marker></defs>`+g;
+  // labels on right
+  const leg=[[DIA.hot,'Conduction','Heat from the hot metal drum wall touching the beans.'],[DIA.dry,'Convection','Hot air moving through the bean mass — the biggest lever on most drums.'],[DIA.accent,'Radiation','Infrared heat radiating from the drum and surfaces.']];
+  leg.forEach((l,i)=>{const y=44+i*56;g+=`<rect x="440" y="${y-12}" width="14" height="14" rx="3" fill="${l[0]}"/><text x="462" y="${y}" fill="${DIA.ink}" font-size="14" font-weight="700" font-family="ui-sans-serif">${l[1]}</text><text x="462" y="${y+18}" fill="${DIA.ink3}" font-size="11.5" font-family="ui-sans-serif"><tspan x="462">${l[2].slice(0,42)}</tspan></text>`;});
+  return diaWrap(`${W} ${H}`,g,'Three ways heat reaches the bean inside a drum roaster.');
+}
+// 6. Extraction band: under / ideal / over.
+function diaExtraction(){
+  const W=760,H=150,L=20,R=20,T=40,barH=42,iw=W-L-R;
+  const X=p=>L+iw*(p/30);
+  let g='';
+  // gradient bands
+  g+=`<rect x="${X(0).toFixed(0)}" y="${T}" width="${(X(18)-X(0)).toFixed(0)}" height="${barH}" fill="${DIA.dry}" opacity="0.5"/>`;
+  g+=`<rect x="${X(18).toFixed(0)}" y="${T}" width="${(X(22)-X(18)).toFixed(0)}" height="${barH}" fill="${DIA.ror}" opacity="0.85"/>`;
+  g+=`<rect x="${X(22).toFixed(0)}" y="${T}" width="${(X(30)-X(22)).toFixed(0)}" height="${barH}" fill="${DIA.hot}" opacity="0.5"/>`;
+  // labels
+  g+=`<text x="${X(9).toFixed(0)}" y="${(T+barH/2+5).toFixed(0)}" fill="#1b140e" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">UNDER</text>`;
+  g+=`<text x="${X(20).toFixed(0)}" y="${(T+barH/2+5).toFixed(0)}" fill="#1b140e" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">IDEAL</text>`;
+  g+=`<text x="${X(26).toFixed(0)}" y="${(T+barH/2+5).toFixed(0)}" fill="#1b140e" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">OVER</text>`;
+  // ticks
+  [0,18,22,30].forEach(p=>{g+=`<text x="${X(p).toFixed(0)}" y="${T+barH+18}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-monospace">${p}%</text>`;});
+  g+=`<text x="${X(9).toFixed(0)}" y="${T-10}" fill="${DIA.dry}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">sour · weak · grassy</text>`;
+  g+=`<text x="${X(20).toFixed(0)}" y="${T-10}" fill="${DIA.ror}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">sweet · balanced</text>`;
+  g+=`<text x="${X(26).toFixed(0)}" y="${T-10}" fill="${DIA.hot}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">bitter · dry · harsh</text>`;
+  return diaWrap(`${W} ${H}`,g,'Extraction yield — the % of coffee dissolved into the cup. The Golden Cup window is 18–22%.');
+}
+// 7. Espresso ratio: dose in → yield out.
+function diaEspresso(){
+  const W=760,H=150,cx1=190,cx2=560,cy=80;
+  let g='';
+  // portafilter (dose)
+  g+=`<rect x="${cx1-50}" y="${cy-30}" width="100" height="42" rx="5" fill="${DIA.dev}"/><text x="${cx1}" y="${cy-4}" fill="#1b140e" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">18 g</text><text x="${cx1}" y="${cy+34}" fill="${DIA.ink}" font-size="13" text-anchor="middle" font-family="ui-sans-serif">dose (dry coffee)</text>`;
+  // arrow
+  g+=`<line x1="${cx1+70}" y1="${cy-8}" x2="${cx2-90}" y2="${cy-8}" stroke="${DIA.accent}" stroke-width="3" marker-end="url(#ae)"/><text x="${(cx1+cx2)/2}" y="${cy-20}" fill="${DIA.accent}" font-size="13" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">25–30 s · 9 bar</text>`;
+  g=`<defs><marker id="ae" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="${DIA.accent}"/></marker></defs>`+g;
+  // cup (yield)
+  g+=`<path d="M${cx2-42} ${cy-32} L${cx2+42} ${cy-32} L${cx2+34} ${cy+18} L${cx2-34} ${cy+18} Z" fill="${DIA.mail}"/><text x="${cx2}" y="${cy-2}" fill="#1b140e" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">36 g</text><text x="${cx2}" y="${cy+40}" fill="${DIA.ink}" font-size="13" text-anchor="middle" font-family="ui-sans-serif">yield (liquid espresso)</text>`;
+  g+=`<text x="${W/2}" y="${cy+70}" fill="${DIA.ink3}" font-size="12.5" text-anchor="middle" font-family="ui-sans-serif">A 1:2 ratio — the modern espresso default. Weigh both, adjust grind to hit the time.</text>`;
+  return diaWrap(`${W} ${H}`,g,'The standard espresso recipe as a ratio.');
+}
+// 8. Grind size across brew methods.
+function diaGrind(){
+  const W=760,H=170,L=20,T=30,gap=(W-40)/4;
+  const methods=[['Espresso','fine',3],['Pour-over','medium',6],['Drip','medium',7],['French press','coarse',11]];
+  let g='';
+  methods.forEach((m,i)=>{const cx=L+gap*i+gap/2, cy=T+40;
+    // draw a cluster of dots sized by grind
+    const n=m[2]<5?26:m[2]<8?14:7, r=m[3];
+    for(let k=0;k<n;k++){const ang=k/n*6.28,rad=18+((k*7)%20);g+=`<circle cx="${(cx+Math.cos(ang)*rad*0.6).toFixed(0)}" cy="${(cy+Math.sin(ang)*rad*0.5).toFixed(0)}" r="${r}" fill="${DIA.dev}" opacity="0.85"/>`;}
+    g+=`<text x="${cx.toFixed(0)}" y="${T+120}" fill="${DIA.ink}" font-size="13.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${m[0]}</text>`;
+    g+=`<text x="${cx.toFixed(0)}" y="${T+138}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${m[1]}</text>`;
+  });
+  return diaWrap(`${W} ${H}`,g,'Grind size matched to method: short, intense brews need fine grounds; long, gentle ones need coarse.');
+}
+// 9. Flavor wheel: 9 inner categories as a radial diagram.
+function diaFlavorWheel(){
+  const W=420,H=420,cx=210,cy=210,rIn=54,rOut=150;
+  const cats=[['Fruity','#c0433a'],['Sour /\nFermented','#c98a2e'],['Green /\nVeg.','#5a8a3a'],['Other','#6a8a8a'],['Roasted','#7a4a28'],['Spices','#a0522d'],['Nutty /\nCocoa','#8a5a34'],['Sweet','#c99a2e'],['Floral','#c86a9a']];
+  const N=cats.length;let g='';
+  cats.forEach((c,i)=>{const a0=i/N*6.283-1.5708,a1=(i+1)/N*6.283-1.5708,am=(a0+a1)/2;
+    const p=(r,a)=>[(cx+r*Math.cos(a)).toFixed(1),(cy+r*Math.sin(a)).toFixed(1)];
+    const [x0,y0]=p(rIn,a0),[x1,y1]=p(rOut,a0),[x2,y2]=p(rOut,a1),[x3,y3]=p(rIn,a1);
+    g+=`<path d="M${x0} ${y0} L${x1} ${y1} A${rOut} ${rOut} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${rIn} ${rIn} 0 0 0 ${x0} ${y0} Z" fill="${c[1]}" opacity="0.82" stroke="${DIA.bg}" stroke-width="2"/>`;
+    const [lx,ly]=p((rIn+rOut)/2,am);
+    const lines=c[0].split('\n');
+    g+=lines.map((ln,li)=>`<text x="${lx}" y="${(+ly+li*12-(lines.length-1)*6).toFixed(1)}" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${ln}</text>`).join('');
+  });
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rIn}" fill="${DIA.bg}" stroke="${DIA.line}"/><text x="${cx}" y="${cy-4}" fill="${DIA.ink}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Coffee</text><text x="${cx}" y="${cy+12}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">start here</text>`;
+  return diaWrap(`${W} ${H}`,g,'The nine inner categories of the SCA Flavor Wheel — you work outward from the center to more specific notes.');
+}
+// 10. CVA score build: 8 sections → formula → number.
+function diaCVA(){
+  const W=760,H=200,L=20,T=20;
+  const secs=['Fragrance','Aroma','Flavor','Aftertaste','Acidity','Sweetness','Mouthfeel','Overall'];
+  let g='';
+  const bw=(W-40)/8;
+  secs.forEach((s,i)=>{const x=L+bw*i;g+=`<rect x="${(x+3).toFixed(0)}" y="${T}" width="${(bw-6).toFixed(0)}" height="34" rx="4" fill="${DIA.mail}" opacity="0.8"/><text x="${(x+bw/2).toFixed(0)}" y="${T+22}" fill="#1b140e" font-size="10" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s.slice(0,7)}</text>`;});
+  g+=`<text x="${W/2}" y="${T+56}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">each rated 1–9 (how much you like it), then summed</text>`;
+  // formula box
+  g+=`<rect x="${(W/2-230).toFixed(0)}" y="${T+70}" width="460" height="52" rx="8" fill="${DIA.bg}" stroke="${DIA.accent}" stroke-width="1.5"/>`;
+  g+=`<text x="${W/2}" y="${T+102}" fill="${DIA.ink}" font-size="16" text-anchor="middle" font-family="ui-monospace">Score = 0.65625 × Σ + 52.75</text>`;
+  // arrow to result
+  g+=`<text x="${W/2}" y="${T+150}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">e.g. sections sum to 48  →  <tspan fill="${DIA.accent}" font-weight="700" font-size="15">84.25</tspan>  (specialty)</text>`;
+  g+=`<text x="${W/2}" y="${T+172}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">minus 2 per non-uniform cup, 4 per defective cup</text>`;
+  return diaWrap(`${W} ${H}`,g,'How the CVA affective score is built from eight liking ratings.');
+}
+function diagram(kind){
+  switch(kind){
+    case 'roastcurve':return diaRoastCurve();
+    case 'phasebar':return diaPhaseBar();
+    case 'dtr':return diaDTR();
+    case 'cracks':return diaCracks();
+    case 'heat':return diaHeat();
+    case 'extraction':return diaExtraction();
+    case 'espresso':return diaEspresso();
+    case 'grind':return diaGrind();
+    case 'flavorwheel':return diaFlavorWheel();
+    case 'cva':return diaCVA();
+    default:return '';
+  }
+}
 function beanSVG(kind){
   const W=90,H=64,cx=W/2,cy=H/2,stroke="#5a4632",green="#9aaf6e";
   const crease=`<path d="M${cx} ${cy-24} C ${cx-7} ${cy-10}, ${cx+7} ${cy+10}, ${cx} ${cy+24}" stroke="#3a2c1e" stroke-width="2.4" fill="none"/>`;
@@ -1285,7 +1492,7 @@ function methDetail(id){
         <div class="sub">${esc(m.sub)}</div>
       </div>
     </div>
-    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>${i===0&&m.diagram?diagram(m.diagram):''}`).join('')}
     ${m.visuals?`<div class="msection"><h3>${esc(m.visuals.title||'Defect Reference')}</h3>${m.visuals.note?`<p>${esc(m.visuals.note)}</p>`:''}${beanGallery(m.visuals.beans)}</div>`:''}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
