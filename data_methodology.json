@@ -1632,7 +1632,8 @@
         "defects",
         "profiling",
         "cracks",
-        "dtr"
+        "dtr",
+        "green_grading"
       ]
     },
     "profiling": {
@@ -1688,7 +1689,8 @@
         "defects",
         "cupping_intro",
         "defect_gallery"
-      ]
+      ],
+      "diagram": "profiling"
     },
     "origin_intro": {
       "name": "Roasting by Origin",
@@ -6795,7 +6797,9 @@
         "threats",
         "climate_coffee",
         "geisha_spotlight",
-        "spot_bourbon"
+        "spot_bourbon",
+        "spot_workhorse",
+        "spot_typica"
       ]
     },
     "species_deep": {
@@ -6844,7 +6848,60 @@
         "green_species",
         "climate_coffee",
         "threats",
-        "geisha_spotlight"
+        "geisha_spotlight",
+        "spot_typica"
+      ]
+    },
+    "spot_typica": {
+      "name": "Spotlight: Typica",
+      "sub": "The original Arabica",
+      "group": "grow",
+      "accent": "#8fbf3a",
+      "diagram": "spottypica",
+      "sections": [
+        {
+          "h": "The one that started it all",
+          "body": "If Bourbon is the sweet founder, Typica is THE founder — the original cultivated Arabica, the variety at the root of nearly the entire family tree. Trace almost any Arabica variety back far enough (Bourbon, Caturra, Geisha, SL28, Mundo Novo, Maragogipe) and you eventually reach Typica. Like all Arabica it began in the coffee forests of southwestern Ethiopia, but the 'Typica' we know is defined by one specific, remarkable journey out of Yemen and around the world. It's a tall, elegant plant — up to about 5 metres, with a thin trunk, widely spaced drooping branches, and distinctive bronze-tipped leaves — and while it's been largely displaced by higher-yielding varieties, it remains a benchmark for pure cup quality."
+        },
+        {
+          "h": "The great journey",
+          "body": "Typica's spread is one of the great stories in coffee, a chain of single plants and small seed lots that seeded whole continents. Arabica went from Ethiopia to Yemen in the 15th–16th century; by 1700 seeds from Yemen were being grown in India (the Baba Budan legend), and from India's Malabar coast a few seeds reached the Dutch colony of Java around 1696–99 — those seeds are what became the distinct Typica variety. In 1706 a single Typica plant was carried from Java to the botanical gardens in Amsterdam; from there a plant went to France in 1714, and Dutch and French colonial routes then pushed Typica to the Caribbean and the Americas in the early 1700s. It reached the Caribbean, Mexico, and Colombia by the late 1700s, and until the 1940s the great majority of coffee in Central and South America was Typica. An astonishing amount of the world's coffee descends from a literal handful of plants."
+        },
+        {
+          "h": "Famous descendants and subtypes",
+          "body": "Typica is really a whole group, and its regional subtypes include some of the most storied names in coffee. Jamaica Blue Mountain — grown high in Jamaica's Blue Mountains, washed, famously shipped in barrels, a registered origin that commands some of the highest prices in the world — is Typica. So is Hawaiian Kona, prized for its smooth balance. Maragogipe, the giant 'elephant bean,' is a natural Typica mutation. Other names for Typica and its local selections include Criollo ('creole') in Spanish-speaking countries, Arábigo, Pluma Hidalgo in Mexico, and the Sumatra typicas. It's still widely grown in Peru, the Dominican Republic, Ecuador, and Jamaica, where quality-focused producers keep it alive despite the agronomic difficulty."
+        },
+        {
+          "h": "The quality-versus-yield bargain",
+          "body": "Typica's cup is its whole argument: clean, elegant, sweet, and refined, with excellent clarity, a silky medium body, and a gentle acidity that can range from bright citrus at high altitude to softer, malic notes lower down — often with chocolate, nut, caramel, and delicate floral or dried-fruit tones. It's the coffee that shows off place and process transparently rather than shouting. But that quality comes with a hard tradeoff: Typica yields roughly 20–30% less than Bourbon, grows tall and awkward to manage, and is highly susceptible to leaf rust, coffee berry disease, and nematodes. That's exactly why it was replaced across most of the Americas after the 1940s — and why growing it today is a deliberate quality-over-productivity choice, viable mainly for producers who can reach specialty and microlot markets. Typica is the reminder that the coffee family began not with the most productive plant, but with the one that simply tasted wonderful."
+        }
+      ],
+      "keypoints": [
+        "Typica = THE original cultivated Arabica, the ROOT of nearly the whole family tree (Bourbon, Caturra, Geisha, SL28, Mundo Novo, Maragogipe all trace back to it). Tall (~5m), thin trunk, drooping branches, bronze-tipped leaves. Largely displaced by higher-yielders but a benchmark for pure cup quality. (With Bourbon = the two founders.)",
+        "The great JOURNEY (chain of single plants): Ethiopia → Yemen (15–16th c.) → India ~1700 (Baba Budan) → Java ~1696–99 (these seeds BECAME Typica) → one plant to Amsterdam 1706 → France 1714 → Caribbean & Americas early 1700s. Until the 1940s MOST Central/South American coffee was Typica. A huge share of world coffee descends from a handful of plants.",
+        "Famous descendants/subtypes: Jamaica BLUE MOUNTAIN (registered, barrel-shipped, among the priciest), Hawaiian KONA, Maragogipe ('elephant bean' — a Typica mutation). Other names: Criollo, Arábigo, Pluma Hidalgo, Sumatra. Still grown in Peru, Dominican Republic, Ecuador, Jamaica.",
+        "The BARGAIN: cup is clean/elegant/sweet/refined — great clarity, silky medium body, gentle acidity (bright citrus high, softer malic low), choc/nut/caramel/floral. Transparent to place & process. BUT ~20–30% lower yield than Bourbon, tall & hard to manage, very susceptible to rust/CBD/nematodes → replaced post-1940s; growing it now is a deliberate quality-over-yield choice for specialty/microlot markets."
+      ],
+      "refs": [
+        {
+          "label": "World Coffee Research — Typica",
+          "link": "https://varieties.worldcoffeeresearch.org/varieties/typica"
+        },
+        {
+          "label": "Perfect Daily Grind — the Typica variety",
+          "link": "https://perfectdailygrind.com/2020/04/the-typica-coffee-variety-what-is-it-why-is-it-so-important/"
+        },
+        {
+          "label": "Mirus Coffee — Typica variety",
+          "link": "https://www.miruscoffee.com/blog/typica"
+        }
+      ],
+      "related": [
+        "variety_tree",
+        "spot_bourbon",
+        "species_deep",
+        "spot_maragogipe",
+        "spot_workhorse"
       ]
     },
     "geisha_spotlight": {
@@ -6981,7 +7038,9 @@
         "variety_tree",
         "spot_sl28",
         "spot_pacamara",
-        "species_deep"
+        "species_deep",
+        "spot_workhorse",
+        "spot_typica"
       ]
     },
     "spot_pacamara": {
@@ -7064,7 +7123,60 @@
       "related": [
         "spot_pacamara",
         "variety_tree",
-        "spot_bourbon"
+        "spot_bourbon",
+        "spot_workhorse"
+      ]
+    },
+    "spot_workhorse": {
+      "name": "Spotlight: Caturra & Catuaí",
+      "sub": "The workhorses of the Americas",
+      "group": "grow",
+      "accent": "#c9a34e",
+      "diagram": "spotworkhorse",
+      "sections": [
+        {
+          "h": "The everyday backbone",
+          "body": "The famous spotlight varieties — Geisha, SL28, Pacamara — get the auction records and the magazine covers, but the coffee most people actually drink from Latin America is built on two humble workhorses: Caturra and its offspring Catuaí. These aren't exotic; they're the reliable, high-yielding, farm-friendly varieties that made specialty-quality coffee economically viable across Brazil, Colombia, and Central America. Understanding them is understanding the everyday backbone of the coffee world, not the rarefied top 1%."
+        },
+        {
+          "h": "Caturra: the dwarf that changed farming",
+          "body": "Caturra is a natural mutation of Bourbon, discovered on a plantation in Minas Gerais, Brazil, sometime between 1915 and 1918. Its single-gene mutation makes the plant grow small and compact — its name comes from a Guarani word meaning 'small.' That compactness was revolutionary for farming: short trees with densely spaced branches can be planted much closer together (higher density = more coffee per hectare) and are far easier to harvest. Brazil's Instituto Agronômico de Campinas (IAC) selected and stabilized it from 1937, and by the 1950s–60s it had become a cornerstone across Colombia, Costa Rica, and Central America. In the cup it keeps Bourbon's clean sweetness with a bright, citric acidity and a light-to-medium body — very good at altitude, if rarely spectacular. Its big weakness: it's highly susceptible to leaf rust and coffee berry disease. Caturra is also the standard reference variety that World Coffee Research uses for yield comparisons — the baseline everything else is measured against."
+        },
+        {
+          "h": "Catuaí: even higher yield, cherries that hold on",
+          "body": "Catuaí is Caturra's most successful offspring. Brazil's IAC crossed Caturra with Mundo Novo (itself a natural Bourbon × Typica hybrid) starting in 1949, and released it in 1972. The name comes from a Guarani phrase meaning 'very good.' It combines Caturra's compact, high-density stature with Mundo Novo's vigor and even higher productivity — it can be planted at nearly double normal density and yields around 20% more than Caturra. Its signature practical trait is that the cherries cling firmly to the branches, which is hugely valuable in windy or rainy regions and for mechanized harvesting, because the fruit doesn't drop prematurely. It comes in red (Vermelho) and yellow (Amarelo) forms. The cup is balanced and accessible — chocolate, nuts, soft acidity — 'good but not great' by the official reckoning, and it holds up well to darker roasts, which is why it's a blend staple. But in skilled hands, especially with honey or natural or anaerobic processing at altitude, Catuaí can produce genuinely vibrant, clean single-origin coffees."
+        },
+        {
+          "h": "Why the workhorses matter",
+          "body": "Caturra and Catuaí are a lesson in what actually drives the coffee industry. They were bred not for exotic flavor but for productivity, compactness, and ease of farming — and that practicality is exactly what let good coffee scale. Between them they dominate Brazilian and much of Central American production, and they anchor countless blends and honest single origins. Their shared weakness — susceptibility to leaf rust — is also why the industry keeps breeding rust-resistant hybrids (Catimor and the rest, many of them using Caturra genetics) to protect the crop. And Caturra's genes echo through the family: beyond Catuaí it's a parent of Catimor and of Maracaturra (a cross with giant-beaned Maragogype). So while nobody auctions a Catuaí lot for four figures a pound, these two varieties quietly do more to fill the world's cups than all the celebrated rarities combined."
+        }
+      ],
+      "keypoints": [
+        "Caturra & Catuaí = the everyday WORKHORSES behind most Latin American coffee (Brazil, Colombia, Central America) — the reliable high-yield backbone, not the exotic top 1% (Geisha/SL28/Pacamara). Bred for productivity & farm-friendliness, which is what let good coffee SCALE.",
+        "CATURRA: natural dwarf mutation of Bourbon, Minas Gerais Brazil ~1915–18 ('caturra' = Guarani 'small'). Compact → higher planting density + easy harvest (revolutionized farming). IAC-selected from 1937; cornerstone by 1950s–60s. Cup: Bourbon sweetness + bright citric acidity, light-medium body — solid, rarely spectacular. WEAK: very susceptible to leaf rust/CBD. The WCR yield-reference baseline.",
+        "CATUAÍ: Caturra's top offspring — IAC crossed Caturra × Mundo Novo (1949, released 1972; 'very good' in Guarani). Even higher yield (~20% over Caturra, ~2× density); signature: cherries CLING to branches (great for wind/rain + mechanized harvest). Red (Vermelho) & yellow (Amarelo). Cup: balanced choc/nut/soft-acid, 'good not great', holds dark roasts — but vibrant with honey/natural/anaerobic at altitude. Also rust-susceptible.",
+        "Why they matter: bred for PRODUCTIVITY not exotic flavor — practicality that scaled good coffee. Dominate Brazilian + much Central American production; anchor blends & honest single origins. Their rust weakness drives the breeding of resistant hybrids (Catimor etc., often using Caturra genes). Caturra also parents Catimor & Maracaturra (×Maragogype). Quietly fill more cups than all the famous rarities combined."
+      ],
+      "refs": [
+        {
+          "label": "World Coffee Research — Caturra",
+          "link": "https://varieties.worldcoffeeresearch.org/varieties/caturra"
+        },
+        {
+          "label": "World Coffee Research — Catuaí",
+          "link": "https://varieties.worldcoffeeresearch.org/varieties/catuai"
+        },
+        {
+          "label": "JayArr — coffee varietal guide",
+          "link": "https://jayarr.coffee/blog/coffee-varietal-guide/"
+        }
+      ],
+      "related": [
+        "variety_tree",
+        "spot_bourbon",
+        "species_deep",
+        "origin_brazil",
+        "green_processing"
       ]
     },
     "harvest": {
@@ -7288,8 +7400,11 @@
       "related": [
         "green_measure",
         "green_processing",
-        "green_grades"
-      ]
+        "green_grades",
+        "defect_gallery",
+        "green_intro"
+      ],
+      "diagram": "greendefects"
     },
     "green_measure": {
       "name": "Density, Moisture & Water Activity",
