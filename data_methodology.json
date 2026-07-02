@@ -876,7 +876,9 @@
         "threats",
         "varietals",
         "green_species",
-        "species_deep"
+        "species_deep",
+        "fine_robusta",
+        "leaf_rust"
       ]
     },
     "cascara": {
@@ -1457,7 +1459,218 @@
         "health",
         "tea_coffee",
         "decaf_deep",
-        "chemistry"
+        "chemistry",
+        "coffee_borer"
+      ]
+    },
+    "fine_robusta": {
+      "name": "The Rise of Fine Robusta",
+      "sub": "Coffee’s comeback species",
+      "group": "science",
+      "accent": "#a0824a",
+      "diagram": "robustarise",
+      "sections": [
+        {
+          "h": "From footnote to force",
+          "body": "For most of specialty coffee's history, Robusta — properly Coffea canephora — was the bean nobody talked about except to look down on it: the cheap, harsh, rubbery stuff of instant jars and supermarket blends, the thing '100% Arabica' labels were proud NOT to contain. That story is now being rewritten. Robusta has quietly grown from about 25% of world coffee production in the early 1990s to roughly 40% today, and that rise accounts for a huge share of ALL the growth in global coffee demand. The fastest-growing coffee markets, with the youngest populations, mostly drink robusta. It is no longer a footnote; it is nearly half the coffee on earth and climbing."
+        },
+        {
+          "h": "Why the industry suddenly cares",
+          "body": "Two forces flipped the script. The first is climate and economics. Arabica is delicate and increasingly expensive — its futures hit an all-time high above $4/lb in early 2025 — while Robusta grows happily at low altitude (roughly 200–800 m) in heat and humidity that would kill Arabica, resists leaf rust far better, and yields more per tree. As Arabica-suitable land shrinks under climate change, Robusta looks less like a compromise and more like insurance. Even premium roasters who once shouted '100% Arabica' now quietly blend in up to about 30% robusta, citing both cost control and, increasingly, flavor. The second force is a genuine quality movement: producers, chiefly in Vietnam (the world's robusta giant) but also Uganda, India, and Brazil, are applying specialty-Arabica techniques — careful picking, washed and honey and anaerobic processing, better drying — to a species that had almost never received that care. The results surprised people."
+        },
+        {
+          "h": "What 'fine robusta' actually tastes like",
+          "body": "The knock on Robusta is that it's bitter, and badly grown commercial robusta genuinely can be — rubbery, woody, grainy. But that reputation was built on a bean that nobody bothered to grow or process well. Handled with specialty care, fine robusta shows deep, savory complexity: dark chocolate, nuts, toasted grain, and a heavy, velvety body, without the wild fruit-acidity of Arabica but with its own distinct, grounded character. Two things are simply built into the species: caffeine (roughly 2.2–2.7%, about double Arabica's) and a thick, persistent crema — which is exactly why traditional Italian espresso blends have always leaned on a percentage of robusta for body and that stable golden foam. The specialty framing is that robusta shouldn't be judged as a cheap substitute for Arabica, but as its own flavor category, the way natural and washed, or honey and anaerobic, are different categories rather than better-and-worse."
+        },
+        {
+          "h": "Grading a species that never had a grade",
+          "body": "A real obstacle was that Robusta never had a proper quality language. The famous SCA cupping protocol and the Q Grader system were built around Arabica, so there was literally no standard way to score robusta or to reward a farmer for making it better. That is being fixed: the Coffee Quality Institute developed a Fine Robusta grading protocol and a Q Robusta certification, and a distinct grading scale is emerging to separate commercial from fine robusta — giving the good stuff a name and a premium. World Coffee Research has also published a catalog of robusta varieties and is breeding for cup quality, not just yield, for almost the first time. The stakes are large: demand is projected to keep climbing, and without investment the world could face robusta shortages of tens of millions of bags by 2040. The bean once written off as inferior is now being treated, seriously, as a big part of coffee's future — both the affordable everyday cup and, increasingly, a specialty experience in its own right."
+        }
+      ],
+      "keypoints": [
+        "Robusta (Coffea canephora) rose from ~25% of world production (early 1990s) to ~40% today — a huge share of ALL global demand growth. The fastest-growing, youngest coffee markets mostly drink robusta. No longer a footnote: nearly half the coffee on earth and climbing.",
+        "Why the industry flipped: (1) CLIMATE + COST — Arabica delicate & pricey (futures >$4/lb early 2025); Robusta grows at low altitude (~200–800m) in heat/humidity, resists rust, yields more → climate insurance. Premium roasters now quietly blend up to ~30% robusta. (2) QUALITY MOVEMENT — Vietnam (the giant), Uganda, India, Brazil applying specialty techniques (careful picking, washed/honey/anaerobic, better drying) to a species that never got that care.",
+        "'Fine robusta' flavor: the 'bitter' rap came from badly-grown commercial lots. Done well = deep SAVORY complexity: dark chocolate, nuts, toasted grain, heavy velvety body (less fruit-acidity than Arabica, its own grounded character). Built-in: ~2.2–2.7% caffeine (~2× Arabica) + thick persistent CREMA — why Italian espresso blends lean on it. Frame it as its own flavor CATEGORY, not a cheap Arabica substitute.",
+        "Grading: SCA/Q systems were built for Arabica — no standard way to score or reward good robusta. Now fixed: CQI's Fine Robusta protocol + Q Robusta certification; a scale separating commercial vs fine robusta; WCR published a robusta-variety catalog & is breeding for CUP QUALITY not just yield. Stakes: demand climbing → possible shortages of tens of millions of bags by 2040 without investment."
+      ],
+      "refs": [
+        {
+          "label": "World Coffee Research — the roots of Robusta",
+          "link": "https://worldcoffeeresearch.org/news/2024/the-roots-of-robusta"
+        },
+        {
+          "label": "Perfect Daily Grind — robusta’s revival in specialty",
+          "link": "https://perfectdailygrind.com/2025/05/robusta-revival-in-specialty-coffee/"
+        },
+        {
+          "label": "Coffee Intelligence — is robusta taking off?",
+          "link": "https://intelligence.coffee/2025/04/robusta-taking-off-for-wrong-reasons/"
+        }
+      ],
+      "related": [
+        "species_deep",
+        "green_species",
+        "climate_coffee",
+        "cmarket",
+        "blending",
+        "leaf_rust"
+      ]
+    },
+    "grind_science": {
+      "name": "The Science of Particle Size",
+      "sub": "Fines, boulders & why uniformity wins",
+      "group": "science",
+      "accent": "#6a8fb0",
+      "diagram": "particlesize",
+      "sections": [
+        {
+          "h": "Grind size is really grind DISTRIBUTION",
+          "body": "Every brewing guide tells you to adjust grind size, and people picture a single dial from coarse to fine. But a grinder never produces one size — it produces a whole distribution of particle sizes at once, and the SHAPE of that distribution matters as much as the average. Hitting a target median micron size (say 340 µm for filter, or 200–400 µm for espresso) is only half the story. The real determinant of a clean, balanced cup is how tightly the particles cluster around that target. Two grinders set to the same average can taste completely different because one produces a tight, even spread and the other a chaotic mix. Uniformity of particle size is arguably the single largest factor in extraction quality."
+        },
+        {
+          "h": "Fines and boulders: the two troublemakers",
+          "body": "At the extremes of the distribution sit the two problem particles. FINES are the dust — tiny fragments, often around 50 µm or smaller, with an enormous surface-area-to-volume ratio. Because extraction happens at particle surfaces, fines give up their solubles almost instantly and OVER-extract, contributing bitterness and, in espresso, clogging the filter and slowing flow. BOULDERS are the opposite: oversized chunks that water can barely penetrate, so their interiors stay under-extracted and sour, and they hold back sweetness and body. The trouble is that a wide distribution contains BOTH at once — which is exactly why a bad grind tastes bitter AND sour at the same time. You're not tasting one flaw; you're tasting the fines over-extracting while the boulders under-extract in the same cup. This is why 'just grind coarser' doesn't fix a muddy espresso if the real problem is a wide spread."
+        },
+        {
+          "h": "Unimodal vs bimodal, flat vs conical",
+          "body": "Grind distributions come in two broad shapes. A UNIMODAL distribution has a single peak — most particles clustered around one size, with few fines and few boulders. A BIMODAL distribution has two peaks: a main cluster at the target size plus a distinct secondary spike of fines. Burr geometry pushes toward one or the other. FLAT burrs shear beans between two parallel rings and tend to produce a more unimodal, uniform grind — prized for clarity, cleaner filter coffee, and even espresso. CONICAL burrs crush beans between a cone and a ring and tend toward a bimodal distribution with more fines — which many people find adds body and texture. Neither is simply 'better': it's a trade between clarity and body, and it interacts with the brew method. (These are strong tendencies, not laws — a cheap flat burr can be bimodal and a great conical can suppress its fines peak.) Blade grinders, which smash rather than cut, produce the worst case: a chaotic spread of both fines and boulders, guaranteeing simultaneous over- and under-extraction."
+        },
+        {
+          "h": "What to actually do about it",
+          "body": "The practical takeaways follow directly from the science. First, a good burr grinder is the highest-leverage purchase in coffee — it matters more than the brewer or the machine, because no brewing skill can rescue a chaotic distribution. Second, match the spread to the method: espresso wants a fine grind (roughly 200–400 µm) tight enough that fines don't choke the puck; pour-over tolerates a slightly broader spread and even benefits from a controlled amount of fines to lift extraction; French press and cold brew want coarse and uniform to avoid a silty, over-extracted cup. Third, keep burrs clean and aligned — even excellent burrs produce a wide, fines-heavy distribution when they're misaligned or dull. And finally, if a cup tastes bitter and sour at once, resist just chasing the average grind number; the fix is usually a tighter distribution (a better or better-maintained grinder), not simply going coarser or finer. Chasing the median while ignoring the spread is the most common way people stay stuck."
+        }
+      ],
+      "keypoints": [
+        "Grind 'size' is really a DISTRIBUTION — a grinder makes many sizes at once; the SHAPE matters as much as the average. Hitting a median micron target (filter ~340µm, espresso ~200–400µm) is only half; how TIGHTLY particles cluster is the real driver. Uniformity is arguably the #1 factor in extraction quality — two grinders at the same average can taste totally different.",
+        "The two troublemakers: FINES (dust ~50µm, huge surface area → OVER-extract fast = bitter; clog espresso filters, slow flow) and BOULDERS (oversized chunks water can't penetrate → UNDER-extract = sour, hold back sweetness/body). A wide spread has BOTH → why a bad grind tastes bitter AND sour at once. 'Just grind coarser' won't fix a wide-spread problem.",
+        "Two shapes: UNIMODAL (one peak, few fines/boulders — clarity) vs BIMODAL (main peak + a fines spike — body/texture). FLAT burrs (shear) trend unimodal/clean; CONICAL burrs (crush) trend bimodal/more fines/more body. Neither strictly 'better' — clarity vs body trade, interacts w/ method (strong tendencies, not laws). BLADE grinders = chaotic both → simultaneous over/under-extraction.",
+        "What to do: (1) a good BURR grinder is the highest-leverage buy — beats the brewer/machine; no skill rescues a chaotic spread. (2) Match spread to method: espresso fine+tight (fines don't choke), pour-over slightly broader (some fines help), French press/cold brew coarse+uniform. (3) Keep burrs clean & ALIGNED (misalignment → wide/fines-heavy). (4) Bitter+sour at once = fix the DISTRIBUTION (better/maintained grinder), don't just chase the average number."
+      ],
+      "refs": [
+        {
+          "label": "Mahlkönig — microns & grind consistency",
+          "link": "https://www.mahlkoenig.com/blogs/news/microns-grind-consistency"
+        },
+        {
+          "label": "Coffee ad Astra — 300 particle size distributions",
+          "link": "https://coffeeadastra.com/2023/09/21/what-i-learned-from-analyzing-300-particle-size-distributions-for-24-espresso-grinders/"
+        },
+        {
+          "label": "Scientific Reports — the role of fines in espresso",
+          "link": "https://www.nature.com/articles/s41598-024-55831-x"
+        }
+      ],
+      "related": [
+        "brew_grind",
+        "brew_grinder",
+        "brew_extraction",
+        "brew_dialing",
+        "brew_troubleshoot"
+      ]
+    },
+    "leaf_rust": {
+      "name": "Coffee Leaf Rust",
+      "sub": "The disease that shaped the coffee map",
+      "group": "science",
+      "accent": "#c9843a",
+      "diagram": "ruststory",
+      "sections": [
+        {
+          "h": "The fungus that eats coffee",
+          "body": "Coffee leaf rust — la roya in Spanish — is caused by a fungus, Hemileia vastatrix, and it is the single most destructive disease in Arabica coffee's history. It shows up as powdery orange-yellow spore masses on the undersides of the leaves; the infected leaves drop early, and a badly hit tree, stripped of the leaves it needs to photosynthesize, produces little fruit and can eventually die. The fungus is an obligate parasite — it can only live on coffee — and it spreads with terrifying efficiency by wind and rain, and over long distances on the clothes, tools, and boots of people moving between farms. Its spores germinate in a temperature window of roughly 13–31°C, peaking around 21°C, which is exactly why a warming climate is now pushing rust to altitudes and regions that were once too cool to be at risk."
+        },
+        {
+          "h": "1869: how rust turned Ceylon into a tea nation",
+          "body": "The most famous chapter is also the most dramatic. Coffee leaf rust was first noted on wild coffee near Lake Victoria in East Africa around 1861, but its first catastrophic epidemic in commercial coffee broke out in 1869 in Ceylon — today Sri Lanka — which at the time was one of the British Empire's great coffee colonies. Over the following two decades the rust devastated the island's plantations. Unable to beat it, planters gave up on coffee and replanted with something the fungus couldn't touch: tea. That single epidemic is the reason Sri Lanka — and, by extension, the British Empire's drinking habits — pivoted from coffee to tea. It is the starkest example in history of a plant disease redrawing the global map of an entire commodity. From that focus in Ceylon, the rust spread relentlessly; between 1869 and 1985 it reached virtually every coffee-growing region on earth, with Hawaii holding out, remarkably, until 2020."
+        },
+        {
+          "h": "2012: the Big Rust",
+          "body": "By the 1990s the industry believed rust was a managed nuisance — kept in check with fungicides, farm hygiene, and some resistant varieties. Then it came roaring back. Beginning around 2008 and exploding in 2012–13, a severe epidemic swept Central America, Colombia, Peru, and Ecuador — an event now called the Big Rust. Yield losses ran up to 35%, the International Coffee Organization estimated hundreds of millions of dollars in damage, and hundreds of thousands of smallholders and laborers lost income and work; in a region where most coffee is grown on tiny farms, the human toll reached into food security. Several factors converged: unusually warm, wet weather (a climate-change fingerprint), plus — after the 2008 financial crisis crushed coffee prices — farmers cutting back on fertilizer and care, which left weakened trees. Some researchers also suspect more aggressive new races of the fungus. The Big Rust was a wake-up call that rust was never really beaten."
+        },
+        {
+          "h": "The Red Queen: breeding, and why the fight never ends",
+          "body": "The most powerful weapon against rust is genetic resistance, and the coffee world's great stroke of luck was the Híbrido de Timor — a rare, natural Arabica × Robusta hybrid found on the island of Timor, which inherited Robusta's rust resistance in an Arabica-drinkable plant. From the 1950s onward, breeders (notably Portugal's CIFC rust research center) crossed the Timor Hybrid with compact Arabicas like Caturra and Villa Sarchi to create the resistant families that now protect much of the crop: the Catimors (Caturra × Timor Hybrid) and Sarchimors (Villa Sarchi × Timor Hybrid). But there's a catch that defines all of plant pathology, often called the 'Red Queen' problem after the character who has to keep running just to stay in place: the fungus evolves. New virulence races of Hemileia keep emerging that overcome the resistance bred into a variety, so 'rust-resistant' cultivars gradually lose their protection and must be re-bred against the new races. This is why rust resistance is a permanent arms race, not a solved problem — and why modern breeding is racing to stack multiple resistance genes and develop new F1 hybrids that hold up longer, especially as climate change hands the fungus new territory."
+        }
+      ],
+      "keypoints": [
+        "Coffee leaf rust ('la roya') = the fungus Hemileia vastatrix, the most destructive disease in Arabica history. Orange-yellow spore masses under the leaves → early leaf drop → tree can't photosynthesize → little fruit, can die. Obligate parasite (coffee-only); spreads by wind/rain + on people's clothes/tools. Germinates ~13–31°C (peak ~21°C) → warming climate pushes it to new altitudes.",
+        "1869 CEYLON: first catastrophic epidemic in commercial coffee (rust first seen ~1861 near Lake Victoria). Devastated Ceylon's (Sri Lanka's) plantations over ~2 decades; planters gave up and replanted with TEA — which is why Sri Lanka & the British Empire pivoted coffee→tea. The starkest case of a disease redrawing a commodity's world map. Spread to nearly every coffee region 1869–1985 (Hawaii held out until 2020).",
+        "2012 THE BIG RUST: industry thought rust was managed — then a severe epidemic (from ~2008, exploding 2012–13) hit Central America, Colombia, Peru, Ecuador. Up to 35% yield loss, hundreds of millions in damage, hundreds of thousands of smallholders/laborers hit (food-security impact). Causes: warm/wet weather (climate fingerprint) + post-2008-crash farmers cutting fertilizer/care → weak trees; maybe new fungus races.",
+        "The RED QUEEN (breeding arms race): best weapon = genetic resistance. Lucky break = Híbrido de Timor (natural Arabica×Robusta hybrid w/ Robusta's rust resistance, Arabica-drinkable). Breeders (Portugal's CIFC) crossed it w/ Caturra/Villa Sarchi → CATIMORS & SARCHIMORS. BUT the fungus evolves new virulence races that break the resistance, so 'resistant' varieties gradually lose protection & must be re-bred — a permanent arms race, now harder as climate hands rust new ground. Modern breeding stacks genes / builds new F1 hybrids."
+      ],
+      "refs": [
+        {
+          "label": "Talhinhas et al. — Hemileia vastatrix (Molecular Plant Pathology)",
+          "link": "https://bsppjournals.onlinelibrary.wiley.com/doi/10.1111/mpp.12512"
+        },
+        {
+          "label": "McCook — The Big Rust and the Red Queen (Phytopathology)",
+          "link": "https://apsjournals.apsnet.org/doi/10.1094/PHYTO-04-15-0085-RVW"
+        },
+        {
+          "label": "Wikipedia — Hemileia vastatrix",
+          "link": "https://en.wikipedia.org/wiki/Hemileia_vastatrix"
+        }
+      ],
+      "related": [
+        "threats",
+        "climate_coffee",
+        "fine_robusta",
+        "variety_tree",
+        "spot_workhorse",
+        "coffee_borer"
+      ]
+    },
+    "coffee_borer": {
+      "name": "The Coffee Berry Borer",
+      "sub": "The beetle that beat caffeine",
+      "group": "science",
+      "accent": "#a0764a",
+      "diagram": "borerstory",
+      "sections": [
+        {
+          "h": "The worst bug in coffee",
+          "body": "If leaf rust is coffee's most destructive disease, the coffee berry borer is its most destructive insect — a tiny beetle, Hypothenemus hampei, known in Spanish as la broca ('the drill'). It is a minute black bark beetle, the female only about 1.4–1.8 mm long, native to Africa and now spread to nearly every coffee-producing country on earth. Its damage is staggering: infestations can slash a crop's yield by up to 80%, and the beetle is blamed for well over US$500 million in losses every year, affecting an estimated 20 million smallholder farms. For a pest you can barely see, it is the single most economically important insect in coffee."
+        },
+        {
+          "h": "A life spent inside the bean",
+          "body": "What makes the borer so hard to fight is that it lives almost its entire life hidden inside the coffee cherry, where sprays and predators can't reach it. A mated female flies to a ripening cherry, bores a tiny hole — usually right at the tip — and tunnels into the seed, the part we roast and drink. There she builds galleries and lays her eggs, and the hatching larvae feed on the bean from the inside out. This ruins the bean directly: it lowers yield, riddles the seed with holes (those are the 'insect damage' defects graders pull out), and opens the door to mould and rot. Because the beetle is sealed inside the fruit for most of its cycle, conventional insecticides largely fail — which is why control leans on trapping, careful harvesting, strict field sanitation (stripping every leftover cherry so none can harbour a new generation), and a biological weapon: a fungus, Beauveria bassiana, that infects and kills the beetle."
+        },
+        {
+          "h": "How it beats caffeine — the gut-bacteria trick",
+          "body": "Here is the part that makes scientists marvel. Caffeine isn't just a stimulant for us; the coffee plant makes it as a natural pesticide — a dose of caffeine that concentrated is toxic to almost every insect, and it's thought to have evolved partly to poison things that eat the plant. Yet the borer feeds directly on the caffeine-rich bean and thrives. For years this was a genuine mystery. The answer, published in 2015, is elegant: the beetle can't handle caffeine on its own — it relies on a community of bacteria living in its gut. Those microbes, prominent among them Pseudomonas species, actually break caffeine down and consume it as food (a source of carbon and nitrogen). Researchers proved it by wiping out the beetle's gut microbes: stripped of its bacterial partners, the borer could no longer detoxify caffeine. Remarkably, borers from seven major coffee countries all share the same core caffeine-eating gut flora. It's one of the clearest known examples of an animal outsourcing a chemical superpower to its microbiome — and it points to a clever future control strategy: disrupt the bacteria, and you disarm the beetle."
+        },
+        {
+          "h": "Rust and borer: coffee's two great enemies",
+          "body": "Together, leaf rust and the berry borer are the two threats that shape coffee agronomy more than any others — one a fungus that starves the tree, the other an insect that eats the bean, and both made worse by a warming climate that lets them climb to altitudes and seasons that were once refuges. The borer is especially temperature-sensitive: warmer highlands mean it can now reproduce in cool zones that used to be safe, and it can squeeze in more generations per year. Neither enemy has a permanent solution; both demand constant vigilance, breeding, biological control, and good farm hygiene. Understanding them is understanding why growing coffee is a continuous fight, not a settled craft — and why the price you pay reflects, in part, an unending battle happening on the plant, most of it invisible to anyone holding the finished cup."
+        }
+      ],
+      "keypoints": [
+        "The coffee berry borer (Hypothenemus hampei, 'la broca') = coffee's most destructive INSECT (rust = worst disease). Tiny black bark beetle (female ~1.4–1.8mm), native to Africa, now in nearly every coffee country. Damage: up to 80% yield loss, >$500M/yr, ~20M smallholder farms affected. The most economically important insect in coffee.",
+        "Lives INSIDE the bean → nearly untouchable. Mated female bores into a ripening cherry (usually at the tip), tunnels into the SEED, builds galleries, lays eggs; larvae eat the bean from inside → lower yield, the 'insect damage' grading defect, mould entry. Sprays largely fail (it's sealed in the fruit); control = trapping, careful harvest, strict SANITATION (strip leftover cherries) + biocontrol fungus Beauveria bassiana.",
+        "HOW IT BEATS CAFFEINE (the marvel): the plant makes caffeine as a natural PESTICIDE — toxic to almost all insects at bean concentrations. The borer can't detoxify it alone; it relies on GUT BACTERIA (notably Pseudomonas) that break caffeine down and eat it (carbon+nitrogen source). Proven 2015 by killing the gut microbes → beetle could no longer handle caffeine. Borers from 7 coffee countries share the same core caffeine-eating gut flora. A future control idea: disrupt the bacteria, disarm the beetle.",
+        "Rust + borer = coffee's two great enemies (fungus starves the tree; insect eats the bean), both worsened by CLIMATE warming (borer especially — warmer highlands = new territory + more generations/yr). No permanent fix for either → constant breeding, biocontrol, hygiene. Growing coffee is a continuous, mostly-invisible fight — part of what your cup's price reflects."
+      ],
+      "refs": [
+        {
+          "label": "Nature Communications — gut microbiota & caffeine detox in the borer",
+          "link": "https://www.nature.com/articles/ncomms8618"
+        },
+        {
+          "label": "Coffee Berry Borer: a global pest (review, PMC)",
+          "link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7763606/"
+        },
+        {
+          "label": "Wikipedia — Hypothenemus hampei",
+          "link": "https://en.wikipedia.org/wiki/Hypothenemus_hampei"
+        }
+      ],
+      "related": [
+        "leaf_rust",
+        "threats",
+        "caffeine_science",
+        "climate_coffee",
+        "green_grading"
       ]
     },
     "instant_coffee": {
@@ -5681,6 +5894,14 @@
           "body": "Decades of research (the SCA Golden Cup standard, rooted in Lockhart's 1950s work) put the sweet spot at 18–22% extraction yield. Below 18% the coffee is under-extracted: sour, grassy, weak, because you haven't pulled the sugars and desirable compounds yet. Above 22% it's over-extracted: bitter, dry, astringent, because you've started pulling the harsh stuff. The art is landing inside that window. For strength, filter coffee typically targets a TDS around 1.15–1.35%, while espresso is far more concentrated at roughly 8–12%."
         },
         {
+          "h": "Why flavors come out in order",
+          "body": "The reason under- and over-extraction taste the way they do is that coffee's compounds don't all dissolve at the same rate — they leave the grounds in a rough sequence. The most soluble compounds go first: fruit acids and some of the salts, which is why a too-short extraction tastes sour and sharp. Sugars and the compounds that read as sweetness and balance come out in the middle of the extraction — this is the desirable heart you're trying to capture. Last to leave are the heavier, less soluble molecules: bitter compounds and drying, astringent polyphenols, which dominate when extraction runs too far. So the 18–22% window isn't arbitrary — it's the span where you've moved past the raw acidity but haven't yet dragged out the bitterness. Under-extract and you stop in the sour early phase; over-extract and you push into the bitter late phase; hit the middle and you get sweetness and balance. This sequence is why the same coffee can taste sour, sweet, or bitter depending only on how far you take it."
+        },
+        {
+          "h": "Extraction vs strength: two different dials",
+          "body": "The most common confusion in brewing is treating 'strong' and 'over-extracted' as the same thing — they aren't. Extraction yield is how MUCH of the coffee you dissolved (a quality axis: sour → sweet → bitter). Strength, measured as TDS, is how CONCENTRATED the drink is (a preference axis: weak → intense). They're set by different things: extraction is governed by the four levers, while strength is governed mostly by your brew ratio — how much water you use per gram of coffee. This is why you can have a weak-but-bitter coffee (over-extracted yet dilute) or a strong-but-sour one (concentrated yet under-extracted). A useful mental model is the Brewing Control Chart, the classic grid coffee professionals use: extraction yield runs along one axis, strength along the other, and the 'ideal' box sits where a good extraction (18–22%) meets your preferred strength. Dial extraction with grind and time; dial strength with the ratio. Keeping them separate in your head is what turns guesswork into control."
+        },
+        {
           "h": "The four levers",
           "body": "Four variables control extraction. Grind size sets surface area — finer extracts faster. Water temperature — hotter extracts faster (brewing runs ~90–96°C). Contact time — longer extracts more. And agitation — stirring or turbulence speeds extraction by moving fresh water past the grounds. When a cup is wrong, you're almost always adjusting one of these four to move extraction up or down."
         },
@@ -5693,7 +5914,9 @@
         "Extraction yield = % of coffee mass dissolved; TDS = concentration; brew ratio links them.",
         "Golden Cup window: 18–22% extraction. Under = sour/weak, over = bitter/dry.",
         "Strength: filter TDS ~1.15–1.35%, espresso ~8–12%.",
-        "Four levers: grind, temperature, time, agitation. Sour → extract more; bitter → extract less."
+        "Four levers: grind, temperature, time, agitation. Sour → extract more; bitter → extract less.",
+        "Flavors leave the grounds IN ORDER (by solubility): fruit ACIDS + salts first (too short = sour/sharp) → SUGARS/sweetness/balance in the middle (the heart you want) → bitter compounds + astringent polyphenols LAST (too far = bitter/drying). The 18–22% window = past the raw acidity, before the bitterness. Same coffee tastes sour/sweet/bitter purely by how far you take it.",
+        "EXTRACTION vs STRENGTH are different dials (the #1 brewing confusion). Extraction yield = how MUCH you dissolved (quality: sour→sweet→bitter, set by the 4 levers). Strength/TDS = how CONCENTRATED (preference: weak→intense, set mostly by brew RATIO). → you can be weak-but-bitter or strong-but-sour. The Brewing Control Chart grids the two; dial extraction with grind/time, strength with ratio."
       ],
       "refs": [
         {
@@ -5710,7 +5933,8 @@
         "brew_dialing",
         "brew_grind",
         "brew_troubleshoot",
-        "brew_water"
+        "brew_water",
+        "grind_science"
       ]
     },
     "brew_espresso": {
@@ -5920,7 +6144,8 @@
         "brew_grinder",
         "brew_extraction",
         "brew_espresso",
-        "brew_methods"
+        "brew_methods",
+        "grind_science"
       ]
     },
     "brew_grinder": {
@@ -5971,7 +6196,8 @@
         "brew_grind",
         "brew_puckprep",
         "brew_extraction",
-        "ops_maintenance"
+        "ops_maintenance",
+        "grind_science"
       ]
     },
     "brew_puckprep": {
@@ -6416,7 +6642,7 @@
       "sub": "Pouring the pattern",
       "group": "brew",
       "accent": "#c9a878",
-      "diagram": "latteart",
+      "diagram": "pourstroke",
       "sections": [
         {
           "h": "Art is a symptom of good milk",
@@ -6431,6 +6657,10 @@
           "body": "Most designs build from three. The heart is simplest: pour into the center until a white disc surfaces, then cut straight up through it and the drag pulls it into a heart. The rosetta (leaf): once foam surfaces, wiggle the pitcher steadily side to side while slowly drawing backward, laying down a stack of arcs, then cut forward through them to spine the leaf. The tulip: pour a blob, stop; pour another blob behind it and let it push the first forward; repeat for stacked layers, then cut through. All three depend on the same fundamentals — the milk surfacing at the right moment and a controlled, steady hand. Latte art is mostly milk texture and practice, not talent."
         },
         {
+          "h": "Beyond the basics",
+          "body": "Once the heart, rosetta, and tulip are reliable, the advanced world opens up along a few axes. STACKING is the first: instead of one push of milk, you make many small, deliberate pulses — each one a bump of the pitcher — to build multi-layered tulips (a '6-stack' is six nested pushes) or the winged 'wave-heart.' The key skill is control of flow: starting and stopping the stream cleanly without dribbling, so each layer sits crisp against the last. ROSETTA VARIATIONS come next — wider leaves, more of them, or the 'inverted' rosetta poured from the far side toward you. Then there's ETCHING and free-pour hybrids: dragging a fine tool (or a thin stream) through the surface to add antennae to a swan, whiskers to a cat, or fine detail no pour alone can make. The true advanced tier is SLOW POURING and the '3D' foam sculptures — but those rely entirely on the foundations: none of it works without milk textured to wet-paint microfoam and a shot with good crema to paint on. Advanced latte art isn't new tricks so much as extreme control of the same two moves — sink and surface — repeated with precision."
+        },
+        {
           "h": "Common failures and fixes",
           "body": "When art goes wrong, the cause is usually diagnosable. No white surfaces / everything sinks: you poured too high or too slowly for too long, or the foam is too thin — get closer and increase flow, and check your steaming built enough microfoam. Big holes and blotches instead of crisp lines: bubbles in the milk — fix the steaming (stretch less air, texture longer to a smooth whirlpool, tap and swirl the pitcher before pouring). Pattern won't move or 'draw': the flow is too gentle once you're at the surface, or the crema broke up — pour with more confidence and make sure the shot has a good crema. Above all, the fix for bad latte art is usually better milk, which loops back to the milk-steaming fundamentals."
         }
@@ -6439,7 +6669,8 @@
         "Latte art requires correctly textured glossy microfoam (no bubbles, milk+foam integrated) — it's a sign the milk was steamed right. Bad art = fix the steaming, not the pour.",
         "Two moves: SINK the milk (pitcher high, thin center stream, under the crema) then SURFACE the foam (spout close, more flow) so white floats and 'draws' on dark crema.",
         "Three foundations: heart (pour + cut through), rosetta (wiggle side-to-side drawing back, then cut forward), tulip (stacked blobs pushed forward, then cut).",
-        "Failures: nothing surfaces = poured too high/thin foam; holes/blotches = bubbles (fix steaming); won't draw = too-gentle flow or broken crema. The fix is usually better milk."
+        "Failures: nothing surfaces = poured too high/thin foam; holes/blotches = bubbles (fix steaming); won't draw = too-gentle flow or broken crema. The fix is usually better milk.",
+        "Advanced = extreme control of the SAME two moves (sink + surface), not new tricks. STACKING = many small pitcher pulses → multi-layer tulips (e.g. 6-stack), wave-hearts (needs clean flow start/stop). ROSETTA variations (wider/more leaves, inverted). ETCHING/hybrids = drag a tool or thin stream for detail (swan antennae, cat whiskers). All of it still needs wet-paint microfoam + good crema."
       ],
       "refs": [
         {
@@ -6799,7 +7030,8 @@
         "geisha_spotlight",
         "spot_bourbon",
         "spot_workhorse",
-        "spot_typica"
+        "spot_typica",
+        "leaf_rust"
       ]
     },
     "species_deep": {
@@ -6849,7 +7081,8 @@
         "climate_coffee",
         "threats",
         "geisha_spotlight",
-        "spot_typica"
+        "spot_typica",
+        "fine_robusta"
       ]
     },
     "spot_typica": {
@@ -7256,7 +7489,9 @@
         "varietals",
         "sustainability",
         "climate_coffee",
-        "variety_tree"
+        "variety_tree",
+        "leaf_rust",
+        "coffee_borer"
       ]
     },
     "green_intro": {
@@ -7708,7 +7943,8 @@
         "varietals",
         "plant",
         "green_processing",
-        "species_deep"
+        "species_deep",
+        "fine_robusta"
       ]
     },
     "green_grades": {
