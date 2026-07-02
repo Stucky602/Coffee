@@ -332,7 +332,8 @@
         "waves",
         "coffeehouse",
         "cultures_world",
-        "esp_history"
+        "esp_history",
+        "moka_pot"
       ]
     },
     "esp_history": {
@@ -383,7 +384,60 @@
         "history_timeline",
         "brew_machinetypes",
         "brew_espresso",
-        "waves"
+        "waves",
+        "moka_pot"
+      ]
+    },
+    "moka_pot": {
+      "name": "The Moka Pot",
+      "sub": "How espresso came home",
+      "group": "culture",
+      "accent": "#a0824a",
+      "diagram": "mokapot",
+      "sections": [
+        {
+          "h": "Before the moka: coffee was a public thing",
+          "body": "For the first centuries of coffee in Europe, brewing good coffee was largely a public affair. The espresso machines that defined Italian coffee — from Bezzera and Pavoni onward — were large, expensive, and complicated, so they lived in cafes, and the cafe was where you went for a proper cup. Home brewing existed but produced a different, gentler drink: Italians used devices like the Napoletana (the Neapolitan 'flip' pot, where you boil water in one chamber, then flip the whole thing so it drips down through the grounds) and the Milanese. These made pleasant coffee, but nothing like the intense, pressure-extracted shot from the bar. The coffee bar was also a social institution, largely male, a place to read the news and argue politics — so home coffee carried a whiff of being the lesser, domestic imitation."
+        },
+        {
+          "h": "1933: Bialetti’s aluminium idea",
+          "body": "The device that changed this was the Moka Express, first made in 1933. Alfonso Bialetti was a Piedmontese metalworker who had spent a decade in the French aluminium industry before opening his own aluminium workshop back home. The popular origin story is charming: inspiration supposedly struck watching his wife use a lessiveuse, an early washing machine that worked by forcing boiling soapy water up a central tube and out over the laundry. Bialetti (with design attributed by some sources to Luigi De Ponti) applied exactly that principle to coffee, deliberately trying to fit the pressure-brewing of a La Pavoni machine into a small stovetop pot shaped like the elegant silver coffee services of well-to-do homes. The result was the now-iconic octagonal, Art Deco aluminium pot — and aluminium itself was a modern, even nationalistic material in 1930s Italy. Its design has barely changed in ninety years and sits in design museums including MoMA."
+        },
+        {
+          "h": "Renato and the marketing that conquered Italy",
+          "body": "The Moka Express was not an overnight hit. Alfonso sold it at local markets and from his workshop, making only around 10,000 a year before the Second World War, during which aluminium went to the war effort and production stopped. The turning point was his son Renato Bialetti, who returned from a prisoner-of-war camp in 1945, took over the business, and turned out to be a marketing genius. In the booming post-war economy he presented the Moka as a design object and blanketed Italy with advertising — billboards, radio, and the new medium of television. He commissioned the famous mascot, l'omino coi baffi ('the little man with the moustache'), a cartoon caricature of his own father, paired with the slogan 'in casa un espresso come al bar' — 'an espresso at home, just like at the bar.' Production exploded to four million pots a year, the Moka displaced the old Napoletana, and it ended up in an estimated 90% of Italian homes. (Renato loved it so much that when he died in 2016, his ashes were placed in a giant Moka pot.)"
+        },
+        {
+          "h": "How it works — and why it isn’t quite espresso",
+          "body": "A moka pot has three chambers. You fill the bottom with water, put fine (but not espresso-fine) grounds in the funnel-shaped middle basket, and screw the top on. As the base heats on the stove, the water turns to steam and the expanding gas builds pressure, which pushes the hot water up through the coffee bed and out into the top chamber — the tell-tale gurgle means it's done. Crucially, unlike a percolator it never recirculates the brewed coffee back through the grounds. The catch is pressure: a moka pot brews at only about 1–2 bars, while true espresso is defined by roughly 9 bars. So despite the nickname 'stovetop espresso maker,' moka coffee is not technically espresso — it lands somewhere between espresso and a strong drip or pour-over: bold and concentrated, with a little crema, but without the syrupy body and true crema of a pump machine. A few tips make it much better: start with hot water in the base (so the coffee doesn't stew while the metal heats), use a medium-fine grind, don't tamp, and pull it off the heat the moment it gurgles to avoid a burnt, bitter finish."
+        }
+      ],
+      "keypoints": [
+        "Before the moka, good coffee was PUBLIC: espresso machines (Bezzera/Pavoni) were big, costly, cafe-only. Home devices — the Napoletana (Neapolitan 'flip' pot) and Milanese — made gentler, non-pressure coffee. The cafe was a (largely male) social institution; home coffee felt like the lesser imitation.",
+        "1933: the Moka Express, by Piedmontese aluminium-maker Alfonso Bialetti (design also credited to Luigi De Ponti). Inspiration: a lessiveuse washing machine that forced boiling water up a central tube. Deliberately fit La Pavoni-style pressure brewing into a small stovetop pot. Iconic octagonal Art Deco aluminium design, barely changed in 90 yrs, now in MoMA.",
+        "Not an instant hit (~10k/yr pre-WWII; aluminium went to the war). Turning point = son RENATO Bialetti (back from a POW camp 1945): a marketing genius who used billboards/radio/TV, the mascot 'l'omino coi baffi' (a caricature of his father), and the slogan 'in casa un espresso come al bar.' → 4 million pots/yr, displaced the Napoletana, ~90% of Italian homes. (Renato's ashes are in a giant Moka pot.)",
+        "How it works: 3 chambers — water in base, fine-ish grounds in middle basket. Heat → steam/gas pressure pushes hot water UP through the coffee to the top (the gurgle = done); never recirculates (unlike a percolator). BUT only ~1–2 bar vs espresso's ~9 bar → NOT technically espresso; sits between espresso & strong drip. Tips: start with HOT water, medium-fine grind, don't tamp, pull off heat at the gurgle."
+      ],
+      "refs": [
+        {
+          "label": "Wikipedia — moka pot",
+          "link": "https://en.wikipedia.org/wiki/Moka_pot"
+        },
+        {
+          "label": "The Sunday Baker — the history of the moka pot",
+          "link": "https://sundaybaker.co/the-history-of-the-moka-pot/"
+        },
+        {
+          "label": "Imbibe — how the moka pot stood the test of time",
+          "link": "https://imbibemagazine.com/how-the-moka-pot-stood-the-test-of-time/"
+        }
+      ],
+      "related": [
+        "esp_history",
+        "brew_pressure",
+        "brew_machinetypes",
+        "history_timeline",
+        "cultures_world"
       ]
     },
     "cultures_world": {
@@ -524,7 +578,8 @@
         "cultures_world",
         "q_grader",
         "cva_overview",
-        "geisha_spotlight"
+        "geisha_spotlight",
+        "processing_experimental"
       ]
     },
     "health": {
@@ -570,7 +625,8 @@
       "related": [
         "tea_coffee",
         "waves",
-        "decaf_deep"
+        "decaf_deep",
+        "caffeine_science"
       ]
     },
     "tea_coffee": {
@@ -616,7 +672,8 @@
       "related": [
         "health",
         "waves",
-        "brew_water"
+        "brew_water",
+        "caffeine_science"
       ]
     },
     "supply_chain": {
@@ -1350,6 +1407,57 @@
         "curve",
         "profiling",
         "instant_coffee"
+      ]
+    },
+    "caffeine_science": {
+      "name": "The Science of Caffeine",
+      "sub": "How your coffee actually works",
+      "group": "science",
+      "accent": "#c86a4a",
+      "diagram": "caffeinescience",
+      "sections": [
+        {
+          "h": "What caffeine actually does",
+          "body": "Caffeine is the most widely consumed psychoactive substance on earth, and its mechanism is elegant. All day long, as your brain works, it produces a molecule called adenosine, which gradually accumulates and binds to receptors that make you feel drowsy — this rising 'sleep pressure' is part of what tells you it's time to rest. Caffeine works because its molecular shape is remarkably similar to adenosine, so it fits into those same receptors (the A1 and A2A subtypes) without activating them. It acts as an antagonist: it doesn't stimulate you directly so much as it blocks the signal that would otherwise make you feel tired. With the drowsiness signal jammed, the brain's own stimulants (like dopamine and adrenaline) act more freely — which is why caffeine makes you feel alert, focused, and energized. It's not adding energy; it's hiding fatigue."
+        },
+        {
+          "h": "Absorption, peak, and the five-hour half-life",
+          "body": "Caffeine is absorbed quickly and almost completely: drink a coffee and it's well absorbed from the small intestine within about 45 minutes, with peak blood levels reached in roughly 30 minutes to 2 hours. Then your liver goes to work. The key number to know is caffeine's half-life — the time for your body to clear half of it — which averages around 5 hours in a healthy adult. That has a practical consequence people underestimate: if you have a strong coffee (say 200 mg) at 3 p.m., around 100 mg is still in your system at 8 p.m., and 50 mg near 1 a.m. This is why afternoon coffee disrupts sleep even when you feel you've 'come down' — the caffeine is still there, quietly blocking adenosine and measurably reducing deep, slow-wave sleep. A useful heuristic is to stop caffeine 8–10 hours before bed."
+        },
+        {
+          "h": "Why people react so differently",
+          "body": "Caffeine tolerance varies enormously between people, and a lot of it is genetic. About 95% of caffeine is broken down by a single liver enzyme, CYP1A2, and a common variation in the CYP1A2 gene sorts people into 'fast' and 'slow' metabolizers. Fast metabolizers clear caffeine quickly (a few hours) and can drink an espresso after dinner and sleep fine; slow metabolizers may take 9–12 hours to clear the same dose and feel wired all evening from one afternoon cup. A second gene, ADORA2A, shapes the adenosine receptor itself — certain variants make people much more prone to caffeine-induced anxiety and jitters, feeling anxious from doses others tolerate easily. So when a friend says coffee doesn't affect them and you're buzzing after half a cup, you're not imagining it: your genes are running different software. Other factors shift metabolism too — smoking roughly halves caffeine's half-life (speeding clearance), while pregnancy and some medications and oral contraceptives can dramatically lengthen it."
+        },
+        {
+          "h": "Tolerance, dependence, and withdrawal",
+          "body": "With regular consumption, the brain adapts. Faced with receptors that are chronically blocked, it grows more adenosine receptors to compensate — which is tolerance: you need more caffeine to get the same effect, and your baseline alertness now partly depends on caffeine just to feel normal. This also explains withdrawal: skip your coffee and all those extra receptors are suddenly flooded with adenosine binding freely, producing the classic headache, fatigue, irritability, and difficulty concentrating that peak over the first day or two and fade within about a week. This is genuine physical dependence, though caffeine is not considered addictive in the harmful sense of drugs that drive compulsive, destructive use. Two practical notes fall out of the science: taking an occasional tolerance break restores caffeine's punch, and delaying your first coffee until 90 or so minutes after waking (rather than immediately) lets your natural morning alertness do its job first, which many find reduces the mid-morning crash and their overall dependence."
+        }
+      ],
+      "keypoints": [
+        "Mechanism: your brain makes ADENOSINE all day (builds 'sleep pressure', binds receptors → drowsy). Caffeine is shaped like adenosine, so it fits the SAME A1/A2A receptors without activating them — an ANTAGONIST that BLOCKS the tired signal (doesn't add energy, hides fatigue). Dopamine/adrenaline then act more freely.",
+        "Kinetics: absorbed within ~45 min, peaks ~30 min–2 hr. HALF-LIFE ~5 hr in a healthy adult → a 200mg coffee at 3pm = ~100mg left at 8pm, ~50mg at 1am. Wrecks deep sleep even when you feel 'down'. Heuristic: stop caffeine 8–10 hr before bed.",
+        "Why people differ (genetic): ~95% metabolized by liver enzyme CYP1A2 — 'fast' metabolizers clear in hours (espresso after dinner, fine); 'slow' take 9–12 hr (wired all evening). ADORA2A gene shapes the receptor → some variants = much more caffeine ANXIETY. Smoking ~halves half-life; pregnancy/some meds/contraceptives lengthen it.",
+        "Tolerance/dependence: chronic blocking → brain grows MORE adenosine receptors (tolerance, need more; baseline depends on caffeine). Skipping → those receptors flooded → WITHDRAWAL (headache/fatigue/irritability, peaks day 1–2, gone ~1 week). Real physical dependence but not addictive in the harmful sense. Tolerance breaks restore the punch; delaying 1st coffee ~90 min after waking can reduce the crash."
+      ],
+      "refs": [
+        {
+          "label": "NCBI StatPearls — caffeine (pharmacology)",
+          "link": "https://www.ncbi.nlm.nih.gov/books/NBK519490/"
+        },
+        {
+          "label": "Biology Insights — caffeine as an adenosine antagonist",
+          "link": "https://biologyinsights.com/caffeine-as-an-adenosine-antagonist-how-it-works/"
+        },
+        {
+          "label": "Fuel Your DNA — CYP1A2 & caffeine metabolism",
+          "link": "https://www.fuelyourdna.com/blog/caffeine-metabolism-cyp1a2"
+        }
+      ],
+      "related": [
+        "health",
+        "tea_coffee",
+        "decaf_deep",
+        "chemistry"
       ]
     },
     "instant_coffee": {
@@ -6167,7 +6275,8 @@
       "related": [
         "brew_espresso",
         "brew_immersion",
-        "brew_methods"
+        "brew_methods",
+        "moka_pot"
       ]
     },
     "brew_milk": {
@@ -7281,7 +7390,60 @@
       "related": [
         "cascara",
         "green_intro",
-        "green_grading"
+        "green_grading",
+        "processing_experimental"
+      ]
+    },
+    "processing_experimental": {
+      "name": "Experimental Processing",
+      "sub": "Fermentation as the new frontier",
+      "group": "green",
+      "accent": "#c86a9a",
+      "diagram": "fermentmethods",
+      "sections": [
+        {
+          "h": "Fermentation is the flavor lever",
+          "body": "For most of coffee history there were three ways to process a cherry — washed, natural, and honey — and they were covered elsewhere as the foundation. What's changed in the last decade is that producers realized processing isn't just a way to get the fruit off the seed; it's a powerful, controllable flavor lever. The key insight is that flavor is created by fermentation — the microbial activity (yeasts and bacteria) that acts on the cherry's sugars after harvest. Every method is really about controlling which microbes work on the coffee, for how long, and under what conditions. Once producers started manipulating that deliberately — borrowing ideas from winemaking, brewing, and food science — they unlocked flavors that traditional processing never reached: raspberry, white wine, mango, cinnamon, tropical fruit. This is the frontier of specialty coffee, and it's moved from rare competition lots to bags you can buy today."
+        },
+        {
+          "h": "Anaerobic and carbonic maceration",
+          "body": "The two headline techniques both remove oxygen, but differently. Anaerobic fermentation is the workhorse: coffee (as cherries or depulped beans) ferments in sealed, oxygen-free tanks or barrels fitted with a one-way valve — as fermentation gases build up, they push the oxygen out. Without oxygen, a different set of microbes dominates, fermentation proceeds slower and more controlled, and the result is typically a heavier body with intense winey, boozy, or fruit-forward notes; done well, it can actually tame the wild 'funk' of a natural while maxing out juicy fruit and body. Carbonic maceration is the show pony, borrowed directly from Beaujolais winemaking: whole, intact cherries go into a tank flushed with carbon dioxide, so fermentation begins inside each individual cherry rather than in the surrounding mass. That produces unusually uniform, vibrant, juicy red-fruit flavors. It's harder and costlier to do — and it earned its fame when Sasa Sestic won the 2015 World Barista Championship using a carbonic-maceration coffee, after which it became a fixture of high-end lots."
+        },
+        {
+          "h": "Lactic, thermal shock, co-fermentation, and more",
+          "body": "Beyond those, the toolkit keeps expanding. Lactic fermentation is a targeted anaerobic process that favors lactic-acid bacteria (sometimes with a salt brine or starter culture), often running 80+ hours — pioneered at farms like La Palma y El Tucán in Colombia — giving a velvety, creamy, yogurt-tangy cup with intense sweetness. Thermal shock cycles the coffee through dramatic hot-and-cold temperature swings to shift which microbes dominate and intensify sweetness or structure, often paired with anaerobic methods. Honey processing itself comes in graded levels — white, yellow, red, and black honey — referring to how much sticky mucilage is left on the bean to dry (more mucilage = darker color, more fermentation, richer and fruitier, but riskier). Yeast-inoculation adds selected yeast strains for controlled, repeatable results, and even koji (the Aspergillus fungus behind sake and miso) is being used for umami-rich sweetness. Multi-stage processes chain several of these together. It's genuinely a period of wild, science-driven experimentation."
+        },
+        {
+          "h": "The co-fermentation controversy — and how to buy well",
+          "body": "The most debated technique is co-fermentation: adding ingredients — fruits, cacao, spices, botanicals — during fermentation. Advocates say the additions create specific bacterial cultures (via their sugars and pH) that steer how the bean ferments, which is legitimately different from simply soaking beans in flavoring. Critics worry the line to 'infused' or artificially flavored coffee gets blurry, and ask whether you're still tasting the coffee at all when the cup screams of added mango or cinnamon. Both concerns are fair, and the industry hasn't fully settled where the line sits. The practical guidance for buyers cuts through it: a trustworthy experimental coffee names its process and its numbers — the method, the fermentation time, the origin, ideally the producer. Vague labels like 'specialty fermented' with no detail, or a flavor that reads like pure candy with no explanation, are red flags. And a fair warning: these coffees are polarizing and often expensive, they're usually best brewed as pour-over to showcase clarity (many are ruined by milk), and there's no shame in preferring a clean washed Kenyan. Experimental processing is one of the most exciting things happening in coffee — approach it with curiosity and a little healthy skepticism."
+        }
+      ],
+      "keypoints": [
+        "Processing isn't just fruit-removal — it's the FLAVOR lever. Flavor comes from FERMENTATION (yeasts + bacteria on the cherry's sugars). Every method = controlling WHICH microbes work, how long, under what conditions. Deliberate manipulation (borrowed from wine/brewing) unlocks raspberry/white-wine/mango/cinnamon notes traditional processing can't reach.",
+        "ANAEROBIC (the workhorse): sealed oxygen-free tanks/barrels w/ one-way valve; different microbes dominate, slower/controlled → heavier body, winey/boozy/fruity; can tame natural 'funk' while maxing juice+body. CARBONIC MACERATION (the show pony, from Beaujolais wine): whole cherries in a CO2-flushed tank → fermentation INSIDE each cherry → uniform, vibrant, juicy red fruit. Sasa Sestic won 2015 WBC with it.",
+        "More tools: LACTIC (targeted anaerobic favoring lactic-acid bacteria, 80+ hrs, La Palma y El Tucán → velvety/yogurt-tang/sweet); THERMAL SHOCK (hot-cold swings shift microbes, intensify sweetness); HONEY LEVELS (white→yellow→red→BLACK = more mucilage left on = more fermentation, richer/fruitier/riskier); yeast-inoculation, koji (sake/miso fungus, umami), multi-stage chains.",
+        "CO-FERMENTATION debate: adding fruits/spices/cacao during fermentation — advocates say it steers the bacterial culture (legit, not just soaking); critics say the line to 'infused'/flavored coffee blurs. Buy well: trustworthy exotic lots NAME the method + fermentation time + origin + producer. Vague 'specialty fermented' or candy-with-no-explanation = red flag. Polarizing, pricey, best as pour-over (not milk); a clean washed coffee is fine too."
+      ],
+      "refs": [
+        {
+          "label": "Royal Coffee — understanding coffee fermentation",
+          "link": "https://royalcoffee.com/understanding-coffee-fermentation-from-classic-to-experimental/"
+        },
+        {
+          "label": "Buddha Beans — exotic coffee trends 2026",
+          "link": "https://buddhabeanscoffee.com/blogs/news/exotic-coffee-trends-in-2026-anaerobic-fermentation-thermal-shock-and-co-ferments-explained"
+        },
+        {
+          "label": "CoffeeGeek — impact of processing on character",
+          "link": "https://coffeegeek.com/blog/farming/the-impact-of-processing-on-coffees-character/"
+        }
+      ],
+      "related": [
+        "green_processing",
+        "cascara",
+        "competitions",
+        "flavor_wheel",
+        "green_intro"
       ]
     },
     "decaf_methods": {
@@ -7384,7 +7546,8 @@
         "decaf_methods",
         "green_processing",
         "health",
-        "green_intro"
+        "green_intro",
+        "caffeine_science"
       ]
     },
     "green_species": {

@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v33"
-CACHE_C = "coffee-guide-v33"
+APP_VERSION = "v35"
+CACHE_C = "coffee-guide-v35"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -305,6 +305,14 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .mgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 
 /* learn hub */
+.learntools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;
+  padding-bottom:14px;border-bottom:1px solid var(--line)}
+.ltcount{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.ltbtn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink1);
+  background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:7px 13px;cursor:pointer;
+  transition:.15s;white-space:nowrap}
+.ltbtn:hover{background:var(--panel2);border-color:var(--ink3);color:var(--heat1)}
+.ltbtn svg{opacity:.85}
 .chaplist{display:flex;flex-direction:column;gap:26px}
 .chapter{--ca:#B07B3E}
 .chaphead{display:flex;align-items:center;gap:13px;padding:0 2px 12px;border-bottom:1px solid var(--line);margin-bottom:13px}
@@ -1316,7 +1324,7 @@ function methLike(m,backView,backLabel){
 
 /* ---------- LEARN LIST ---------- */
 /* ---------- LEARN HUB ---------- */
-let learnQuery='', learnOpen=null;
+let learnQuery='', learnOpen=new Set();
 function learnList(){
   app.innerHTML=`<div class="wrap">
     <div class="seclead"><span class="no">03</span><div><h2>Learn</h2><p>The full craft, green to cup — ${Object.keys(METHODOLOGY).length} deep-dives across ${METH_GROUPS.length} areas.</p></div></div>
@@ -1352,7 +1360,17 @@ function drawLearn(){
     return;
   }
   // hub view: chapters → group tiles, click a tile to expand into cards
-  box.innerHTML=`<div class="chaplist">${METH_CHAPTERS.map(([cid,ctitle,cdesc,caccent,groups])=>{
+  const gids=allGroupIds();
+  const openCount=gids.filter(g=>learnOpen.has(g)).length;
+  const allOpen=openCount===gids.length;
+  const toolbar=`<div class="learntools">
+    <span class="ltcount">${gids.length} areas · ${Object.values(METHODOLOGY).filter(m=>m.group!=='origin').length} topics</span>
+    <button class="ltbtn" onclick="${allOpen?'collapseAllHubs()':'expandAllHubs()'}">
+      ${allOpen
+        ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg> Collapse all'
+        : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg> Expand all'}
+    </button></div>`;
+  box.innerHTML=toolbar+`<div class="chaplist">${METH_CHAPTERS.map(([cid,ctitle,cdesc,caccent,groups])=>{
     const chapGroups=groups.filter(gid=>Object.entries(METHODOLOGY).some(([id,m])=>m.group===gid));
     if(!chapGroups.length)return '';
     const total=chapGroups.reduce((n,gid)=>n+Object.entries(METHODOLOGY).filter(([id,m])=>m.group===gid).length,0);
@@ -1366,7 +1384,7 @@ function drawLearn(){
         const glabel=METH_GROUPS.find(g=>g[0]===gid)?.[1]||gid;
         const items=Object.entries(METHODOLOGY).filter(([id,m])=>m.group===gid);
         const meta=METH_GROUP_META[gid]||{desc:'',accent:caccent};
-        const open=learnOpen===gid;
+        const open=learnOpen.has(gid);
         return `<div class="hubgroup ${open?'open':''}">
           <button class="hubhead" onclick="toggleHub('${gid}')" style="--ga:${meta.accent}">
             <span class="hubbar"></span>
@@ -1383,7 +1401,10 @@ function drawLearn(){
     </section>`;
   }).join('')}</div>`;
 }
-function toggleHub(gid){learnOpen=learnOpen===gid?null:gid;drawLearn();}
+function toggleHub(gid){ if(learnOpen.has(gid))learnOpen.delete(gid); else learnOpen.add(gid); drawLearn(); }
+function allGroupIds(){ return METH_GROUPS.map(g=>g[0]).filter(gid=>Object.values(METHODOLOGY).some(m=>m.group===gid)); }
+function expandAllHubs(){ allGroupIds().forEach(gid=>learnOpen.add(gid)); drawLearn(); }
+function collapseAllHubs(){ learnOpen.clear(); drawLearn(); }
 
 /* ---------- METH DETAIL ---------- */
 /* ---------- DEFECT BEAN ILLUSTRATIONS (inline SVG, zero-byte, offline) ---------- */
@@ -1735,14 +1756,13 @@ function diaWaves(){
     ['2nd','1960s+','Experience','café · espresso · Starbucks','#B07B3E',.34],
     ['3rd','2000s+','Craft','single origin · light · direct trade','#C9A34E',.62],
     ['4th','now','Science + home','precision · at-home · community','#e0864a',.88]];
-  let g='';
+  let g=diaDefs(waves.map(w=>w[4]));
   g+=`<line x1="${L}" y1="${axisY}" x2="${W-R}" y2="${axisY}" stroke="${DIA.line}" stroke-width="2"/>`;
-  // rising steps to suggest growth in quality-focus
   waves.forEach((w,i)=>{const x=L+iw*w[5];const barH=40+i*34;const y=axisY-barH;
-    g+=`<rect x="${(x-52).toFixed(0)}" y="${y.toFixed(0)}" width="104" height="${barH}" rx="6" fill="${w[4]}" opacity="0.2" stroke="${w[4]}" stroke-width="1.5"/>`;
-    g+=`<text x="${x.toFixed(0)}" y="${(y+22).toFixed(0)}" fill="${w[4]}" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
-    g+=`<text x="${x.toFixed(0)}" y="${(y+40).toFixed(0)}" fill="${DIA.ink}" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
-    if(barH>60)g+=`<text x="${x.toFixed(0)}" y="${(y+58).toFixed(0)}" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
+    g+=`<rect x="${(x-52).toFixed(0)}" y="${y.toFixed(0)}" width="104" height="${barH}" rx="7" fill="url(#${_cid(w[4])})" stroke="${w[4]}" stroke-width="1.5" filter="url(#dsoft)"/>`;
+    g+=`<text x="${x.toFixed(0)}" y="${(y+24).toFixed(0)}" fill="${w[4]}" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
+    g+=`<text x="${x.toFixed(0)}" y="${(y+42).toFixed(0)}" fill="${DIA.ink}" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
+    if(barH>60)g+=`<text x="${x.toFixed(0)}" y="${(y+60).toFixed(0)}" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
     g+=`<circle cx="${x.toFixed(0)}" cy="${axisY}" r="5" fill="${w[4]}"/>`;
     g+=`<text x="${x.toFixed(0)}" y="${axisY+22}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${w[1]}</text>`;
   });
@@ -1754,15 +1774,14 @@ function diaSupplyChain(){
   const W=760,H=200,cy=70,L=20;
   const steps=[['Farmer','grows & picks','#7d8f5a'],['Mill','processes green','#95602F'],['Exporter','+ Importer','#B07B3E'],['Roaster','roasts & sells','#8A5A34'],['Café / You','brews','#e0864a']];
   const gap=(W-40)/steps.length;
-  let g='';
+  let g=diaDefs(steps.map(s=>s[2]));
+  g=`<defs>${diaArrowMarker(DIA.ink3)}</defs>`+g;
   steps.forEach((s,i)=>{const cx=L+gap*i+gap/2;
-    g+=`<circle cx="${cx.toFixed(0)}" cy="${cy}" r="30" fill="${s[2]}" opacity="0.2" stroke="${s[2]}" stroke-width="2"/>`;
+    g+=`<circle cx="${cx.toFixed(0)}" cy="${cy}" r="30" fill="url(#${_cid(s[2])})" stroke="${s[2]}" stroke-width="2" filter="url(#dsoft)"/>`;
     g+=`<text x="${cx.toFixed(0)}" y="${cy-2}" fill="${s[2]}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[0].split(' ')[0]}</text>`;
     g+=`<text x="${cx.toFixed(0)}" y="${cy+50}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;
-    if(i<steps.length-1)g+=`<path d="M${(cx+32).toFixed(0)} ${cy} L${(cx+gap-32).toFixed(0)} ${cy}" stroke="${DIA.ink3}" stroke-width="2" marker-end="url(#asc)"/>`;
+    if(i<steps.length-1)g+=`<path d="M${(cx+32).toFixed(0)} ${cy} L${(cx+gap-32).toFixed(0)} ${cy}" stroke="${DIA.ink3}" stroke-width="2" marker-end="url(#darr)"/>`;
   });
-  g=`<defs><marker id="asc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${DIA.ink3}"/></marker></defs>`+g;
-  // value bar beneath
   g+=`<text x="${W/2}" y="${cy+96}" fill="${DIA.ink}" font-size="12.5" text-anchor="middle" font-family="ui-sans-serif">Every link adds cost and takes margin — historically the farmer did the most work for the least return.</text>`;
   g+=`<text x="${W/2}" y="${cy+116}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Direct trade shortens the chain and pushes more value back to the farm.</text>`;
   return diaWrap(`${W} ${H}`,g,'The path from coffee cherry to your cup.');
@@ -1771,17 +1790,17 @@ function diaSupplyChain(){
 function diaBlend(){
   const W=760,H=200,cx2=590,cy=80,L=40;
   const comps=[['Base','body & sweetness','#8A5A34',30],['Bright','acidity & lift','#C9A34E',86],['Accent','aromatics','#e0864a',142]];
-  let g='';
-  comps.forEach(c=>{g+=`<circle cx="${L+30}" cy="${c[3]}" r="15" fill="${c[2]}" opacity="0.85"/>`;
-    g+=`<text x="${L+54}" y="${c[3]-2}" fill="${c[2]}" font-size="13.5" font-weight="700" font-family="ui-sans-serif">${c[0]}</text>`;
-    g+=`<text x="${L+54}" y="${c[3]+14}" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">${c[1]}</text>`;
-    // arrow to blend
-    g+=`<path d="M${L+150} ${c[3]} Q${L+260} ${c[3]}, ${cx2-46} ${cy}" stroke="${c[2]}" stroke-width="2" fill="none" opacity="0.6"/>`;
+  let g=diaDefs(['#8A5A34','#C9A34E','#e0864a']);
+  comps.forEach(c=>{g+=`<circle cx="${L+30}" cy="${c[3]}" r="16" fill="url(#${_cid(c[2])})" stroke="${c[2]}" stroke-width="2" filter="url(#dsoft)"/>`;
+    g+=`<text x="${L+56}" y="${c[3]-2}" fill="${c[2]}" font-size="13.5" font-weight="700" font-family="ui-sans-serif">${c[0]}</text>`;
+    g+=`<text x="${L+56}" y="${c[3]+14}" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">${c[1]}</text>`;
+    g+=`<path d="M${L+150} ${c[3]} Q${L+260} ${c[3]}, ${cx2-46} ${cy}" stroke="${c[2]}" stroke-width="2" fill="none" opacity="0.55"/>`;
   });
-  // the blend cup
+  // the blend cup with depth
+  g+=`<circle cx="${cx2}" cy="${cy}" r="40" fill="#000" opacity="0.25" filter="url(#dsoft)"/>`;
   g+=`<circle cx="${cx2}" cy="${cy}" r="40" fill="none" stroke="${DIA.accent}" stroke-width="2.5"/>`;
-  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 1 ${cx2} ${cy+40} Z" fill="#8A5A34" opacity="0.5"/>`;
-  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 0 ${cx2} ${cy+40} Z" fill="#C9A34E" opacity="0.4"/>`;
+  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 1 ${cx2} ${cy+40} Z" fill="#8A5A34" opacity="0.55"/>`;
+  g+=`<path d="M${cx2} ${cy-40} A40 40 0 0 0 ${cx2} ${cy+40} Z" fill="#C9A34E" opacity="0.45"/>`;
   g+=`<text x="${cx2}" y="${cy+64}" fill="${DIA.ink}" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">The blend</text>`;
   g+=`<text x="${W/2}" y="${H-16}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">Dial the ratio by cupping the components together until the cup is balanced.</text>`;
   return diaWrap(`${W} ${H}`,g,'A blend is built from components that each play a role.');
@@ -1935,12 +1954,17 @@ function diaDecaf(){
 // 26. Coffee's spread map (schematic).
 function diaCoffeeMap(){
   const W=760,H=220;
-  let g=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="10"/>`;
   const stops=[['Ethiopia','origin',120,120,'#5f8f4a'],['Yemen','15th c.',210,105,'#C9A34E'],['Europe','17th c.',330,70,'#B07B3E'],['Java','Dutch',560,140,'#8A5A34'],['Americas','French/colonial',430,160,'#a0522d']];
+  let g=diaDefs(stops.map(s=>s[4]));
+  g=`<defs>${diaArrowMarker('#8a7660')}</defs>`+g;
+  g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="10"/>`;
   // arrows in sequence
-  for(let i=0;i<stops.length-1;i++){const a=stops[i],b=stops[i+1];g+=`<path d="M${a[2]} ${a[3]} Q${(a[2]+b[2])/2} ${Math.min(a[3],b[3])-24} ${b[2]} ${b[3]}" stroke="#7a6a52" stroke-width="1.6" fill="none" stroke-dasharray="4 3" marker-end="url(#acm)"/>`;}
-  g=`<defs><marker id="acm" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#7a6a52"/></marker></defs>`+g;
-  stops.forEach(s=>{g+=`<circle cx="${s[2]}" cy="${s[3]}" r="7" fill="${s[4]}" stroke="#12100c" stroke-width="2"/><text x="${s[2]}" y="${s[3]-14}" fill="#f0e6d8" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[0]}</text><text x="${s[2]}" y="${s[3]+22}" fill="#8f7c66" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;});
+  for(let i=0;i<stops.length-1;i++){const a=stops[i],b=stops[i+1];g+=`<path d="M${a[2]} ${a[3]} Q${(a[2]+b[2])/2} ${Math.min(a[3],b[3])-24} ${b[2]} ${b[3]}" stroke="#8a7660" stroke-width="1.6" fill="none" stroke-dasharray="4 3" marker-end="url(#darr)"/>`;}
+  stops.forEach(s=>{
+    g+=`<circle cx="${s[2]}" cy="${s[3]}" r="16" fill="url(#${_cid(s[4])})" opacity="0.9"/>`;
+    g+=`<circle cx="${s[2]}" cy="${s[3]}" r="7" fill="${s[4]}" stroke="#12100c" stroke-width="2"/>`;
+    g+=`<text x="${s[2]}" y="${s[3]-18}" fill="#f0e6d8" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[0]}</text>`;
+    g+=`<text x="${s[2]}" y="${s[3]+26}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;});
   return diaWrap(`${W} ${H}`,g,'Coffee\u2019s rough journey out of Ethiopia \u2014 climate plus colonial trade drew today\u2019s map.');
 }
 // 27. Caffeine content comparison.
@@ -1976,16 +2000,16 @@ function diaEspMachine(){
 // 29. Taste map: tongue (structure) vs nose (flavor).
 function diaTasteMap(){
   const W=760,H=230;
-  let g='';
+  let g=diaDefs(['#8A5A34','#c86a9a']);
   // tongue side
-  g+=`<circle cx="200" cy="90" r="60" fill="#8A5A34" opacity="0.18" stroke="#8A5A34" stroke-width="2"/>`;
+  g+=`<circle cx="200" cy="90" r="60" fill="url(#${_cid('#8A5A34')})" stroke="#8A5A34" stroke-width="2" filter="url(#dsoft)"/>`;
   g+=`<text x="200" y="60" fill="#f0e6d8" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">TONGUE</text>`;
-  g+=`<text x="200" y="78" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif">tastes structure</text>`;
+  g+=`<text x="200" y="78" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">tastes structure</text>`;
   ['sweet','sour','bitter','salty','umami'].forEach((t,i)=>{g+=`<text x="200" y="${96+i*15}" fill="#c9b8a4" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
   // nose side
-  g+=`<circle cx="560" cy="90" r="60" fill="#c86a9a" opacity="0.18" stroke="#c86a9a" stroke-width="2"/>`;
+  g+=`<circle cx="560" cy="90" r="60" fill="url(#${_cid('#c86a9a')})" stroke="#c86a9a" stroke-width="2" filter="url(#dsoft)"/>`;
   g+=`<text x="560" y="60" fill="#f0e6d8" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">NOSE</text>`;
-  g+=`<text x="560" y="78" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif">smells flavor (retronasal)</text>`;
+  g+=`<text x="560" y="78" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">smells flavor (retronasal)</text>`;
   ['berry \u00b7 citrus','floral \u00b7 jasmine','chocolate \u00b7 nut','spice \u00b7 caramel'].forEach((t,i)=>{g+=`<text x="560" y="${98+i*15}" fill="#c9b8a4" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
   // bridge
   g+=`<path d="M262 90 Q380 40 498 90" stroke="#C9A34E" stroke-width="2" fill="none" stroke-dasharray="5 4"/>`;
@@ -2015,18 +2039,20 @@ function diaLatteArt(){
 // 31. Water recipe: two dials.
 function diaWaterRecipe(){
   const W=760,H=210;
-  let g='';
+  let g=diaDefs(['#B07B3E','#6a8fb0','#7a9a6a']);
+  g=`<defs>${diaArrowMarker('#8a7660')}</defs>`+g;
   // distilled base
-  g+=`<rect x="40" y="70" width="120" height="60" rx="8" fill="#12100c" stroke="#6a8fb0" stroke-width="2"/><text x="100" y="95" fill="#6a8fb0" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Distilled</text><text x="100" y="112" fill="#8f7c66" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">blank slate</text>`;
+  g+=`<rect x="40" y="70" width="120" height="60" rx="8" fill="#12100c" stroke="#6a8fb0" stroke-width="2"/><text x="100" y="95" fill="#6a8fb0" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Distilled</text><text x="100" y="112" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">blank slate</text>`;
   // plus two additions
   g+=`<text x="185" y="105" fill="#f0e6d8" font-size="22" text-anchor="middle">+</text>`;
-  g+=`<rect x="210" y="52" width="150" height="44" rx="8" fill="#B07B3E" opacity="0.2" stroke="#B07B3E" stroke-width="1.5"/><text x="285" y="72" fill="#B07B3E" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Hardness (Mg/Ca)</text><text x="285" y="88" fill="#8f7c66" font-size="10" text-anchor="middle" font-family="ui-sans-serif">extracts flavor & body</text>`;
-  g+=`<rect x="210" y="104" width="150" height="44" rx="8" fill="#6a8fb0" opacity="0.22" stroke="#6a8fb0" stroke-width="1.5"/><text x="285" y="124" fill="#6a8fb0" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Buffer (bicarbonate)</text><text x="285" y="140" fill="#8f7c66" font-size="10" text-anchor="middle" font-family="ui-sans-serif">tames acidity</text>`;
+  g+=diaCard(210,52,150,44,'#B07B3E',{r:8,shadow:false});
+  g+=`<text x="285" y="72" fill="#B07B3E" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Hardness (Mg/Ca)</text><text x="285" y="88" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">extracts flavor & body</text>`;
+  g+=diaCard(210,104,150,44,'#6a8fb0',{r:8,shadow:false});
+  g+=`<text x="285" y="124" fill="#6a8fb0" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Buffer (bicarbonate)</text><text x="285" y="140" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">tames acidity</text>`;
   // arrow to target
-  g+=`<path d="M370 100 L440 100" stroke="#7a6a52" stroke-width="2.5" marker-end="url(#awr)"/>`;
-  g=`<defs><marker id="awr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#7a6a52"/></marker></defs>`+g;
-  g+=`<circle cx="560" cy="100" r="56" fill="#7a9a6a" opacity="0.18" stroke="#7a9a6a" stroke-width="2"/><text x="560" y="86" fill="#7a9a6a" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Target</text><text x="560" y="104" fill="#f0e6d8" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">~150 mg/L TDS</text><text x="560" y="120" fill="#8f7c66" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">hardness>alkalinity</text>`;
-  g+=`<text x="${W/2}" y="${H-8}" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Enough hardness to extract, low enough alkalinity to let acidity through. Lock a recipe and keep it constant.</text>`;
+  g+=`<path d="M370 100 L440 100" stroke="#8a7660" stroke-width="2.5" marker-end="url(#darr)"/>`;
+  g+=`<circle cx="560" cy="100" r="56" fill="url(#${_cid('#7a9a6a')})" stroke="#7a9a6a" stroke-width="2" filter="url(#dsoft)"/><text x="560" y="86" fill="#7a9a6a" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Target</text><text x="560" y="104" fill="#f0e6d8" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">~150 mg/L TDS</text><text x="560" y="120" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">hardness>alkalinity</text>`;
+  g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Enough hardness to extract, low enough alkalinity to let acidity through. Lock a recipe and keep it constant.</text>`;
   return diaWrap(`${W} ${H}`,g,'Building brewing water from distilled: two dials, hardness and buffer.');
 }
 // 32. Conical vs flat burrs.
@@ -2114,24 +2140,23 @@ function diaAcidMap(){
 // 36. Espresso dial ring: recipe + fixes.
 function diaDialRing(){
   const W=760,H=250,cx=210,cy=125;
-  let g='';
-  // central recipe
-  g+=`<circle cx="${cx}" cy="${cy}" r="78" fill="none" stroke="#5A2F16" stroke-width="3"/>`;
-  g+=`<circle cx="${cx}" cy="${cy}" r="78" fill="#5A2F16" opacity="0.12"/>`;
-  g+=`<text x="${cx}" y="${cy-30}" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-monospace">RECIPE</text>`;
+  let g=diaDefs(['#5A2F16','#C9A34E','#d0553a']);
+  // central recipe (glowing)
+  g+=`<circle cx="${cx}" cy="${cy}" r="78" fill="url(#${_cid('#5A2F16')})" stroke="#5A2F16" stroke-width="3" filter="url(#dsh)"/>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="78" fill="none" stroke="${_rgba('#C9A34E',0.25)}" stroke-width="6"/>`;
+  g+=`<text x="${cx}" y="${cy-30}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-monospace">RECIPE</text>`;
   g+=`<text x="${cx}" y="${cy-8}" fill="#f0e6d8" font-size="17" font-weight="700" text-anchor="middle" dominant-baseline="central" font-family="ui-monospace">18g \u2192 36g</text>`;
   g+=`<text x="${cx}" y="${cy+14}" fill="#c9b8a4" font-size="13" text-anchor="middle" dominant-baseline="central" font-family="ui-sans-serif">1:2 ratio</text>`;
   g+=`<text x="${cx}" y="${cy+34}" fill="#C9A34E" font-size="13" text-anchor="middle" dominant-baseline="central" font-family="ui-monospace">~27\u201330 s</text>`;
-  // labels around: dose / yield / time
-  g+=`<text x="${cx}" y="${cy-88}" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif">dose in</text>`;
-  // fixes panel
+  g+=`<text x="${cx}" y="${cy-88}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">dose in</text>`;
+  // fixes panel with gradient cards
   const fixes=[['Too SOUR','#C9A34E','grind finer','longer ratio \u00b7 hotter'],['Too BITTER','#d0553a','grind coarser','shorter ratio \u00b7 cooler']];
   fixes.forEach((f,i)=>{const y=70+i*70;
-    g+=`<rect x="380" y="${y}" width="350" height="56" rx="10" fill="${f[1]}" opacity="0.13" stroke="${f[1]}" stroke-width="1.5"/>`;
+    g+=diaCard(380,y,350,56,f[1],{r:10});
     g+=`<text x="398" y="${y+23}" fill="${f[1]}" font-size="14" font-weight="800" font-family="ui-sans-serif">${f[0]}</text>`;
-    g+=`<text x="398" y="${y+42}" fill="#f0e6d8" font-size="12.5" font-family="ui-sans-serif">${f[2]} \u00b7 <tspan fill="#8f7c66">${f[3]}</tspan></text>`;
+    g+=`<text x="398" y="${y+42}" fill="#f0e6d8" font-size="12.5" font-family="ui-sans-serif">${f[2]} \u00b7 <tspan fill="${DIA.ink3}">${f[3]}</tspan></text>`;
   });
-  g+=`<text x="555" y="222" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Grind is the master dial. Change one thing, taste, repeat.</text>`;
+  g+=`<text x="555" y="222" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Grind is the master dial. Change one thing, taste, repeat.</text>`;
   return diaWrap(`${W} ${H}`,g,'The espresso recipe and how to steer it by taste.');
 }
 // 37. Milk steaming: stretch then texture.
@@ -2172,21 +2197,20 @@ function diaMaintenance(){
     ['PERIODIC','#6E3E1E',['Descale (by hardness)','Grinder pellets (few mo.)','Replace gasket / burrs']],
   ];
   const cw=(W-L*2)/cols.length, gap=12;
-  let g='';
+  let g=diaDefs(cols.map(c=>c[1]));
   cols.forEach((c,i)=>{const x=L+i*cw;
-    g+=`<rect x="${x+gap/2}" y="10" width="${cw-gap}" height="${H-40}" rx="12" fill="${c[1]}" opacity="0.10" stroke="${c[1]}" stroke-width="1.5"/>`;
+    g+=diaCard(x+gap/2,10,cw-gap,H-40,c[1],{r:12});
     g+=`<text x="${x+cw/2}" y="36" fill="${c[1]}" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-monospace" letter-spacing="1">${c[0]}</text>`;
-    g+=`<line x1="${x+gap/2+12}" y1="46" x2="${x+cw-gap/2-12}" y2="46" stroke="${c[1]}" stroke-width="1" opacity="0.4"/>`;
+    g+=`<line x1="${x+gap/2+12}" y1="46" x2="${x+cw-gap/2-12}" y2="46" stroke="${_rgba(c[1],0.35)}" stroke-width="1"/>`;
     c[2].forEach((t,j)=>{const yy=68+j*44;
       g+=`<circle cx="${x+gap/2+18}" cy="${yy}" r="3.5" fill="${c[1]}"/>`;
-      // wrap task text
       const words=t.split(' ');let line='',lines=[],max=15;
       words.forEach(w=>{if((line+' '+w).trim().length>max){lines.push(line.trim());line=w;}else line+=' '+w;});
       if(line.trim())lines.push(line.trim());
       lines.forEach((ln,k)=>{g+=`<text x="${x+gap/2+30}" y="${yy+4+k*13}" fill="#f0e6d8" font-size="11.5" font-family="ui-sans-serif">${ln}</text>`;});
     });
   });
-  g+=`<text x="${W/2}" y="${H-8}" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">A neglected machine ruins good coffee before you see it \u2014 oils go rancid in days, scale drifts temperature.</text>`;
+  g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">A neglected machine ruins good coffee before you see it \u2014 oils go rancid in days, scale drifts temperature.</text>`;
   return diaWrap(`${W} ${H}`,g,'The espresso maintenance cadence \u2014 small habits protect flavor and the machine.');
 }
 // 39. Aroma compound families and their smells.
@@ -2583,28 +2607,25 @@ function diaEspHistory(){
 // 53. The journey and rise of Geisha.
 function diaGeishaStory(){
   const W=760,H=250;
-  let g='';
-  // journey chain
   const stops=[['Gori Gesha','Ethiopia, 1930s','#7d9f4a'],['CATIE','Costa Rica, 1950s (T2722)','#B07B3E'],['Panama','1960s \u2014 for rust resistance','#C9A34E'],['Best of Panama','2004 \u2014 the moment','#d0a850']];
+  let g=diaDefs(['#7d9f4a','#B07B3E','#C9A34E','#d0a850','#c86a6a']);
+  g=`<defs>${diaArrowMarker('#8a7660')}</defs>`+g;
   const y0=44;
   stops.forEach((s,i)=>{const x=30+i*185;
-    g+=`<rect x="${x}" y="${y0}" width="150" height="48" rx="10" fill="${s[2]}" opacity="0.15" stroke="${s[2]}" stroke-width="1.4"/>`;
+    g+=diaCard(x,y0,150,48,s[2],{r:10,strong:i===3});
     g+=`<text x="${x+75}" y="${y0+20}" fill="#f0e6d8" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${s[0]}</text>`;
-    g+=`<text x="${x+75}" y="${y0+37}" fill="#8f7c66" font-size="9" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;
-    if(i<stops.length-1) g+=`<path d="M${x+150} ${y0+24} l14 0" stroke="#7a6a52" stroke-width="1.5" marker-end="url(#ags)"/>`;
+    g+=`<text x="${x+75}" y="${y0+37}" fill="${DIA.ink3}" font-size="9" text-anchor="middle" font-family="ui-sans-serif">${s[1]}</text>`;
+    if(i<stops.length-1) g+=`<path d="M${x+150} ${y0+24} l13 0" stroke="#8a7660" stroke-width="1.6" marker-end="url(#darr)"/>`;
   });
-  g=`<defs><marker id="ags" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#7a6a52"/></marker></defs>`+g;
-  g+=`<text x="30" y="30" fill="#8f7c66" font-size="10.5" font-family="ui-monospace">THE JOURNEY</text>`;
-  // flavor + price
-  g+=`<rect x="30" y="118" width="345" height="96" rx="12" fill="#d0a850" opacity="0.09" stroke="#d0a850" stroke-width="1.5"/>`;
-  g+=`<text x="202" y="140" fill="#d0a850" font-size="12.5" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">THE FLAVOR</text>`;
+  g+=`<text x="30" y="30" fill="${DIA.ink3}" font-size="10.5" font-family="ui-monospace">THE JOURNEY</text>`;
+  // flavor + price panels
+  g+=diaCard(30,118,345,96,'#d0a850',{r:12,title:'THE FLAVOR',titleSize:12.5});
   ['Jasmine \u00b7 orange blossom \u00b7 bergamot','Peach \u00b7 tropical fruit \u00b7 tea-like body','From linalool + geraniol aromatics','Only at altitude, picked & processed w/ care'].forEach((t,i)=>{
     g+=`<text x="202" y="${160+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
-  g+=`<rect x="390" y="118" width="345" height="96" rx="12" fill="#c86a6a" opacity="0.10" stroke="#c86a6a" stroke-width="1.5"/>`;
-  g+=`<text x="562" y="140" fill="#c86a6a" font-size="12.5" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">THE PRICE (world\u2019s most expensive)</text>`;
+  g+=diaCard(390,118,345,96,'#c86a6a',{r:12,title:'THE PRICE (world\u2019s most expensive)',titleSize:12});
   ['2004: ~$21/lb (\u224810\u00d7 the going rate)','2019: broke $1,000/lb','2020s: top lots >$2,000/lb green','Scarcity + narrative'].forEach((t,i)=>{
     g+=`<text x="562" y="${160+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
-  g+=`<text x="${W/2}" y="${H-6}" fill="#8f7c66" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">A forgotten rust-resistant plant \u2192 the most celebrated variety of the modern era.</text>`;
+  g+=`<text x="${W/2}" y="${H-6}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">A forgotten rust-resistant plant \u2192 the most celebrated variety of the modern era.</text>`;
   return diaWrap(`${W} ${H}`,g,'How Geisha travelled the world and became coffee\u2019s superstar.');
 }
 // 54. Roast-defect visual gallery — custom coffee-bean SVGs showing each defect.
@@ -2709,6 +2730,130 @@ function diaSpotMaragogipe(){return diaVarietyCard('Maragogipe','#B07B3E','\u201
   ['LARGEST beans in coffee','Big plant, wide spacing','Low-yielding'],
   ['Soft, mild, smooth, clean','Gentle sweetness','Low-moderate acidity'],
   ['The \u2018giant bean\u2019 gene','Parent of Pacamara','Distinctive novelty']);}
+// 56. Caffeine science: adenosine-blocking mechanism + the ~5hr half-life decay.
+function diaCaffeineScience(){
+  const W=760,H=270;
+  let g=diaDefs(['#c86a4a','#5a8a9a','#8fbf3a']);
+  // LEFT: the receptor mechanism
+  g+=diaHeader(24,18,340,'The mechanism','caffeine blocks the "tired" signal','#c86a4a');
+  // receptor (a notch) with adenosine blocked and caffeine plugged in
+  const ry=110;
+  // receptor body
+  g+=`<path d="M60 ${ry+40} L60 ${ry-10} Q60 ${ry-20} 75 ${ry-20} L110 ${ry-20} Q120 ${ry-20} 120 ${ry-8} L120 ${ry+8} Q120 ${ry+18} 130 ${ry+18} L150 ${ry+18} Q160 ${ry+18} 160 ${ry+8} L160 ${ry-8} Q160 ${ry-20} 170 ${ry-20} L205 ${ry-20} Q220 ${ry-20} 220 ${ry-10} L220 ${ry+40} Z" fill="url(#${_cid('#8fbf3a')})" stroke="${_rgba('#8fbf3a',0.6)}" stroke-width="1.5"/>`;
+  g+=`<text x="140" y="${ry+34}" fill="${DIA.ink3}" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif">adenosine receptor</text>`;
+  // caffeine molecule plugged into the notch
+  g+=`<circle cx="140" cy="${ry-2}" r="15" fill="url(#${_cid('#c86a4a')})" stroke="#c86a4a" stroke-width="2" filter="url(#dsoft)"/>`;
+  g+=`<text x="140" y="${ry+2}" fill="#f0e6d8" font-size="9" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">CAFF</text>`;
+  // adenosine floating away, blocked
+  g+=`<circle cx="270" cy="${ry-30}" r="13" fill="${_rgba('#5a8a9a',0.3)}" stroke="#5a8a9a" stroke-width="1.5" stroke-dasharray="3 2"/>`;
+  g+=`<text x="270" y="${ry-27}" fill="${DIA.ink}" font-size="8" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">aden.</text>`;
+  g+=`<text x="270" y="${ry-9}" fill="#5a8a9a" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">blocked!</text>`;
+  g+=`<path d="M255 ${ry-18} L230 ${ry-6}" stroke="#5a8a9a" stroke-width="1.3" stroke-dasharray="3 2" opacity="0.6"/>`;
+  g+=`<text x="140" y="${ry+64}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">Same shape as adenosine \u2192 plugs the</text>`;
+  g+=`<text x="140" y="${ry+79}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">receptor without switching it on.</text>`;
+  // divider
+  g+=`<line x1="380" y1="30" x2="380" y2="240" stroke="${DIA.line}" stroke-dasharray="4 5"/>`;
+  // RIGHT: half-life decay curve
+  g+=diaHeader(404,18,340,'The ~5-hour half-life','why afternoon coffee wrecks sleep','#5a8a9a');
+  const gx0=430,gx1=730,gy0=70,gy1=190; // graph box
+  // axes
+  g+=`<line x1="${gx0}" y1="${gy0}" x2="${gx0}" y2="${gy1}" stroke="${DIA.line}"/>`;
+  g+=`<line x1="${gx0}" y1="${gy1}" x2="${gx1}" y2="${gy1}" stroke="${DIA.line}"/>`;
+  g+=`<text x="${gx0-6}" y="${gy0+4}" fill="${DIA.ink3}" font-size="9" text-anchor="end" font-family="ui-monospace">200mg</text>`;
+  g+=`<text x="${gx0-6}" y="${(gy0+gy1)/2+4}" fill="${DIA.ink3}" font-size="9" text-anchor="end" font-family="ui-monospace">100</text>`;
+  // exponential decay: half every 5h; plot 0..15h across width
+  const hours=15; const pts=[];
+  for(let h=0;h<=hours;h+=0.5){ const frac=Math.pow(0.5,h/5); const x=gx0+(h/hours)*(gx1-gx0); const y=gy1-frac*(gy1-gy0); pts.push([x,y]); }
+  const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  // area under curve
+  g+=`<path d="${path} L${gx1} ${gy1} L${gx0} ${gy1} Z" fill="url(#${_cid('#c86a4a')})"/>`;
+  g+=`<path d="${path}" fill="none" stroke="#e0864a" stroke-width="2.5" stroke-linecap="round"/>`;
+  // markers at 3pm(0h), 8pm(5h), 1am(10h)
+  const mk=(h,lab,mg)=>{const frac=Math.pow(0.5,h/5);const x=gx0+(h/hours)*(gx1-gx0);const y=gy1-frac*(gy1-gy0);
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="#e0864a" stroke="${DIA.bg}" stroke-width="1.5"/>`+
+      `<text x="${x.toFixed(1)}" y="${gy1+13}" fill="${DIA.ink3}" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">${lab}</text>`+
+      `<text x="${x.toFixed(1)}" y="${(y-8).toFixed(1)}" fill="#e0864a" font-size="9" font-weight="700" text-anchor="middle" font-family="ui-monospace">${mg}</text>`;};
+  g+=mk(0,'3pm','200');
+  g+=mk(5,'8pm','100');
+  g+=mk(10,'1am','50');
+  g+=`<text x="${(gx0+gx1)/2}" y="${gy1+30}" fill="#c9b8a4" font-size="10" text-anchor="middle" font-family="ui-sans-serif">Half clears every ~5 hours (much slower if you're a "slow metabolizer").</text>`;
+  g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Caffeine hides fatigue by blocking adenosine \u2014 then lingers for hours. Genes (CYP1A2, ADORA2A) set your response.</text>`;
+  return diaWrap(`${W} ${H}`,g,'How caffeine blocks the brain\u2019s tiredness signal, and how slowly it clears.');
+}
+// 57. Experimental processing / fermentation methods.
+function diaFermentMethods(){
+  const W=760,H=290;
+  const methods=[
+    ['Anaerobic','sealed, no oxygen \u00b7 one-way valve','heavy body, winey, boozy fruit','#8A5A34'],
+    ['Carbonic maceration','whole cherries in CO\u2082 (from wine)','uniform, vibrant, juicy red fruit','#c0433a'],
+    ['Lactic','anaerobic favoring LAB \u00b7 80+ hrs','velvety, yogurt-tang, sweet','#d0a850'],
+    ['Thermal shock','hot\u2194cold swings shift microbes','intensified sweetness, exotic','#5a8a9a'],
+    ['Co-fermentation','+ fruit/spice/cacao (debated)','layered candy & spice notes','#c86a9a'],
+  ];
+  let g=diaDefs(['#7d9f4a',...methods.map(m=>m[3])]);
+  // shared start: the cherry + microbes
+  g+=`<circle cx="70" cy="130" r="30" fill="url(#${_cid('#7d9f4a')})" stroke="#7d9f4a" stroke-width="2" filter="url(#dsh)"/>`;
+  g+=`<text x="70" y="126" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">cherry</text>`;
+  g+=`<text x="70" y="140" fill="#f0e6d8" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">+ microbes</text>`;
+  g+=`<text x="70" y="176" fill="${DIA.ink3}" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">fermentation =</text>`;
+  g+=`<text x="70" y="188" fill="${DIA.ink3}" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">flavor lever</text>`;
+  g+=`<text x="20" y="24" fill="${DIA.ink3}" font-size="10.5" font-family="ui-monospace">CONTROL THE MICROBES \u2192 UNLOCK FLAVOR</text>`;
+  methods.forEach((m,i)=>{const y=36+i*48;
+    g+=`<line x1="100" y1="130" x2="176" y2="${y+22}" stroke="${m[3]}" stroke-width="1.5" opacity="0.5"/>`;
+    g+=`<circle cx="176" cy="${y+22}" r="2.5" fill="${m[3]}"/>`;
+    g+=diaCard(180,y,560,44,m[3],{r:9,shadow:false});
+    g+=`<text x="194" y="${y+19}" fill="#f0e6d8" font-size="13.5" font-weight="700" font-family="ui-sans-serif">${m[0]}</text>`;
+    g+=`<text x="194" y="${y+35}" fill="${DIA.ink3}" font-size="10" font-family="ui-sans-serif">${m[1]}</text>`;
+    g+=`<text x="726" y="${y+19}" fill="${_rgba(m[3],1)}" font-size="10.5" font-weight="600" text-anchor="end" font-family="ui-sans-serif">\u2192 in the cup:</text>`;
+    g+=`<text x="726" y="${y+35}" fill="#c9b8a4" font-size="10.5" text-anchor="end" font-family="ui-sans-serif" font-style="italic">${m[2]}</text>`;
+  });
+  g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Trustworthy lots name the method + fermentation time + origin. Vague "specialty fermented" = a red flag.</text>`;
+  return diaWrap(`${W} ${H}`,g,'The experimental fermentation methods and the flavors they create.');
+}
+// 57. Moka pot cross-section: three chambers + steam-pressure flow, and how it differs from espresso.
+function diaMokaPot(){
+  const W=760,H=270;
+  let g=diaDefs(['#a0824a','#8A5A34','#c0433a','#7a9a6a']);
+  g=`<defs>${diaArrowMarker('#e0864a')}</defs>`+g;
+  // ---- LEFT: cross-section of the pot ----
+  const cx=175;
+  g+=diaHeader(24,16,320,'The three chambers','steam pressure pushes water up','#a0824a');
+  // top chamber (collector) - trapezoid widening up
+  g+=`<path d="M${cx-70} 60 L${cx+70} 60 L${cx+55} 110 L${cx-55} 110 Z" fill="url(#${_cid('#8A5A34')})" stroke="${_rgba('#8A5A34',0.7)}" stroke-width="1.6"/>`;
+  g+=`<text x="${cx}" y="82" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">3. Top: brewed</text>`;
+  g+=`<text x="${cx}" y="96" fill="${DIA.ink3}" font-size="9" text-anchor="middle" font-family="ui-sans-serif">coffee collects here</text>`;
+  // middle: coffee basket (funnel) - small trapezoid
+  g+=`<path d="M${cx-40} 118 L${cx+40} 118 L${cx+30} 150 L${cx-30} 150 Z" fill="url(#${_cid('#a0824a')})" stroke="${_rgba('#a0824a',0.8)}" stroke-width="1.4"/>`;
+  // coffee grounds dots
+  for(let i=0;i<10;i++){g+=`<circle cx="${cx-28+((i*13)%56)}" cy="${124+((i*7)%20)}" r="2" fill="#4a2f18"/>`;}
+  g+=`<text x="${cx}" y="139" fill="#f0e6d8" font-size="9" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">2. Grounds</text>`;
+  // funnel stem down into base
+  g+=`<rect x="${cx-4}" y="150" width="8" height="30" fill="${_rgba('#a0824a',0.5)}" stroke="${_rgba('#a0824a',0.7)}" stroke-width="1"/>`;
+  // bottom chamber (boiler) - larger trapezoid
+  g+=`<path d="M${cx-60} 180 L${cx+60} 180 L${cx+50} 235 L${cx-50} 235 Z" fill="url(#${_cid('#c0433a')})" stroke="${_rgba('#c0433a',0.7)}" stroke-width="1.6"/>`;
+  // water fill
+  g+=`<path d="M${cx-56} 205 L${cx+56} 205 L${cx+50} 233 L${cx-50} 233 Z" fill="${_rgba('#6a8fb0',0.4)}"/>`;
+  g+=`<text x="${cx}" y="198" fill="#f0e6d8" font-size="10" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">1. Base: water</text>`;
+  g+=`<text x="${cx}" y="222" fill="${_rgba('#cfe0f0',1)}" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif">heat \u2192 steam \u2192 pressure</text>`;
+  // upward flow arrows through stem
+  g+=`<path d="M${cx} 205 L${cx} 156" stroke="#e0864a" stroke-width="2" marker-end="url(#darr)" opacity="0.9"/>`;
+  g+=`<path d="M${cx} 118 L${cx} 100" stroke="#e0864a" stroke-width="2" marker-end="url(#darr)" opacity="0.9"/>`;
+  // flame under base
+  for(let i=-1;i<=1;i++){g+=`<path d="M${cx+i*18} 250 q4 -10 0 -16 q-4 6 0 16" fill="#e0864a" opacity="0.7"/>`;}
+  // ---- RIGHT: moka vs espresso comparison ----
+  g+=diaHeader(410,16,330,'Not quite espresso','pressure is the difference','#7a9a6a');
+  const rows=[['Moka pot','~1\u20132 bar','#a0824a','bold, light crema'],['True espresso','~9 bar','#c0433a','syrupy, full crema']];
+  rows.forEach((r,i)=>{const y=64+i*54;
+    g+=diaCard(410,y,330,44,r[2],{r:9});
+    g+=`<text x="426" y="${y+19}" fill="#f0e6d8" font-size="13" font-weight="700" font-family="ui-sans-serif">${r[0]}</text>`;
+    g+=`<text x="426" y="${y+35}" fill="${DIA.ink3}" font-size="10" font-family="ui-sans-serif">${r[3]}</text>`;
+    g+=`<text x="724" y="${y+27}" fill="${r[2]}" font-size="15" font-weight="800" text-anchor="end" font-family="ui-monospace">${r[1]}</text>`;
+  });
+  g+=`<text x="575" y="188" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">Lands between espresso and a strong pour-over.</text>`;
+  g+=`<text x="575" y="205" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Tip: start with HOT water, don't tamp, pull off at the gurgle.</text>`;
+  g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Bialetti's 1933 idea: fit cafe-style pressure brewing into a pot for the home stove.</text>`;
+  return diaWrap(`${W} ${H}`,g,'How a moka pot brews, and why it sits just short of true espresso.');
+}
 function diagram(kind){
   switch(kind){
     case 'roastcurve':return diaRoastCurve();
@@ -2769,6 +2914,9 @@ function diagram(kind){
     case 'spotbourbon':return diaSpotBourbon();
     case 'spotpacamara':return diaSpotPacamara();
     case 'spotmaragogipe':return diaSpotMaragogipe();
+    case 'caffeinescience':return diaCaffeineScience();
+    case 'fermentmethods':return diaFermentMethods();
+    case 'mokapot':return diaMokaPot();
     default:return '';
   }
 }
