@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v45"
-CACHE_C = "coffee-guide-v45"
+APP_VERSION = "v46"
+CACHE_C = "coffee-guide-v46"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1588,12 +1588,13 @@ function diaPhaseBar(){
     g+=`<text x="${(x+w/2).toFixed(0)}" y="${(T+barH/2+14).toFixed(0)}" fill="#1b140e" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif" opacity="0.75">${s[4]}</text>`;
     g+=`<text x="${(x+w/2).toFixed(0)}" y="${T-8}" fill="${s[2]}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${s[5]}</text>`;});
   // proportion note
-  g+=`<text x="${L}" y="${T+barH+24}" fill="${DIA.ink3}" font-size="12" font-family="ui-sans-serif">Roughly the proportions of a balanced roast — most flavor is built in the Maillard phase; development sets the final roast level.</text>`;
+  g+=`<text x="${L}" y="${T+barH+24}" fill="${DIA.ink3}" font-size="12" font-family="ui-sans-serif">Roughly the proportions of a balanced roast — most flavor is built in the Maillard phase;</text>`;
+  g+=`<text x="${L}" y="${T+barH+42}" fill="${DIA.ink3}" font-size="12" font-family="ui-sans-serif">development sets the final roast level.</text>`;
   return diaWrap(`${W} ${H}`,g,'The three phases of a roast, start to drop.');
 }
 // 3. DTR: total time bar with the development portion highlighted + percentage band.
 function diaDTR(){
-  const W=760,H=170,L=10,R=10,T=24,barH=40,iw=W-L-R;
+  const W=760,H=188,L=10,R=10,T=24,barH=40,iw=W-L-R;
   const rows=[['Light / Nordic',.12],['Balanced City+',.20],['Dark',.25]];
   let g='';
   rows.forEach((r,i)=>{const y=T+i*46;
@@ -1666,7 +1667,7 @@ function diaExtraction(){
 }
 // 7. Espresso ratio: dose in → yield out.
 function diaEspresso(){
-  const W=760,H=150,cx1=190,cx2=560,cy=80;
+  const W=760,H=172,cx1=190,cx2=560,cy=80;
   let g=diaDefs([DIA.dev,DIA.mail,DIA.accent]);
   g=`<defs>${diaArrowMarker(DIA.accent)}</defs>`+g;
   // portafilter (dose)
@@ -3040,7 +3041,7 @@ function diaProfiling(){
   let g=diaDefs(['#7d9f4a','#C9A34E','#c86a4a','#8fbf3a','#B07B3E']);
   g=`<defs>${diaArrowMarker('#8a7660')}</defs>`+g;
   // the loop nodes around an oval
-  const cx=250,cy=125,rx=200,ry=88;
+  const cx=264,cy=128,rx=178,ry=82;
   const nodes=[
     ['Green','assess density\n& moisture','#7d9f4a',-90],
     ['Sample roast','small batch,\nvary the curve','#C9A34E',-18],
@@ -3058,7 +3059,7 @@ function diaProfiling(){
   });
   nodes.forEach((n,i)=>{const p=pts[i];
     g+=`<circle cx="${p[0].toFixed(0)}" cy="${p[1].toFixed(0)}" r="15" fill="url(#${_cid(n[2])})" stroke="${n[2]}" stroke-width="2" filter="url(#dsoft)"/>`;
-    g+=`<text x="${p[0].toFixed(0)}" y="${p[1].toFixed(0)+4}" fill="#f0e6d8" font-size="10" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${i+1}</text>`;
+    g+=`<text x="${p[0].toFixed(0)}" y="${(p[1]+4).toFixed(0)}" fill="#f0e6d8" font-size="10" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${i+1}</text>`;
     // label outside the node
     const a=n[3]*Math.PI/180; const lx=p[0]+Math.cos(a)*34, ly=p[1]+Math.sin(a)*30;
     const anchor = Math.cos(a)>0.3?'start':(Math.cos(a)<-0.3?'end':'middle');
