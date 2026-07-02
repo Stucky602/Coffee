@@ -1139,8 +1139,8 @@
           "body": "Roughly 224–230°C, a quieter, faster, higher-pitched crackle — more like crisp cereal — as the bean's cell walls fracture further and oils migrate to the surface. Second crack marks the transition into dark-roast territory. Roasts landing before it keep origin character; roasts taken into it become roast-forward."
         },
         {
-          "h": "Reading them by ear",
-          "body": "Experienced roasters roast partly by sound. The timing, intensity, and evenness of first crack tell you about the batch's uniformity and moisture. A ragged, drawn-out first crack often signals uneven green or an uneven roast."
+          "h": "What the cracks actually are",
+          "body": "The two cracks are two physically different events, which is why they sound different. First crack is fundamentally about water and pressure: as the bean climbs past ~196°C, steam and the CO2 building up inside can no longer stay contained, and the bean ruptures and nearly doubles in size — the popcorn-like snap is literally the bean's structure tearing open as it expands. Chemically, first crack roughly coincides with the roast turning exothermic: the bean, which you've been pouring heat into, starts releasing its own heat as browning reactions accelerate, which is why the roast can suddenly want to run away from you. Second crack is a different mechanism: by ~224°C the bean's cell walls have become brittle and the woody matrix itself begins to fracture, while oils are pushed out to the surface (the sheen you see on dark roasts). Past second crack you're increasingly tasting the roast — carbon and char — rather than the coffee, and taken far enough the bean can literally catch fire, which is the real reason dark roasting is a controlled flirtation with the edge."
         },
         {
           "h": "Reading the cracks by ear",
@@ -1150,7 +1150,10 @@
       "keypoints": [
         "First crack (~196–205°C): the reference point development time is measured from.",
         "Second crack (~224–230°C): the gateway into dark, roast-forward territory.",
-        "Sound — timing and evenness — is a real diagnostic, not just a landmark."
+        "Sound — timing and evenness — is a real diagnostic, not just a landmark.",
+        "FIRST CRACK (~196–205°C): steam + CO2 rupture the bean → it nearly DOUBLES in size; popcorn-like snap. The single most important landmark — development time is measured from here; nothing is drinkable before it. Roughly coincides with the roast turning EXOTHERMIC (bean starts releasing its own heat) → it can run away, so ease the heat after.",
+        "SECOND CRACK (~224–230°C): brittle cell walls fracture + oils migrate to the SURFACE (the dark-roast sheen); quieter, faster, higher crackle (Rice Krispies vs popcorn). Marks dark-roast territory — before it = origin character kept; into/past it = roast-forward (tasting carbon/char). Taken too far the bean can catch fire.",
+        "The GAP between the cracks is where roast level is decided: drop between them for light-to-medium (origin clarity), into/past 2nd for dark (body, roast). A hot drum races first→second faster than expected — control the final approach by ear."
       ],
       "refs": [
         {

@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v44"
-CACHE_C = "coffee-guide-v44"
+APP_VERSION = "v45"
+CACHE_C = "coffee-guide-v45"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1749,13 +1749,13 @@ function diaProcessing(){
 // 12. Milk steaming: two phases on a temperature track.
 function diaMilk(){
   const W=760,H=190,L=30,R=30,iw=W-L-R,cy=70;
-  let g='';
+  let g=diaDefs([DIA.dry,DIA.mail]);
   // temperature track
   g+=`<line x1="${L}" y1="${cy}" x2="${W-R}" y2="${cy}" stroke="${DIA.line}" stroke-width="3"/>`;
   const X=t=>L+iw*(t/70);
   // stretch zone (cold→~37) and texture zone (37→65)
-  g+=`<rect x="${X(4)}" y="${cy-24}" width="${X(37)-X(4)}" height="48" rx="6" fill="${DIA.dry}" opacity="0.2"/>`;
-  g+=`<rect x="${X(37)}" y="${cy-24}" width="${X(65)-X(37)}" height="48" rx="6" fill="${DIA.mail}" opacity="0.3"/>`;
+  g+=`<rect x="${X(4)}" y="${cy-24}" width="${X(37)-X(4)}" height="48" rx="6" fill="url(#${_cid(DIA.dry)})" opacity="0.5" filter="url(#dsoft)"/>`;
+  g+=`<rect x="${X(37)}" y="${cy-24}" width="${X(65)-X(37)}" height="48" rx="6" fill="url(#${_cid(DIA.mail)})" opacity="0.6" filter="url(#dsoft)"/>`;
   g+=`<text x="${X(20)}" y="${cy-32}" fill="${DIA.dry}" font-size="13" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">1 · STRETCH</text>`;
   g+=`<text x="${X(20)}" y="${cy+4}" fill="${DIA.ink}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">tip near surface</text>`;
   g+=`<text x="${X(20)}" y="${cy+18}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">add air · &quot;tss tss&quot;</text>`;
@@ -1991,25 +1991,26 @@ function diaMilkDrinks(){
   // each drink: [name, size-oz-ish height, espresso frac, milk frac, foam frac]
   const drinks=[['Macchiato',60,.7,.0,.3],['Cortado',70,.45,.45,.1],['Flat White',95,.3,.6,.1],['Cappuccino',100,.33,.34,.33],['Latte',120,.22,.68,.1]];
   const baseY=180, maxH=120, gap=(W-60)/drinks.length;
-  let g='';
+  let g=diaDefs(['#5A2F16','#e8dcc8']);
   drinks.forEach((dk,i)=>{const cx=30+gap*i+gap/2, w=54, h=dk[1]/120*maxH;
     const top=baseY-h;
     const eF=dk[2],mF=dk[3],fF=dk[4];
     const eH=h*eF, mH=h*mF, fH=h*fF;
-    // cup outline
-    g+=`<rect x="${cx-w/2}" y="${top}" width="${w}" height="${h}" rx="5" fill="none" stroke="#7a6a52" stroke-width="1.5"/>`;
+    // cup outline with soft depth
+    g+=`<rect x="${cx-w/2}" y="${top}" width="${w}" height="${h}" rx="5" fill="#12100c" stroke="#7a6a52" stroke-width="1.5" filter="url(#dsoft)"/>`;
     // espresso (bottom)
-    g+=`<rect x="${cx-w/2+2}" y="${baseY-eH}" width="${w-4}" height="${eH-1}" fill="#5A2F16"/>`;
+    g+=`<rect x="${cx-w/2+2}" y="${baseY-eH}" width="${w-4}" height="${eH-1}" fill="url(#${_cid('#5A2F16')})"/>`;
     // milk (middle)
-    g+=`<rect x="${cx-w/2+2}" y="${baseY-eH-mH}" width="${w-4}" height="${mH}" fill="#e8dcc8"/>`;
-    // foam (top)
+    g+=`<rect x="${cx-w/2+2}" y="${baseY-eH-mH}" width="${w-4}" height="${mH}" fill="url(#${_cid('#e8dcc8')})"/>`;
+    // foam (top) with a subtle top highlight
     g+=`<rect x="${cx-w/2+2}" y="${top+1}" width="${w-4}" height="${fH}" fill="#f5eee0"/>`;
+    if(fH>4)g+=`<rect x="${cx-w/2+2}" y="${top+1}" width="${w-4}" height="3" fill="#fff" opacity="0.35"/>`;
     g+=`<text x="${cx}" y="${baseY+18}" fill="#f0e6d8" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${dk[0]}</text>`;
   });
   // legend
-  g+=`<rect x="250" y="200" width="12" height="12" fill="#5A2F16"/><text x="266" y="210" fill="#8f7c66" font-size="11" font-family="ui-sans-serif">espresso</text>`;
-  g+=`<rect x="360" y="200" width="12" height="12" fill="#e8dcc8"/><text x="376" y="210" fill="#8f7c66" font-size="11" font-family="ui-sans-serif">steamed milk</text>`;
-  g+=`<rect x="490" y="200" width="12" height="12" fill="#f5eee0"/><text x="506" y="210" fill="#8f7c66" font-size="11" font-family="ui-sans-serif">foam</text>`;
+  g+=`<rect x="250" y="200" width="12" height="12" fill="#5A2F16"/><text x="266" y="210" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">espresso</text>`;
+  g+=`<rect x="360" y="200" width="12" height="12" fill="#e8dcc8"/><text x="376" y="210" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">steamed milk</text>`;
+  g+=`<rect x="490" y="200" width="12" height="12" fill="#f5eee0"/><text x="506" y="210" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">foam</text>`;
   return diaWrap(`${W} ${H}`,g,'The same espresso shot, dressed in milk and foam in different proportions.');
 }
 // 25. Decaf methods.
@@ -2240,29 +2241,28 @@ function diaDialRing(){
 // 37. Milk steaming: stretch then texture.
 function diaMilkStretch(){
   const W=760,H=230;
-  let g='';
+  let g=diaDefs(['#e8dcc8','#8A5A34','#C9A34E']);
+  g=`<defs>${diaArrowMarker('#8a7660')}<marker id="ams" markerWidth="7" markerHeight="7" refX="4" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="#fff"/></marker></defs>`+g;
   // phase 1: stretch
   const cxA=210,cxB=560,cy=100;
   [['1 \u00b7 STRETCH','add air EARLY (cold)','tip near surface \u00b7 \u201ctsss\u201d','#8A5A34',cxA,'air'],
    ['2 \u00b7 TEXTURE','spin into microfoam','tip submerged \u00b7 whirlpool','#C9A34E',cxB,'spin']].forEach(p=>{
     const cx=p[4];
     // pitcher
-    g+=`<path d="M${cx-34} ${cy-38} L${cx+30} ${cy-38} L${cx+24} ${cy+34} L${cx-28} ${cy+34} Z" fill="none" stroke="#7a6a52" stroke-width="2"/>`;
+    g+=`<path d="M${cx-34} ${cy-38} L${cx+30} ${cy-38} L${cx+24} ${cy+34} L${cx-28} ${cy+34} Z" fill="#12100c" stroke="#7a6a52" stroke-width="2" filter="url(#dsoft)"/>`;
     g+=`<path d="M${cx+30} ${cy-30} L${cx+50} ${cy-24} L${cx+42} ${cy-12} L${cx+26} ${cy-18} Z" fill="none" stroke="#7a6a52" stroke-width="2"/>`;
     // milk
-    g+=`<path d="M${cx-30} ${cy-6} L${cx+26} ${cy-6} L${cx+22} ${cy+30} L${cx-26} ${cy+30} Z" fill="#e8dcc8" opacity="0.85"/>`;
+    g+=`<path d="M${cx-30} ${cy-6} L${cx+26} ${cy-6} L${cx+22} ${cy+30} L${cx-26} ${cy+30} Z" fill="url(#${_cid('#e8dcc8')})" opacity="0.9"/>`;
     if(p[5]==='air'){g+=`<ellipse cx="${cx-2}" cy="${cy-10}" rx="24" ry="6" fill="#f5eee0"/>`;for(let k=0;k<4;k++)g+=`<circle cx="${cx-16+k*10}" cy="${cy-2}" r="2" fill="#fff" opacity="0.7"/>`;
       g+=`<path d="M${cx} ${cy-52} L${cx} ${cy-14}" stroke="#c9b8a4" stroke-width="3"/>`;}
     if(p[5]==='spin'){g+=`<path d="M${cx-16} ${cy+6} A16 8 0 1 0 ${cx+16} ${cy+6}" fill="none" stroke="#fff" stroke-width="1.6" opacity="0.7" marker-end="url(#ams)"/>`;
       g+=`<path d="M${cx-4} ${cy-46} L${cx-4} ${cy+2}" stroke="#c9b8a4" stroke-width="3"/>`;}
     g+=`<text x="${cx}" y="${cy+58}" fill="${p[3]}" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${p[0]}</text>`;
     g+=`<text x="${cx}" y="${cy+76}" fill="#f0e6d8" font-size="12" text-anchor="middle" font-family="ui-sans-serif">${p[1]}</text>`;
-    g+=`<text x="${cx}" y="${cy+92}" fill="#8f7c66" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${p[2]}</text>`;
+    g+=`<text x="${cx}" y="${cy+92}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${p[2]}</text>`;
   });
-  g=`<defs><marker id="ams" markerWidth="7" markerHeight="7" refX="4" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="#fff"/></marker></defs>`+g;
-  g+=`<path d="M300 ${cy} L470 ${cy}" stroke="#7a6a52" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ams2)"/>`;
-  g=g.replace('</defs>','<marker id="ams2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#7a6a52"/></marker></defs>');
-  g+=`<text x="${W/2}" y="${H-6}" fill="#8f7c66" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Stretch only while cold, then stop adding air and spin. Target ~55\u201365\u00b0C \u2014 past ~70\u00b0C it scalds.</text>`;
+  g+=`<path d="M300 ${cy} L470 ${cy}" stroke="#8a7660" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#darr)"/>`;
+  g+=`<text x="${W/2}" y="${H-6}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Stretch only while cold, then stop adding air and spin. Target ~55\u201365\u00b0C \u2014 past ~70\u00b0C it scalds.</text>`;
   return diaWrap(`${W} ${H}`,g,'The two phases of steaming milk, in order.');
 }
 // 38. Maintenance cadence: what to do how often.
