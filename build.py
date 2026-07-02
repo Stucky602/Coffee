@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v11"
-CACHE_C = "coffee-guide-v11"
+APP_VERSION = "v12"
+CACHE_C = "coffee-guide-v12"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -23,7 +23,6 @@ METH_GROUPS = [
     ("read", "Reading the Roast"),
     ("science", "Roast Science"),
     ("practice", "In Practice"),
-    ("origin", "Roasting by Origin"),
     ("cupping", "Cupping & Quality"),
     ("ops", "Roastery Operations"),
     ("brew", "Brewing & Barista"),
@@ -85,15 +84,18 @@ HTML = r"""<!DOCTYPE html>
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
   font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased;line-height:1.5}
-a{color:inherit}
+a,a:visited{color:inherit}
 button{font-family:inherit;cursor:pointer}
 h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-0.01em}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
 /* header */
 header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:14px;height:60px}
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:60px;
+  padding-left:calc(20px + env(safe-area-inset-left,0px));
+  padding-right:calc(20px + env(safe-area-inset-right,0px))}
 .brand{display:flex;align-items:baseline;gap:9px;cursor:pointer;user-select:none}
 .brand .mark{font-family:var(--mono);font-size:12px;letter-spacing:.18em;
   color:var(--bg);background:linear-gradient(135deg,var(--heat1),var(--heat3));
@@ -115,9 +117,24 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .hero h1 .grad{background:linear-gradient(100deg,var(--heat1),var(--heat4));
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p{color:var(--ink2);font-size:16.5px;max-width:60ch;margin:18px 0 0}
+.hero .lede{font-size:17.5px;line-height:1.55;max-width:64ch}
 .heatbar{display:flex;height:6px;margin-top:28px;border-radius:4px;overflow:hidden;max-width:520px}
 .heatbar i{flex:1}
 .hero .beans{position:absolute;inset:0;z-index:1;opacity:.5}
+
+/* home section directory */
+.dirlead{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink3);margin:34px 0 16px}
+.secdir{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+.secard{display:flex;gap:16px;text-align:left;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;padding:20px;cursor:pointer;transition:.16s;align-items:flex-start}
+.secard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-2px)}
+.secard-ic{flex-shrink:0;width:44px;height:44px;border-radius:11px;display:flex;align-items:center;
+  justify-content:center;background:var(--bg);border:1px solid var(--line);color:var(--heat2)}
+.secard-body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.secard-title{font-size:18px;font-weight:700;color:var(--ink1);letter-spacing:-.01em}
+.secard-blurb{font-size:13.5px;color:var(--ink3);line-height:1.5}
+.secard-cta{font-size:13px;font-weight:600;color:var(--heat1);margin-top:3px}
 
 /* section head */
 .seclead{display:flex;align-items:baseline;gap:12px;margin:40px 0 4px}
@@ -229,6 +246,46 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
   align-self:center;line-height:1}
 .hubcards{padding:4px 18px 18px}
 
+/* origins tab */
+.originmapwrap{margin:18px 0 8px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#12100c}
+.mapcap{font-size:12.5px;color:var(--ink3);padding:10px 14px;border-top:1px solid var(--line);text-align:center}
+.mapdot text{pointer-events:none}
+.mapdot:hover circle:last-of-type{r:9}
+.originnote{color:var(--ink2);font-size:15px;line-height:1.6;max-width:70ch;margin:20px 0 8px}
+.origrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-top:4px}
+.origcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;cursor:pointer;
+  transition:.16s;display:flex;flex-direction:column;gap:9px}
+.origcard:hover{border-color:var(--heat3);background:var(--panel2);transform:translateY(-2px)}
+.origcard-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.origcard-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.origcard-roast{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--rc);border:1px solid var(--rc);border-radius:20px;padding:3px 9px;opacity:.9;white-space:nowrap}
+.origcard-blurb{font-size:13px;color:var(--ink3);line-height:1.5;flex:1}
+.origcard-tags{display:flex;flex-wrap:wrap;gap:5px}
+.origcard-tags span{font-size:11px;color:var(--ink2);background:var(--bg);border:1px solid var(--line);
+  border-radius:20px;padding:2px 8px}
+.origcard-meta{font-family:var(--mono);font-size:11px;color:var(--ink3)}
+/* origin detail */
+.odhead{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;padding-bottom:8px}
+.odtxt{flex:1;min-width:260px}
+.odtxt h1{font-size:34px;letter-spacing:-.03em;margin:6px 0 2px}
+.odtxt .sub{color:var(--ink3);font-size:15px}
+.odtxt .oneline{color:var(--ink2);font-size:15.5px;line-height:1.55;max-width:60ch}
+.origtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.origtags span{font-size:12px;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);
+  border-radius:20px;padding:3px 10px}
+.odroast{flex-shrink:0;margin:0 auto}
+.odroast-ring{width:120px;height:120px;border-radius:50%;border:3px solid var(--rc);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  background:radial-gradient(circle,color-mix(in srgb,var(--rc) 14%,transparent),transparent)}
+.odroast-ring span{font-size:16px;font-weight:700;color:var(--ink1);text-align:center;padding:0 8px;line-height:1.1}
+.odroast-ring small{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.factstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:22px 0 8px}
+.fact{background:var(--panel);padding:13px 15px}
+.fact .fl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.fact .fv{font-size:13.5px;color:var(--ink1);line-height:1.35}
+
 /* detail */
 .detail{padding-bottom:60px}
 .back{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);font-size:13px;
@@ -247,9 +304,15 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .dhead .oneline{color:var(--ink2);font-size:15.5px;margin:14px 0 0;max-width:56ch;line-height:1.5}
 .dhead .usefor{margin-top:14px;font-size:13.5px;color:var(--ink2)}
 .dhead .usefor b{color:var(--heat1);font-weight:600}
-.radarbox{flex-shrink:0;text-align:center}
+.radarbox{flex-shrink:0;text-align:center;margin:0 auto}
+.radarbox svg{display:block;margin:0 auto}
 .radarbox .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink3);margin-top:6px}
+@media(max-width:640px){
+  .dhead{justify-content:center}
+  .dhead .txt{flex:1 1 100%}
+  .radarbox{flex:1 1 100%;margin-top:6px}
+}
 
 .block{margin-top:34px}
 .block > h2{font-size:15px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;
@@ -323,7 +386,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .refs ul{margin:0;padding:0;list-style:none}
 .refs li{margin-bottom:7px;padding-left:16px;position:relative}
 .refs li:before{content:"↗";position:absolute;left:0;color:var(--ink3);font-size:11px}
-.refs a{color:var(--ink2);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line);
+.refs a,.refs a:visited{color:var(--ink2);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line);
   transition:.14s}
 .refs a:hover{color:var(--heat1);border-color:var(--heat3)}
 .siblings{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
@@ -356,7 +419,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 }
 .mobnav{display:none}
 @media(max-width:640px){
-  .mobnav{display:flex;position:sticky;top:60px;z-index:30;background:var(--bg);
+  .mobnav{display:flex;position:sticky;top:calc(60px + env(safe-area-inset-top,0px));z-index:30;background:var(--bg);
     border-bottom:1px solid var(--line)}
   .mobnav button{flex:1;background:none;border:none;color:var(--ink3);font-size:13px;
     font-weight:600;padding:11px 0;border-bottom:2px solid transparent}
@@ -375,6 +438,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
       <button data-nav="home" onclick="go('home')">Overview</button>
       <button data-nav="start" onclick="go('start')">Start Here</button>
       <button data-nav="profiles" onclick="go('profiles')">Roast Profiles</button>
+      <button data-nav="origins" onclick="go('origins')">Origins</button>
       <button data-nav="compare" onclick="go('compare')">Compare</button>
       <button data-nav="learn" onclick="go('learn')">Learn</button>
     </nav>
@@ -383,8 +447,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 </header>
 <nav class="mobnav">
   <button data-nav="home" onclick="go('home')">Overview</button>
-  <button data-nav="start" onclick="go('start')">Start</button>
   <button data-nav="profiles" onclick="go('profiles')">Profiles</button>
+  <button data-nav="origins" onclick="go('origins')">Origins</button>
   <button data-nav="compare" onclick="go('compare')">Compare</button>
   <button data-nav="learn" onclick="go('learn')">Learn</button>
 </nav>
@@ -408,8 +472,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function radar(vals, size, accent, opts){
   opts=opts||{};
   const axes=FLAVOR_AXES, N=axes.length;
-  const cx=size/2, cy=size/2;
-  const pad=opts.small?18:44;
+  // Horizontal margin so side labels (e.g. "Bitterness") aren't clipped by the viewBox edge.
+  const M=opts.small?0:48;
+  const cx=size/2+M, cy=size/2;
+  const vbW=size+M*2;
+  const pad=opts.small?18:30;
   const R=size/2-pad;
   const rings=5;
   const ptFor=(v,i)=>{
@@ -434,7 +501,7 @@ function radar(vals, size, accent, opts){
     const ex=cx+R*Math.cos(ang), ey=cy+R*Math.sin(ang);
     g+=`<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#3a2a1c" stroke-width="1"/>`;
     if(!opts.small){
-      const lx=cx+(R+16)*Math.cos(ang), ly=cy+(R+16)*Math.sin(ang);
+      const lx=cx+(R+15)*Math.cos(ang), ly=cy+(R+15)*Math.sin(ang);
       let anchor='middle';
       if(Math.cos(ang)>0.3)anchor='start'; else if(Math.cos(ang)<-0.3)anchor='end';
       g+=`<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" fill="#c9b8a4" font-size="11.5" font-family="ui-sans-serif,system-ui" text-anchor="${anchor}">${axes[i][1]}</text>`;
@@ -449,7 +516,7 @@ function radar(vals, size, accent, opts){
   };
   g+=drawShape(vals,accent,opts.color2?0.16:0.28);
   if(opts.vals2){g+=drawShape(opts.vals2,opts.color2,0.16);}
-  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
+  return `<svg viewBox="0 0 ${vbW} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
 }
 
 /* ---------- ROAST CURVE RENDERER ---------- */
@@ -553,8 +620,8 @@ function roastCurve(c,accent,w,h,units){
 let state={view:'home'};
 function setNav(n){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===n));}
 function go(view,arg){state={view,arg};render();window.scrollTo(0,0);
-  const top=['home','start','profiles','compare','learn'].includes(view)?view:
-    (view==='profile'?'profiles':view==='meth'?'learn':'home');
+  const top=['home','start','profiles','origins','compare','learn'].includes(view)?view:
+    (view==='profile'?'profiles':view==='origin'?'origins':view==='meth'?'learn':'home');
   setNav(top);}
 
 function render(){
@@ -563,6 +630,8 @@ function render(){
   if(v==='start')return startHere();
   if(v==='profiles')return profileList();
   if(v==='profile')return profileDetail(state.arg);
+  if(v==='origins')return originList();
+  if(v==='origin')return originDetail(state.arg);
   if(v==='compare')return compare();
   if(v==='learn')return learnList();
   if(v==='meth')return methDetail(state.arg);
@@ -640,37 +709,50 @@ function glossaryRows(rows){
 function home(){
   const heat=['--heat1','--heat2','--heat3','--heat4','--heat5'].map(h=>`<i style="background:var(${h})"></i>`).join('');
   const nP=Object.keys(PROFILES).length, nM=Object.keys(METHODOLOGY).length;
+  const nO=Object.entries(METHODOLOGY).filter(([id,m])=>m.group==='origin').length;
+  const nLearn=nM-nO; // learn topics excluding origins (now its own tab)
+  // section directory: [icon-svg, title, blurb, button label, target view]
+  const sections=[
+    [svgIcon('profiles'),'Roast Profiles',`Every roast level from Nordic light to Italian dark — plus purpose-built espresso and omni — broken down by curve, phase, flavor signature, and the ways each one fails.`,`Browse ${nP} profiles`,`profiles`],
+    [svgIcon('compare'),'Compare',`Lay any profiles side by side — overlay their flavor radars or their roast curves to see exactly how a light and a dark diverge.`,`Open compare`,`compare`],
+    [svgIcon('origin'),'Roasting by Origin',`How coffee from ${nO} growing regions behaves in the roaster — what the green is like, how to handle it, and the roast level that shows it best.`,`Explore origins`,`origins`],
+    [svgIcon('learn'),'Learn',`${nLearn} deep-dives across the whole craft: green buying and grading, reading the roast, the science, cupping and quality, running a roastery, and brewing behind the bar.`,`Start learning`,`learn`],
+    [svgIcon('start'),'New to Coffee?',`Start here. A plain-language tour of how green becomes the cup, the light-versus-dark tradeoff, and a glossary that decodes the jargon.`,`Get oriented`,`start`],
+  ];
   app.innerHTML=`
   <section class="hero">
     <div class="wrap">
-      <h1>The roast is where green coffee <span class="grad">becomes flavor.</span></h1>
-      <p>A working reference for the coffee professional — ${nP} roast profiles broken down by curve, phase, flavor signature, and failure mode, plus ${nM} deep-dives spanning the whole chain: buying and grading green, roasting fundamentals, origin behavior, cupping and quality, running a roastery, and brewing behind the bar. Built for practitioners, not the shelf.</p>
+      <h1>Where green coffee <span class="grad">becomes flavor.</span></h1>
+      <p class="lede">A field reference for people who roast, brew, and buy coffee for a living — from the green bean and the roast curve all the way to the cup. The theory that actually changes what you do at the machine, with none of the fluff.</p>
       <div class="heatbar">${heat}</div>
     </div>
   </section>
   <div class="wrap">
-    <div class="seclead"><span class="no">01</span><div><h2>Roast Profiles</h2><p>From Nordic light to Italian dark, plus purpose-built espresso and omni.</p></div></div>
-    <div class="grid" style="margin-top:16px">${
-      Object.entries(PROFILES).slice(0,6).map(([id,p])=>profileCard(id,p)).join('')
-    }</div>
-    <div style="margin-top:16px"><button class="back" style="margin:0" onclick="go('profiles')">See all ${nP} profiles →</button></div>
-
-    <div class="seclead"><span class="no">02</span><div><h2>Learn the Craft</h2><p>Green buying, the roast curve, cupping, running a roastery, and brewing — the whole chain.</p></div></div>
-    <div class="grid mgrid" style="margin-top:16px">${
-      homeLearnSample().map(([id,m])=>methCard(id,m,true)).join('')
-    }</div>
-    <div style="margin:16px 0 50px"><button class="back" style="margin:0" onclick="go('learn')">Explore all ${nM} topics →</button></div>
+    <div class="dirlead">Jump in anywhere</div>
+    <div class="secdir">${sections.map(s=>`
+      <button class="secard" onclick="go('${s[4]}')">
+        <span class="secard-ic">${s[0]}</span>
+        <span class="secard-body">
+          <span class="secard-title">${s[1]}</span>
+          <span class="secard-blurb">${s[2]}</span>
+          <span class="secard-cta">${s[3]} →</span>
+        </span>
+      </button>`).join('')}
+    </div>
+    <div style="height:50px"></div>
   </div>`;
 }
-// Pick one representative topic from six different groups so the home sample spans the chain.
-function homeLearnSample(){
-  const want=['green','read','origin','cupping','ops','brew'];
-  const out=[];
-  for(const g of want){
-    const hit=Object.entries(METHODOLOGY).find(([id,m])=>m.group===g);
-    if(hit)out.push(hit);
-  }
-  return out;
+// Small inline line-icons for the home directory (stroke-based, inherit accent).
+function svgIcon(kind){
+  const s='width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  const paths={
+    profiles:`<path d="M3 3v18h18"/><path d="M6 15l4-6 4 3 5-8"/>`,
+    compare:`<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 8l4 4-4 4"/><path d="M12 8l-4 4 4 4" opacity=".4"/>`,
+    origin:`<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/>`,
+    learn:`<path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v16H5.5A2.5 2.5 0 0 0 3 21.5z"/><path d="M21 5.5A2.5 2.5 0 0 0 18.5 3H12v16h6.5a2.5 2.5 0 0 1 2.5 2.5z"/>`,
+    start:`<circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><path d="M12 8h.01"/>`,
+  };
+  return `<svg ${s}>${paths[kind]||''}</svg>`;
 }
 
 function profileCard(id,p){
@@ -873,13 +955,13 @@ function drawCmp(){
   const lg=document.getElementById('cmplg'),leg=document.getElementById('cmpleg');
   if(!cmpSel.length){lg.innerHTML='<p class="cmphint">Select profiles to compare.</p>';leg.innerHTML='';return;}
   if(cmpMode==='curve')return drawCmpCurve(lg,leg);
-  // overlay: draw multi-shape radar manually
-  const size=340,N=FLAVOR_AXES.length,cx=size/2,cy=size/2,pad=44,R=size/2-pad;
+  // overlay: draw multi-shape radar manually. M = horizontal margin so side labels aren't clipped.
+  const size=340,N=FLAVOR_AXES.length,M=48,vbW=size+M*2,cx=size/2+M,cy=size/2,pad=30,R=size/2-pad;
   let g='';
   for(let ring=1;ring<=5;ring++){let pts=[];for(let i=0;i<N;i++){const a=-Math.PI/2+i*(2*Math.PI/N);const r=R*(ring/5);pts.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}g+=`<polygon points="${pts.join(' ')}" fill="none" stroke="#3a2a1c" stroke-width="1"/>`;}
-  for(let i=0;i<N;i++){const a=-Math.PI/2+i*(2*Math.PI/N);const ex=cx+R*Math.cos(a),ey=cy+R*Math.sin(a);g+=`<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#3a2a1c"/>`;const lx=cx+(R+16)*Math.cos(a),ly=cy+(R+16)*Math.sin(a);let an='middle';if(Math.cos(a)>0.3)an='start';else if(Math.cos(a)<-0.3)an='end';g+=`<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" fill="#c9b8a4" font-size="11.5" text-anchor="${an}">${FLAVOR_AXES[i][1]}</text>`;}
+  for(let i=0;i<N;i++){const a=-Math.PI/2+i*(2*Math.PI/N);const ex=cx+R*Math.cos(a),ey=cy+R*Math.sin(a);g+=`<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#3a2a1c"/>`;const lx=cx+(R+15)*Math.cos(a),ly=cy+(R+15)*Math.sin(a);let an='middle';if(Math.cos(a)>0.3)an='start';else if(Math.cos(a)<-0.3)an='end';g+=`<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" fill="#c9b8a4" font-size="11.5" text-anchor="${an}">${FLAVOR_AXES[i][1]}</text>`;}
   cmpSel.forEach((id,idx)=>{const col=CMP_COLORS[idx];const f=PROFILES[id].flavor;let pts=[];for(let i=0;i<N;i++){const a=-Math.PI/2+i*(2*Math.PI/N);const r=R*((f[FLAVOR_AXES[i][0]]||0)/5);pts.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}g+=`<polygon points="${pts.join(' ')}" fill="${col}" fill-opacity="0.13" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;});
-  lg.innerHTML=`<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
+  lg.innerHTML=`<svg viewBox="0 0 ${vbW} ${size}" width="${size}" height="${size}" style="max-width:100%">${g}</svg>`;
   leg.innerHTML=cmpSel.map((id,i)=>`<div class="it"><i style="background:${CMP_COLORS[i]}"></i><span>${esc(PROFILES[id].name)} <span style="color:var(--ink3)">· ${esc(PROFILES[id].level)}</span></span></div>`).join('')+`<div class="cmphint">Tap a profile above to add or remove it.</div>`;
 }
 function drawCmpCurve(lg,leg){
@@ -908,6 +990,130 @@ function drawCmpCurve(lg,leg){
   });
   lg.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px">${g}</svg>`;
   leg.innerHTML=cmpSel.map((id,i)=>{const cv=buildCurve(PROFILES[id].curve);return `<div class="it"><i style="background:${CMP_COLORS[i]}"></i><span>${esc(PROFILES[id].name)} <span style="color:var(--ink3)">· ${mm(cv.total)} · DTR ${esc(PROFILES[id].curve.dtr)}</span></span></div>`;}).join('')+`<div class="cmphint">Dots mark first crack and drop. Shorter, earlier-dropping curves are lighter roasts.</div>`;
+}
+
+/* ---------- ORIGINS TAB ---------- */
+// Equirectangular projection helper: lng/lat -> x/y in a mapW x mapH box.
+function projXY(lng,lat,mapW,mapH){
+  const x=(lng+180)/360*mapW;
+  const y=(90-lat)/180*mapH;
+  return [x,y];
+}
+function originList(){
+  const origins=Object.entries(METHODOLOGY).filter(([id,m])=>m.group==='origin'&&id!=='origin_intro');
+  const intro=METHODOLOGY['origin_intro'];
+  // group by continent for the card sections
+  const byCont={};
+  origins.forEach(([id,m])=>{(byCont[m.continent]=byCont[m.continent]||[]).push([id,m]);});
+  const contOrder=['Africa','Central America','South America','Asia'];
+  app.innerHTML=`<div class="wrap">
+    <div class="seclead"><span class="no">◍</span><div><h2>Roasting by Origin</h2><p>Where the coffee comes from shapes the cup before you ever light the burner. ${origins.length} origins, how each behaves, and the roast that shows it best.</p></div></div>
+    ${originMap(origins)}
+    <div class="originnote">${esc(intro.sections[0].body)}</div>
+    ${contOrder.filter(c=>byCont[c]).map(cont=>`
+      <div class="grouplabel">${cont}</div>
+      <div class="origrid">${byCont[cont].map(([id,m])=>originCard(id,m)).join('')}</div>
+    `).join('')}
+    <div style="height:20px"></div>
+    <button class="back" style="margin:0" onclick="go('meth','origin_intro')">Read: the practical rule for roasting any origin →</button>
+    <div style="height:50px"></div>
+  </div>`;
+}
+function originMap(origins){
+  const mapW=1000, mapH=500;
+  // Simplified continent silhouettes (very rough, evocative not accurate) as filled blobs.
+  // We draw a subtle world backdrop + the Bean Belt band + a dot per origin.
+  const beltTop=projXY(0,23.5,mapW,mapH)[1];
+  const beltBot=projXY(0,-23.5,mapW,mapH)[1];
+  let dots='';
+  origins.forEach(([id,m])=>{
+    if(m.lng==null)return;
+    const [x,y]=projXY(m.lng,m.lat,mapW,mapH);
+    dots+=`<g class="mapdot" onclick="go('origin','${id}')" style="cursor:pointer">
+      <circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="18" fill="var(--heat3)" opacity="0.18"/>
+      <circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="7" fill="var(--heat1)" stroke="#160e08" stroke-width="2"/>
+      <text x="${x.toFixed(0)}" y="${(y-16).toFixed(0)}" fill="#f0e6d8" font-size="19" font-weight="600" text-anchor="middle" font-family="ui-sans-serif">${esc(m.country.replace(/ \(.*\)/,''))}</text>
+    </g>`;
+  });
+  return `<div class="originmapwrap">
+    <svg viewBox="0 0 ${mapW} ${mapH}" width="100%" style="display:block">
+      <rect x="0" y="0" width="${mapW}" height="${mapH}" fill="#12100c"/>
+      <!-- bean belt band -->
+      <rect x="0" y="${beltTop.toFixed(0)}" width="${mapW}" height="${(beltBot-beltTop).toFixed(0)}" fill="var(--heat5)" opacity="0.08"/>
+      <line x1="0" y1="${beltTop.toFixed(0)}" x2="${mapW}" y2="${beltTop.toFixed(0)}" stroke="var(--heat4)" stroke-width="1" stroke-dasharray="6 5" opacity="0.5"/>
+      <line x1="0" y1="${beltBot.toFixed(0)}" x2="${mapW}" y2="${beltBot.toFixed(0)}" stroke="var(--heat4)" stroke-width="1" stroke-dasharray="6 5" opacity="0.5"/>
+      <text x="14" y="${(beltTop-8).toFixed(0)}" fill="var(--heat3)" font-size="15" font-family="ui-monospace" opacity="0.8">Tropic of Cancer</text>
+      <text x="14" y="${(beltBot+22).toFixed(0)}" fill="var(--heat3)" font-size="15" font-family="ui-monospace" opacity="0.8">Tropic of Capricorn</text>
+      <text x="${(mapW-14).toFixed(0)}" y="${((beltTop+beltBot)/2+5).toFixed(0)}" fill="var(--heat2)" font-size="16" font-family="ui-monospace" text-anchor="end" opacity="0.7" letter-spacing="2">THE BEAN BELT</text>
+      ${dots}
+    </svg>
+    <div class="mapcap">Coffee grows in a band around the equator — the Bean Belt. Tap a dot for the origin.</div>
+  </div>`;
+}
+function originCard(id,m){
+  const tags=(m.flavorTags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('');
+  return `<div class="origcard" onclick="go('origin','${id}')">
+    <div class="origcard-top">
+      <div class="origcard-name">${esc(m.name)}</div>
+      <div class="origcard-roast" style="--rc:${roastColor(m.roastLevel)}">${esc(m.roastLevel)}</div>
+    </div>
+    <div class="origcard-blurb">${esc(m.blurb)}</div>
+    <div class="origcard-tags">${tags}</div>
+    <div class="origcard-meta">${esc(m.altitude)} · ${esc((m.process||'').split(' ')[0])}</div>
+  </div>`;
+}
+function roastColor(level){
+  const map={'Light':'#C9A34E','Light–Medium':'#BC8A43','Medium':'#B07B3E','Medium–Dark':'#8A5A34','Dark':'#6E3E1E'};
+  return map[level]||'#B07B3E';
+}
+function originDetail(id){
+  const m=METHODOLOGY[id]; if(!m)return go('origins');
+  if(id==='origin_intro'){ // intro page uses the plain meth layout but back to origins
+    return methLike(m,'origins','← All origins');
+  }
+  const facts=[
+    ['Regions',m.regions],['Altitude',m.altitude],['Varieties',m.varieties],
+    ['Process',m.process],['Harvest',m.harvest]
+  ].filter(f=>f[1]);
+  const siblings=Object.entries(METHODOLOGY).filter(([sid,sm])=>sm.group==='origin'&&sid!==id&&sid!=='origin_intro');
+  app.innerHTML=`<div class="wrap detail">
+    <button class="back" onclick="go('origins')">← All origins</button>
+    <div class="odhead">
+      <div class="odtxt">
+        <div class="lvl" style="color:${m.accent}">${esc(m.continent)}</div>
+        <h1>${esc(m.name)}</h1>
+        <div class="sub">${esc(m.sub)}</div>
+        <div class="oneline" style="margin-top:12px">${esc(m.blurb)}</div>
+        <div class="origtags">${(m.flavorTags||[]).map(t=>`<span>${esc(t)}</span>`).join('')}</div>
+      </div>
+      <div class="odroast">
+        <div class="odroast-ring" style="--rc:${roastColor(m.roastLevel)}">
+          <span>${esc(m.roastLevel)}</span>
+          <small>target roast</small>
+        </div>
+      </div>
+    </div>
+    <div class="factstrip">${facts.map(f=>`<div class="fact"><div class="fl">${esc(f[0])}</div><div class="fv">${esc(f[1])}</div></div>`).join('')}</div>
+    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
+    ${refsBlock(m.refs)}
+    ${siblings.length?`<div class="siblings"><h4>More origins</h4><div class="origrid">${siblings.map(([sid,sm])=>originCard(sid,sm)).join('')}</div></div>`:''}
+    <div style="height:40px"></div>
+  </div>`;
+}
+// Generic meth-style render used by the origin intro page.
+function methLike(m,backView,backLabel){
+  app.innerHTML=`<div class="wrap detail">
+    <button class="back" onclick="go('${backView}')">${esc(backLabel)}</button>
+    <div class="dhead" style="border-bottom:none;padding-bottom:6px"><div class="txt">
+      <div class="lvl" style="color:${m.accent}">Roasting by Origin</div>
+      <h1>${esc(m.name)}</h1><div class="sub">${esc(m.sub)}</div>
+    </div></div>
+    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${esc(s.body)}</p></div>`).join('')}
+    ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
+    ${refsBlock(m.refs)}
+    <div style="height:40px"></div>
+  </div>`;
 }
 
 /* ---------- LEARN LIST ---------- */
@@ -941,7 +1147,7 @@ function drawLearn(){
   const q=learnQuery.trim();
   if(q){
     // flat, cross-group search results
-    const hits=Object.entries(METHODOLOGY).filter(([id,m])=>matchMeth(m,q));
+    const hits=Object.entries(METHODOLOGY).filter(([id,m])=>m.group!=='origin'&&matchMeth(m,q));
     if(!hits.length){box.innerHTML=`<div class="empty">No topic matches that. Try "crack", "grind", "moisture", or "defect".</div>`;return;}
     box.innerHTML=`<div class="lcount">${hits.length} topic${hits.length>1?'s':''}</div>
       <div class="grid mgrid">${hits.map(([id,m])=>methCard(id,m,true)).join('')}</div>`;
