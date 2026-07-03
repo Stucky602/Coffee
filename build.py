@@ -54,8 +54,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v67"
-CACHE_C = "coffee-guide-v67"
+APP_VERSION = "v68"
+CACHE_C = "coffee-guide-v68"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1894,27 +1894,33 @@ function diaCracks(){
 }
 // 5. Heat transfer in a drum (three modes).
 function diaHeat(){
-  const W=760,H=230,cx=250,cy=115,rd=78;
-  let g='';
-  // drum
-  g+=`<circle cx="${cx}" cy="${cy}" r="${rd}" fill="none" stroke="${DIA.mail}" stroke-width="4"/>`;
-  g+=`<circle cx="${cx}" cy="${cy}" r="${rd+10}" fill="none" stroke="${DIA.line}" stroke-width="2" stroke-dasharray="3 4"/>`;
-  // beans
-  for(let i=0;i<7;i++){const a=i/7*Math.PI*2;g+=`<ellipse cx="${(cx+Math.cos(a)*38).toFixed(0)}" cy="${(cy+Math.sin(a)*30+10).toFixed(0)}" rx="9" ry="6" fill="${DIA.dev}"/>`;}
-  // conduction (drum wall arrow)
-  g+=`<path d="M${cx-rd+4} ${cy+40} Q${cx-40} ${cy+30} ${cx-20} ${cy+18}" stroke="${DIA.hot}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
-  // convection (hot air swirl)
-  g+=`<path d="M${cx-10} ${cy-50} Q${cx+30} ${cy-40} ${cx+20} ${cy-10}" stroke="${DIA.dry}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
-  // radiation (from wall)
-  g+=`<path d="M${cx+rd-6} ${cy} L${cx+30} ${cy}" stroke="${DIA.accent}" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>`;
-  // arrowhead marker
-  g=`<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${DIA.ink}"/></marker></defs>`+g;
-  // labels on right (wrapped, no truncation)
-  const leg=[[DIA.hot,'Conduction','Heat from the hot metal drum wall touching the beans.'],[DIA.dry,'Convection','Hot air moving through the bean mass \u2014 the biggest lever on most drums.'],[DIA.accent,'Radiation','Infrared heat radiating from the drum and surfaces.']];
-  leg.forEach((l,i)=>{const y=40+i*62;g+=`<rect x="430" y="${y-12}" width="14" height="14" rx="3" fill="${l[0]}"/><text x="452" y="${y}" fill="${DIA.ink}" font-size="14" font-weight="700" font-family="ui-sans-serif">${l[1]}</text><text x="452" fill="${DIA.ink3}" font-size="11.5" font-family="ui-sans-serif">${wrapTspans(l[2],452,y+17,14,34)}</text>`;});
+  const W=760,H=230,cx=240,cy=112,rd=76;
+  let g=`<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#e8dcc8"/></marker>
+    <radialGradient id="drumWall" cx="0.5" cy="0.5" r="0.5"><stop offset="0.82" stop-color="#1a120a" stop-opacity="0"/><stop offset="1" stop-color="#c0433a" stop-opacity="0.35"/></radialGradient></defs>`;
+  // drum: heavy metal wall ring + hot inner-wall glow
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rd}" fill="url(#drumWall)"/>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rd}" fill="none" stroke="#8a7c66" stroke-width="5"/>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="${rd-3}" fill="none" stroke="#c0433a" stroke-width="1.6" opacity="0.55"/>`;
+  // tumbling beans piled at the bottom (like a real drum)
+  const beans=[[-30,34],[-12,40],[8,42],[26,36],[-22,24],[0,28],[18,26],[-8,14],[10,16]];
+  beans.forEach(b=>{g+=`<ellipse cx="${cx+b[0]}" cy="${cy+b[1]}" rx="9" ry="6" fill="#6a4326" stroke="#3a2414" stroke-width="0.8"/><path d="M${cx+b[0]} ${cy+b[1]-5} q-2 5 0 10" stroke="#e7dcc4" stroke-width="0.8" opacity="0.5" fill="none"/>`;});
+  // 1) CONDUCTION: short bold arrow from hot wall directly into a bean touching it
+  g+=`<path d="M${cx-rd+6} ${cy+30} L${cx-34} ${cy+30}" stroke="#c0433a" stroke-width="3" fill="none" marker-end="url(#ah)"/>`;
+  // 2) CONVECTION: flowing air arrows curving up through the bean mass
+  g+=`<path d="M${cx-24} ${cy+44} C${cx-30} ${cy} ${cx+10} ${cy-10} ${cx+4} ${cy-46}" stroke="#C9A34E" stroke-width="2.6" fill="none" marker-end="url(#ah)" opacity="0.9"/>`;
+  g+=`<path d="M${cx+18} ${cy+40} C${cx+26} ${cy} ${cx+30} ${cy-16} ${cx+26} ${cy-42}" stroke="#C9A34E" stroke-width="2" fill="none" marker-end="url(#ah)" opacity="0.7"/>`;
+  // 3) RADIATION: wavy infrared lines beaming inward from the wall
+  for(let k=0;k<3;k++){const yy=cy-18+k*16;g+=`<path d="M${cx+rd-6} ${yy} q-10 -4 -20 0 q-10 4 -20 0" stroke="#e0864a" stroke-width="1.8" fill="none" opacity="0.8"/>`;}
+  // legend on the right (wrapped)
+  const leg=[['#c0433a','Conduction','Heat from the hot metal drum wall touching the beans.'],
+             ['#C9A34E','Convection','Hot air moving through the bean mass \u2014 the biggest lever on most drums.'],
+             ['#e0864a','Radiation','Infrared heat beaming off the drum and hot surfaces.']];
+  leg.forEach((l,i)=>{const y=42+i*62;
+    g+=`<rect x="440" y="${y-12}" width="14" height="14" rx="3" fill="${l[0]}"/>`;
+    g+=`<text x="462" y="${y}" fill="${DIA.ink}" font-size="14" font-weight="700" font-family="ui-sans-serif">${l[1]}</text>`;
+    g+=`<text x="462" fill="${DIA.ink3}" font-size="11.5" font-family="ui-sans-serif">${wrapTspans(l[2],462,y+17,14,34)}</text>`;});
   return diaWrap(`${W} ${H}`,g,'Three ways heat reaches the bean inside a drum roaster.');
-}
-// 6. Extraction band: under / ideal / over.
+}// 6. Extraction band: under / ideal / over.
 function diaExtraction(){
   const W=760,H=150,L=20,R=20,T=40,barH=42,iw=W-L-R;
   const X=p=>L+iw*(p/30);
