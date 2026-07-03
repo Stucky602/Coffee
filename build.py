@@ -8,8 +8,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v47"
-CACHE_C = "coffee-guide-v47"
+APP_VERSION = "v48"
+CACHE_C = "coffee-guide-v48"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -214,6 +214,10 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
   background:linear-gradient(100deg,transparent 20%,rgba(255,240,214,.55) 50%,transparent 80%);
   background-size:220% 100%;mix-blend-mode:screen;animation:heatsweep 4.5s ease-in-out infinite}
 @keyframes heatsweep{0%{background-position:180% 0}60%,100%{background-position:-80% 0}}
+.herosig{margin-top:22px!important;font-family:var(--mono);font-size:12px;letter-spacing:.02em;
+  color:var(--ink3);max-width:60ch;font-style:normal;position:relative;padding-left:14px}
+.herosig::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;border-radius:2px;
+  background:linear-gradient(var(--heat1),var(--heat4))}
 .hero .beans{position:absolute;inset:0;z-index:1;opacity:.5}
 
 /* home section directory */
@@ -622,7 +626,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 </nav>
 <main id="app"></main>
 <footer><div class="wrap">
-  <span>Coffee — An Industry Guide · Roasting reference for working professionals</span>
+  <span>Coffee — An Industry Guide · Made for the people who take it seriously.</span>
   <span id="footver"></span>
 </div></footer>
 
@@ -923,18 +927,19 @@ function home(){
   const nLearn=nM-nO; // learn topics excluding origins (now its own tab)
   // section directory: [icon-svg, title, blurb, button label, target view]
   const sections=[
-    [svgIcon('profiles'),'Roast Profiles',`Every roast level from Nordic light to Italian dark — plus purpose-built espresso and omni — broken down by curve, phase, flavor signature, and the ways each one fails.`,`Browse ${nP} profiles`,`profiles`],
-    [svgIcon('compare'),'Compare',`Lay any profiles side by side — overlay their flavor radars or their roast curves to see exactly how a light and a dark diverge.`,`Open compare`,`compare`],
-    [svgIcon('origin'),'Roasting by Origin',`How coffee from ${nO} growing regions behaves in the roaster — what the green is like, how to handle it, and the roast level that shows it best.`,`Explore origins`,`origins`],
-    [svgIcon('learn'),'Learn',`${nLearn} deep-dives across the whole craft: green buying and grading, reading the roast, the science, cupping and quality, running a roastery, and brewing behind the bar.`,`Start learning`,`learn`],
-    [svgIcon('start'),'New to Coffee?',`Start here. A plain-language tour of how green becomes the cup, the light-versus-dark tradeoff, and a glossary that decodes the jargon.`,`Get oriented`,`start`],
+    [svgIcon('profiles'),'Roast Profiles',`Every roast level from Nordic light to Italian dark — plus purpose-built espresso and omni. Each one broken down by curve, phase, and flavor signature, including the honest bit: exactly how it falls apart when you push it too far.`,`Browse ${nP} profiles`,`profiles`],
+    [svgIcon('compare'),'Compare',`Put any two profiles nose to nose. Overlay their flavor radars or their roast curves and watch a light and a dark pull apart in front of you — no guessing, just the shapes.`,`Open compare`,`compare`],
+    [svgIcon('origin'),'Roasting by Origin',`${nO} growing regions, and how each one actually behaves in the drum — what the green wants, where it fights you, and the roast level that finally lets it sing.`,`Explore origins`,`origins`],
+    [svgIcon('learn'),'Learn',`${nLearn} deep-dives across the whole craft — green buying and grading, reading the roast, the science underneath it, cupping, running a roastery, and holding it together behind the bar. The good stuff, none of the padding.`,`Start learning`,`learn`],
+    [svgIcon('start'),'New to Coffee?',`Start here, no shame in it. A plain-language tour of how a grassy green seed becomes the cup, the light-versus-dark tradeoff that decides everything, and a glossary that quietly translates the jargon.`,`Get oriented`,`start`],
   ];
   app.innerHTML=`
   <section class="hero">
     <div class="wrap">
       <h1>Where green coffee <span class="grad">becomes flavor.</span></h1>
-      <p class="lede">A field reference for people who roast, brew, and buy coffee for a living — from the green bean and the roast curve all the way to the cup. The theory that actually changes what you do at the machine, with none of the fluff.</p>
+      <p class="lede">A field reference for the people who roast, brew, and buy coffee for a living. From the green bean to the roast curve to the cup — the theory that actually changes what you do at the machine. Opinionated where it counts, honest about the rest, and blessedly free of fluff.</p>
       <div class="heatbar">${heat}</div>
+      <p class="herosig">Light to dark, seed to cup — every step here has a reason, and we tell you what it is.</p>
     </div>
   </section>
   <div class="wrap">
@@ -988,7 +993,7 @@ function methCard(id,m,showGroup){
 /* ---------- PROFILE LIST ---------- */
 let profQuery='', profLevel='all', profSort='spectrum';
 function profileList(){
-  app.innerHTML=`<div class="wrap"><div class="seclead"><span class="no">01</span><div><h2>Roast Profiles</h2><p>Ten core profiles spanning the full roast spectrum.</p></div></div>
+  app.innerHTML=`<div class="wrap"><div class="seclead"><span class="no">01</span><div><h2>Roast Profiles</h2><p>Ten core profiles, from the palest Nordic to the darkest Italian — the whole spectrum, warts and all.</p></div></div>
     <div class="filterbar">
       <div class="searchwrap">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
@@ -1047,7 +1052,7 @@ function drawProfResults(){
     box.innerHTML=entries.length?`<div class="grouplabel">Sorted by ${label.toLowerCase()} — highest first</div><div class="grid">${entries.map(([id,p])=>profileCard(id,p)).join('')}</div>`:emptyState();
   }
 }
-function emptyState(){return `<div class="empty">No profiles match that. Try a roast level, a flavor like “bright” or “bitter,” or clear the search.</div>`;}
+function emptyState(){return `<div class="empty">Nothing here matches that one. Try a roast level, a flavor like “bright” or “bitter,” or clear the search and start over — no harm done.</div>`;}
 
 /* ---------- PROFILE DETAIL ---------- */
 function profileDetail(id){
@@ -1182,7 +1187,7 @@ const CMP_COLORS=['#C9A34E','#B07B3E','#8A5A34','#6E3E1E','#e08a5a'];
 function compare(){
   const ids=Object.keys(PROFILES);
   app.innerHTML=`<div class="wrap">
-    <div class="seclead"><span class="no">02</span><div><h2>Compare Profiles</h2><p>Overlay flavor signatures or roast curves. Pick up to four.</p></div></div>
+    <div class="seclead"><span class="no">02</span><div><h2>Compare Profiles</h2><p>Overlay flavor signatures or roast curves and let them argue it out. Up to four at a time.</p></div></div>
     <div class="cmpmodebar">
       <button id="modeRadar" class="${cmpMode==='radar'?'on':''}" onclick="setCmpMode('radar')">Flavor Radar</button>
       <button id="modeCurve" class="${cmpMode==='curve'?'on':''}" onclick="setCmpMode('curve')">Roast Curve</button>
@@ -1466,7 +1471,7 @@ function drawLearn(){
   if(q){
     // flat, cross-group search results
     const hits=Object.entries(METHODOLOGY).filter(([id,m])=>m.group!=='origin'&&matchMeth(m,q));
-    if(!hits.length){box.innerHTML=`<div class="empty">No topic matches that. Try "crack", "grind", "moisture", or "defect".</div>`;return;}
+    if(!hits.length){box.innerHTML=`<div class="empty">Drew a blank on that one. Try “crack”, “grind”, “moisture”, or “defect” — or wander the chapters below.</div>`;return;}
     box.innerHTML=`<div class="lcount">${hits.length} topic${hits.length>1?'s':''}</div>
       <div class="grid mgrid">${hits.map(([id,m])=>methCard(id,m,true)).join('')}</div>`;
     return;
