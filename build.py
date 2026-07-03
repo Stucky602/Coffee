@@ -1,6 +1,49 @@
 #!/usr/bin/env python3
 """Build the self-contained 'Coffee - An Industry Guide' HTML PWA from JSON data."""
-import json, pathlib
+import json, pathlib, re
+
+# ---- Country-silhouette curve smoothing -------------------------------------
+# The COUNTRY_SIL paths are hand-authored as straight-line polygons (readable,
+# capture each country's proportions). At build time we convert every polygon
+# into a smooth closed Bezier curve (Catmull-Rom -> cubic Bezier) so the outlines
+# flow like real coastlines instead of reading as angular blobs.
+def _cr_to_bezier(pts, tension=0.8):
+    n = len(pts)
+    if n < 3:
+        return None
+    d = f"M{pts[0][0]:.1f} {pts[0][1]:.1f}"
+    for i in range(n):
+        p0 = pts[(i - 1) % n]; p1 = pts[i]; p2 = pts[(i + 1) % n]; p3 = pts[(i + 2) % n]
+        c1x = p1[0] + (p2[0] - p0[0]) / 6.0 * tension
+        c1y = p1[1] + (p2[1] - p0[1]) / 6.0 * tension
+        c2x = p2[0] - (p3[0] - p1[0]) / 6.0 * tension
+        c2y = p2[1] - (p3[1] - p1[1]) / 6.0 * tension
+        d += f" C{c1x:.1f} {c1y:.1f} {c2x:.1f} {c2y:.1f} {p2[0]:.1f} {p2[1]:.1f}"
+    return d + "Z"
+
+def _subdivide(pts):
+    """Insert a midpoint between each pair of vertices -> doubles the point count,
+    giving the curve smoother finer coastline detail to work with."""
+    out = []
+    n = len(pts)
+    for i in range(n):
+        a = pts[i]; b = pts[(i + 1) % n]
+        out.append(a)
+        out.append(((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0))
+    return out
+
+def smooth_silhouette(d, tension=0.8, subdivide=True):
+    out = []
+    for part in re.split(r'Z', d):
+        nums = re.findall(r'-?\d+\.?\d*', part)
+        if len(nums) >= 6:
+            pts = [(float(nums[j]), float(nums[j + 1])) for j in range(0, len(nums) - 1, 2)]
+            if subdivide:
+                pts = _subdivide(pts)
+            b = _cr_to_bezier(pts, tension)
+            if b:
+                out.append(b)
+    return " ".join(out)
 
 BASE = pathlib.Path(__file__).parent
 profiles = json.loads((BASE / "data_profiles.json").read_text())["PROFILES"]
@@ -8,8 +51,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v48"
-CACHE_C = "coffee-guide-v48"
+APP_VERSION = "v52"
+CACHE_C = "coffee-guide-v52"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1293,43 +1336,82 @@ function beltStrip(n){
 // Rendered faintly in the empty lower-right of the region-map card as a watermark.
 // Only distinctive, identifiable shapes are included; origins without one render nothing (no fake blob).
 const COUNTRY_SIL={
-  'Brazil':'M55 8 L66 12 L70 8 L76 14 L72 22 L82 30 L88 44 L86 60 L74 76 L60 88 L46 90 L36 82 L40 72 L30 66 L22 54 L18 40 L26 30 L20 22 L30 18 L40 24 L48 16 Z',
-  'Colombia':'M40 10 L54 8 L60 18 L72 22 L74 34 L64 42 L70 54 L64 70 L54 86 L46 78 L44 60 L34 54 L30 40 L36 30 L30 20 Z',
-  'Ethiopia':'M20 34 L40 24 L52 14 L64 20 L80 30 L86 44 L74 52 L80 64 L64 74 L50 68 L38 74 L28 62 L34 50 L22 46 Z',
-  'Kenya':'M28 20 L46 16 L84 30 L72 46 L74 60 L58 84 L48 76 L44 60 L30 52 L36 40 L26 32 Z',
-  'Vietnam':'M40 8 L52 12 L50 24 L60 34 L58 46 L70 58 L60 72 L54 90 L46 84 L52 70 L44 58 L48 44 L40 32 L44 20 Z',
-  'India':'M30 14 L50 10 L72 14 L78 26 L70 36 L76 48 L64 66 L54 86 L46 72 L40 54 L30 42 L24 28 Z',
-  'Indonesia (Sumatra)':'M22 22 L36 16 L44 28 L60 40 L74 56 L84 70 L76 76 L60 64 L46 52 L34 40 L24 32 Z',
-  'Mexico':'M14 26 L34 20 L50 26 L64 22 L78 32 L70 42 L82 46 L78 58 L66 56 L58 68 L50 60 L40 50 L30 44 L18 38 Z',
-  'Peru':'M62 12 L74 20 L70 34 L78 46 L66 58 L54 78 L40 88 L30 78 L44 66 L50 50 L54 34 L58 22 Z',
-  'Papua New Guinea':'M18 40 L34 34 L48 42 L56 34 L72 40 L86 50 L76 60 L60 54 L48 60 L34 54 L22 50 Z',
-  'Panama':'M14 42 L30 38 L42 48 L52 42 L56 52 L70 46 L84 54 L74 62 L58 58 L48 64 L38 56 L24 54 Z',
-  'Costa Rica':'M28 30 L44 26 L58 36 L70 48 L64 62 L52 72 L42 62 L46 48 L34 42 Z',
-  'Guatemala':'M22 34 L44 28 L64 34 L78 44 L72 56 L58 54 L50 66 L40 58 L44 46 L30 44 Z',
-  'Honduras':'M18 36 L40 30 L60 36 L80 42 L74 54 L58 52 L46 62 L38 52 L44 44 L26 44 Z',
-  'Nicaragua':'M26 30 L46 28 L66 36 L76 50 L68 66 L54 74 L46 62 L50 48 L36 44 L28 38 Z',
-  'El Salvador':'M18 44 L40 38 L62 42 L82 50 L74 60 L54 58 L38 62 L24 54 Z',
-  'Yemen':'M18 40 L44 32 L72 34 L86 44 L80 58 L60 62 L44 58 L28 60 L20 50 Z',
-  'Tanzania':'M26 28 L48 24 L70 30 L82 44 L76 62 L62 76 L48 70 L40 56 L30 46 L24 36 Z',
-  'Uganda':'M28 30 L50 26 L70 32 L78 46 L70 62 L52 70 L40 60 L34 46 L26 40 Z',
-  'Rwanda':'M28 34 L50 28 L72 36 L78 50 L62 62 L44 60 L32 50 Z',
-  'Ecuador':'M30 30 L54 26 L74 34 L70 48 L58 60 L44 66 L36 54 L40 42 L28 40 Z',
-  'Bolivia':'M34 22 L58 18 L76 30 L74 48 L62 66 L46 74 L34 62 L40 46 L30 36 Z',
-  'DR Congo':'M22 26 L46 20 L68 26 L82 40 L74 58 L60 74 L46 68 L38 54 L28 44 L24 34 Z',
-  'Thailand':'M44 10 L56 16 L52 30 L62 40 L56 54 L60 70 L52 88 L44 74 L50 58 L44 44 L48 28 L40 20 Z',
-  'China (Yunnan)':'M18 24 L44 16 L70 20 L86 32 L80 46 L62 50 L50 62 L40 54 L30 42 L20 34 Z',
-  'Timor-Leste':'M14 46 L38 40 L60 44 L84 52 L72 62 L50 58 L30 60 L16 54 Z',
-  'Malawi':'M46 10 L58 18 L54 34 L60 50 L54 68 L48 86 L40 70 L46 52 L42 34 L44 20 Z',
-  'Zambia':'M20 32 L44 26 L64 24 L84 34 L78 50 L84 62 L66 66 L50 58 L36 62 L26 50 L30 40 Z',
-  'Zimbabwe':'M20 34 L46 28 L72 32 L84 44 L74 58 L54 66 L36 60 L26 48 Z',
-  'Burundi':'M30 32 L52 28 L70 38 L66 56 L48 66 L34 56 L32 42 Z',
-  'Jamaica':'M12 44 L40 38 L68 40 L88 48 L80 60 L54 62 L30 58 L14 52 Z',
-  // Island origins (keyed by their display name). Distinctive island shapes, same vector style.
-  'Java':'M8 46 L24 40 L40 44 L54 40 L70 44 L86 42 L92 50 L80 58 L64 54 L48 60 L32 54 L18 58 L8 52 Z',
-  'Sulawesi (Toraja)':'M30 8 L40 12 L38 30 L52 34 L56 20 L66 18 L64 34 L54 46 L64 58 L60 76 L50 74 L52 58 L40 50 L34 66 L24 62 L32 46 L26 32 L18 30 L28 24 Z',
-  'Bali (Kintamani)':'M14 40 L34 32 L52 34 L72 32 L88 42 L82 56 L64 60 L48 54 L30 58 L16 50 Z',
-  'Flores (Bajawa)':'M6 50 L24 44 L40 48 L58 44 L76 48 L94 50 L86 60 L66 58 L50 62 L32 56 L16 60 L6 54 Z',
-  'Hawaii (Kona)':'M14 30 L22 26 L26 34 L20 40 Z M34 40 L44 36 L48 46 L38 50 Z M52 52 L66 48 L74 58 L62 66 L52 60 Z M78 66 L86 62 L90 70 L82 74 Z'
+  // Higher-detail, recognizable country silhouettes normalized to a ~100x100 box.
+  // Drawn to fill the box and capture each country's distinctive contour, not a blob.
+  'Brazil':'M50 6 L57 9 L61 5 L67 9 L65 16 L72 18 L79 25 L83 34 L86 45 L84 55 L80 63 L82 71 L76 80 L68 87 L59 91 L50 90 L43 84 L45 77 L38 79 L33 72 L36 65 L28 62 L22 54 L18 45 L20 37 L26 31 L22 24 L28 19 L36 22 L41 16 L46 19 Z',
+  'Colombia':'M42 8 L50 6 L55 12 L60 10 L64 16 L70 18 L73 25 L71 32 L66 36 L70 44 L67 54 L70 62 L64 74 L57 86 L50 90 L45 82 L47 72 L42 66 L44 56 L38 52 L34 44 L38 36 L33 30 L36 22 L31 16 Z',
+  'Ethiopia':'M16 42 L26 34 L34 30 L40 20 L48 16 L54 22 L62 20 L70 26 L80 30 L88 38 L86 46 L78 50 L84 58 L76 66 L66 70 L58 76 L50 72 L42 78 L34 72 L30 62 L36 54 L26 52 L20 48 Z',
+  'Kenya':'M30 16 L42 14 L50 18 L84 28 L78 38 L74 46 L76 56 L70 66 L60 80 L52 88 L46 80 L44 66 L36 60 L32 50 L38 42 L30 36 L34 28 L26 22 Z',
+  'Vietnam':'M36 6 L46 8 L50 16 L48 24 L54 30 L58 40 L56 48 L64 54 L70 62 L66 70 L58 68 L54 78 L50 90 L44 86 L48 74 L44 64 L50 58 L46 50 L50 42 L44 36 L48 28 L42 22 L46 14 L38 12 Z',
+  'India':'M28 12 L38 8 L48 10 L58 8 L70 12 L78 18 L82 26 L76 32 L80 38 L74 44 L78 50 L70 58 L64 50 L62 62 L56 76 L50 88 L45 76 L42 62 L36 54 L30 48 L34 40 L26 34 L30 26 L24 20 Z',
+  'Indonesia (Sumatra)':'M18 20 L28 14 L34 22 L44 28 L52 38 L62 46 L72 56 L82 66 L88 74 L82 80 L72 74 L62 64 L54 56 L44 48 L36 40 L28 32 L22 26 Z',
+  'Mexico':'M8 22 L20 18 L32 22 L42 20 L52 26 L60 22 L70 20 L80 26 L86 34 L80 40 L88 44 L84 52 L74 50 L78 60 L70 72 L64 62 L58 68 L54 58 L46 52 L40 56 L34 48 L26 42 L18 38 L12 30 Z',
+  'Peru':'M58 8 L68 12 L74 20 L72 30 L80 40 L76 50 L66 58 L60 70 L50 82 L40 90 L32 82 L40 74 L46 62 L50 50 L54 40 L52 30 L56 20 Z',
+  'Papua New Guinea':'M10 42 L22 36 L32 42 L42 38 L50 44 L58 38 L68 42 L78 48 L88 52 L84 60 L74 62 L64 56 L56 62 L48 56 L40 62 L30 56 L20 54 L12 50 Z',
+  'Panama':'M8 40 L20 36 L30 44 L38 40 L46 48 L56 44 L64 40 L74 46 L86 50 L82 58 L72 62 L62 56 L54 62 L46 56 L38 60 L30 54 L20 52 L12 46 Z',
+  'Costa Rica':'M26 24 L38 20 L48 26 L58 24 L66 32 L74 42 L72 54 L64 66 L56 76 L48 68 L44 58 L38 60 L34 50 L28 44 L24 34 Z',
+  'Guatemala':'M18 30 L30 24 L44 22 L58 26 L70 30 L80 38 L76 48 L66 50 L58 46 L52 56 L46 66 L40 58 L44 48 L34 46 L26 42 L20 38 Z',
+  'Honduras':'M12 32 L26 26 L40 24 L54 28 L68 32 L82 38 L78 48 L68 50 L60 46 L52 54 L44 62 L38 54 L42 46 L30 46 L20 44 Z',
+  'Nicaragua':'M22 22 L34 20 L46 24 L58 30 L70 38 L76 50 L72 62 L64 72 L56 82 L48 74 L46 62 L50 50 L42 46 L34 42 L28 34 L24 28 Z',
+  'El Salvador':'M12 42 L26 36 L40 34 L54 36 L68 40 L82 46 L76 56 L62 56 L50 60 L38 58 L26 60 L16 52 Z',
+  'Yemen':'M12 38 L28 32 L44 30 L60 30 L74 34 L86 40 L82 52 L70 58 L58 60 L46 58 L34 62 L24 58 L16 48 Z',
+  'Tanzania':'M22 24 L36 20 L50 22 L64 26 L78 32 L84 44 L80 56 L72 68 L62 78 L52 74 L46 62 L40 56 L32 50 L26 42 L28 34 L22 30 Z',
+  'Uganda':'M24 26 L38 22 L52 24 L66 28 L78 34 L82 46 L76 58 L64 68 L52 72 L44 64 L40 54 L32 50 L26 42 L28 34 Z',
+  'Rwanda':'M22 30 L34 24 L48 22 L62 26 L74 32 L82 42 L78 54 L68 62 L56 66 L46 62 L38 56 L30 50 L24 42 L26 36 Z',
+  'Ecuador':'M26 26 L40 22 L54 22 L68 28 L76 36 L72 46 L64 42 L60 54 L52 64 L44 70 L36 62 L40 52 L32 48 L28 40 L24 34 Z',
+  'Bolivia':'M30 18 L44 14 L58 16 L72 22 L80 32 L78 44 L70 54 L62 66 L52 76 L42 72 L38 60 L44 50 L36 46 L30 38 L34 30 L28 24 Z',
+  'DR Congo':'M18 24 L32 18 L46 16 L60 20 L72 18 L82 26 L86 38 L80 48 L84 58 L76 68 L64 76 L52 72 L44 62 L36 66 L28 58 L24 48 L18 40 L22 32 Z',
+  'Thailand':'M40 6 L52 10 L54 20 L48 28 L56 34 L62 44 L58 52 L64 62 L60 72 L54 86 L48 76 L52 64 L46 56 L50 46 L44 40 L48 30 L42 24 L46 16 L38 14 Z',
+  'China (Yunnan)':'M12 22 L28 14 L44 12 L60 14 L74 18 L86 26 L90 36 L82 42 L72 44 L62 52 L54 62 L46 56 L40 48 L34 52 L28 44 L22 38 L16 32 Z',
+  'Timor-Leste':'M10 44 L26 38 L42 36 L58 38 L74 42 L88 48 L82 58 L66 58 L52 62 L38 60 L24 62 L14 54 Z',
+  'Malawi':'M44 8 L54 12 L56 22 L52 32 L58 42 L62 52 L58 64 L52 76 L46 88 L40 76 L46 64 L50 54 L44 44 L48 34 L42 24 L46 16 Z',
+  'Zambia':'M14 30 L30 24 L46 22 L60 20 L76 24 L86 32 L82 44 L86 54 L74 62 L62 66 L52 60 L44 66 L34 62 L26 54 L20 44 L24 36 Z',
+  'Zimbabwe':'M16 32 L30 26 L46 24 L62 26 L76 32 L86 42 L80 54 L68 62 L56 68 L46 64 L38 58 L30 60 L22 52 L18 42 Z',
+  'Burundi':'M26 28 L38 22 L52 22 L66 28 L74 38 L72 50 L64 60 L54 66 L44 62 L36 56 L28 48 L24 40 L26 34 Z',
+  'Jamaica':'M8 42 L24 36 L40 34 L56 36 L72 38 L88 44 L84 54 L70 58 L54 60 L38 58 L22 58 L10 52 Z',
+  // Island origins (keyed by display name). Distinctive island shapes, same vector style.
+  'Java':'M6 48 L18 42 L28 46 L38 42 L48 46 L58 42 L68 46 L78 42 L90 46 L94 52 L84 58 L72 54 L62 58 L50 54 L40 58 L28 54 L18 58 L8 54 Z',
+  'Sulawesi (Toraja)':'M28 6 L38 10 L40 22 L36 32 L46 30 L50 18 L58 14 L62 24 L58 36 L50 42 L60 48 L58 62 L52 76 L44 72 L48 58 L40 52 L34 64 L26 60 L32 48 L26 38 L18 42 L14 34 L24 30 L20 20 L26 16 Z',
+  'Bali (Kintamani)':'M10 38 L26 30 L44 28 L62 30 L82 36 L90 46 L82 56 L64 60 L48 56 L30 60 L14 52 L8 44 Z',
+  'Flores (Bajawa)':'M4 50 L18 44 L30 48 L44 44 L58 48 L72 44 L86 48 L96 52 L88 60 L74 58 L60 62 L46 58 L32 62 L18 58 L6 56 Z',
+  'Hawaii (Kona)':'M10 26 L18 22 L24 28 L20 36 L12 34 Z M30 36 L40 32 L46 40 L38 48 L30 44 Z M50 48 L62 44 L70 52 L60 62 L50 56 Z M76 62 L86 58 L92 66 L84 74 L76 68 Z'
+};
+// Topography per country (coords in the same 0..100 box as COUNTRY_SIL).
+// mtns: clusters of [x,y] peak positions placed where the real ranges sit.
+// coast: [x,y] points tracing the main coastline edge for a shoreline accent.
+// Only the coffee-relevant terrain is marked — enough to read as real geography.
+const COUNTRY_TOPO={
+  'Brazil':{mtns:[[70,58],[76,54],[73,64],[80,60],[66,62]],coast:[[86,45],[84,55],[80,63],[76,72],[68,80],[60,86]]},
+  'Colombia':{mtns:[[44,30],[42,42],[46,54],[40,64],[48,68],[43,48],[45,38]],coast:[[36,22],[31,30],[34,40],[38,20]]},
+  'Ethiopia':{mtns:[[46,40],[54,36],[40,48],[58,46],[50,52],[44,56],[60,38]]},
+  'Kenya':{mtns:[[44,44],[50,50],[40,54],[54,46],[46,58]],coast:[[70,66],[60,80],[52,88]]},
+  'Vietnam':{mtns:[[48,30],[50,44],[46,54],[50,62]],coast:[[58,40],[64,54],[58,68],[52,80]]},
+  'India':{mtns:[[36,18],[48,14],[60,18],[68,24],[30,44],[40,56],[52,66]],coast:[[70,30],[64,50],[54,72],[46,84],[34,52],[28,36]]},
+  'Indonesia (Sumatra)':{mtns:[[34,26],[44,34],[54,44],[64,54],[74,62]],coast:[[28,18],[40,30],[52,42],[64,54],[78,66]]},
+  'Mexico':{mtns:[[28,32],[40,36],[52,34],[62,38],[36,44],[48,42]],coast:[[70,22],[80,30],[74,40],[60,26]]},
+  'Peru':{mtns:[[58,24],[62,36],[56,48],[50,60],[44,72],[54,42],[52,54]],coast:[[68,14],[62,30],[52,50],[42,72],[34,84]]},
+  'Papua New Guinea':{mtns:[[32,42],[44,46],[54,44],[64,48],[74,52]],coast:[[22,38],[42,42],[62,42],[80,50]]},
+  'Guatemala':{mtns:[[36,34],[48,38],[58,36],[44,44]],coast:[[22,32],[64,32]]},
+  'Costa Rica':{mtns:[[40,34],[50,40],[58,48],[46,50]],coast:[[28,28],[68,46],[52,72]]},
+  'Honduras':{mtns:[[34,34],[46,36],[58,38],[42,44]]},
+  'Nicaragua':{mtns:[[40,34],[50,42],[46,54]],coast:[[26,30],[70,40]]},
+  'El Salvador':{mtns:[[36,42],[50,44],[62,44]],coast:[[30,54],[64,54]]},
+  'Yemen':{mtns:[[30,42],[44,44],[24,50]],coast:[[30,56],[48,58],[66,56]]},
+  'Tanzania':{mtns:[[42,34],[52,32],[36,44],[46,50]],coast:[[74,42],[64,64],[54,76]]},
+  'Rwanda':{mtns:[[36,38],[48,36],[42,48],[56,42]]},
+  'Ecuador':{mtns:[[46,32],[50,44],[44,54],[52,54]],coast:[[30,32],[40,52],[36,64]]},
+  'Bolivia':{mtns:[[40,26],[46,38],[42,50],[50,44]]},
+  'DR Congo':{mtns:[[68,30],[74,44],[70,56],[76,50]],coast:[[22,42],[28,54]]},
+  'China (Yunnan)':{mtns:[[30,26],[44,22],[56,28],[40,40],[52,48]]},
+  'Malawi':{mtns:[[48,24],[52,40],[48,56],[52,72]]},
+  'Zambia':{mtns:[[36,34],[50,32],[64,34],[46,46]]},
+  'Zimbabwe':{mtns:[[38,36],[52,34],[64,40],[48,50]]},
+  'Burundi':{mtns:[[36,36],[48,34],[42,48]]},
+  'Uganda':{mtns:[[34,36],[46,32],[40,52],[68,40]]},
+  'Bali (Kintamani)':{mtns:[[40,40],[52,42],[62,44]]},
+  'Flores (Bajawa)':{mtns:[[30,50],[46,48],[60,50],[74,48]]},
+  'Sulawesi (Toraja)':{mtns:[[34,30],[44,44],[52,36],[40,56]]},
+  'Java':{mtns:[[24,50],[40,48],[56,50],[72,48]]},
 };
 function originRegionMap(m){
   const rm=m.regionMap; if(!rm)return '';
@@ -1341,14 +1423,73 @@ function originRegionMap(m){
   const country=(m.country||m.name).replace(/ \(.*\)/,'');
   let g=diaDefs([accent]);
   g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="14"/>`;
-  // faint country silhouette watermark in the lower-right empty space (if we have one).
+  // Country silhouette watermark, lower-right — a small piece of terrain, not just a blob.
+  // Base landmass + (clipped inside it) mountain ranges in a lighter elevation tint and a
+  // shoreline accent along the coast, placed where the real geography sits.
   const silKey=(m.country||m.name).replace(/ \(.*\)/,'');
-  const sil=COUNTRY_SIL[m.country||m.name]||COUNTRY_SIL[silKey];
+  const silName=m.country||m.name;
+  const sil=COUNTRY_SIL[silName]||COUNTRY_SIL[silKey];
   if(sil){
-    const silSize=Math.min(H-padTop-8, 132);         // fit within the region-list band
-    const sx=W-silSize-16, sy=H-silSize-12;           // anchor bottom-right
-    g+=`<g transform="translate(${sx},${sy}) scale(${(silSize/100).toFixed(3)})" opacity="0.13" aria-hidden="true">`+
-       `<path d="${sil}" fill="${accent}"/></g>`;
+    const silSize=Math.max(H-padTop+18, 150);          // fill the card height, generously
+    const sx=W-silSize+silSize*0.14, sy=H-silSize+silSize*0.12;  // let it bleed off the corner
+    const uid=_cid(accent)+(''+silSize).replace('.','');
+    const gid='silfade'+uid, cid='silclip'+uid;
+    const topo=COUNTRY_TOPO[silName]||COUNTRY_TOPO[silKey]||{};
+    // lighter "elevation" tint = accent pushed toward warm gold
+    const elev='#d8b566';
+    let inner='';
+    // shoreline accent: a soft lighter stroke tracing the coast points
+    if(topo.coast&&topo.coast.length>1){
+      const cpath='M'+topo.coast.map(p=>p[0]+' '+p[1]).join(' L');
+      inner+=`<path d="${cpath}" fill="none" stroke="#e8d29a" stroke-opacity="0.5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    // mountains: little peak glyphs where the real ranges are, varied for a ridgeline feel
+    if(topo.mtns){
+      topo.mtns.forEach((p,i)=>{
+        const x=p[0],y=p[1],s=3.6+((i*7)%5)*0.5;   // slight size variation
+        // shadow side + body
+        inner+=`<path d="M${x-s} ${y+s} L${x} ${y-s} L${x+s} ${y+s} Z" fill="${elev}" fill-opacity="0.6"/>`;
+        // sunlit left face
+        inner+=`<path d="M${x-s} ${y+s} L${x} ${y-s} L${x-s*0.1} ${y+s*0.3} Z" fill="#f2e6bf" fill-opacity="0.6"/>`;
+        // little snow cap on the taller ones
+        if(s>4.2)inner+=`<path d="M${x-s*0.35} ${y-s*0.2} L${x} ${y-s} L${x+s*0.35} ${y-s*0.2} L${x} ${y-s*0.35} Z" fill="#fbf3dc" fill-opacity="0.7"/>`;
+      });
+    }
+    // Coffee-growing life — because people live and work these hills.
+    // Coffee grows on the slopes at altitude, so the growing zones (a soft cultivated
+    // green tint) and the little settlement lights nestle beside the mountains: farms and
+    // towns on the same ridges. A quiet acknowledgement that this is a worked, lived-in land.
+    if(topo.mtns&&topo.mtns.length){
+      const grow='#8faf74';   // cultivated slope green (fits the warm palette, muted)
+      topo.mtns.forEach((p,i)=>{
+        const x=p[0],y=p[1];
+        // a soft planted patch just downslope of each range (where coffee actually grows)
+        const gx=x+ (i%2?3.4:-3.6), gy=y+3.6;
+        inner+=`<circle cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="3.6" fill="${grow}" fill-opacity="0.42"/>`;
+        inner+=`<circle cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="2.0" fill="${grow}" fill-opacity="0.30"/>`;
+        // a warm settlement light beside most ranges — where people live
+        if(i%2===0){
+          const lx=x+2.2, ly=y+4.6;
+          inner+=`<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="2.0" fill="#ffe7a8" fill-opacity="0.22"/>`; // glow
+          inner+=`<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="0.85" fill="#fff1cf" fill-opacity="0.95"/>`; // light
+        }
+      });
+      // a coffee cherry with its leaf, nestled in the growing country — the crop these
+      // communities build a life around. Larger + clearer so the human story reads.
+      const c0=topo.mtns[0];
+      const chx=c0[0]+6.0, chy=c0[1]+6.4;
+      inner+=`<path d="M${chx.toFixed(1)} ${(chy-2.6).toFixed(1)} q2.4 -2.0 4.4 -0.8 q-2.0 1.0 -4.4 0.8" fill="#8faf74" fill-opacity="0.75"/>`; // leaf
+      inner+=`<circle cx="${chx.toFixed(1)}" cy="${chy.toFixed(1)}" r="2.6" fill="#c65b3c" fill-opacity="0.72"/>`;   // cherry body
+      inner+=`<circle cx="${(chx-0.8).toFixed(1)}" cy="${(chy-0.8).toFixed(1)}" r="0.9" fill="#ffd9b0" fill-opacity="0.7"/>`; // highlight
+    }
+    g+=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">`+
+       `<stop offset="0" stop-color="${accent}" stop-opacity="0.22"/>`+
+       `<stop offset="1" stop-color="${accent}" stop-opacity="0.10"/></linearGradient>`+
+       `<clipPath id="${cid}"><path d="${sil}"/></clipPath></defs>`;
+    g+=`<g transform="translate(${sx.toFixed(0)},${sy.toFixed(0)}) scale(${(silSize/100).toFixed(3)})" aria-hidden="true">`+
+       `<path d="${sil}" fill="url(#${gid})"/>`+
+       `<g clip-path="url(#${cid})" opacity="0.9">${inner}</g>`+
+       `</g>`;
   }
   // header: a location-pin mark + country + altitude band.
   // Pin sits on the country-name row only; the GROWING REGIONS label is indented
@@ -3678,6 +3819,20 @@ if('serviceWorker' in navigator){
 </html>"""
 
 out = HTML.replace("__DATA__", DATA_JSON)
+
+# Smooth every COUNTRY_SIL path into flowing Bezier curves (coastline look).
+_n_smoothed = [0]
+def _smooth_paths(mobj):
+    block = mobj.group(1)
+    def repl(pm):
+        _n_smoothed[0] += 1
+        return pm.group(1) + smooth_silhouette(pm.group(2)) + pm.group(3)
+    new_block = re.sub(r"(:')([ML][^']*)(')", repl, block)
+    return "const COUNTRY_SIL={" + new_block + "\n};"
+
+out = re.sub(r"const COUNTRY_SIL=\{(.*?)\n\};", _smooth_paths, out, flags=re.S)
+print(f"Smoothed {_n_smoothed[0]} country silhouettes into Bezier curves")
+
 (BASE / "index.html").write_text(out, encoding="utf-8")
 
 # --- PWA manifest ---
