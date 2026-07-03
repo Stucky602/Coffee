@@ -672,7 +672,7 @@
       "related": [
         "health",
         "waves",
-        "brew_water",
+        "brew_waterchem",
         "caffeine_science"
       ]
     },
@@ -5829,7 +5829,6 @@
         "brew_machine",
         "brew_grinder",
         "ops_storage",
-        "brew_water",
         "brew_waterchem"
       ]
     },
@@ -5936,7 +5935,7 @@
         "brew_dialing",
         "brew_grind",
         "brew_troubleshoot",
-        "brew_water",
+        "brew_waterchem",
         "grind_science"
       ]
     },
@@ -6687,53 +6686,6 @@
         "brew_espresso"
       ]
     },
-    "brew_water": {
-      "name": "Water Chemistry",
-      "sub": "The 98% ingredient",
-      "group": "brew",
-      "accent": "#7A4A28",
-      "sections": [
-        {
-          "h": "Why water matters",
-          "body": "A cup of coffee is about 98% water, so water isn't a neutral background — it's the solvent doing the extracting, and its mineral content directly changes what and how much it pulls from the grounds. Two identical coffees brewed with different water taste genuinely different. This is why serious cafés treat water as an ingredient to be specified, not whatever comes from the tap."
-        },
-        {
-          "h": "The two numbers that matter",
-          "body": "Coffee water is characterized mainly by two things. Total hardness — the dissolved minerals (mostly magnesium and calcium) that actively grab and extract flavor compounds; too little and coffee tastes flat and empty, too much and it can taste harsh or chalky. And alkalinity (buffering capacity, largely bicarbonate) — which neutralizes acidity; too high and it flattens the bright, pleasant acids that make specialty coffee sing, too low and the cup can taste sharp. The SCA also points to a near-neutral pH (roughly 6.5–7.5) as a target range."
-        },
-        {
-          "h": "Practical takeaways",
-          "body": "You don't need a chemistry lab, but you should know your water. Very hard tap water over-buffers acidity and scales your machine; distilled or zero-mineral water extracts poorly and tastes hollow. Many cafés filter, blend, or build water to a target. There's a practical safety angle too: hardness minerals are what form limescale inside espresso machines and boilers, so water treatment protects both flavor and equipment."
-        },
-        {
-          "h": "Building or fixing your water",
-          "body": "You don't need a lab, but you do need to know roughly what your water is. Very hard, high-alkalinity tap water buffers away the bright acidity that makes specialty coffee interesting and scales up your machine; very soft or distilled water extracts poorly and tastes hollow and flat. Common fixes: filtering to reduce hardness and off-flavors, blending tap with distilled to hit a target, or building water from distilled using mineral packs. A rough specialty target is moderate hardness with lower alkalinity and a near-neutral pH. Whatever you do, keep it consistent — changing your water changes every coffee you brew."
-        }
-      ],
-      "keypoints": [
-        "Coffee is ~98% water; the water is the solvent and shapes extraction directly.",
-        "Two key numbers: hardness (minerals that extract flavor) and alkalinity (buffer that neutralizes acidity).",
-        "Too-hard/high-alkalinity water flattens acidity; distilled/zero-mineral extracts hollow. SCA target pH ~6.5–7.5.",
-        "Know and treat your water — it protects both flavor and machines (limescale)."
-      ],
-      "refs": [
-        {
-          "label": "How-to-Brew — SCA water pH guidance",
-          "link": "https://how-to-brew.coffee/espresso-brewing/guide-to-milk-texturing-and-steaming/"
-        },
-        {
-          "label": "SCA — brewing control chart & standards",
-          "link": "https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart"
-        }
-      ],
-      "diagram": "water",
-      "related": [
-        "brew_waterrecipe",
-        "brew_extraction",
-        "brew_troubleshoot",
-        "brew_waterchem"
-      ]
-    },
     "brew_waterchem": {
       "name": "Water Chemistry",
       "sub": "The 98% ingredient",
@@ -6779,7 +6731,7 @@
         }
       ],
       "related": [
-        "brew_water",
+        "brew_waterchem",
         "brew_waterrecipe",
         "brew_extraction",
         "ops_maintenance"
@@ -6822,7 +6774,7 @@
         }
       ],
       "related": [
-        "brew_water",
+        "brew_waterchem",
         "brew_extraction",
         "brew_troubleshoot"
       ]

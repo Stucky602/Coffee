@@ -54,8 +54,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v68"
-CACHE_C = "coffee-guide-v68"
+APP_VERSION = "v70"
+CACHE_C = "coffee-guide-v70"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -66,14 +66,14 @@ PROFILE_GROUPS = [
 ]
 METH_GROUPS = [
     ("culture", "Coffee, the Bigger Picture"),
-    ("grow", "Growing &amp; Origin"),
-    ("green", "Green Buying &amp; QC"),
+    ("grow", "Growing & Origin"),
+    ("green", "Green Buying & QC"),
     ("read", "Reading the Roast"),
     ("science", "Roast Science"),
     ("practice", "In Practice"),
-    ("cupping", "Cupping &amp; Quality"),
+    ("cupping", "Cupping & Quality"),
     ("ops", "Roastery Operations"),
-    ("brew", "Brewing &amp; Barista"),
+    ("brew", "Brewing & Barista"),
     ("business", "The Business of Coffee"),
 ]
 
@@ -83,8 +83,8 @@ METH_CHAPTERS = [
     ("world",  "The World of Coffee", "History, culture, economics, and the plant itself",       "#c98a2e", ["culture", "grow"]),
     ("green",  "From Cherry to Green", "Processing, grading, and buying green coffee",            "#7d8f5a", ["green"]),
     ("roast",  "The Craft of Roasting", "Reading the roast, the science, and diagnosing it",      "#C9A34E", ["read", "science", "practice"]),
-    ("taste",  "Tasting &amp; Quality",     "Cupping, scoring, and the language of flavor",           "#6E3E1E", ["cupping"]),
-    ("serve",  "Brewing &amp; Business",    "Behind the bar, running the roastery, and the trade",    "#5A2F16", ["brew", "ops", "business"]),
+    ("taste",  "Tasting & Quality",     "Cupping, scoring, and the language of flavor",           "#6E3E1E", ["cupping"]),
+    ("serve",  "Brewing & Business",    "Behind the bar, running the roastery, and the trade",    "#5A2F16", ["brew", "ops", "business"]),
 ]
 
 # Per-group metadata for the Learn hub: one-line description + accent color.
@@ -684,12 +684,12 @@ const {PROFILES,METHODOLOGY,GLOSSARY,PROFILE_GROUPS,METH_GROUPS,METH_CHAPTERS,ME
 const PATH=[
   {id:'history',label:"Coffee\u2019s Origin Story",why:"Where it all came from, before anything else."},
   {id:'plant',label:'The Coffee Plant',why:"What coffee actually is \u2014 a fruit seed."},
-  {id:'varietals',label:'Varietals &amp; Cultivars',why:"Why the variety sets the flavor ceiling."},
+  {id:'varietals',label:'Varietals & Cultivars',why:"Why the variety sets the flavor ceiling."},
   {id:'green_processing',label:'Processing Methods',why:"How the cherry becomes the green bean."},
   {id:'green_intro',label:'Buying Green Coffee',why:"The green caps everything downstream."},
   {id:'curve',label:'Reading the Roast Curve',why:"The roaster's core instrument."},
   {id:'phases',label:'The Phases of a Roast',why:"Drying, Maillard, development \u2014 the three acts."},
-  {id:'cracks',label:'First &amp; Second Crack',why:"The audible landmarks that set roast level."},
+  {id:'cracks',label:'First & Second Crack',why:"The audible landmarks that set roast level."},
   {id:'chemistry',label:'Roasting Chemistry',why:"What's actually happening inside the bean."},
   {id:'cupping_intro',label:'Cupping',why:"How the industry tastes and scores coffee."},
   {id:'brew_extraction',label:'Extraction Theory',why:"The one idea behind every brew method."},
@@ -1028,7 +1028,7 @@ function profileCard(id,p){
   </div>`;
 }
 function methCard(id,m,showGroup){
-  const tag=showGroup?`<span class="k">${METH_GROUPS.find(g=>g[0]===m.group)?.[1]||''}</span>`:'';
+  const tag=showGroup?`<span class="k">${esc(METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'')}</span>`:'';
   return `<div class="mcard" onclick="go('meth','${id}')">
     ${tag}
     <h3>${esc(m.name)}</h3>
@@ -2063,7 +2063,7 @@ function diaMilk(){
   g+=`<text x="${X(51)}" y="${cy+4}" fill="${DIA.ink}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">wand deep · whirlpool</text>`;
   g+=`<text x="${X(51)}" y="${cy+18}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">shred bubbles to microfoam</text>`;
   // temp ticks
-  [[4,'cold'],[37,'~37°C'],[60,'60°C'],[65,'65°C']].forEach(t=>{g+=`<line x1="${X(t[0])}" y1="${cy+24}" x2="${X(t[0])}" y2="${cy+30}" stroke="${DIA.ink3}"/><text x="${X(t[0])}" y="${cy+44}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-monospace">${t[1]}</text>`;});
+  [[4,'cold'],[37,'~37°C'],[65,'65°C stop']].forEach(t=>{g+=`<line x1="${X(t[0])}" y1="${cy+24}" x2="${X(t[0])}" y2="${cy+30}" stroke="${DIA.ink3}"/><text x="${X(t[0])}" y="${cy+44}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-monospace">${t[1]}</text>`;});
   // danger zone
   g+=`<text x="${X(68)}" y="${cy-32}" fill="${DIA.hot}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">70°C+</text>`;
   g+=`<text x="${W/2}" y="${cy+78}" fill="${DIA.ink3}" font-size="12" text-anchor="middle" font-family="ui-sans-serif">Stretch first while the milk is cold, then texture. Stop by 65°C — past 70°C the milk scalds and the foam collapses.</text>`;
@@ -2218,11 +2218,13 @@ function diaWaves(){
     ['4th','now','Science + home','precision · at-home · community','#e0864a',.88]];
   let g=diaDefs(waves.map(w=>w[4]));
   g+=`<line x1="${L}" y1="${axisY}" x2="${W-R}" y2="${axisY}" stroke="${DIA.line}" stroke-width="2"/>`;
-  waves.forEach((w,i)=>{const x=L+iw*w[5];const barH=40+i*34;const y=axisY-barH;
-    g+=`<rect x="${(x-52).toFixed(0)}" y="${y.toFixed(0)}" width="104" height="${barH}" rx="7" fill="url(#${_cid(w[4])})" stroke="${w[4]}" stroke-width="1.5" filter="url(#dsoft)"/>`;
-    g+=`<text x="${x.toFixed(0)}" y="${(y+24).toFixed(0)}" fill="${w[4]}" font-size="20" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
-    g+=`<text x="${x.toFixed(0)}" y="${(y+42).toFixed(0)}" fill="${DIA.ink}" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
-    if(barH>60)g+=`<text x="${x.toFixed(0)}" y="${(y+60).toFixed(0)}" fill="${DIA.ink3}" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
+  waves.forEach((w,i)=>{const x=L+iw*w[5];const barH=58+i*30;const y=axisY-barH;
+    g+=`<rect x="${(x-54).toFixed(0)}" y="${y.toFixed(0)}" width="108" height="${barH}" rx="7" fill="url(#${_cid(w[4])})" stroke="${w[4]}" stroke-width="1.5" filter="url(#dsoft)"/>`;
+    // number + name stacked near the top of the card (always fits)
+    g+=`<text x="${x.toFixed(0)}" y="${(y+26).toFixed(0)}" fill="${w[4]}" font-size="19" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
+    g+=`<text x="${x.toFixed(0)}" y="${(y+43).toFixed(0)}" fill="${DIA.ink}" font-size="11.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
+    // detail line only on the taller cards, with clear room above the card bottom
+    if(barH>=88)g+=`<text x="${x.toFixed(0)}" y="${(y+61).toFixed(0)}" fill="${DIA.ink3}" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
     g+=`<circle cx="${x.toFixed(0)}" cy="${axisY}" r="5" fill="${w[4]}"/>`;
     g+=`<text x="${x.toFixed(0)}" y="${axisY+22}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${w[1]}</text>`;
   });
@@ -2741,7 +2743,7 @@ function diaMaintenance(){
 }
 // 39. Aroma compound families and their smells.
 function diaAromaChem(){
-  const W=760,H=250,cx=175,cy=125;
+  const W=760,H=262,cx=175,cy=125;
   const fams=[['Pyrazines','nutty, roasty','#8A5A34'],['Furans','sweet, caramel','#C9A34E'],['Aldehydes','fruity, malty','#b0703a'],['Ketones','buttery','#d0a850'],['Sulfur cmpds','tiny but huge','#7a6a52']];
   let g=diaDefs(['#c98a3a',...fams.map(f=>f[2])]);
   // center: heat -> reactions, glowing radial
@@ -3386,13 +3388,16 @@ function diaMokaPot(){
   // chamber labels (to the LEFT of the handle so they never overlap the pot)
   const lab=(y,n,t,sub)=>{g+=`<text x="66" y="${y}" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="end" font-family="ui-sans-serif">${n} ${t}</text>`;g+=`<text x="66" y="${y+13}" fill="${DIA.ink3}" font-size="8.5" text-anchor="end" font-family="ui-sans-serif">${sub}</text>`;};
   // put labels stacked down the far left
-  g+=`<text x="330" y="90" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="end" font-family="ui-sans-serif">3 \u00b7 Top: brewed coffee</text><text x="330" y="103" fill="${DIA.ink3}" font-size="8.5" text-anchor="end" font-family="ui-sans-serif">collects up here</text>`;
-  g+=`<text x="330" y="150" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="end" font-family="ui-sans-serif">2 \u00b7 Grounds basket</text><text x="330" y="163" fill="${DIA.ink3}" font-size="8.5" text-anchor="end" font-family="ui-sans-serif">coarse grind, no tamp</text>`;
-  g+=`<text x="330" y="212" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="end" font-family="ui-sans-serif">1 \u00b7 Base: water</text><text x="330" y="225" fill="${DIA.ink3}" font-size="8.5" text-anchor="end" font-family="ui-sans-serif">heat \u2192 steam \u2192 pressure</text>`;
-  // leader dots from labels to the pot parts
-  g+=`<line x1="334" y1="86" x2="${cx-52}" y2="100" stroke="#6a5c48" stroke-width="0.7" opacity="0.4"/>`;
-  g+=`<line x1="334" y1="146" x2="${cx-30}" y2="155" stroke="#6a5c48" stroke-width="0.7" opacity="0.4"/>`;
-  g+=`<line x1="334" y1="208" x2="${cx-54}" y2="215" stroke="#6a5c48" stroke-width="0.7" opacity="0.4"/>`;
+  // chamber labels — placed to the RIGHT of the pot, left-anchored, clear of the body
+  const potR=246; // right extent of the pot (spout)
+  const lx=272;
+  g+=`<text x="${lx}" y="90" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="start" font-family="ui-sans-serif">3 \u00b7 Top: brewed coffee</text><text x="${lx}" y="103" fill="${DIA.ink3}" font-size="8.5" text-anchor="start" font-family="ui-sans-serif">collects up here</text>`;
+  g+=`<text x="${lx}" y="150" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="start" font-family="ui-sans-serif">2 \u00b7 Grounds basket</text><text x="${lx}" y="163" fill="${DIA.ink3}" font-size="8.5" text-anchor="start" font-family="ui-sans-serif">coarse grind, no tamp</text>`;
+  g+=`<text x="${lx}" y="212" fill="#f0e6d8" font-size="10.5" font-weight="700" text-anchor="start" font-family="ui-sans-serif">1 \u00b7 Base: water</text><text x="${lx}" y="225" fill="${DIA.ink3}" font-size="8.5" text-anchor="start" font-family="ui-sans-serif">heat \u2192 steam \u2192 pressure</text>`;
+  // leader lines from the pot's right edge to each label (never cross the body)
+  g+=`<line x1="${cx+50}" y1="95" x2="${lx-8}" y2="90" stroke="#6a5c48" stroke-width="0.8" opacity="0.45"/>`;
+  g+=`<line x1="${cx+30}" y1="152" x2="${lx-8}" y2="150" stroke="#6a5c48" stroke-width="0.8" opacity="0.45"/>`;
+  g+=`<line x1="${cx+56}" y1="218" x2="${lx-8}" y2="212" stroke="#6a5c48" stroke-width="0.8" opacity="0.45"/>`;
   // ---- RIGHT: moka vs espresso comparison (kept, it reads well) ----
   g+=diaHeader(410,16,330,'Not quite espresso','pressure is the difference','#7a9a6a');
   const rows=[['Moka pot','~1\u20132 bar','#a0824a','bold, light crema'],['True espresso','~9 bar','#c0433a','syrupy, full crema']];
@@ -3480,12 +3485,12 @@ function diaProfiling(){
   g=`<defs>${diaArrowMarker('#9a8468')}</defs>`+g;
   // Loop nodes in a clean pentagon on the LEFT; scale-up card on the RIGHT.
   // Labels are pushed radially outward with real clearance so nothing collides.
-  const cx=250,cy=150,rx=150,ry=104;
+  const cx=224,cy=150,rx=132,ry=100;
   // order clockwise from top: 1 Green, 2 Sample roast, 3 Cup, 4 Adjust, 5 Repeat
   const nodes=[
     ['Green','assess density, moisture','#8caf5a',-90,'below'],
-    ['Sample roast','small batch, vary the curve','#C9A34E',-18,'right'],
-    ['Cup','score blind, note flaws','#c86a4a',54,'right'],
+    ['Sample roast','small batch','#C9A34E',-18,'right'],
+    ['Cup','score blind','#c86a4a',54,'right'],
     ['Adjust','change ONE variable','#8fbf3a',126,'left'],
     ['Repeat','converge on the target','#B07B3E',198,'left'],
   ];
@@ -3512,11 +3517,11 @@ function diaProfiling(){
     g+=`<text x="${lx.toFixed(0)}" y="${(ly+14).toFixed(0)}" fill="${DIA.ink3}" font-size="9.5" text-anchor="${anchor}" font-family="ui-sans-serif">${n[1]}</text>`;
   });
   // arrow out to the scale-up card
-  g+=`<path d="M424 150 L486 150" stroke="#9a8468" stroke-width="2" marker-end="url(#darr)" opacity="0.75"/>`;
+  g+=`<path d="M392 150 L486 150" stroke="#9a8468" stroke-width="2" marker-end="url(#darr)" opacity="0.75"/>`;
   // scale-to-production card on the right
-  g+=diaCard(492,104,246,92,'#B07B3E',{r:12,title:'THEN SCALE UP',titleSize:12,strong:true});
+  g+=diaCard(496,104,242,92,'#B07B3E',{r:12,title:'THEN SCALE UP',titleSize:12,strong:true});
   ['Re-map the curve to the','production roaster (mass','&amp; airflow differ) \u2014 then','re-cup to confirm.'].forEach((t,i)=>{
-    g+=`<text x="615" y="${140+i*15}" fill="#c9b8a4" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
+    g+=`<text x="617" y="${140+i*15}" fill="#c9b8a4" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
   // caption, fully clear below everything
   g+=`<text x="${W/2}" y="${H-10}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Change one variable at a time, cup blind, document everything \u2014 that's how a profile is built.</text>`;
   return diaWrap(`${W} ${H}`,g,'The sample-roasting loop: roast, cup, adjust one thing, repeat, then scale to production.');
@@ -3591,21 +3596,22 @@ function diaParticleSize(){
   g+=`<line x1="${gx0}" y1="${gy1}" x2="${gx1}" y2="${gy1}" stroke="${DIA.line}" stroke-width="1.5"/>`;
   g+=`<line x1="${gx0}" y1="${gy0}" x2="${gx0}" y2="${gy1}" stroke="${DIA.line}" stroke-width="1.5"/>`;
   g+=`<text x="${(gx0+gx1)/2}" y="${gy1+34}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">particle size \u2192 (fine to coarse, microns)</text>`;
-  g+=`<text x="${gx0-8}" y="${gy0-2}" fill="${DIA.ink3}" font-size="9" text-anchor="end" font-family="ui-sans-serif"># of particles</text>`;
+  g+=`<text x="${gx0-16}" y="${(gy0+gy1)/2}" fill="${DIA.ink3}" font-size="9" text-anchor="middle" font-family="ui-sans-serif" transform="rotate(-90 ${gx0-16} ${(gy0+gy1)/2})"># of particles \u2192</text>`;
   // x helper
   const X=f=>gx0+f*(gx1-gx0);
   const Y=v=>gy1-v*(gy1-gy0); // v in 0..1
   // gaussian helper
   const gauss=(x,mu,sig)=>Math.exp(-0.5*Math.pow((x-mu)/sig,2));
-  // UNIMODAL (flat burr) - single tight peak, blue
+  // UNIMODAL (flat burr) - single tight peak, blue (filled)
   let uni='';
   for(let i=0;i<=100;i++){const f=i/100;const v=gauss(f,0.52,0.1);uni+=(i?'L':'M')+X(f).toFixed(1)+' '+Y(v*0.92).toFixed(1)+' ';}
-  g+=`<path d="${uni} L${X(1)} ${gy1} L${gx0} ${gy1} Z" fill="url(#${_cid('#6a8fb0')})"/>`;
-  g+=`<path d="${uni}" fill="none" stroke="#6a8fb0" stroke-width="2.5"/>`;
-  // BIMODAL (conical) - main peak + fines spike, red/orange
+  g+=`<path d="${uni} L${X(1)} ${gy1} L${gx0} ${gy1} Z" fill="${_rgba('#6a8fb0',0.28)}"/>`;
+  g+=`<path d="${uni}" fill="none" stroke="#6a8fb0" stroke-width="2.6"/>`;
+  // BIMODAL (conical) - main peak + fines spike, red/orange (filled, distinct)
   let bi='';
   for(let i=0;i<=100;i++){const f=i/100;const v=gauss(f,0.55,0.11)*0.8+gauss(f,0.14,0.05)*0.5;bi+=(i?'L':'M')+X(f).toFixed(1)+' '+Y(v*0.92).toFixed(1)+' ';}
-  g+=`<path d="${bi}" fill="none" stroke="#c86a4a" stroke-width="2.5" stroke-dasharray="1 0"/>`;
+  g+=`<path d="${bi} L${X(1)} ${gy1} L${gx0} ${gy1} Z" fill="${_rgba('#c86a4a',0.16)}"/>`;
+  g+=`<path d="${bi}" fill="none" stroke="#c86a4a" stroke-width="2.6"/>`;
   // mark fines + boulders zones (labels sit lower inside the frame, clear of the legend)
   g+=`<line x1="${X(0.14)}" y1="${gy0}" x2="${X(0.14)}" y2="${gy1}" stroke="#c86a4a" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>`;
   g+=`<text x="${X(0.14)}" y="${gy0+44}" fill="#c86a4a" font-size="10" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">FINES</text>`;
@@ -3721,10 +3727,10 @@ function diaPourStroke(){
   g=`<defs>${diaArrowMarker('#e8dcc8')}
     <marker id="darrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#c0433a"/></marker>
     <radialGradient id="lacrema" cx="0.5" cy="0.42" r="0.78">
-      <stop offset="0" stop-color="#a86636"/><stop offset="0.62" stop-color="#8f5427"/><stop offset="1" stop-color="#63381a"/>
+      <stop offset="0" stop-color="#9c5c2f"/><stop offset="0.62" stop-color="#7d4820"/><stop offset="1" stop-color="#532e15"/>
     </radialGradient>
     <radialGradient id="lamilk" cx="0.42" cy="0.36" r="0.95">
-      <stop offset="0" stop-color="#fbf5e6"/><stop offset="1" stop-color="#ead7b9"/>
+      <stop offset="0" stop-color="#fffdf7"/><stop offset="0.7" stop-color="#f6ecd6"/><stop offset="1" stop-color="#eaddc2"/>
     </radialGradient>
   </defs>`+g;
   const milk='url(#lamilk)', cut='#8a5124';
