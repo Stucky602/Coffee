@@ -54,8 +54,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v78"
-CACHE_C = "coffee-guide-v78"
+APP_VERSION = "v79"
+CACHE_C = "coffee-guide-v79"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1740,64 +1740,76 @@ function diaDefs(colors){
 // Returns a <g> translated+scaled to (cx,cy,s). Bean drawn in a ~[-32..32]x[-22..22] box.
 function diaBean(cx,cy,s,col,kind,overlay){
   kind=kind||'roast';
-  const edge = kind==='green' ? '#39472c' : '#2a1a10';
+  const edge = kind==='green' ? '#37452a' : '#281810';
   const [r,gc,b]=_hex2rgb(col);
-  const dark=`rgb(${Math.round(r*0.62)},${Math.round(gc*0.62)},${Math.round(b*0.62)})`;
-  const lite=`rgb(${Math.min(255,Math.round(r*1.22))},${Math.min(255,Math.round(gc*1.22))},${Math.min(255,Math.round(b*1.22))})`;
-  const silver = kind==='green' ? '#d3d8bc' : '#e7dcc4';
+  const mul=(f)=>`rgb(${Math.min(255,Math.round(r*f))},${Math.min(255,Math.round(gc*f))},${Math.min(255,Math.round(b*f))})`;
+  const dark=mul(0.58), mid=mul(0.82), lite=mul(1.20), litest=mul(1.34);
+  const silver = kind==='green' ? '#dee3c6' : '#ecdfc6';
   const uid=_cid(col)+kind+(overlay||'x');
-  const gid='bnb'+uid;
+  const gid='bnb'+uid, gcut='bnv'+uid, gsheen='bns'+uid;
   let g=`<g transform="translate(${cx},${cy}) scale(${s})">`;
-  // green beans read flatter/more matte: a softer, less-glossy gradient with a broad center
+  // ---- gradients: a rounded body lit from top-left, plus a dark valley gradient for the cut ----
+  // body radial is offset up-left; a lower-right fade gives the bean a solid, domed read
+  const bcx = kind==='green' ? 0.40 : 0.38, bcy = kind==='green' ? 0.33 : 0.30, brad = kind==='green' ? 0.98 : 0.92;
+  g+=`<defs>`+
+     `<radialGradient id="${gid}" cx="${bcx}" cy="${bcy}" r="${brad}">`+
+       `<stop offset="0" stop-color="${litest}"/><stop offset="0.30" stop-color="${lite}"/>`+
+       `<stop offset="0.62" stop-color="${col}"/><stop offset="0.86" stop-color="${mid}"/><stop offset="1" stop-color="${dark}"/></radialGradient>`+
+     `<linearGradient id="${gcut}" x1="0" y1="0" x2="1" y2="0">`+
+       `<stop offset="0" stop-color="${dark}"/><stop offset="0.5" stop-color="${mul(0.42)}"/><stop offset="1" stop-color="${dark}"/></linearGradient>`+
+     `<radialGradient id="${gsheen}" cx="0.32" cy="0.26" r="0.6">`+
+       `<stop offset="0" stop-color="#ffffff" stop-opacity="${kind==='green'?0.16:0.24}"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>`+
+     `</defs>`;
+  // bean body: egg-shaped seed — one end a touch broader, flat-faced, rounded (real ~10x6mm)
+  const body=`M0 -22 C 13.5 -21.5 21.5 -12.5 21.5 -0.5 C 21.5 12 13 22 0 22 C -13.5 22 -21.5 12 -21.5 -0.5 C -21.5 -12.5 -13.5 -21.5 0 -22 Z`;
+  g+=`<ellipse cx="1.5" cy="3.5" rx="22.5" ry="22" fill="#000" opacity="0.18" filter="url(#dsoft)"/>`; // contact shadow
+  g+=`<path d="${body}" fill="url(#${gid})" stroke="${edge}" stroke-width="1.4"/>`;
+  // inner ambient-occlusion rim: a soft dark inset so the edge rounds away from the eye
+  g+=`<path d="${body}" fill="none" stroke="${dark}" stroke-width="3" opacity="0.35" transform="scale(0.92)"/>`;
+  // ---- the center cut: a real folded VALLEY (Arabica wavy S), filled dark with a lit silverskin edge ----
+  // valley as a thin closed ribbon down the seam, so it reads as depth not a drawn line
+  const valley=`M-2.6 -19 C -6.5 -10 3.5 -3 -1.5 5.5 C -5 12 2 16 -1 19.5 L2.8 19.5 C 6 16 -1 12 3 5.5 C 7.5 -3 -2 -10 2.4 -19 Z`;
+  const seam = `M0 -19 C -4 -10 5 -3 0 5.5 C -3.4 12 3 16 0 19.5`;
   if(kind==='green'){
-    g+=`<defs><radialGradient id="${gid}" cx="0.42" cy="0.36" r="0.9">`+
-       `<stop offset="0" stop-color="${lite}"/><stop offset="0.45" stop-color="${col}"/><stop offset="1" stop-color="${dark}"/></radialGradient></defs>`;
+    // green coffee: the seam holds pale, tightly-adhering silverskin — bright lining, soft valley
+    g+=`<path d="${valley}" fill="url(#${gcut})" opacity="0.55"/>`;
+    g+=`<path d="${seam}" fill="none" stroke="${silver}" stroke-width="3.6" opacity="0.8" stroke-linecap="round"/>`;
+    g+=`<path d="${seam}" fill="none" stroke="#c3c8a4" stroke-width="1.6" opacity="0.7" stroke-linecap="round"/>`;
+    g+=`<path d="${seam}" fill="none" stroke="${mul(0.5)}" stroke-width="0.9" opacity="0.65" stroke-linecap="round"/>`;
   } else {
-    g+=`<defs><radialGradient id="${gid}" cx="0.4" cy="0.3" r="0.85">`+
-       `<stop offset="0" stop-color="${lite}"/><stop offset="0.6" stop-color="${col}"/><stop offset="1" stop-color="${dark}"/></radialGradient></defs>`;
+    // roast: deeper darker crease, a thinner drier silverskin trace catching the top light
+    g+=`<path d="${valley}" fill="url(#${gcut})" opacity="0.85"/>`;
+    g+=`<path d="${seam}" fill="none" stroke="${silver}" stroke-width="2.2" opacity="0.5" stroke-linecap="round"/>`;
+    g+=`<path d="${seam}" fill="none" stroke="#120a06" stroke-width="1.3" opacity="0.85" stroke-linecap="round"/>`;
   }
-  // bean body: an oblong seed, flat-faced, rounded ends (real ~10x6mm proportions)
-  const body=`M0 -22 C 14 -22 22 -12 22 0 C 22 12 14 22 0 22 C -14 22 -22 12 -22 0 C -22 -12 -14 -22 0 -22 Z`;
-  g+=`<ellipse cx="1.5" cy="3" rx="23" ry="23" fill="#000" opacity="0.16" filter="url(#dsoft)"/>`; // contact shadow
-  g+=`<path d="${body}" fill="url(#${gid})" stroke="${edge}" stroke-width="1.5"/>`;
-  // the center cut: a folded valley with a paler silverskin lining running its length,
-  // an Arabica wavy S (roast) or a straighter line — drawn as two lips + a bright fill.
-  const crease = `M0 -19 C -5 -10 5 -2 0 6 C -4 12 3 16 0 19`;
-  if(kind==='green'){
-    // green coffee: the center cut holds pale silverskin — render a wider, brighter lining
-    g+=`<path d="${crease}" fill="none" stroke="${silver}" stroke-width="4.4" opacity="0.72" stroke-linecap="round"/>`;
-    g+=`<path d="${crease}" fill="none" stroke="#b7bd9a" stroke-width="2" opacity="0.6" stroke-linecap="round"/>`;
-    g+=`<path d="${crease}" fill="none" stroke="${edge}" stroke-width="1.1" opacity="0.7" stroke-linecap="round"/>`;
-  } else {
-    g+=`<path d="${crease}" fill="none" stroke="${silver}" stroke-width="3.2" opacity="0.55" stroke-linecap="round"/>`;
-    g+=`<path d="${crease}" fill="none" stroke="${edge}" stroke-width="1.6" opacity="0.9" stroke-linecap="round"/>`;
-  }
-  // faint parallel fold shadows either side of the cut to read as a valley
-  g+=`<path d="M-4 -17 C -8 -8 -2 0 -5 8 C -7 13 -3 16 -5 18" fill="none" stroke="${edge}" stroke-width="0.8" opacity="0.28"/>`;
-  g+=`<path d="M5 -16 C 2 -8 8 -1 4 8 C 2 13 6 15 4 17" fill="none" stroke="${edge}" stroke-width="0.8" opacity="0.24"/>`;
-  // highlight: waxy sheen for roast, softer matte sheen for green
-  g+=`<ellipse cx="-9" cy="-10" rx="9" ry="6" fill="#ffffff" opacity="${kind==='green'?0.07:0.12}"/>`;
+  // sheen: a soft top-left glossy patch that sits ON the body (over the gradient), not a flat oval
+  g+=`<ellipse cx="-8.5" cy="-10.5" rx="11" ry="8" fill="url(#${gsheen})"/>`;
   // ---- defect overlays (clipped to the bean body) ----
   if(overlay){
     const cid='bnc'+uid;
     g+=`<clipPath id="${cid}"><path d="${body}"/></clipPath><g clip-path="url(#${cid})">`;
-    if(overlay==='scorch'){g+=`<ellipse cx="-11" cy="-3" rx="7" ry="5" fill="#1a0f06" opacity="0.8"/><ellipse cx="9" cy="7" rx="5.5" ry="4" fill="#1a0f06" opacity="0.75"/>`;}
-    if(overlay==='tip'){g+=`<ellipse cx="-20" cy="0" rx="7" ry="6" fill="#160c05" opacity="0.88"/><ellipse cx="20" cy="0" rx="7" ry="6" fill="#160c05" opacity="0.88"/>`;}
-    if(overlay==='face'){g+=`<path d="M0 -22 C -14 -22 -22 -12 -22 0 C -22 12 -14 22 0 22 Z" fill="#120a04" opacity="0.9"/>`;}
-    if(overlay==='chip'){g+=`<path d="M12 -16 L26 -6 L22 9 L10 3 Z" fill="#0e0805"/><path d="M12 -16 L26 -6 L22 9 L10 3 Z" fill="none" stroke="${edge}" stroke-width="1"/>`;}
-    if(overlay==='oil'){g+=`<ellipse cx="-7" cy="-8" rx="11" ry="7" fill="#fff" opacity="0.16"/><ellipse cx="9" cy="8" rx="7" ry="4" fill="#fff" opacity="0.12"/>`;}
-    if(overlay==='fullblack'){g+=`<path d="${body}" fill="#0e0a06" opacity="0.9"/>`;}
-    if(overlay==='partblack'){g+=`<path d="M0 -22 C -14 -22 -22 -12 -22 0 C -22 12 -14 22 0 22 Z" fill="#0e0a06" opacity="0.88"/>`;}
-    if(overlay==='sour'){g+=`<path d="${body}" fill="#6e3018" opacity="0.55"/><ellipse cx="-7" cy="4" rx="12" ry="9" fill="#3f1809" opacity="0.5"/><ellipse cx="8" cy="-6" rx="7" ry="5" fill="#5a2410" opacity="0.45"/>`;}
-    if(overlay==='insect'){[[-12,-6],[6,-9],[11,5],[-4,8],[15,-1],[-15,4]].forEach(p=>{g+=`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="#1e0f05"/><circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="none" stroke="#000" stroke-width="0.6" opacity="0.6"/><circle cx="${p[0]-0.7}" cy="${p[1]-0.7}" r="0.9" fill="#4a3418" opacity="0.5"/>`;});}
-    if(overlay==='broken'){g+=`<path d="M11 -16 L26 -4 L23 10 L10 3 Z" fill="#d8d2b0"/><path d="M11 -16 L26 -4 L23 10 L10 3 Z" fill="none" stroke="${edge}" stroke-width="1"/><path d="M14 -12 L22 -3" stroke="#b0a982" stroke-width="0.8" opacity="0.7"/><path d="M13 0 L21 5" stroke="#b0a982" stroke-width="0.8" opacity="0.6"/>`;}
-    if(overlay==='floater'){g+=`<path d="${body}" fill="#e4e0cc" opacity="0.5"/><ellipse cx="-6" cy="-4" rx="12" ry="9" fill="#f0ecd8" opacity="0.3"/>`;}
-    if(overlay==='fungus'){g+=`<ellipse cx="-10" cy="-3" rx="8" ry="6" fill="#a89a34" opacity="0.65"/><ellipse cx="9" cy="6" rx="6" ry="5" fill="#8a7a26" opacity="0.6"/><circle cx="-4" cy="8" r="3" fill="#6e6420" opacity="0.55"/><circle cx="4" cy="-9" r="2.4" fill="#b0a038" opacity="0.5"/>`;}
-    if(overlay==='immature'){g+=`<path d="${body}" fill="#b9c288" opacity="0.5"/><path d="${crease}" fill="none" stroke="#e6ead0" stroke-width="5.5" opacity="0.7" stroke-linecap="round"/><path d="M-18 -6 C -14 -2 -14 2 -18 6" fill="none" stroke="#e6ead0" stroke-width="2" opacity="0.5"/>`;}
+    if(overlay==='scorch'){g+=`<ellipse cx="-11" cy="-3" rx="8" ry="6" fill="#160c04" opacity="0.85"/><ellipse cx="9" cy="8" rx="6" ry="4.5" fill="#160c04" opacity="0.8"/><ellipse cx="-11" cy="-3" rx="8" ry="6" fill="none" stroke="#000" stroke-width="0.6" opacity="0.4"/>`;}
+    if(overlay==='tip'){g+=`<ellipse cx="-20" cy="0" rx="8" ry="7" fill="#120a04" opacity="0.9"/><ellipse cx="20" cy="0" rx="8" ry="7" fill="#120a04" opacity="0.9"/>`;}
+    if(overlay==='face'){g+=`<path d="M0 -22 C -13.5 -21.5 -21.5 -12.5 -21.5 -0.5 C -21.5 12 -13.5 22 0 22 Z" fill="#0f0803" opacity="0.92"/>`;}
+    if(overlay==='chip'){g+=`<path d="M11 -16 L26 -5 L22 10 L9 3 Z" fill="#0d0704"/><path d="M11 -16 L26 -5 L22 10 L9 3 Z" fill="none" stroke="${edge}" stroke-width="1"/>`;}
+    if(overlay==='oil'){g+=`<ellipse cx="-7" cy="-8" rx="12" ry="8" fill="#fff" opacity="0.20"/><ellipse cx="9" cy="8" rx="8" ry="5" fill="#fff" opacity="0.15"/><ellipse cx="4" cy="-4" rx="18" ry="16" fill="#fff" opacity="0.05"/>`;}
+    if(overlay==='fullblack'){g+=`<path d="${body}" fill="#0c0805" opacity="0.92"/><ellipse cx="-8" cy="-9" rx="9" ry="6" fill="#241a12" opacity="0.35"/>`;}
+    if(overlay==='partblack'){g+=`<path d="M0 -22 C -13.5 -21.5 -21.5 -12.5 -21.5 -0.5 C -21.5 12 -13.5 22 0 22 Z" fill="#0c0805" opacity="0.9"/>`;}
+    // sour: reddish-brown, over-fermented mottling + a reddish silverskin trace (per SCA description)
+    if(overlay==='sour'){g+=`<path d="${body}" fill="#7a3a1e" opacity="0.6"/><ellipse cx="-7" cy="4" rx="13" ry="10" fill="#4a1c0c" opacity="0.55"/><ellipse cx="9" cy="-6" rx="8" ry="6" fill="#5e2812" opacity="0.5"/><ellipse cx="4" cy="12" rx="7" ry="5" fill="#3f1809" opacity="0.5"/><path d="${seam}" fill="none" stroke="#9a5236" stroke-width="2.2" opacity="0.7" stroke-linecap="round"/>`;}
+    // insect (borer): several small deep holes with a darker bored rim
+    if(overlay==='insect'){[[-12,-6,2.9],[6,-9,2.5],[12,5,2.7],[-4,9,2.4],[15,-1,2.2],[-14,5,2.3],[2,-2,2.0]].forEach(p=>{g+=`<circle cx="${p[0]}" cy="${p[1]}" r="${p[2]+0.8}" fill="#3a2a18" opacity="0.6"/><circle cx="${p[0]}" cy="${p[1]}" r="${p[2]}" fill="#160c05"/><circle cx="${p[0]+0.6}" cy="${p[1]+0.6}" r="${p[2]*0.4}" fill="#000" opacity="0.7"/>`;});}
+    // broken/chipped: a clean cut face exposing the paler dense inner bean
+    if(overlay==='broken'){g+=`<path d="M10 -17 L27 -4 L23 11 L8 3 Z" fill="${kind==='green'?'#c9cfa8':'#d8d2b0'}"/><path d="M10 -17 L27 -4 L23 11 L8 3 Z" fill="none" stroke="${edge}" stroke-width="1.1"/><path d="M13 -12 L23 -3" stroke="${mul(0.6)}" stroke-width="0.8" opacity="0.6"/><path d="M12 0 L22 6" stroke="${mul(0.6)}" stroke-width="0.8" opacity="0.5"/>`;}
+    if(overlay==='floater'){g+=`<path d="${body}" fill="#e8e4d0" opacity="0.55"/><ellipse cx="-6" cy="-4" rx="13" ry="10" fill="#f2eeda" opacity="0.35"/>`;}
+    // fungus/mould: powdery blotches ranging yellow -> reddish-brown (per references)
+    if(overlay==='fungus'){g+=`<ellipse cx="-10" cy="-3" rx="9" ry="7" fill="#b8a238" opacity="0.68"/><ellipse cx="8" cy="7" rx="7" ry="6" fill="#8a5a26" opacity="0.62"/><circle cx="-3" cy="9" r="3.4" fill="#6e5820" opacity="0.6"/><circle cx="5" cy="-9" r="2.8" fill="#c0aa40" opacity="0.55"/><circle cx="-13" cy="6" r="2" fill="#9a7a2c" opacity="0.5"/>`;}
+    // immature/underripe: pale yellowish-green body + strongly-adhering shiny silverskin down the seam
+    if(overlay==='immature'){g+=`<path d="${body}" fill="#c2ca8e" opacity="0.6"/><path d="${valley}" fill="#eef0d8" opacity="0.6"/><path d="${seam}" fill="none" stroke="#f0f2dc" stroke-width="4.2" opacity="0.78" stroke-linecap="round"/><path d="M-18 -6 C -13 -2 -13 2 -18 6" fill="none" stroke="#eef0d8" stroke-width="2.2" opacity="0.55"/>`;}
     g+=`</g>`;
   }
   // shell/ear = a malformed concave bean; draw a distinct outline instead of the body overlay
-  if(overlay==='shell'){g+=`<path d="M-4 -18 C 16 -12 16 12 -4 18 C 4 6 4 -6 -4 -18 Z" fill="${dark}" opacity="0.5" stroke="${edge}" stroke-width="1.2"/>`;}
+  if(overlay==='shell'){g+=`<path d="M-4 -18 C 16 -12 16 12 -4 18 C 4 6 4 -6 -4 -18 Z" fill="${dark}" opacity="0.55" stroke="${edge}" stroke-width="1.2"/>`;}
   g+=`</g>`;
   return g;
 }
@@ -2061,19 +2073,32 @@ function diaProcessing(){
     ['Natural','#a0433a','whole cherry dried on the bean','fruity \u00b7 heavy \u00b7 wild',570,2],
   ];
   let g=diaDefs(['#9aaf6e','#b8c48a','#d09a4a','#a0433a']);
+  g+=`<defs>`+
+     `<radialGradient id="procCherry" cx="0.4" cy="0.32" r="0.85"><stop offset="0" stop-color="#c14a3c"/><stop offset="0.6" stop-color="#9a2e26"/><stop offset="1" stop-color="#6e2018"/></radialGradient>`+
+     `<radialGradient id="procHoney" cx="0.4" cy="0.34" r="0.85"><stop offset="0" stop-color="#e8bc72"/><stop offset="0.6" stop-color="#cf9542"/><stop offset="1" stop-color="#a06f28"/></radialGradient>`+
+     `</defs>`;
   cols.forEach(c=>{const cx=c[4], fruit=c[5];
     // fruit still on the bean: Natural = full cherry skin+pulp, Honey = sticky mucilage coat, Washed = bare
     if(fruit===2){ // natural: whole dried cherry around the seed
-      g+=`<ellipse cx="${cx}" cy="${cy}" rx="42" ry="50" fill="url(#${_cid('#a0433a')})" stroke="#7a2e26" stroke-width="2"/>`;
-      g+=`<ellipse cx="${cx-13}" cy="${cy-16}" rx="12" ry="9" fill="#c86550" opacity="0.5"/>`; // sheen
-      g+=`<path d="M${cx} ${cy-50} q-4 -8 3 -14" stroke="#5a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>`; // stem
+      g+=`<ellipse cx="${cx+1.5}" cy="${cy+4}" rx="43" ry="51" fill="#000" opacity="0.22" filter="url(#dsoft)"/>`;
+      g+=`<ellipse cx="${cx}" cy="${cy}" rx="42" ry="50" fill="url(#procCherry)" stroke="#5f2018" stroke-width="1.6"/>`;
+      // a wrinkle/shrivel hint (dried natural) + a glossy skin highlight
+      g+=`<path d="M${cx-30} ${cy-8} Q${cx-24} ${cy+6} ${cx-30} ${cy+20}" fill="none" stroke="#6e2018" stroke-width="1.3" opacity="0.55"/>`;
+      g+=`<path d="M${cx+30} ${cy-10} Q${cx+24} ${cy+4} ${cx+29} ${cy+18}" fill="none" stroke="#6e2018" stroke-width="1.3" opacity="0.5"/>`;
+      g+=`<ellipse cx="${cx-14}" cy="${cy-18}" rx="12" ry="8" fill="#d86a54" opacity="0.5"/>`; // sheen
+      g+=`<path d="M${cx} ${cy-50} q-4 -8 3 -14" stroke="#4a2216" stroke-width="3" fill="none" stroke-linecap="round"/>`; // stem
+      // a cutaway window so the seed inside reads (the whole point of the panel)
+      g+=`<path d="M${cx} ${cy-36} A36 44 0 0 1 ${cx} ${cy+36} Z" fill="#7a2a20" opacity="0.55"/>`;
     }
-    if(fruit===1){ // honey: sticky mucilage coat (thinner, translucent gold)
-      g+=`<ellipse cx="${cx}" cy="${cy}" rx="34" ry="42" fill="url(#${_cid('#d09a4a')})" stroke="${_rgba('#d09a4a',0.7)}" stroke-width="2"/>`;
-      g+=`<ellipse cx="${cx-10}" cy="${cy-14}" rx="9" ry="7" fill="#e8bc74" opacity="0.45"/>`;
+    if(fruit===1){ // honey: sticky translucent mucilage coat clinging to the seed
+      g+=`<ellipse cx="${cx+1.5}" cy="${cy+3}" rx="35" ry="43" fill="#000" opacity="0.18" filter="url(#dsoft)"/>`;
+      g+=`<ellipse cx="${cx}" cy="${cy}" rx="34" ry="42" fill="url(#procHoney)" stroke="${_rgba('#a06f28',0.8)}" stroke-width="1.6"/>`;
+      // glossy sticky drip highlights
+      g+=`<ellipse cx="${cx-11}" cy="${cy-16}" rx="9" ry="6" fill="#f0cc86" opacity="0.5"/>`;
+      g+=`<path d="M${cx+18} ${cy+6} q3 8 -1 16" fill="none" stroke="#e8bc72" stroke-width="2" opacity="0.4" stroke-linecap="round"/>`;
     }
     // the seed itself (real bean) sits inside — green, kind='green'
-    g+=diaBean(cx,cy,fruit===2?0.82:0.92,'#8a9a5e','green',null);
+    g+=diaBean(cx,cy,fruit===2?0.80:0.90,'#7f9464','green',null);
     // labels
     g+=`<text x="${cx}" y="${cy+74}" fill="${c[1]}" font-size="16" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${c[0]}</text>`;
     g+=`<text x="${cx}" y="${cy+92}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif">${c[2]}</text>`;
@@ -2277,7 +2302,7 @@ function diaWaves(){
 // 17. Supply chain: cherry to cup with value flow.
 function diaSupplyChain(){
   const W=760,H=200,cy=70,L=20;
-  const steps=[['Farmer','grows & picks','#7d8f5a'],['Mill','processes green','#95602F'],['Exporter','+ Importer','#B07B3E'],['Roaster','roasts & sells','#8A5A34'],['Café / You','brews','#e0864a']];
+  const steps=[['Farmer','grows and picks','#7d8f5a'],['Mill','processes green','#95602F'],['Exporter','+ Importer','#B07B3E'],['Roaster','roasts and sells','#8A5A34'],['Café / You','brews','#e0864a']];
   const gap=(W-40)/steps.length;
   let g=diaDefs(steps.map(s=>s[2]));
   g=`<defs>${diaArrowMarker(DIA.ink3)}</defs>`+g;
@@ -2535,7 +2560,7 @@ function diaDecaf(){
   methods.forEach(m=>{const cx=m[4],cy=70;
     g+=`<circle cx="${cx}" cy="${cy}" r="36" fill="url(#${_cid(m[1])})" stroke="${m[1]}" stroke-width="2" filter="url(#dsoft)" opacity="0.9"/>`;
     // a real green bean losing caffeine (dots escaping outward)
-    g+=diaBean(cx,cy,0.85,'#6b7f4a','green',null);
+    g+=diaBean(cx,cy,0.85,'#66805c','green',null);
     for(let k=0;k<4;k++){const a=k/4*6.28+0.4;g+=`<circle cx="${(cx+Math.cos(a)*30).toFixed(0)}" cy="${(cy+Math.sin(a)*30).toFixed(0)}" r="2.5" fill="${m[1]}" opacity="0.7"/>`;}
     g+=`<text x="${cx}" y="${cy+58}" fill="${m[1]}" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${m[0]}</text>`;
     g+=`<text x="${cx}" y="${cy+76}" fill="#f0e6d8" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${m[2]}</text>`;
@@ -2800,15 +2825,29 @@ function diaMilkStretch(){
   [['1 \u00b7 STRETCH','add air EARLY (cold)','tip near surface \u00b7 \u201ctsss\u201d','#8A5A34',cxA,'air'],
    ['2 \u00b7 TEXTURE','spin into microfoam','tip submerged \u00b7 whirlpool','#C9A34E',cxB,'spin']].forEach(p=>{
     const cx=p[4];
-    // pitcher
-    g+=`<path d="M${cx-34} ${cy-38} L${cx+30} ${cy-38} L${cx+24} ${cy+34} L${cx-28} ${cy+34} Z" fill="#12100c" stroke="#7a6a52" stroke-width="2" filter="url(#dsoft)"/>`;
-    g+=`<path d="M${cx+30} ${cy-30} L${cx+50} ${cy-24} L${cx+42} ${cy-12} L${cx+26} ${cy-18} Z" fill="none" stroke="#7a6a52" stroke-width="2"/>`;
-    // milk
-    g+=`<path d="M${cx-30} ${cy-6} L${cx+26} ${cy-6} L${cx+22} ${cy+30} L${cx-26} ${cy+30} Z" fill="url(#${_cid('#e8dcc8')})" opacity="0.9"/>`;
-    if(p[5]==='air'){g+=`<ellipse cx="${cx-2}" cy="${cy-10}" rx="24" ry="6" fill="#f5eee0"/>`;for(let k=0;k<4;k++)g+=`<circle cx="${cx-16+k*10}" cy="${cy-2}" r="2" fill="#fff" opacity="0.7"/>`;
-      g+=`<path d="M${cx} ${cy-52} L${cx} ${cy-14}" stroke="#c9b8a4" stroke-width="3"/>`;}
-    if(p[5]==='spin'){g+=`<path d="M${cx-16} ${cy+6} A16 8 0 1 0 ${cx+16} ${cy+6}" fill="none" stroke="#fff" stroke-width="1.6" opacity="0.7" marker-end="url(#ams)"/>`;
-      g+=`<path d="M${cx-4} ${cy-46} L${cx-4} ${cy+2}" stroke="#c9b8a4" stroke-width="3"/>`;}
+    // steaming pitcher: tapered body (wider at top), a proper triangular spout, a handle
+    g+=`<path d="M${cx-32} ${cy-40} L${cx+28} ${cy-40} L${cx+22} ${cy+36} L${cx-26} ${cy+36} Z" fill="#14120d" stroke="#8a7a62" stroke-width="2" filter="url(#dsoft)"/>`;
+    g+=`<path d="M${cx+28} ${cy-40} L${cx+50} ${cy-30} L${cx+40} ${cy-16} L${cx+24} ${cy-24} Z" fill="#14120d" stroke="#8a7a62" stroke-width="2"/>`; // spout
+    g+=`<path d="M${cx-32} ${cy-40} q-14 4 -10 22 q3 12 12 14" fill="none" stroke="#8a7a62" stroke-width="2.4"/>`; // handle (left)
+    // milk fill
+    g+=`<path d="M${cx-29} ${cy-8} L${cx+24} ${cy-8} L${cx+20} ${cy+32} L${cx-24} ${cy+32} Z" fill="url(#${_cid('#e8dcc8')})" opacity="0.95"/>`;
+    if(p[5]==='air'){
+      // surface breaking, folding air in — a raised foam ridge + bubbles + a "tsss" wand near top
+      g+=`<ellipse cx="${cx-2}" cy="${cy-8}" rx="25" ry="6" fill="#f6efe1"/>`;
+      [[-16,-4,2.2],[-6,-1,2.6],[4,-3,2],[12,0,2.4],[-2,3,1.8]].forEach(b=>{g+=`<circle cx="${cx+b[0]}" cy="${cy+b[1]}" r="${b[2]}" fill="#fff" opacity="0.75"/>`;});
+      g+=`<line x1="${cx+2}" y1="${cy-54}" x2="${cx+2}" y2="${cy-12}" stroke="#b7a488" stroke-width="3"/>`; // steam wand, tip near surface
+      g+=`<circle cx="${cx+2}" cy="${cy-11}" r="2.4" fill="#b7a488"/>`;
+      // little "tsss" air ticks
+      g+=`<path d="M${cx-8} ${cy-16} q-3 -3 0 -6 M${cx+12} ${cy-16} q3 -3 0 -6" fill="none" stroke="#e8dcc8" stroke-width="1.2" opacity="0.7"/>`;
+    }
+    if(p[5]==='spin'){
+      // wand plunged deep, whirlpool spinning the milk — a clear circular arrow
+      g+=`<line x1="${cx-3}" y1="${cy-52}" x2="${cx-3}" y2="${cy+6}" stroke="#b7a488" stroke-width="3"/>`; // wand submerged
+      g+=`<circle cx="${cx-3}" cy="${cy+7}" r="2.4" fill="#b7a488"/>`;
+      // whirlpool: a spiral of two arcs converging, with a flow arrowhead
+      g+=`<path d="M${cx-17} ${cy+10} A17 9 0 1 1 ${cx+16} ${cy+8}" fill="none" stroke="#fff" stroke-width="1.8" opacity="0.8" marker-end="url(#ams)"/>`;
+      g+=`<path d="M${cx-10} ${cy+14} A10 5 0 1 0 ${cx+9} ${cy+13}" fill="none" stroke="#fff" stroke-width="1.3" opacity="0.55"/>`;
+    }
     g+=`<text x="${cx}" y="${cy+58}" fill="${p[3]}" font-size="14" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${p[0]}</text>`;
     g+=`<text x="${cx}" y="${cy+76}" fill="#f0e6d8" font-size="12" text-anchor="middle" font-family="ui-sans-serif">${p[1]}</text>`;
     g+=`<text x="${cx}" y="${cy+92}" fill="${DIA.ink3}" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${p[2]}</text>`;
@@ -2894,10 +2933,14 @@ function diaScaPath(){
   ['Foundation','Intermediate','Professional'].forEach((lv,i)=>{const yy=30+i*44;
     g+=node(378,yy,100,32,'#C9A34E',lv,null,false);
   });
-  // arrow from modules block to levels, and levels to credentials
-  g+=`<path d="M${mx+mw+2} 132 L376 132" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.7"/>`;
-  g+=`<path d="M480 96 C 505 96 505 88 524 88" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.7" fill="none"/>`;
-  g+=`<path d="M480 162 C 505 162 505 158 524 158" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.7" fill="none"/>`;
+  // arrow from the modules block into the levels stack
+  g+=`<path d="M${mx+mw+2} 132 L374 132" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
+  // a collecting bracket on the right of the 3 levels, then two clean fan-out arrows to the credentials
+  const lvTop=46, lvBot=178, lvMid=(lvTop+lvBot)/2; // vertical centers of the pills
+  g+=`<path d="M482 ${lvTop} L498 ${lvTop} L498 ${lvBot} L482 ${lvBot}" fill="none" stroke="#9a8468" stroke-width="1.4" opacity="0.55"/>`;
+  g+=`<path d="M498 ${lvMid} L508 ${lvMid}" stroke="#9a8468" stroke-width="1.4" opacity="0.55"/>`;
+  g+=`<path d="M508 ${lvMid} C 516 ${lvMid} 516 89 524 89" fill="none" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
+  g+=`<path d="M508 ${lvMid} C 516 ${lvMid} 516 159 524 159" fill="none" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
   // ---- col 4: the two credentials ----
   g+=node(526,62,214,54,'#8fbf3a','SCA Skills Diploma','earn points across modules',true);
   g+=node(526,132,214,54,'#c86a4a','Q Grader (CQI)','coffee\u2019s \u2018sommelier\u2019 license',true);
@@ -2947,8 +2990,8 @@ function diaCherryByproduct(){
 // 42. Coffee vs tea comparison.
 function diaTeaCoffee(){
   const W=760,H=230;
-  const cols=[['COFFEE','#6E3E1E',180,['Roasted SEED of Coffea fruit','~95 mg caffeine / cup','Bolder, heavier, immediate','Morning & productivity']],
-              ['TEA','#7a9a6a',560,['Dried LEAF of Camellia sinensis','~30\u201350 mg caffeine / cup','Lighter, L-theanine = steady','All-day & calm']]];
+  const cols=[['COFFEE','#6E3E1E',180,['Roasted SEED of Coffea fruit','~95 mg caffeine / cup','Bolder, heavier, immediate','Morning and productivity']],
+              ['TEA','#7a9a6a',560,['Dried LEAF of Camellia sinensis','~30\u201350 mg caffeine / cup','Lighter, L-theanine = steady','All-day and calm']]];
   let g=diaDefs(['#6E3E1E','#7a9a6a']);
   cols.forEach(c=>{const cx=c[2];
     // icon circle (no text inside — the title sits below so it never overflows)
@@ -2971,53 +3014,80 @@ function diaTeaCoffee(){
 function diaMachTypes(){
   const W=760,H=250;
   const cols=[
-    ['Single boiler','#8A5A34',130,'one boiler:\nbrew OR steam','switch & wait'],
+    ['Single boiler','#8A5A34',130,'one boiler:\nbrew OR steam','switch and wait'],
     ['Heat exchanger','#B07B3E',380,'steam boiler +\nbrew pipe through it','flush to cool'],
     ['Dual boiler','#C9A34E',630,'two boilers:\nbrew + steam','direct, no wait'],
   ];
   let g=diaDefs(['#8A5A34','#B07B3E','#C9A34E','#5a8a9a','#c0433a']);
   g=`<defs>${diaArrowMarker('#8a7660')}
-    <linearGradient id="mtBoiler" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6a635a"/><stop offset="0.5" stop-color="#b0a898"/><stop offset="1" stop-color="#5a544c"/></linearGradient>
-    <linearGradient id="mtSteam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a4a3a"/><stop offset="0.5" stop-color="#c07a5a"/><stop offset="1" stop-color="#6a3e30"/></linearGradient>
-    <linearGradient id="mtBrew" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a7440"/><stop offset="0.5" stop-color="#d0b060"/><stop offset="1" stop-color="#7a6438"/></linearGradient></defs>`+g;
-  // a horizontal boiler cylinder
-  const boiler=(cx,cy,w,h,grad,label,col)=>{
-    let s=`<rect x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="${h/2}" fill="url(#${grad})" stroke="${col}" stroke-width="1.6"/>`;
-    // end cap seam + fill line
-    s+=`<line x1="${cx-w/2+6}" y1="${cy-h/2+3}" x2="${cx-w/2+6}" y2="${cy+h/2-3}" stroke="${col}" stroke-width="0.8" opacity="0.5"/>`;
-    s+=`<line x1="${cx-w/2+4}" y1="${cy+2}" x2="${cx+w/2-4}" y2="${cy+2}" stroke="#6a8fb0" stroke-width="1" opacity="0.4"/>`; // water level
-    if(label)s+=`<text x="${cx}" y="${cy+3}" fill="#2a241c" font-size="9" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${label}</text>`;
+    <marker id="mtCold" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="#6a9fc8"/></marker>
+    <marker id="mtHot" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="#d0553a"/></marker>
+    <linearGradient id="mtShell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a8278"/><stop offset="0.5" stop-color="#c2bAac"/><stop offset="1" stop-color="#6a6258"/></linearGradient>
+    <linearGradient id="mtWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a6a8a"/><stop offset="1" stop-color="#274a63"/></linearGradient>
+    <linearGradient id="mtHotB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c07a5a"/><stop offset="1" stop-color="#7a3e2a"/></linearGradient></defs>`+g;
+  // a cutaway boiler: metal shell (rounded rect), a water fill in the lower portion, steam above.
+  // opt: {steamTop:true} shades the upper space as steam.
+  const boilerCut=(cx,cy,w,h,waterFrac,waterFill,col)=>{
+    const x=cx-w/2, y=cy-h/2, rr=h*0.32;
+    let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rr}" fill="url(#mtShell)" stroke="${col}" stroke-width="1.8"/>`;
+    // clip the water region to the rounded shell
+    const cid='bc'+Math.round(cx)+Math.round(cy);
+    s+=`<clipPath id="${cid}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rr}"/></clipPath>`;
+    const wy=y+h*(1-waterFrac);
+    s+=`<g clip-path="url(#${cid})">`;
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="${h*(1-waterFrac)}" fill="#efe8dc" opacity="0.10"/>`; // steam space
+    s+=`<rect x="${x}" y="${wy}" width="${w}" height="${h*waterFrac}" fill="${waterFill}"/>`;
+    s+=`<line x1="${x}" y1="${wy}" x2="${x+w}" y2="${wy}" stroke="#dfeaf2" stroke-width="1" opacity="0.55"/>`; // water line
+    // tiny steam bubbles rising in the top space
+    if(waterFrac<0.95){[[cx-w*0.18,y+h*0.16],[cx+w*0.10,y+h*0.22],[cx+w*0.24,y+h*0.13]].forEach(p=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="1.4" fill="#fff" opacity="0.4"/>`;});}
+    s+=`</g>`;
     return s;
   };
   // a brew group head (portafilter) below a point
   const group=(cx,cy)=>`<path d="M${cx-9} ${cy} L${cx+9} ${cy} L${cx+6} ${cy+9} L${cx-6} ${cy+9} Z" fill="#3a332c" stroke="#8a7c66" stroke-width="1.2"/><rect x="${cx-11} " y="${cy-4}" width="22" height="5" rx="2" fill="#8a7c66"/>`;
-  cols.forEach((c,i)=>{const cx=c[2],cy=78,col=c[1];
+  const wand=(cx,cy)=>`<line x1="${cx}" y1="${cy}" x2="${cx+7}" y2="${cy+16}" stroke="#8a7c66" stroke-width="2"/><circle cx="${cx+8}" cy="${cy+18}" r="3" fill="none" stroke="#8a7c66" stroke-width="1.5"/>`;
+  cols.forEach((c,i)=>{const cx=c[2],cy=80,col=c[1];
     g+=`<text x="${cx}" y="34" fill="${col}" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${c[0]}</text>`;
     if(i===0){
-      // one boiler feeding both a group head and a steam wand
-      g+=boiler(cx,cy,88,34,'mtBoiler','BREW / STEAM',col);
-      g+=`<line x1="${cx-20}" y1="${cy+17}" x2="${cx-20}" y2="${cy+30}" stroke="#8a7c66" stroke-width="2"/>`; g+=group(cx-20,cy+30);
-      g+=`<line x1="${cx+22}" y1="${cy+17}" x2="${cx+30}" y2="${cy+34}" stroke="#8a7c66" stroke-width="2"/><circle cx="${cx+31}" cy="${cy+36}" r="3" fill="none" stroke="#8a7c66" stroke-width="1.5"/>`; // steam wand tip
-      g+=`<text x="${cx-20}" y="${cy+52}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">brew</text>`;
-      g+=`<text x="${cx+31}" y="${cy+52}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">steam</text>`;
+      // ONE boiler, full of hot water — feeds either the group OR the wand (switch & wait)
+      g+=boilerCut(cx,cy,92,40,0.72,'url(#mtHotB)',col);
+      g+=`<text x="${cx}" y="${cy+3}" fill="#f4ece0" font-size="8.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">one boiler</text>`;
+      g+=`<line x1="${cx-22}" y1="${cy+20}" x2="${cx-22}" y2="${cy+32}" stroke="#8a7c66" stroke-width="2"/>`; g+=group(cx-22,cy+32);
+      g+=wand(cx+24,cy+20);
+      g+=`<text x="${cx-22}" y="${cy+54}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">brew</text>`;
+      g+=`<text x="${cx+30}" y="${cy+54}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">steam</text>`;
     }
     if(i===1){
-      // big steam boiler with a brew pipe running through it
-      g+=boiler(cx,cy,96,40,'mtSteam','steam boiler',col);
-      // brew pipe (cool water) threading through
-      g+=`<path d="M${cx-54} ${cy+6} Q${cx} ${cy+16} ${cx+54} ${cy+6}" fill="none" stroke="#6a8fb0" stroke-width="3.5" opacity="0.85"/>`;
-      g+=`<text x="${cx}" y="${cy+24}" fill="#bcd6e8" font-size="7.5" text-anchor="middle" font-family="ui-sans-serif">brew pipe (HX)</text>`;
-      g+=`<line x1="${cx+50}" y1="${cy+8}" x2="${cx+50}" y2="${cy+30}" stroke="#8a7c66" stroke-width="2"/>`; g+=group(cx+50,cy+30);
+      // ONE boiler (water below, steam above). A BREW PIPE (HX) traverses the water:
+      // cold water enters the bottom, absorbs heat rising through, exits the top to the group.
+      g+=boilerCut(cx,cy,100,44,0.66,'url(#mtWater)',col);
+      g+=`<text x="${cx}" y="${cy-9}" fill="#dfeaf2" font-size="8" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">steam</text>`;
+      g+=`<text x="${cx}" y="${cy+14}" fill="#dfeaf2" font-size="8" text-anchor="middle" font-family="ui-sans-serif">hot water</text>`;
+      // the HX tube: an inverted-U passing DOWN into the water and back UP, drawn over the boiler
+      const bx=cx-16, tx=cx+16, topY=cy-30, botY=cy+16;
+      g+=`<path d="M${bx} ${cy+40} L${bx} ${botY} C${bx} ${topY} ${tx} ${topY} ${tx} ${botY} L${tx} ${cy+40}" fill="none" stroke="#9a6a4a" stroke-width="4.5" opacity="0.9"/>`;
+      g+=`<path d="M${bx} ${cy+40} L${bx} ${botY} C${bx} ${topY} ${tx} ${topY} ${tx} ${botY} L${tx} ${cy+40}" fill="none" stroke="#c89a6a" stroke-width="1.6" opacity="0.7"/>`;
+      // cold in (left, bottom) -> hot out (right, to group)
+      g+=`<path d="M${bx} ${cy+48} L${bx} ${cy+41}" stroke="#6a9fc8" stroke-width="2.4" marker-end="url(#mtCold)"/>`;
+      g+=`<text x="${bx-2}" y="${cy+58}" fill="#7fb0d8" font-size="7.5" text-anchor="middle" font-family="ui-sans-serif">cold in</text>`;
+      g+=`<line x1="${tx}" y1="${cy+41}" x2="${tx}" y2="${cy+30}" stroke="#d0553a" stroke-width="2.4"/>`; g+=group(tx,cy+30);
+      g+=`<text x="${tx+2}" y="${cy+58}" fill="#d68a5a" font-size="7.5" text-anchor="middle" font-family="ui-sans-serif">hot → group</text>`;
+      // steam wand off the very top
+      g+=wand(cx+46,cy-14);
     }
     if(i===2){
-      // two separate boilers, one for brew one for steam
-      g+=boiler(cx-24,cy,44,32,'mtBrew','brew',col);
-      g+=boiler(cx+24,cy,44,32,'mtSteam','steam','#c0433a');
-      g+=`<line x1="${cx-24}" y1="${cy+16}" x2="${cx-24}" y2="${cy+30}" stroke="#8a7c66" stroke-width="2"/>`; g+=group(cx-24,cy+30);
-      g+=`<line x1="${cx+24}" y1="${cy+16}" x2="${cx+30}" y2="${cy+34}" stroke="#8a7c66" stroke-width="2"/><circle cx="${cx+31}" cy="${cy+36}" r="3" fill="none" stroke="#8a7c66" stroke-width="1.5"/>`;
+      // TWO separate boilers — a dedicated brew boiler and a dedicated steam boiler
+      g+=boilerCut(cx-26,cy,46,36,0.82,'url(#mtHotB)',col);
+      g+=`<text x="${cx-26}" y="${cy+3}" fill="#f4ece0" font-size="7.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">brew</text>`;
+      g+=boilerCut(cx+26,cy,46,36,0.62,'url(#mtWater)','#c0433a');
+      g+=`<text x="${cx+26}" y="${cy+3}" fill="#dfeaf2" font-size="7.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">steam</text>`;
+      g+=`<line x1="${cx-26}" y1="${cy+18}" x2="${cx-26}" y2="${cy+32}" stroke="#8a7c66" stroke-width="2"/>`; g+=group(cx-26,cy+32);
+      g+=wand(cx+24,cy+18);
+      g+=`<text x="${cx-26}" y="${cy+54}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">brew</text>`;
+      g+=`<text x="${cx+30}" y="${cy+54}" fill="${DIA.ink3}" font-size="8" text-anchor="middle" font-family="ui-sans-serif">steam</text>`;
     }
-    c[3].split('\n').forEach((ln,j)=>{g+=`<text x="${cx}" y="${150+j*15}" fill="#c9b8a4" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${ln}</text>`;});
-    g+=`<text x="${cx}" y="${192}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">${c[4]}</text>`;
+    c[3].split('\n').forEach((ln,j)=>{g+=`<text x="${cx}" y="${152+j*15}" fill="#c9b8a4" font-size="11.5" text-anchor="middle" font-family="ui-sans-serif">${ln}</text>`;});
+    g+=`<text x="${cx}" y="${194}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">${c[4]}</text>`;
   });
   g+=`<line x1="255" y1="55" x2="255" y2="200" stroke="${DIA.line}" stroke-dasharray="4 5"/>`;
   g+=`<line x1="505" y1="55" x2="505" y2="200" stroke="${DIA.line}" stroke-dasharray="4 5"/>`;
@@ -3194,7 +3264,7 @@ function diaFamilyTree(){
   // ------- ROW 4: Timor hybrid source (y=344) -------
   const y4=344;
   g+=link(500,y3+38,560,y4,HYB); g+=link(675,y3+38,760,y4,HYB); g+=link(650,y3+38,650,y4,HYB);
-  g+=node(470,y4,320,'Timor Hybrid \u2014 Arabica \u00d7 Robusta',HYB,'the disease-resistance source \u2192 Catimor & Sarchimor',true);
+  g+=node(470,y4,320,'Timor Hybrid \u2014 Arabica \u00d7 Robusta',HYB,'the disease-resistance source \u2192 Catimor and Sarchimor',true);
   // Geisha aside (stands apart, bottom-left)
   g+=node(70,y4,330,'Geisha \u2014 Ethiopian landrace',GSH,'jasmine / bergamot \u00b7 the modern superstar',true);
   g+=`<text x="70" y="${y4+56}" fill="#8a7658" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">stands apart from the Typica/Bourbon line</text>`;
@@ -3203,7 +3273,7 @@ function diaFamilyTree(){
 function diaSpeciesMap(){
   const W=760,H=250;
   const arab=['ARABICA','Coffea arabica','#8fbf3a',['~60\u201370% of production','high altitude, delicate','~1.2\u20131.5% caffeine','sweet, acidic, complex','THE specialty species']];
-  const rob=['ROBUSTA','Coffea canephora','#a0824a',['~30\u201340% of production','hot & low, very hardy','~2.2\u20132.7% caffeine','heavy, bitter, less nuance','instant + espresso blends']];
+  const rob=['ROBUSTA','Coffea canephora','#a0824a',['~30\u201340% of production','hot and low, very hardy','~2.2\u20132.7% caffeine','heavy, bitter, less nuance','instant + espresso blends']];
   let g=diaDefs(['#8fbf3a','#a0824a','#7a6a52']);
   [[arab,60],[rob,410]].forEach(([sp,x])=>{
     g+=diaCard(x,24,290,150,sp[2],{r:12,strong:true});
@@ -3234,7 +3304,7 @@ function diaDecafMethods(){
   let g=diaDefs(['#7d9f4a',...methods.map(m=>m[2])]);
   // green bean in center-left as the shared start (a real bean, not a flat disc)
   g+=`<circle cx="90" cy="120" r="40" fill="url(#${_cid('#7d9f4a')})" opacity="0.14"/>`;
-  g+=diaBean(90,116,1.15,'#6b7f4a','green',null);
+  g+=diaBean(90,116,1.15,'#66805c','green',null);
   g+=`<text x="90" y="162" fill="#f0e6d8" font-size="11" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">green beans</text>`;
   g+=`<text x="90" y="178" fill="${DIA.ink3}" font-size="9" text-anchor="middle" font-family="ui-sans-serif">steam \u2192 extract \u2192 dry</text>`;
   methods.forEach(m=>{const y=m[3];
@@ -3256,19 +3326,26 @@ function diaInstantCoffee(){
   g+=diaCard(300,16,160,38,'#a0824a',{r:9,strong:true});
   g+=`<text x="380" y="34" fill="#f0e6d8" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">Concentrated brew</text>`;
   g+=`<text x="380" y="48" fill="${DIA.ink3}" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif">remove ALL the water \u2192</text>`;
-  // clean symmetric branch from the card's center-bottom to each method card's top
-  g+=`<path d="M380 55 Q380 68 200 78" stroke="#8a7660" stroke-width="1.6" fill="none" marker-end="url(#darr)"/>`;
-  g+=`<path d="M380 55 Q380 68 560 78" stroke="#8a7660" stroke-width="1.6" fill="none" marker-end="url(#darr)"/>`;
+  // clean symmetric branch: down from the card center, then split left/right into each method
+  g+=`<path d="M380 55 L380 66 C380 72 372 72 366 72 L214 72 C206 72 200 74 200 80" stroke="#8a7660" stroke-width="1.6" fill="none" marker-end="url(#darr)"/>`;
+  g+=`<path d="M380 55 L380 66 C380 72 388 72 394 72 L546 72 C554 72 560 74 560 80" stroke="#8a7660" stroke-width="1.6" fill="none" marker-end="url(#darr)"/>`;
   // spray drying
   g+=diaCard(40,80,320,118,'#B07B3E',{r:12});
-  g+=`<text x="200" y="102" fill="#f0e6d8" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">SPRAY DRYING</text>`;
+  g+=`<text x="150" y="102" fill="#f0e6d8" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">SPRAY DRYING</text>`;
   ['Mist into hot-air tower','Water flashes off instantly','\u2192 fine POWDER','Cheaper, high-volume','Heat costs aroma'].forEach((t,i)=>{
-    g+=`<text x="200" y="${122+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
+    g+=`<text x="150" y="${122+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
+  // powder icon (right side of card): a small mound of fine dust
+  g+=`<path d="M290 176 Q300 150 310 176 Z" fill="#c8a86a" opacity="0.6"/>`;
+  [[292,170],[300,164],[308,170],[296,174],[304,173]].forEach(d=>{g+=`<circle cx="${d[0]}" cy="${d[1]}" r="1.1" fill="#e0c48a" opacity="0.8"/>`;});
+  g+=`<text x="300" y="190" fill="#a07a3a" font-size="8" text-anchor="middle" font-family="ui-sans-serif">powder</text>`;
   // freeze drying
   g+=diaCard(400,80,320,118,'#5a8a9a',{r:12});
-  g+=`<text x="560" y="102" fill="#f0e6d8" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">FREEZE DRYING</text>`;
+  g+=`<text x="510" y="102" fill="#f0e6d8" font-size="14" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">FREEZE DRYING</text>`;
   ['Freeze to ~-40\u00b0C','Vacuum: ice \u2192 vapor (sublimes)','\u2192 crystalline GRANULES','Premium method','Cold preserves aroma'].forEach((t,i)=>{
-    g+=`<text x="560" y="${122+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
+    g+=`<text x="510" y="${122+i*15}" fill="#c9b8a4" font-size="10.5" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
+  // granule icon (right side): a few angular crystals
+  [[652,172,5],[662,168,4],[658,176,4.5],[669,174,3.5]].forEach(cr=>{const x=cr[0],y=cr[1],s=cr[2];g+=`<path d="M${x} ${y-s} L${x+s} ${y} L${x} ${y+s} L${x-s} ${y} Z" fill="#7fb0c8" opacity="0.55" stroke="#a8d0e0" stroke-width="0.7"/>`;});
+  g+=`<text x="660" y="190" fill="#6a9ab0" font-size="8" text-anchor="middle" font-family="ui-sans-serif">granules</text>`;
   g+=`<text x="${W/2}" y="${H-8}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Instant = brewed coffee with the water removed. Cold-drying keeps more flavor \u2014 hence premium freeze-dried.</text>`;
   return diaWrap(`${W} ${H}`,g,'The two ways instant coffee is dried.');
 }
@@ -3555,16 +3632,16 @@ function diaGreenDefects(){
   // a raw (green) coffee bean at (cx,cy), scale s, base fill, optional defect overlay
   const gbean=(cx,cy,s,fill,overlay)=>diaBean(cx,cy,s*1.15,fill,'green',overlay);
   // cells: [name, base-fill, category tag, cause/look, overlay]
-  const green='#6b7f4a', paleGreen='#9aa86a';
+  const green='#66805c', paleGreen='#9aa86a';
   const cells=[
-    ['Healthy','#6b7f4a','—','even blue-green, dense',null],
-    ['Full black','#6b7f4a','CAT 1','over-fermented / dead','fullblack'],
-    ['Full sour','#6b7f4a','CAT 1','reddish-brown, over-fermented','sour'],
-    ['Partial black','#6b7f4a','CAT 2','part of the bean blackened','partblack'],
-    ['Insect damage','#6b7f4a','CAT 2','borer holes (broca)','insect'],
-    ['Broken / chipped','#6b7f4a','CAT 2','cut, pale inner exposed','broken'],
+    ['Healthy','#66805c','—','even blue-green, dense',null],
+    ['Full black','#66805c','CAT 1','over-fermented / dead','fullblack'],
+    ['Full sour','#66805c','CAT 1','reddish-brown, over-fermented','sour'],
+    ['Partial black','#66805c','CAT 2','part of the bean blackened','partblack'],
+    ['Insect damage','#66805c','CAT 2','borer holes (broca)','insect'],
+    ['Broken / chipped','#66805c','CAT 2','cut, pale inner exposed','broken'],
     ['Immature','#9aa86a','CAT 2','pale, thin — silverskin sticks','immature'],
-    ['Shell / ear','#6b7f4a','CAT 2','malformed hollow shape','shell'],
+    ['Shell / ear','#66805c','CAT 2','malformed hollow shape','shell'],
     ['Floater / fungus','#8a9a5a','CAT 2','faded, low-density / mold','fungus'],
   ];
   let g='';
@@ -3659,7 +3736,7 @@ function diaProfiling(){
   g+=`<path d="M392 150 L486 150" stroke="#9a8468" stroke-width="2" marker-end="url(#darr)" opacity="0.75"/>`;
   // scale-to-production card on the right
   g+=diaCard(496,104,242,92,'#B07B3E',{r:12,title:'THEN SCALE UP',titleSize:12,strong:true});
-  ['Re-map the curve to the','production roaster (mass','& airflow differ) \u2014 then','re-cup to confirm.'].forEach((t,i)=>{
+  ['Re-map the curve to the','production roaster (mass','and airflow differ) \u2014 then','re-cup to confirm.'].forEach((t,i)=>{
     g+=`<text x="617" y="${140+i*15}" fill="#c9b8a4" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${t}</text>`;});
   // caption, fully clear below everything
   g+=`<text x="${W/2}" y="${H-10}" fill="${DIA.ink3}" font-size="11" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">Change one variable at a time, cup blind, document everything \u2014 that's how a profile is built.</text>`;
@@ -3880,41 +3957,79 @@ function diaPourStroke(){
   const heartD=(cx,cy,s)=>`M${(cx).toFixed(1)} ${(cy+s).toFixed(1)} C${(cx-0.9*s).toFixed(1)} ${(cy+0.45*s).toFixed(1)} ${(cx-1.05*s).toFixed(1)} ${(cy-0.08*s).toFixed(1)} ${(cx-0.86*s).toFixed(1)} ${(cy-0.38*s).toFixed(1)} C${(cx-0.65*s).toFixed(1)} ${(cy-0.7*s).toFixed(1)} ${(cx-0.2*s).toFixed(1)} ${(cy-0.72*s).toFixed(1)} ${(cx).toFixed(1)} ${(cy-0.4*s).toFixed(1)} C${(cx+0.2*s).toFixed(1)} ${(cy-0.72*s).toFixed(1)} ${(cx+0.65*s).toFixed(1)} ${(cy-0.7*s).toFixed(1)} ${(cx+0.86*s).toFixed(1)} ${(cy-0.38*s).toFixed(1)} C${(cx+1.05*s).toFixed(1)} ${(cy-0.08*s).toFixed(1)} ${(cx+0.9*s).toFixed(1)} ${(cy+0.45*s).toFixed(1)} ${(cx).toFixed(1)} ${(cy+s).toFixed(1)} Z`;
   const heart=(cx,cy,s,detail)=>{
     _lc++;const id='lah'+_lc;
-    let o=`<defs><clipPath id="${id}"><path d="${heartD(cx,cy,s)}"/></clipPath></defs>`;
-    o+=`<path d="${heartD(cx,cy,s)}" fill="${milk}"/>`;
-    if(detail){ // faint pour rings from the disc phases, clipped inside the heart
-      o+=`<g clip-path="url(#${id})">`+
-         `<circle cx="${cx}" cy="${(cy-0.04*s).toFixed(1)}" r="${(0.6*s).toFixed(1)}" fill="none" stroke="${cut}" stroke-width="1" opacity="0.28"/>`+
-         `<circle cx="${cx}" cy="${cy.toFixed(1)}" r="${(0.34*s).toFixed(1)}" fill="none" stroke="${cut}" stroke-width="1" opacity="0.22"/></g>`;
-      o+=`<path d="M${cx} ${(cy-0.4*s).toFixed(1)} L${cx} ${(cy+s+3).toFixed(1)}" stroke="${cut}" stroke-width="1.3" opacity="0.6" stroke-linecap="round"/>`;
+    let o=`<path d="${heartD(cx,cy,s)}" fill="${milk}"/>`;
+    if(detail){ // a soft inner shading + the single pull-through line down the center
+      o+=`<path d="${heartD(cx,cy-0.03*s,0.82*s)}" fill="#fff" opacity="0.16"/>`;
+      o+=`<path d="M${cx} ${(cy-0.42*s).toFixed(1)} L${cx} ${(cy+s+3).toFixed(1)}" stroke="${cut}" stroke-width="1.3" opacity="0.55" stroke-linecap="round"/>`;
     }
     return o;
   };
-  // --- parametric ROSETTA fern: paired drooping leaves, big at base, tiny heart + stem on finish ---
-  const rosetta=(cx,cy,r,nPairs,finished)=>{
-    const baseY=cy+0.5*r, topY=cy-0.5*r, maxW=0.72*r, span=baseY-topY;
+  // --- parametric ROSETTA fern (from real pour refs): a central spine with symmetric sickle
+  //     leaves fanning out both sides, largest mid-cup, tapering top & bottom, curving back
+  //     toward the base; capped by a small rounded head, then a stem cut straight through. ---
+  const rosetta=(cx,cy,r,nLeaves,finished)=>{
+    // leaves are laid from the near (bottom) edge up toward the far (top) edge
+    const baseY=cy+0.86*r, headY=cy-0.72*r, span=baseY-headY;
+    const maxW=0.80*r;
     let o='';
-    for(let i=nPairs-1;i>=0;i--){ // draw top leaves first, base leaves overlap on top
-      const t=nPairs<=1?0:i/(nPairs-1);
-      const y=baseY - t*span*( (nPairs<6)?0.55:1 ); // partial pours stay low in the cup
-      const w=maxW*(1-0.5*t), dr=0.32*w+2.4, th=3.1-1.4*t;
-      for(const m of [1,-1]){
-        o+=`<path d="M${cx} ${y.toFixed(1)} C${(cx+m*0.42*w).toFixed(1)} ${(y-1.7).toFixed(1)} ${(cx+m*0.78*w).toFixed(1)} ${(y+dr*0.3).toFixed(1)} ${(cx+m*w).toFixed(1)} ${(y+dr).toFixed(1)} C${(cx+m*0.68*w).toFixed(1)} ${(y+dr+th*0.7).toFixed(1)} ${(cx+m*0.26*w).toFixed(1)} ${(y+th).toFixed(1)} ${cx} ${(y+th*0.72).toFixed(1)} Z" fill="${milk}"/>`;
-      }
+    // when partial (mid-pour), the leaves fill only the lower part of the cup
+    const fill = finished?1:(nLeaves<=3?0.42:0.7);
+    const usedSpan=span*fill;
+    const N=nLeaves;
+    // one symmetric leaf: attaches at the spine (sx,sy), sweeps out to (tipx,tipy) and back,
+    // the tip pulled DOWN toward the base so the fern reads as flowing forward
+    const leaf=(sy,w,drop,m)=>{
+      const lift = w*0.20;            // shallow leading-edge rise
+      const dr   = w*0.16 + 2.4;      // shallow tip drop -> flat sickle, rows stay separate
+      const tipX = cx+m*w, tipY = sy + dr*0.15;
+      const l1x=cx+m*0.36*w, l1y=sy-lift*0.8;
+      const l2x=cx+m*0.82*w, l2y=sy-lift*0.2;
+      const t1x=cx+m*0.74*w, t1y=sy+dr*1.0;
+      const t2x=cx+m*0.26*w, t2y=sy+dr*0.85;
+      const backY=sy+dr*0.5;
+      return `<path d="M${cx} ${sy.toFixed(1)} C${l1x.toFixed(1)} ${l1y.toFixed(1)} ${l2x.toFixed(1)} ${l2y.toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)} C${t1x.toFixed(1)} ${t1y.toFixed(1)} ${t2x.toFixed(1)} ${t2y.toFixed(1)} ${cx} ${backY.toFixed(1)} Z" fill="${milk}"/>`;
+    };
+    // draw from the TOP (smallest) down so lower/larger leaves overlap on top — real layering
+    for(let i=N-1;i>=0;i--){
+      const t=N<=1?0:i/(N-1);                 // 0 = base leaf, 1 = top leaf
+      const sy=baseY - t*usedSpan;
+      // width bulges in the lower-middle, tapers at both ends (sinusoid on t)
+      const bulge=Math.sin(Math.min(1,t*1.1+0.08)*Math.PI);   // 0 at base/top, 1 mid
+      const w=maxW*(0.30+0.70*bulge);
+      const drop=0.26*w+3.2;
+      o+=leaf(sy,w,drop,1);
+      o+=leaf(sy,w,drop,-1);
     }
+    // rounded head cap at the far end
     if(finished){
-      o+=`<path d="${heartD(cx,topY-0.13*r,0.15*r)}" fill="${milk}"/>`;
-      o+=`<path d="M${cx} ${(topY-0.2*r).toFixed(1)} L${cx} ${(baseY+3.4).toFixed(1)}" stroke="${cut}" stroke-width="1.25" opacity="0.6" stroke-linecap="round"/>`;
+      o+=`<ellipse cx="${cx}" cy="${(headY+0.02*r).toFixed(1)}" rx="${(0.16*r).toFixed(1)}" ry="${(0.13*r).toFixed(1)}" fill="${milk}"/>`;
+      // central spine + pull-through stem
+      o+=`<path d="M${cx} ${(headY-0.06*r).toFixed(1)} L${cx} ${(baseY+3.4).toFixed(1)}" stroke="${cut}" stroke-width="1.25" opacity="0.5" stroke-linecap="round"/>`;
     }
     return o;
   };
-  // --- parametric TULIP: nested upward-wrapping crescents + small heart + pull-through ---
+  // --- parametric TULIP (from real pour refs): stacked chevron petals, each smaller going up,
+  //     a small round bloom on top, and a stem/point pulled through the bottom. ---
   const tulip=(cx,cy,r,nPetals,finished)=>{
-    const ys=[cy+0.46*r, cy+0.15*r, cy-0.14*r], ws=[0.62*r,0.48*r,0.35*r];
+    // petals stack from the near (bottom) edge upward; bottom is widest
+    const botY=cy+0.72*r, topBloomY=cy-0.62*r;
+    const rows=Math.max(1,nPetals);
+    const stackSpan=(botY-topBloomY)*(finished?0.86:0.62);
     let o='';
-    for(let i=0;i<nPetals;i++){
-      const y=ys[i], w=ws[i], h=0.52*w+3;
-      o+=`<path d="M${(cx-w).toFixed(1)} ${(y-2.6).toFixed(1)} Q${cx} ${(y+h).toFixed(1)} ${(cx+w).toFixed(1)} ${(y-2.6).toFixed(1)} Q${cx} ${(y+h*0.12).toFixed(1)} ${(cx-w).toFixed(1)} ${(y-2.6).toFixed(1)} Z" fill="${milk}"/>`;
+    // a single petal: a pushed crescent — a wide arc whose underside curves up, cupping the next
+    const petal=(yBase,w)=>{
+      const lip=w*0.60;             // how far the crescent rises
+      const inner=w*0.34;           // inner scoop depth (the "cup" that cradles the next petal)
+      return `<path d="M${(cx-w).toFixed(1)} ${yBase.toFixed(1)} `+
+             `C${(cx-0.55*w).toFixed(1)} ${(yBase-lip).toFixed(1)} ${(cx-0.2*w).toFixed(1)} ${(yBase-lip*1.05).toFixed(1)} ${cx} ${(yBase-lip*1.08).toFixed(1)} `+
+             `C${(cx+0.2*w).toFixed(1)} ${(yBase-lip*1.05).toFixed(1)} ${(cx+0.55*w).toFixed(1)} ${(yBase-lip).toFixed(1)} ${(cx+w).toFixed(1)} ${yBase.toFixed(1)} `+
+             `C${(cx+0.5*w).toFixed(1)} ${(yBase-inner).toFixed(1)} ${(cx-0.5*w).toFixed(1)} ${(yBase-inner).toFixed(1)} ${(cx-w).toFixed(1)} ${yBase.toFixed(1)} Z" fill="${milk}"/>`;
+    };
+    for(let i=0;i<rows;i++){
+      const f=rows<=1?0:i/(rows-1);           // 0 = bottom (widest), 1 = top (narrowest)
+      const yBase=botY - f*stackSpan;
+      const w=r*(0.66-0.30*f);
+      o+=petal(yBase,w);
     }
     if(finished){
       o+=`<path d="${heartD(cx,cy-0.42*r,0.17*r)}" fill="${milk}"/>`;
