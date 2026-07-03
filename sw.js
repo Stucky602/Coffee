@@ -1,4 +1,4 @@
-const CACHE="coffee-guide-v52";
+const CACHE="coffee-guide-v53";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",e=>{
   self.skipWaiting();

@@ -51,8 +51,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v52"
-CACHE_C = "coffee-guide-v52"
+APP_VERSION = "v53"
+CACHE_C = "coffee-guide-v53"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1423,72 +1423,48 @@ function originRegionMap(m){
   const country=(m.country||m.name).replace(/ \(.*\)/,'');
   let g=diaDefs([accent]);
   g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="14"/>`;
-  // Country silhouette watermark, lower-right — a small piece of terrain, not just a blob.
-  // Base landmass + (clipped inside it) mountain ranges in a lighter elevation tint and a
-  // shoreline accent along the coast, placed where the real geography sits.
+  // Country silhouette watermark, lower-right — an elegant engraved-map treatment.
+  // One clean shape with a crisp outline, soft tonal "elevation" shading where the
+  // highlands sit (no cartoon peaks), and a single quiet marker for the growing heart.
+  // Restraint over clutter: it should read as a considered map, not a diorama.
   const silKey=(m.country||m.name).replace(/ \(.*\)/,'');
   const silName=m.country||m.name;
   const sil=COUNTRY_SIL[silName]||COUNTRY_SIL[silKey];
   if(sil){
-    const silSize=Math.max(H-padTop+18, 150);          // fill the card height, generously
-    const sx=W-silSize+silSize*0.14, sy=H-silSize+silSize*0.12;  // let it bleed off the corner
+    const silSize=Math.max((H-padTop)*1.18, 168);        // larger, fills the right side
+    const sx=W-silSize+silSize*0.20, sy=H-silSize+silSize*0.18;  // anchor & bleed off the corner
     const uid=_cid(accent)+(''+silSize).replace('.','');
-    const gid='silfade'+uid, cid='silclip'+uid;
+    const gid='silfill'+uid, cid='silclip'+uid, hid='silhi'+uid;
     const topo=COUNTRY_TOPO[silName]||COUNTRY_TOPO[silKey]||{};
-    // lighter "elevation" tint = accent pushed toward warm gold
-    const elev='#d8b566';
-    let inner='';
-    // shoreline accent: a soft lighter stroke tracing the coast points
-    if(topo.coast&&topo.coast.length>1){
-      const cpath='M'+topo.coast.map(p=>p[0]+' '+p[1]).join(' L');
-      inner+=`<path d="${cpath}" fill="none" stroke="#e8d29a" stroke-opacity="0.5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
-    }
-    // mountains: little peak glyphs where the real ranges are, varied for a ridgeline feel
-    if(topo.mtns){
-      topo.mtns.forEach((p,i)=>{
-        const x=p[0],y=p[1],s=3.6+((i*7)%5)*0.5;   // slight size variation
-        // shadow side + body
-        inner+=`<path d="M${x-s} ${y+s} L${x} ${y-s} L${x+s} ${y+s} Z" fill="${elev}" fill-opacity="0.6"/>`;
-        // sunlit left face
-        inner+=`<path d="M${x-s} ${y+s} L${x} ${y-s} L${x-s*0.1} ${y+s*0.3} Z" fill="#f2e6bf" fill-opacity="0.6"/>`;
-        // little snow cap on the taller ones
-        if(s>4.2)inner+=`<path d="M${x-s*0.35} ${y-s*0.2} L${x} ${y-s} L${x+s*0.35} ${y-s*0.2} L${x} ${y-s*0.35} Z" fill="#fbf3dc" fill-opacity="0.7"/>`;
-      });
-    }
-    // Coffee-growing life — because people live and work these hills.
-    // Coffee grows on the slopes at altitude, so the growing zones (a soft cultivated
-    // green tint) and the little settlement lights nestle beside the mountains: farms and
-    // towns on the same ridges. A quiet acknowledgement that this is a worked, lived-in land.
+    // centroid of the highland points = where the terrain shading + growing marker sit
+    let hx=52, hy=48;
     if(topo.mtns&&topo.mtns.length){
-      const grow='#8faf74';   // cultivated slope green (fits the warm palette, muted)
-      topo.mtns.forEach((p,i)=>{
-        const x=p[0],y=p[1];
-        // a soft planted patch just downslope of each range (where coffee actually grows)
-        const gx=x+ (i%2?3.4:-3.6), gy=y+3.6;
-        inner+=`<circle cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="3.6" fill="${grow}" fill-opacity="0.42"/>`;
-        inner+=`<circle cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="2.0" fill="${grow}" fill-opacity="0.30"/>`;
-        // a warm settlement light beside most ranges — where people live
-        if(i%2===0){
-          const lx=x+2.2, ly=y+4.6;
-          inner+=`<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="2.0" fill="#ffe7a8" fill-opacity="0.22"/>`; // glow
-          inner+=`<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="0.85" fill="#fff1cf" fill-opacity="0.95"/>`; // light
-        }
-      });
-      // a coffee cherry with its leaf, nestled in the growing country — the crop these
-      // communities build a life around. Larger + clearer so the human story reads.
-      const c0=topo.mtns[0];
-      const chx=c0[0]+6.0, chy=c0[1]+6.4;
-      inner+=`<path d="M${chx.toFixed(1)} ${(chy-2.6).toFixed(1)} q2.4 -2.0 4.4 -0.8 q-2.0 1.0 -4.4 0.8" fill="#8faf74" fill-opacity="0.75"/>`; // leaf
-      inner+=`<circle cx="${chx.toFixed(1)}" cy="${chy.toFixed(1)}" r="2.6" fill="#c65b3c" fill-opacity="0.72"/>`;   // cherry body
-      inner+=`<circle cx="${(chx-0.8).toFixed(1)}" cy="${(chy-0.8).toFixed(1)}" r="0.9" fill="#ffd9b0" fill-opacity="0.7"/>`; // highlight
+      hx=topo.mtns.reduce((a,p)=>a+p[0],0)/topo.mtns.length;
+      hy=topo.mtns.reduce((a,p)=>a+p[1],0)/topo.mtns.length;
     }
-    g+=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">`+
-       `<stop offset="0" stop-color="${accent}" stop-opacity="0.22"/>`+
-       `<stop offset="1" stop-color="${accent}" stop-opacity="0.10"/></linearGradient>`+
+    // spread of the highlands -> radius of the elevation glow
+    let rad=26;
+    if(topo.mtns&&topo.mtns.length>1){
+      const dmax=Math.max(...topo.mtns.map(p=>Math.hypot(p[0]-hx,p[1]-hy)));
+      rad=Math.max(16, Math.min(40, dmax+14));
+    }
+    g+=`<defs>`+
+       `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">`+
+         `<stop offset="0" stop-color="${accent}" stop-opacity="0.26"/>`+
+         `<stop offset="1" stop-color="${accent}" stop-opacity="0.13"/></linearGradient>`+
+       `<radialGradient id="${hid}" cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="${rad.toFixed(1)}" gradientUnits="userSpaceOnUse">`+
+         `<stop offset="0" stop-color="#e9cf94" stop-opacity="0.42"/>`+
+         `<stop offset="0.55" stop-color="#d8b566" stop-opacity="0.16"/>`+
+         `<stop offset="1" stop-color="#d8b566" stop-opacity="0"/></radialGradient>`+
        `<clipPath id="${cid}"><path d="${sil}"/></clipPath></defs>`;
+    let inner=`<rect x="-10" y="-10" width="120" height="120" fill="url(#${hid})"/>`; // soft highland shading
+    // one quiet marker for the coffee-growing heart: a small ring, not a cherry
+    inner+=`<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="2.4" fill="none" stroke="#f0dca0" stroke-width="1" stroke-opacity="0.55"/>`+
+           `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="0.9" fill="#f0dca0" fill-opacity="0.7"/>`;
     g+=`<g transform="translate(${sx.toFixed(0)},${sy.toFixed(0)}) scale(${(silSize/100).toFixed(3)})" aria-hidden="true">`+
        `<path d="${sil}" fill="url(#${gid})"/>`+
-       `<g clip-path="url(#${cid})" opacity="0.9">${inner}</g>`+
+       `<g clip-path="url(#${cid})">${inner}</g>`+
+       `<path d="${sil}" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="0.8"/>`+  // crisp outline
        `</g>`;
   }
   // header: a location-pin mark + country + altitude band.
