@@ -51,8 +51,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v53"
-CACHE_C = "coffee-guide-v53"
+APP_VERSION = "v54"
+CACHE_C = "coffee-guide-v54"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -1418,31 +1418,33 @@ function originRegionMap(m){
   const accent=m.accent||'#B07B3E';
   const regions=rm.regions2||[];
   if(!regions.length)return '';
-  const W=440, padTop=52, rowH=34, padBot=16;
-  const H=padTop+regions.length*rowH+padBot;
-  const country=(m.country||m.name).replace(/ \(.*\)/,'');
+  const W=440, padTop=64, rowH=34, padBot=18;
+  const silName=m.country||m.name;
+  const silKey=silName.replace(/ \(.*\)/,'');
+  const sil=COUNTRY_SIL[silName]||COUNTRY_SIL[silKey];
+  const topo=COUNTRY_TOPO[silName]||COUNTRY_TOPO[silKey]||{};
+  const haveHeart=!!(topo.mtns&&topo.mtns.length);
+  // The right zone stacks: map + country name + altitude + heart legend.
+  // The card must be tall enough for whichever side is taller (list vs right zone).
+  const mapTop=18, mapSize=150;
+  const rightZoneH=mapTop+mapSize+ (haveHeart?26:22) + (rm.alt?16:0) + (haveHeart?20:0) + 12;
+  const listH=padTop+regions.length*rowH+padBot;
+  const H=Math.max(listH, rightZoneH);
+  const country=silName.replace(/ \(.*\)/,'');
   let g=diaDefs([accent]);
   g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#12100c" rx="14"/>`;
-  // Country silhouette watermark, lower-right — an elegant engraved-map treatment.
-  // One clean shape with a crisp outline, soft tonal "elevation" shading where the
-  // highlands sit (no cartoon peaks), and a single quiet marker for the growing heart.
-  // Restraint over clutter: it should read as a considered map, not a diorama.
-  const silKey=(m.country||m.name).replace(/ \(.*\)/,'');
-  const silName=m.country||m.name;
-  const sil=COUNTRY_SIL[silName]||COUNTRY_SIL[silKey];
+  // ---- RIGHT ZONE: the country map, centered, with its name + legend beneath ----
+  const mapCx=W*0.72;
   if(sil){
-    const silSize=Math.max((H-padTop)*1.18, 168);        // larger, fills the right side
-    const sx=W-silSize+silSize*0.20, sy=H-silSize+silSize*0.18;  // anchor & bleed off the corner
-    const uid=_cid(accent)+(''+silSize).replace('.','');
+    const silSize=mapSize;
+    const sx=mapCx-silSize/2, sy=mapTop;
+    const uid=_cid(accent)+(''+silSize).replace('.','')+regions.length;
     const gid='silfill'+uid, cid='silclip'+uid, hid='silhi'+uid;
-    const topo=COUNTRY_TOPO[silName]||COUNTRY_TOPO[silKey]||{};
-    // centroid of the highland points = where the terrain shading + growing marker sit
     let hx=52, hy=48;
-    if(topo.mtns&&topo.mtns.length){
+    if(haveHeart){
       hx=topo.mtns.reduce((a,p)=>a+p[0],0)/topo.mtns.length;
       hy=topo.mtns.reduce((a,p)=>a+p[1],0)/topo.mtns.length;
     }
-    // spread of the highlands -> radius of the elevation glow
     let rad=26;
     if(topo.mtns&&topo.mtns.length>1){
       const dmax=Math.max(...topo.mtns.map(p=>Math.hypot(p[0]-hx,p[1]-hy)));
@@ -1457,26 +1459,33 @@ function originRegionMap(m){
          `<stop offset="0.55" stop-color="#d8b566" stop-opacity="0.16"/>`+
          `<stop offset="1" stop-color="#d8b566" stop-opacity="0"/></radialGradient>`+
        `<clipPath id="${cid}"><path d="${sil}"/></clipPath></defs>`;
-    let inner=`<rect x="-10" y="-10" width="120" height="120" fill="url(#${hid})"/>`; // soft highland shading
-    // one quiet marker for the coffee-growing heart: a small ring, not a cherry
-    inner+=`<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="2.4" fill="none" stroke="#f0dca0" stroke-width="1" stroke-opacity="0.55"/>`+
-           `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="0.9" fill="#f0dca0" fill-opacity="0.7"/>`;
-    g+=`<g transform="translate(${sx.toFixed(0)},${sy.toFixed(0)}) scale(${(silSize/100).toFixed(3)})" aria-hidden="true">`+
+    let inner=`<rect x="-10" y="-10" width="120" height="120" fill="url(#${hid})"/>`;
+    if(haveHeart){
+      inner+=`<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="2.6" fill="none" stroke="#f4e2ad" stroke-width="1.1" stroke-opacity="0.7"/>`+
+             `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="1.0" fill="#f4e2ad" fill-opacity="0.85"/>`;
+    }
+    g+=`<g transform="translate(${sx.toFixed(1)},${sy.toFixed(1)}) scale(${(silSize/100).toFixed(3)})" aria-hidden="true">`+
        `<path d="${sil}" fill="url(#${gid})"/>`+
        `<g clip-path="url(#${cid})">${inner}</g>`+
-       `<path d="${sil}" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="0.8"/>`+  // crisp outline
+       `<path d="${sil}" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="0.8"/>`+
        `</g>`;
+    // country name under the map (centered on the map), then altitude, then heart legend
+    let cy=sy+silSize+20;
+    g+=`<text x="${mapCx.toFixed(0)}" y="${cy}" fill="#f0e6d8" font-size="18" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${esc(country)}</text>`;
+    if(rm.alt){cy+=16;g+=`<text x="${mapCx.toFixed(0)}" y="${cy}" fill="${accent}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${esc(rm.alt)}</text>`;}
+    if(haveHeart){
+      cy+=18;
+      const lw=132, lx0=mapCx-lw/2;
+      g+=`<circle cx="${(lx0+4).toFixed(0)}" cy="${(cy-3).toFixed(0)}" r="2.6" fill="none" stroke="#f4e2ad" stroke-width="1" stroke-opacity="0.75"/><circle cx="${(lx0+4).toFixed(0)}" cy="${(cy-3).toFixed(0)}" r="1" fill="#f4e2ad"/>`;
+      g+=`<text x="${(lx0+13).toFixed(0)}" y="${cy}" fill="#8f7c66" font-size="9.5" font-family="ui-sans-serif">coffee-growing heartland</text>`;
+    }
   }
-  // header: a location-pin mark + country + altitude band.
-  // Pin sits on the country-name row only; the GROWING REGIONS label is indented
-  // to start past the pin so the two never overlap.
-  g+=`<g transform="translate(22,14)" filter="url(#dsoft)">
-    <path d="M8 0 C3 0 -1 4 -1 9 C-1 16 8 24 8 24 C8 24 17 16 17 9 C17 4 13 0 8 0 Z" fill="${accent}"/>
-    <circle cx="8" cy="9" r="3.4" fill="#12100c"/></g>`;
-  g+=`<text x="50" y="30" fill="#f0e6d8" font-size="17" font-weight="700" font-family="ui-sans-serif">${esc(country)}</text>`;
-  if(rm.alt)g+=`<text x="${W-20}" y="30" fill="${accent}" font-size="12" text-anchor="end" font-family="ui-monospace">${esc(rm.alt)}</text>`;
-  g+=`<text x="50" y="46" fill="#8f7c66" font-size="10.5" letter-spacing="1.5" font-family="ui-monospace">GROWING REGIONS</text>`;
-  // a subtle vertical spine connecting the region dots
+  // ---- LEFT: big GROWING REGIONS header (with the pin) + the region list ----
+  g+=`<g transform="translate(20,20)" filter="url(#dsoft)">
+    <path d="M7 0 C2.6 0 -1 3.4 -1 7.7 C-1 13.7 7 20.6 7 20.6 C7 20.6 15 13.7 15 7.7 C15 3.4 11.4 0 7 0 Z" fill="${accent}"/>
+    <circle cx="7" cy="7.7" r="2.9" fill="#12100c"/></g>`;
+  g+=`<text x="42" y="30" fill="#f0e6d8" font-size="15" font-weight="700" letter-spacing="1.2" font-family="ui-monospace">GROWING</text>`;
+  g+=`<text x="42" y="47" fill="${accent}" font-size="15" font-weight="700" letter-spacing="1.2" font-family="ui-monospace">REGIONS</text>`;
   const dotX=30, firstY=padTop+rowH/2;
   const lastY=padTop+(regions.length-1)*rowH+rowH/2;
   g+=`<line x1="${dotX}" y1="${firstY}" x2="${dotX}" y2="${lastY}" stroke="${accent}" stroke-width="1.5" opacity="0.3"/>`;
