@@ -54,8 +54,8 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v79"
-CACHE_C = "coffee-guide-v79"
+APP_VERSION = "v80"
+CACHE_C = "coffee-guide-v80"
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -2237,8 +2237,8 @@ function diaRoasters(){
       g+=`<circle cx="${cx}" cy="${cy-2}" r="20" fill="none" stroke="${_rgba(col,0.55)}" stroke-width="1.6"/>`; // door ring
       g+=`<circle cx="${cx}" cy="${cy-2}" r="3" fill="${col}"/>`; // door knob
       g+=`<circle cx="${cx-13}" cy="${cy-15}" r="2" fill="${_rgba(col,0.6)}"/><circle cx="${cx+13}" cy="${cy-15}" r="2" fill="${_rgba(col,0.6)}"/>`; // face bolts
-      // rotation arrow inside
-      g+=`<path d="M${cx+9} ${cy-10} a11 11 0 1 1 -12 3" fill="none" stroke="${col}" stroke-width="1.4" opacity="0.6" marker-end="url(#darr)"/>`;
+      // rotation arrow: a 3/4 arc concentric with the drum face (circles the door knob)
+      g+=`<path d="M${cx+7.7} ${cy-11.2} A12 12 0 1 1 ${cx-10.4} ${cy-10.0}" fill="none" stroke="${col}" stroke-width="1.5" opacity="0.65" marker-end="url(#darr)"/>`;
       // legs + base
       g+=`<rect x="${cx-30}" y="${cy+28}" width="60" height="6" rx="2" fill="${met}" stroke="${col}" stroke-width="1.4"/>`;
       g+=`<line x1="${cx-22}" y1="${cy+34}" x2="${cx-24}" y2="${cy+50}" stroke="${col}" stroke-width="2.2"/><line x1="${cx+22}" y1="${cy+34}" x2="${cx+24}" y2="${cy+50}" stroke="${col}" stroke-width="2.2"/>`;
@@ -2264,9 +2264,9 @@ function diaRoasters(){
       g+=`<circle cx="${cx}" cy="${cy-2}" r="18" fill="none" stroke="${_rgba(col,0.5)}" stroke-width="1.5"/>`;
       g+=`<circle cx="${cx}" cy="${cy-2}" r="3" fill="${col}"/>`;
       for(let i=0;i<4;i++){const a=i/4*6.28;g+=`<ellipse cx="${(cx+Math.cos(a)*10).toFixed(0)}" cy="${(cy-2+Math.sin(a)*10).toFixed(0)}" rx="3.4" ry="2.4" fill="#6a4326"/>`;}
-      // recirc duct: out the top, loop right, back in bottom
-      g+=`<path d="M${cx} ${cy-30} C${cx+52} ${cy-40} ${cx+58} ${cy+30} ${cx} ${cy+26}" fill="none" stroke="#e0a860" stroke-width="2.4" opacity="0.65" marker-end="url(#darr)"/>`;
-      g+=`<text x="${cx+50}" y="${cy-4}" fill="#e0a860" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif" opacity="0.8">air</text>`;
+      // recirc duct: out the top, loop right, back into the drum's right side (clear of the base)
+      g+=`<path d="M${cx+4} ${cy-29} C${cx+46} ${cy-34} ${cx+50} ${cy+8} ${cx+26} ${cy+2}" fill="none" stroke="#e0a860" stroke-width="2.4" opacity="0.7" marker-end="url(#darr)"/>`;
+      g+=`<text x="${cx+44}" y="${cy-8}" fill="#e0a860" font-size="8.5" text-anchor="middle" font-family="ui-sans-serif" opacity="0.85">air</text>`;
       // legs + base
       g+=`<rect x="${cx-28}" y="${cy+26}" width="56" height="6" rx="2" fill="${met}" stroke="${col}" stroke-width="1.4"/>`;
       g+=`<line x1="${cx-20}" y1="${cy+32}" x2="${cx-22}" y2="${cy+48}" stroke="${col}" stroke-width="2.2"/><line x1="${cx+20}" y1="${cy+32}" x2="${cx+22}" y2="${cy+48}" stroke="${col}" stroke-width="2.2"/>`;
@@ -2287,12 +2287,19 @@ function diaWaves(){
   let g=diaDefs(waves.map(w=>w[4]));
   g+=`<line x1="${L}" y1="${axisY}" x2="${W-R}" y2="${axisY}" stroke="${DIA.line}" stroke-width="2"/>`;
   waves.forEach((w,i)=>{const x=L+iw*w[5];const barH=58+i*30;const y=axisY-barH;
-    g+=`<rect x="${(x-54).toFixed(0)}" y="${y.toFixed(0)}" width="108" height="${barH}" rx="7" fill="url(#${_cid(w[4])})" stroke="${w[4]}" stroke-width="1.5" filter="url(#dsoft)"/>`;
+    const cardW=124, hw=cardW/2;
+    g+=`<rect x="${(x-hw).toFixed(0)}" y="${y.toFixed(0)}" width="${cardW}" height="${barH}" rx="7" fill="url(#${_cid(w[4])})" stroke="${w[4]}" stroke-width="1.5" filter="url(#dsoft)"/>`;
     // number + name stacked near the top of the card (always fits)
     g+=`<text x="${x.toFixed(0)}" y="${(y+26).toFixed(0)}" fill="${w[4]}" font-size="19" font-weight="800" text-anchor="middle" font-family="ui-sans-serif">${w[0]}</text>`;
     g+=`<text x="${x.toFixed(0)}" y="${(y+43).toFixed(0)}" fill="${DIA.ink}" font-size="11.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${w[2]}</text>`;
-    // detail line only on the taller cards, with clear room above the card bottom
-    if(barH>=88)g+=`<text x="${x.toFixed(0)}" y="${(y+61).toFixed(0)}" fill="#d8c8b0" font-size="10" text-anchor="middle" font-family="ui-sans-serif">${w[3]}</text>`;
+    // detail line on the taller cards — wrap onto two lines so it stays inside the card width
+    if(barH>=88){
+      const parts=w[3].split(' · ');
+      const l1=parts.slice(0,Math.ceil(parts.length/2)).join(' · ');
+      const l2=parts.slice(Math.ceil(parts.length/2)).join(' · ');
+      g+=`<text x="${x.toFixed(0)}" y="${(y+60).toFixed(0)}" fill="#d8c8b0" font-size="9" text-anchor="middle" font-family="ui-sans-serif">${l1}</text>`;
+      if(l2)g+=`<text x="${x.toFixed(0)}" y="${(y+72).toFixed(0)}" fill="#d8c8b0" font-size="9" text-anchor="middle" font-family="ui-sans-serif">${l2}</text>`;
+    }
     g+=`<circle cx="${x.toFixed(0)}" cy="${axisY}" r="5" fill="${w[4]}"/>`;
     g+=`<text x="${x.toFixed(0)}" y="${axisY+22}" fill="${DIA.ink3}" font-size="11.5" text-anchor="middle" font-family="ui-monospace">${w[1]}</text>`;
   });
@@ -2501,56 +2508,102 @@ function diaTroubleshoot(){
 // 24. Milk drink ratios.
 function diaMilkDrinks(){
   const W=760,H=250;
-  // name, totalHeight, espFrac, milkFrac, foamFrac, shape, widthAtTop, widthAtBottom, hasHandle
-  // shapes tuned to look like the real glassware for each drink
+  // Each drink drawn in its REAL vessel. Fractions are of the FILLED liquid height (esp/milk/foam).
+  // vessel: 'espcup'(macchiato), 'gibraltar'(cortado glass), 'cup'(flat white), 'bowl'(cappuccino), 'latteglass'(latte)
   const drinks=[
-    ['Macchiato', 46,.62,.0,.38,'demitasse',34,26,true],   // tiny espresso cup
-    ['Cortado',   58,.45,.45,.10,'tumbler',  40,40,false],  // short straight glass (Gibraltar)
-    ['Flat White',74,.30,.60,.10,'tulip',    46,30,true],   // tulip cup
-    ['Cappuccino',80,.30,.30,.40,'bowl',     58,34,true],   // wide bowl cup
-    ['Latte',     108,.18,.72,.10,'glass',   46,40,false],  // tall latte glass
+    ['Macchiato', 52,.70,.00,.30,'espcup'],    // tiny espresso cup, just a foam stain
+    ['Cortado',   62,.50,.50,.00,'gibraltar'],  // Gibraltar glass, 1:1, no foam
+    ['Flat White',72,.34,.56,.10,'cup'],        // ceramic cup, thin microfoam
+    ['Cappuccino',82,.32,.30,.38,'bowl'],       // rounded cup, tall foam dome
+    ['Latte',     86,.22,.66,.12,'latte'],      // wide bowl ceramic cup, thin foam
   ];
-  const baseY=190, gap=(W-40)/drinks.length;
-  const ESP='#43260f', MILK='#efe4d2', FOAM='#f8f2e6';
+  const baseY=196, gap=(W-40)/drinks.length;
+  const ESP='#43260f', MILK='#efe4d2', FOAM='#f8f2e6', GLASS='#c3b7a2', GLASSD='#8a7c66';
   let g=diaDefs(['#43260f','#efe4d2']);
-  drinks.forEach((dk,i)=>{const [name,h,ef,mf,ff,shape,wTop,wBot,handle]=dk;
+  drinks.forEach((dk,i)=>{const [name,h,ef,mf,ff,vessel]=dk;
     const cx=20+gap*i+gap/2, top=baseY-h;
-    // build the vessel outline path per shape
-    let outline, hx=wTop/2;
-    if(shape==='demitasse'||shape==='tulip'){
-      // curved-wall cup: narrower at base, gentle belly
-      outline=`M${cx-wTop/2} ${top} Q${cx-wBot/2-6} ${(top+baseY)/2} ${cx-wBot/2} ${baseY} L${cx+wBot/2} ${baseY} Q${cx+wBot/2+6} ${(top+baseY)/2} ${cx+wTop/2} ${top} Z`;
-    } else if(shape==='bowl'){
-      // wide rounded bowl
-      outline=`M${cx-wTop/2} ${top} Q${cx-wTop/2-4} ${(top+baseY)/2} ${cx-wBot/2} ${baseY} Q${cx} ${baseY+7} ${cx+wBot/2} ${baseY} Q${cx+wTop/2+4} ${(top+baseY)/2} ${cx+wTop/2} ${top} Z`;
-    } else {
-      // straight tumbler / tall glass (slight taper)
-      outline=`M${cx-wTop/2} ${top} L${cx-wBot/2} ${baseY} L${cx+wBot/2} ${baseY} L${cx+wTop/2} ${top} Z`;
-    }
-    // handle behind (for cups)
-    if(handle){const hy=top+h*0.42;g+=`<path d="M${cx+wTop/2-2} ${hy} q${16+h*0.12} 2 ${14+h*0.1} ${h*0.3} q-2 ${h*0.16} -${14+h*0.1} ${h*0.12}" fill="none" stroke="#cfc3b0" stroke-width="3.5" opacity="0.8"/>`;}
-    // clip + fills (espresso bottom, milk mid, foam top)
     const clip='md'+i;
-    g+=`<defs><clipPath id="${clip}"><path d="${outline}"/></clipPath></defs>`;
+    let wall, foot=null, saucer=false, handle=null, rimW;
+    const midY=(top+baseY)/2;
+
+    if(vessel==='espcup'){
+      // small espresso cup: flared rim, rounded belly, tucked-in foot
+      const rT=18, rB=11;
+      wall=`M${cx-rT} ${top} C${cx-rT+1} ${top+h*0.5} ${cx-rB-2} ${baseY-4} ${cx-rB} ${baseY} L${cx+rB} ${baseY} C${cx+rB+2} ${baseY-4} ${cx+rT-1} ${top+h*0.5} ${cx+rT} ${top} Z`;
+      rimW=rT; foot={r:rB+3,y:baseY}; saucer=true;
+      handle=`M${cx+rT-1} ${top+h*0.34} q13 1 12 ${h*0.26} q-1 ${h*0.14} -12 ${h*0.12}`;
+    } else if(vessel==='gibraltar'){
+      // Gibraltar / cortado glass: straight walls, slight flare at rim, thick glass base (no saucer)
+      const rT=21, rB=18;
+      wall=`M${cx-rT} ${top} L${cx-rB} ${baseY} L${cx+rB} ${baseY} L${cx+rT} ${top} Z`;
+      rimW=rT; foot={r:rB,y:baseY,glass:true};
+    } else if(vessel==='cup'){
+      // flat-white ceramic cup: wide, rounded, shorter — wider than tall feel
+      const rT=27, rB=17;
+      wall=`M${cx-rT} ${top} C${cx-rT-2} ${top+h*0.55} ${cx-rB-3} ${baseY-3} ${cx-rB} ${baseY} L${cx+rB} ${baseY} C${cx+rB+3} ${baseY-3} ${cx+rT+2} ${top+h*0.55} ${cx+rT} ${top} Z`;
+      rimW=rT; foot={r:rB+2,y:baseY}; saucer=true;
+      handle=`M${cx+rT-1} ${top+h*0.36} q17 1 16 ${h*0.30} q-1 ${h*0.16} -16 ${h*0.13}`;
+    } else if(vessel==='bowl'){
+      // cappuccino: big rounded bowl cup
+      const rT=30, rB=18;
+      wall=`M${cx-rT} ${top} C${cx-rT-4} ${top+h*0.5} ${cx-rB-4} ${baseY-3} ${cx-rB} ${baseY} C${cx} ${baseY+4} ${cx} ${baseY+4} ${cx+rB} ${baseY} C${cx+rB+4} ${baseY-3} ${cx+rT+4} ${top+h*0.5} ${cx+rT} ${top} Z`;
+      rimW=rT; foot={r:rB+2,y:baseY}; saucer=true;
+      handle=`M${cx+rT-2} ${top+h*0.34} q19 1 18 ${h*0.30} q-1 ${h*0.15} -18 ${h*0.12}`;
+    } else { // latte — wide bowl-shaped ceramic cup with a handle (the café classic, biggest of the set)
+      const rT=34, rB=20;
+      wall=`M${cx-rT} ${top} C${cx-rT-4} ${top+h*0.52} ${cx-rB-5} ${baseY-3} ${cx-rB} ${baseY} C${cx} ${baseY+5} ${cx} ${baseY+5} ${cx+rB} ${baseY} C${cx+rB+5} ${baseY-3} ${cx+rT+4} ${top+h*0.52} ${cx+rT} ${top} Z`;
+      rimW=rT; foot={r:rB+3,y:baseY}; saucer=true;
+      handle=`M${cx+rT-2} ${top+h*0.30} q21 1 20 ${h*0.32} q-1 ${h*0.16} -20 ${h*0.13}`;
+    }
+
+    // draw handle behind the cup
+    if(handle)g+=`<path d="${handle}" fill="none" stroke="${GLASS}" stroke-width="4" opacity="0.85"/>`;
+
+    // fills clipped to the wall interior (espresso at bottom, milk, then foam on top)
+    g+=`<defs><clipPath id="${clip}"><path d="${wall}"/></clipPath></defs>`;
     g+=`<g clip-path="url(#${clip})">`;
     const eH=h*ef, mH=h*mf, fH=h*ff;
-    g+=`<rect x="${cx-40}" y="${baseY-eH}" width="80" height="${eH+2}" fill="url(#${_cid('#43260f')})"/>`;
-    g+=`<rect x="${cx-40}" y="${baseY-eH-mH}" width="80" height="${mH}" fill="url(#${_cid('#efe4d2')})"/>`;
-    g+=`<rect x="${cx-40}" y="${top-2}" width="80" height="${fH+2}" fill="${FOAM}"/>`;
-    g+=`<rect x="${cx-40}" y="${baseY-eH-1.5}" width="80" height="3" fill="#5a3418" opacity="0.5"/>`;
-    if(ff>0.15)g+=`<ellipse cx="${cx-wTop*0.16}" cy="${top+fH*0.45}" rx="${wTop*0.28}" ry="${fH*0.28}" fill="#fff" opacity="0.35"/>`;
+    // faint glass tint so an empty glass still reads as glass
+    if(foot&&foot.glass)g+=`<rect x="${cx-40}" y="${top-2}" width="80" height="${h+6}" fill="#dfe7ee" opacity="0.05"/>`;
+    g+=`<rect x="${cx-40}" y="${baseY-eH}" width="80" height="${eH+3}" fill="url(#${_cid('#43260f')})"/>`;
+    if(mH>0)g+=`<rect x="${cx-40}" y="${baseY-eH-mH}" width="80" height="${mH+1}" fill="url(#${_cid('#efe4d2')})"/>`;
+    if(fH>0)g+=`<rect x="${cx-40}" y="${baseY-eH-mH-fH}" width="80" height="${fH+1}" fill="${FOAM}"/>`;
+    // crema line between espresso and milk
+    if(mH>0)g+=`<rect x="${cx-40}" y="${baseY-eH-1.5}" width="80" height="3" fill="#5a3418" opacity="0.45"/>`;
+    // domed foam highlight for the foamy drinks
+    if(ff>0.2)g+=`<ellipse cx="${cx-rimW*0.18}" cy="${baseY-eH-mH-fH*0.5}" rx="${rimW*0.5}" ry="${fH*0.35}" fill="#fff" opacity="0.3"/>`;
     g+=`</g>`;
-    // vessel outline stroke
-    g+=`<path d="${outline}" fill="none" stroke="#b8ac98" stroke-width="1.7" filter="url(#dsoft)"/>`;
-    // saucer for cups (not glasses)
-    if(shape!=='tumbler'&&shape!=='glass')g+=`<ellipse cx="${cx}" cy="${baseY+5}" rx="${wBot*0.75}" ry="3.5" fill="none" stroke="#8a7c66" stroke-width="1.3" opacity="0.65"/>`;
-    // name + size hint
-    g+=`<text x="${cx}" y="${baseY+26}" fill="#f0e6d8" font-size="12" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${name}</text>`;
+
+    // cappuccino foam dome rising ABOVE the rim
+    if(vessel==='bowl'){g+=`<path d="M${cx-rimW+3} ${top+2} Q${cx} ${top-9} ${cx+rimW-3} ${top+2} Z" fill="${FOAM}"/><path d="M${cx-rimW+3} ${top+2} Q${cx} ${top-9} ${cx+rimW-3} ${top+2}" fill="none" stroke="${GLASSD}" stroke-width="1" opacity="0.4"/>`;}
+
+    // vessel wall stroke on top
+    g+=`<path d="${wall}" fill="none" stroke="${GLASS}" stroke-width="1.8"/>`;
+    // rim ellipse (opening) for round vessels so the top reads as a mouth, not a flat cut
+    if(vessel!=='gibraltar')g+=`<ellipse cx="${cx}" cy="${top}" rx="${rimW}" ry="${rimW*0.22}" fill="none" stroke="${GLASS}" stroke-width="1.5" opacity="0.8"/>`;
+
+    // FOOT / base — a real base, not a floating coin
+    if(foot){
+      if(foot.stem){ // latte glass: short stem + a flat foot disc
+        g+=`<line x1="${cx}" y1="${baseY-2}" x2="${cx}" y2="${baseY+5}" stroke="${GLASS}" stroke-width="2.5"/>`;
+        g+=`<path d="M${cx-foot.r} ${baseY+7} Q${cx} ${baseY+9} ${cx+foot.r} ${baseY+7}" fill="none" stroke="${GLASS}" stroke-width="2"/>`;
+      } else if(foot.glass){ // gibraltar: a subtle thick-glass base band
+        g+=`<line x1="${cx-foot.r+1}" y1="${baseY}" x2="${cx+foot.r-1}" y2="${baseY}" stroke="${GLASS}" stroke-width="2.4" opacity="0.9"/>`;
+        g+=`<line x1="${cx-foot.r+3}" y1="${baseY-4}" x2="${cx+foot.r-3}" y2="${baseY-4}" stroke="${GLASSD}" stroke-width="1" opacity="0.4"/>`;
+      }
+    }
+    // saucer for ceramic cups: an arc tucked under the foot, not a floating disc
+    if(saucer){g+=`<path d="M${cx-foot.r-9} ${baseY+5} Q${cx} ${baseY+11} ${cx+foot.r+9} ${baseY+5}" fill="none" stroke="${GLASSD}" stroke-width="1.6" opacity="0.7"/>`;}
+
+    // name — anchored a fixed distance below the shared base so all labels align
+    g+=`<text x="${cx}" y="${baseY+30}" fill="#f0e6d8" font-size="12.5" font-weight="700" text-anchor="middle" font-family="ui-sans-serif">${name}</text>`;
   });
-  // legend
-  g+=`<rect x="250" y="216" width="12" height="12" rx="2" fill="${ESP}"/><text x="266" y="226" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">espresso</text>`;
-  g+=`<rect x="360" y="216" width="12" height="12" rx="2" fill="${MILK}"/><text x="376" y="226" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">steamed milk</text>`;
-  g+=`<rect x="490" y="216" width="12" height="12" rx="2" fill="${FOAM}"/><text x="506" y="226" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">foam</text>`;
+  // legend row, centered as a group under the drinks
+  const lg=[['espresso',ESP],['steamed milk',MILK],['foam',FOAM]];
+  let lx=232;
+  lg.forEach(it=>{g+=`<rect x="${lx}" y="222" width="12" height="12" rx="2" fill="${it[1]}" stroke="${GLASSD}" stroke-width="0.5"/>`;
+    g+=`<text x="${lx+17}" y="232" fill="${DIA.ink3}" font-size="11" font-family="ui-sans-serif">${it[0]}</text>`;
+    lx+=it[0].length*6.6+34;});
   return diaWrap(`${W} ${H}`,g,'The same espresso shot, in the real glassware for each drink \u2014 milk and foam in different proportions.');
 }// 25. Decaf methods.
 function diaDecaf(){
@@ -2594,7 +2647,12 @@ function diaCoffeeMap(){
   // ordered dashed arrows following the numbered sequence
   for(let i=0;i<stops.length-1;i++){const a=stops[i],b=stops[i+1];
     const mx=(a[4]+b[4])/2, my=Math.min(a[5],b[5])-28;
-    g+=`<path d="M${a[4]} ${a[5]} Q${mx} ${my} ${b[4]} ${b[5]}" stroke="#b09876" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#darr)" opacity="0.85"/>`;
+    // back the arrow off both dots: start at edge of A, end ~20px short of B's center (r15 + head)
+    const angEnd=Math.atan2(b[5]-my, b[4]-mx);
+    const ex=b[4]-Math.cos(angEnd)*20, ey=b[5]-Math.sin(angEnd)*20;
+    const angStart=Math.atan2(my-a[5], mx-a[4]);
+    const sx=a[4]+Math.cos(angStart)*17, sy=a[5]+Math.sin(angStart)*17;
+    g+=`<path d="M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx} ${my} ${ex.toFixed(1)} ${ey.toFixed(1)}" stroke="#b09876" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#darr)" opacity="0.85"/>`;
   }
   stops.forEach(s=>{
     g+=`<circle cx="${s[4]}" cy="${s[5]}" r="15" fill="url(#${_cid(s[3])})" stroke="${s[3]}" stroke-width="2"/>`;
@@ -2933,10 +2991,10 @@ function diaScaPath(){
   ['Foundation','Intermediate','Professional'].forEach((lv,i)=>{const yy=30+i*44;
     g+=node(378,yy,100,32,'#C9A34E',lv,null,false);
   });
-  // arrow from the modules block into the levels stack
-  g+=`<path d="M${mx+mw+2} 132 L374 132" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
+  // arrow from the modules block into the levels stack (aim at the stack's vertical middle)
+  g+=`<path d="M${mx+mw+2} 100 L374 100" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
   // a collecting bracket on the right of the 3 levels, then two clean fan-out arrows to the credentials
-  const lvTop=46, lvBot=178, lvMid=(lvTop+lvBot)/2; // vertical centers of the pills
+  const lvTop=46, lvBot=134, lvMid=(lvTop+lvBot)/2; // vertical CENTERS of the three pills (46, 90, 134)
   g+=`<path d="M482 ${lvTop} L498 ${lvTop} L498 ${lvBot} L482 ${lvBot}" fill="none" stroke="#9a8468" stroke-width="1.4" opacity="0.55"/>`;
   g+=`<path d="M498 ${lvMid} L508 ${lvMid}" stroke="#9a8468" stroke-width="1.4" opacity="0.55"/>`;
   g+=`<path d="M508 ${lvMid} C 516 ${lvMid} 516 89 524 89" fill="none" stroke="#9a8468" stroke-width="1.6" marker-end="url(#darr)" opacity="0.75"/>`;
@@ -3213,7 +3271,7 @@ function diaHistoryTimeline(){
 }
 // 48. The Arabica family tree.
 function diaFamilyTree(){
-  const W=880,H=430;
+  const W=940,H=430;
   let g=diaDefs(['#C9A34E','#c86a6a','#B07B3E','#8A5A34','#8fbf3a','#7d9f4a','#c86a9a','#5a8a9a','#c0433a','#d0a850']);
   // lineage colors (a node's family = its accent)
   const TYP='#C9A34E', BOU='#c86a6a', HYB='#c0433a', GSH='#d8b45a', SL='#c07fa8', DIS='#6a9aae';
@@ -3248,7 +3306,7 @@ function diaFamilyTree(){
   g+=node(70,y2,150,'Maragogipe',TYP,'giant bean',false);
   g+=node(245,y2,150,'Mundo Novo','#b98a4a','Bourbon \u00d7 Typica',false);
   // Bourbon branch
-  g+=link(600,y1+42,460,y2,BOU); g+=link(650,y1+42,650,y2,BOU); g+=link(700,y1+42,800,y2,SL);
+  g+=link(600,y1+42,460,y2,BOU); g+=link(650,y1+42,650,y2,BOU); g+=link(700,y1+42,845,y2,SL);
   g+=node(420,y2,150,'Caturra','#9ab648','dwarf · BR ~1937',false);
   g+=node(595,y2,150,'Pacas / V.Sarchi','#8aa356','dwarf mutations',false);
   g+=node(770,y2,150,'SL28 / SL34',SL,'Kenya · blackcurrant',false);
@@ -3267,7 +3325,7 @@ function diaFamilyTree(){
   g+=node(470,y4,320,'Timor Hybrid \u2014 Arabica \u00d7 Robusta',HYB,'the disease-resistance source \u2192 Catimor and Sarchimor',true);
   // Geisha aside (stands apart, bottom-left)
   g+=node(70,y4,330,'Geisha \u2014 Ethiopian landrace',GSH,'jasmine / bergamot \u00b7 the modern superstar',true);
-  g+=`<text x="70" y="${y4+56}" fill="#8a7658" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">stands apart from the Typica/Bourbon line</text>`;
+  g+=`<text x="235" y="${y4+56}" fill="#8a7658" font-size="9.5" text-anchor="middle" font-family="ui-sans-serif" font-style="italic">stands apart from the Typica/Bourbon line</text>`;
   return diaWrap(`${W} ${H}`,g,'How the major Arabica varieties are related \u2014 two founders (Typica, Bourbon) branch into mutations and crosses, with the Timor Hybrid adding Robusta\u2019s disease resistance.');
 }// 49. The coffee species map.
 function diaSpeciesMap(){
