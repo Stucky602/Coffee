@@ -1,4 +1,4 @@
-# Coffee — An Industry Guide.
+# Coffee — An Industry Guide
 
 A working roasting reference for coffee professionals. Built as a self-contained, installable web app
 for the roastery floor — no accounts, no network needed once loaded.
