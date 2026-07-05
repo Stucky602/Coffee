@@ -97,18 +97,19 @@ def draw_bean(D, base, kind, overlay=None):
         return pts
     seam=seam_pts()
     # valley: dark channel underneath
-    val=Image.new("L",(D,D),0); vd=ImageDraw.Draw(val)
-    vd.line(seam,fill=255,width=int(D*0.10),joint="curve")
-    val=val.filter(ImageFilter.GaussianBlur(D*0.02)); val=ImageChops.multiply(val,mask)
-    valdark=Image.new("RGBA",(D,D),(*mul(base,0.32),200))
-    img=Image.composite(valdark,img,val)
-    # silverskin line (bright), green = brighter/wider
-    ss_col=(222,226,196) if kind=='green' else (232,220,196)
-    ss=Image.new("L",(D,D),0); sd=ImageDraw.Draw(ss)
-    sd.line(seam,fill=(210 if kind=='green' else 150),width=int(D*0.045),joint="curve")
-    ss=ss.filter(ImageFilter.GaussianBlur(D*0.008)); ss=ImageChops.multiply(ss,mask)
-    ssimg=Image.new("RGBA",(D,D),(*ss_col,255))
-    img=Image.composite(ssimg,img,ss)
+    def draw_seam(strength=1.0):
+        nonlocal img
+        val=Image.new("L",(D,D),0); vd=ImageDraw.Draw(val)
+        vd.line(seam,fill=int(255*strength),width=int(D*0.10),joint="curve")
+        val=val.filter(ImageFilter.GaussianBlur(D*0.02)); val=ImageChops.multiply(val,mask)
+        valdark=Image.new("RGBA",(D,D),(*mul(base,0.32),int(200*strength)))
+        img=Image.composite(valdark,img,val)
+        ss_col=(222,226,196) if kind=='green' else (232,220,196)
+        ss=Image.new("L",(D,D),0); sd=ImageDraw.Draw(ss)
+        sd.line(seam,fill=int((210 if kind=='green' else 150)*strength),width=int(D*0.045),joint="curve")
+        ss=ss.filter(ImageFilter.GaussianBlur(D*0.008)); ss=ImageChops.multiply(ss,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*ss_col,255)),img,ss)
+    draw_seam()
 
     # ================= DEFECT OVERLAYS =================
     def soft_blob(cxx,cyy,r,col,alpha,blur=None):
@@ -124,7 +125,8 @@ def draw_bean(D, base, kind, overlay=None):
 
     if overlay=='fullblack':
         blk=Image.new("RGBA",(D,D),(14,10,7,235)); img=Image.composite(blk,img,mask)
-        # shrivel wrinkles
+        # shrivel wrinkles (rebind draw to current img)
+        d=ImageDraw.Draw(img)
         for k in range(5):
             yk=cy-ry*0.6+k*ry*0.3
             d.line([(cx-rx*0.5,yk),(cx+rx*0.5,yk+8)],fill=(40,30,22,120),width=2)
@@ -143,19 +145,21 @@ def draw_bean(D, base, kind, overlay=None):
         rsd.line(seam,fill=170,width=int(D*0.04),joint="curve"); rs=rs.filter(ImageFilter.GaussianBlur(D*0.008)); rs=ImageChops.multiply(rs,mask)
         img=Image.composite(Image.new("RGBA",(D,D),(170,92,60,255)),img,rs)
     elif overlay=='insect':
-        # several small deep borer holes
+        # several small deep borer holes — rebind draw to the CURRENT img (composites replaced it)
+        d=ImageDraw.Draw(img)
         holes=[(-0.28,-0.15),(0.15,-0.22),(0.28,0.12),(-0.1,0.22),(0.34,-0.02),(-0.32,0.12),(0.05,-0.05)]
         for hx,hy in holes:
-            px,py=cx+hx*rx*2,cy+hy*ry*2; r=D*0.028*random.uniform(0.8,1.3)
-            d.ellipse([px-r*1.5,py-r*1.5,px+r*1.5,py+r*1.5],fill=(70,52,34,120))  # bored rim
-            d.ellipse([px-r,py-r,px+r,py+r],fill=(18,12,6,255))  # hole
+            px,py=cx+hx*rx*2,cy+hy*ry*2; r=D*0.030*random.uniform(0.85,1.35)
+            d.ellipse([px-r*1.7,py-r*1.7,px+r*1.7,py+r*1.7],fill=(60,44,28,140))   # bored rim (frass)
+            d.ellipse([px-r,py-r,px+r,py+r],fill=(14,9,5,255))                      # dark hole
+            d.ellipse([px-r*0.5,py-r*0.5,px+r*0.2,py+r*0.2],fill=(0,0,0,255))       # deep center
     elif overlay=='broken':
         # clean cut face exposing paler inner
         inner=(200,206,168) if kind=='green' else (214,196,158)
         poly=[(cx+rx*0.2,cy-ry*0.7),(cx+rx*1.05,cy-ry*0.15),(cx+rx*0.9,cy+ry*0.5),(cx+rx*0.15,cy+ry*0.1)]
         cutm=Image.new("L",(D,D),0); ImageDraw.Draw(cutm).polygon(poly,fill=255); cutm=ImageChops.multiply(cutm,mask)
         img=Image.composite(Image.new("RGBA",(D,D),(*inner,255)),img,cutm)
-        d.line([poly[0],poly[3]],fill=(*mul(base,0.6),160),width=2)
+        ImageDraw.Draw(img).line([poly[0],poly[3]],fill=(*mul(base,0.6),160),width=2)
     elif overlay=='immature':
         # pale yellow-green, shiny clinging silverskin, u-curl hint
         img=Image.composite(Image.new("RGBA",(D,D),(196,204,140,150)),img,mask)
@@ -168,7 +172,8 @@ def draw_bean(D, base, kind, overlay=None):
         paste_blob(cx+rx*0.3,cy+ry*0.25,rx*0.45,(140,96,44),150)
         paste_blob(cx-rx*0.05,cy+ry*0.35,rx*0.3,(110,84,40),140)
         paste_blob(cx+rx*0.15,cy-ry*0.35,rx*0.22,(190,170,70),130)
-        # speckle
+        # speckle (rebind draw to current img)
+        d=ImageDraw.Draw(img)
         for _ in range(40):
             a=random.uniform(0,2*math.pi); rr=random.uniform(0,0.85)
             px,py=cx+math.cos(a)*rx*rr,cy+math.sin(a)*ry*rr
@@ -177,10 +182,17 @@ def draw_bean(D, base, kind, overlay=None):
         # faded low-density: wash toward pale, lose contrast
         img=Image.composite(Image.new("RGBA",(D,D),(232,228,200,120)),img,mask)
     elif overlay=='shell':
-        # malformed concave 'ear' — carve out an inner scoop
-        scoop=Image.new("L",(D,D),0); ImageDraw.Draw(scoop).ellipse([cx-rx*0.2,cy-ry*0.7,cx+rx*1.2,cy+ry*0.7],fill=255)
-        scoop=ImageChops.multiply(scoop,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(*mul(base,0.5),200)),img,scoop)
+        # malformed hollow 'ear': carve a concave scoop OUT of the bean so the card background
+        # shows through (a shell is hollow) — leaving a curved shell wall with a shaded inner lip.
+        scoop=Image.new("L",(D,D),0)
+        ImageDraw.Draw(scoop).ellipse([cx-rx*0.15,cy-ry*0.72,cx+rx*1.25,cy+ry*0.72],fill=255)
+        scoop=scoop.filter(ImageFilter.GaussianBlur(D*0.006))
+        # shade the inner lip just inside the scoop before erasing (reads as a curved wall)
+        lip=scoop.filter(ImageFilter.GaussianBlur(D*0.03))
+        lip=ImageChops.subtract(lip,scoop); lip=ImageChops.multiply(lip,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*mul(base,0.45),255)),img,lip)
+        # erase the scoop from alpha -> background shows through
+        a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(scoop,mask)); img.putalpha(a)
     elif overlay=='pale':
         # underdeveloped: pale light-brown, matte wash
         img=Image.composite(Image.new("RGBA",(D,D),(196,150,96,150)),img,mask)
@@ -202,20 +214,44 @@ def draw_bean(D, base, kind, overlay=None):
         half=half.filter(ImageFilter.GaussianBlur(D*0.03)); half=ImageChops.multiply(half,mask)
         img=Image.composite(Image.new("RGBA",(D,D),(20,12,6,220)),img,half)
     elif overlay=='chip':
-        poly=[(cx+rx*0.3,cy-ry*0.5),(cx+rx*1.0,cy-ry*0.1),(cx+rx*0.7,cy+ry*0.35)]
-        cm=Image.new("L",(D,D),0); ImageDraw.Draw(cm).polygon(poly,fill=255); cm=ImageChops.multiply(cm,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(14,9,5,255)),img,cm)
+        # a missing chunk at the edge: fully erase a notch so the panel shows through,
+        # with a thin pale 'exposed inner' rim on the BEAN side of the fresh break.
+        notch=[(cx+rx*0.30,cy-ry*0.62),(cx+rx*1.30,cy-ry*0.62),(cx+rx*1.30,cy+ry*0.35),(cx+rx*0.72,cy+ry*0.20)]
+        nm=Image.new("L",(D,D),0); ImageDraw.Draw(nm).polygon(notch,fill=255)
+        # pale exposed-inner rim: draw a bright band just inside the break line first
+        inner=(214,196,158) if kind=='roast' else (200,206,168)
+        brk=Image.new("L",(D,D),0); ImageDraw.Draw(brk).line([notch[0],notch[3]],fill=220,width=int(D*0.045))
+        brk=brk.filter(ImageFilter.GaussianBlur(D*0.006)); brk=ImageChops.multiply(brk,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*inner,255)),img,brk)
+        # now erase the notch (full)
+        a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(nm,mask)); img.putalpha(a)
     elif overlay=='oil':
         # overdeveloped: dark + oily sheen patches
         img=Image.composite(Image.new("RGBA",(D,D),(30,18,10,140)),img,mask)
         for (ox,oy,orr) in [(-0.2,-0.2,0.5),(0.25,0.15,0.35),(0.05,-0.05,0.7)]:
             paste_blob(cx+ox*rx,cy+oy*ry,rx*orr,(255,240,220),60,blur=rx*0.3)
 
-    # ---- top sheen (over everything, subtle) ----
-    if overlay not in ('fullblack','partblack','facing'):
-        sh=Image.new("L",(D,D),0); ImageDraw.Draw(sh).ellipse([cx-rx*0.6,cy-ry*0.7,cx-rx*0.05,cy-ry*0.15],fill=(70 if kind=='green' else 95))
-        sh=sh.filter(ImageFilter.GaussianBlur(D*0.03)); sh=ImageChops.multiply(sh,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(255,255,255,255)),img,sh)
+    # washes above cover the seam — redraw it so every bean keeps its S-curve center cut
+    if overlay in ('sour','floater','pale','quaker','baked','oil'):
+        draw_seam(strength=0.7 if overlay in ('pale','quaker','baked') else 0.85)
+
+    # ---- top sheen: a TIGHT curved glint, not a soft fog (avoids the 'spraypaint' look) ----
+    # matte defects get no glint; glossy/dark ones get a small bright streak following the bean curve.
+    gloss = {'green':0.0,'roast':0.0}  # base amount by kind
+    glint_alpha = 0
+    if kind=='roast' and overlay in (None,'scorch','tip','chip','facing'): glint_alpha=60
+    if overlay=='oil': glint_alpha=120           # overdeveloped is oily-shiny
+    if kind=='green' and overlay in (None,'broken'): glint_alpha=34
+    if overlay in ('immature','floater','pale','quaker','baked','sour','fungus','fullblack','partblack','shell'):
+        glint_alpha=0                             # matte / not applicable
+    if glint_alpha>0:
+        sh=Image.new("L",(D,D),0); sd2=ImageDraw.Draw(sh)
+        # a slim curved streak in the upper-left quadrant, angled along the bean's long axis
+        streak=[(cx-rx*0.42,cy-ry*0.42),(cx-rx*0.18,cy-ry*0.30),(cx-rx*0.10,cy-ry*0.02),(cx-rx*0.30,cy-ry*0.06)]
+        sd2.polygon(streak,fill=glint_alpha)
+        sh=sh.filter(ImageFilter.GaussianBlur(D*0.012))   # tight blur, not D*0.03
+        sh=ImageChops.multiply(sh,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(255,252,244,255)),img,sh)
 
     return img
 
