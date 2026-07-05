@@ -1,5 +1,5 @@
-const CACHE="coffee-guide-v80";
-const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"];
+const CACHE="coffee-guide-v81";
+const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg","./img/latteart.png","./img/roasters.png"];
 self.addEventListener("install",e=>{
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));

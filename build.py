@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the self-contained 'Coffee - An Industry Guide' HTML PWA from JSON data."""
-import json, pathlib, re
+import json, pathlib, re, shutil
 
 # ---- Country-silhouette curve smoothing -------------------------------------
 # The COUNTRY_SIL paths are hand-authored as straight-line polygons (readable,
@@ -54,8 +54,13 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v80"
-CACHE_C = "coffee-guide-v80"
+APP_VERSION = "v81"
+CACHE_C = "coffee-guide-v81"
+
+# Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
+# These read better as art than hand-drawn SVG. Listed here so the build copies
+# them into the output and the service worker precaches them for offline use.
+IMG_ASSETS = ["latteart.png", "roasters.png"]
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -576,6 +581,7 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(22,14,8,.92);
 .diagram:hover{border-color:var(--heat3);box-shadow:0 0 24px rgba(201,163,78,.08)}
 @keyframes diareveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .diagram svg{display:block}
+.diagram-img img{display:block;width:100%;height:auto;border-radius:8px}
 .diagram figcaption{font-size:12.5px;color:var(--ink3);line-height:1.5;margin-top:10px;max-width:70ch}
 
 /* compare */
@@ -1704,6 +1710,13 @@ const DIA={bg:'#1b140e',line:'#3a2e24',ink:'#c9b8a4',ink3:'#8f7c66',
 function diaWrap(vb,inner,cap){
   const lbl=cap?` aria-label="${esc(cap.replace(/"/g,''))}"`:'';
   return `<figure class="diagram"><svg viewBox="0 0 ${vb}" width="100%" role="img"${lbl} preserveAspectRatio="xMidYMid meet">${inner}</svg>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
+}
+// Image-based diagram: same <figure> shell, but an <img> pointing at a PNG in ./img/.
+// Used for illustrations that read better as raster art than hand-drawn SVG (latte art, roasters).
+// The service worker precaches ./img/* so these still work offline once visited.
+function diaImg(file,cap,alt){
+  const a=alt||cap||'';
+  return `<figure class="diagram diagram-img"><img src="./img/${file}" alt="${esc(String(a).replace(/"/g,''))}" loading="lazy" decoding="async"/>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
 }
 // Wrap a string into <tspan> lines at ~maxChars, returned as tspans anchored at x.
 function wrapTspans(text, x, startY, lineH, maxChars, attrs){
@@ -4165,7 +4178,7 @@ function diagram(kind){
     case 'milk':return diaMilk();
     case 'brewfamilies':return diaBrewFamilies();
     case 'water':return diaWater();
-    case 'roasters':return diaRoasters();
+    case 'roasters':return diaImg('roasters.png','The three main roaster architectures and what each is good at.','Drum, fluid-bed, and hybrid coffee roasters compared');
     case 'waves':return diaWaves();
     case 'supplychain':return diaSupplyChain();
     case 'blend':return diaBlend();
@@ -4220,7 +4233,7 @@ function diagram(kind){
     case 'particlesize':return diaParticleSize();
     case 'ruststory':return diaRustStory();
     case 'borerstory':return diaBorerStory();
-    case 'pourstroke':return diaPourStroke();
+    case 'pourstroke':return diaImg('latteart.png','The three foundational pours \u2014 sink a base, texture the surface, then cut or pull through to finish.','Heart, rosetta, and tulip latte-art pours shown step by step');
     default:return '';
   }
 }
@@ -4492,9 +4505,24 @@ icon = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 </svg>'''
 (BASE / "icon.svg").write_text(icon, encoding="utf-8")
 
-# --- Service worker: cache the shell for offline field use ---
+# --- Copy illustrated PNG diagrams into ./img/ (source lives in ./img_src/) ---
+_img_src = BASE / "img_src"
+_img_out = BASE / "img"
+_img_out.mkdir(exist_ok=True)
+_copied = []
+for _f in IMG_ASSETS:
+    _s = _img_src / _f
+    if _s.exists():
+        shutil.copy2(_s, _img_out / _f)
+        _copied.append(_f)
+    else:
+        print(f"  WARNING: image asset missing: img_src/{_f}")
+print(f"Copied {len(_copied)} image asset(s) into img/: {', '.join(_copied) if _copied else '(none)'}")
+
+# --- Service worker: cache the shell + illustrated images for offline field use ---
+_img_paths = "".join(f',"./img/{f}"' for f in IMG_ASSETS)
 sw = f'''const CACHE="{CACHE_C}";
-const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"];
+const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"{_img_paths}];
 self.addEventListener("install",e=>{{
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{{}}));
