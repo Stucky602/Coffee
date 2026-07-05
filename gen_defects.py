@@ -154,12 +154,23 @@ def draw_bean(D, base, kind, overlay=None):
             d.ellipse([px-r,py-r,px+r,py+r],fill=(14,9,5,255))                      # dark hole
             d.ellipse([px-r*0.5,py-r*0.5,px+r*0.2,py+r*0.2],fill=(0,0,0,255))       # deep center
     elif overlay=='broken':
-        # clean cut face exposing paler inner
-        inner=(200,206,168) if kind=='green' else (214,196,158)
-        poly=[(cx+rx*0.2,cy-ry*0.7),(cx+rx*1.05,cy-ry*0.15),(cx+rx*0.9,cy+ry*0.5),(cx+rx*0.15,cy+ry*0.1)]
-        cutm=Image.new("L",(D,D),0); ImageDraw.Draw(cutm).polygon(poly,fill=255); cutm=ImageChops.multiply(cutm,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(*inner,255)),img,cutm)
-        ImageDraw.Draw(img).line([poly[0],poly[3]],fill=(*mul(base,0.6),160),width=2)
+        # a broken bean: the missing chunk is GONE (background shows through) along a jagged fracture,
+        # with a thin pale exposed-inner rim on the bean side of the break.
+        rng=random.Random(11)
+        inner=(196,202,164) if kind=='green' else (210,192,154)
+        p_top=(cx+rx*0.02, cy-ry*0.66); p_bot=(cx+rx*0.42, cy+ry*0.58)
+        steps=7; edge=[]
+        for i in range(steps+1):
+            t=i/steps; bx=p_top[0]+(p_bot[0]-p_top[0])*t; by=p_top[1]+(p_bot[1]-p_top[1])*t
+            edge.append((bx+rng.uniform(-1,1)*rx*0.12, by+rng.uniform(-1,1)*ry*0.05))
+        face=edge+[(cx+rx*1.4,cy+ry*0.7),(cx+rx*1.4,cy-ry*0.8)]  # out past the bean edge
+        fm=Image.new("L",(D,D),0); ImageDraw.Draw(fm).polygon(face,fill=255)
+        # pale exposed-inner rim along the break, on the bean side (drawn before erase)
+        brk=Image.new("L",(D,D),0); ImageDraw.Draw(brk).line(edge,fill=200,width=int(D*0.05),joint="curve")
+        brk=brk.filter(ImageFilter.GaussianBlur(D*0.008)); brk=ImageChops.multiply(brk,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*inner,255)),img,brk)
+        # erase the broken chunk -> background shows through
+        a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(fm,mask)); img.putalpha(a)
     elif overlay=='immature':
         # pale yellow-green, shiny clinging silverskin, u-curl hint
         img=Image.composite(Image.new("RGBA",(D,D),(196,204,140,150)),img,mask)
@@ -182,23 +193,34 @@ def draw_bean(D, base, kind, overlay=None):
         # faded low-density: wash toward pale, lose contrast
         img=Image.composite(Image.new("RGBA",(D,D),(232,228,200,120)),img,mask)
     elif overlay=='shell':
-        # malformed hollow 'ear': carve a concave scoop OUT of the bean so the card background
-        # shows through (a shell is hollow) — leaving a curved shell wall with a shaded inner lip.
-        scoop=Image.new("L",(D,D),0)
-        ImageDraw.Draw(scoop).ellipse([cx-rx*0.15,cy-ry*0.72,cx+rx*1.25,cy+ry*0.72],fill=255)
-        scoop=scoop.filter(ImageFilter.GaussianBlur(D*0.006))
-        # shade the inner lip just inside the scoop before erasing (reads as a curved wall)
-        lip=scoop.filter(ImageFilter.GaussianBlur(D*0.03))
-        lip=ImageChops.subtract(lip,scoop); lip=ImageChops.multiply(lip,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(*mul(base,0.45),255)),img,lip)
-        # erase the scoop from alpha -> background shows through
-        a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(scoop,mask)); img.putalpha(a)
+        # a shell/'ear' is a thin CURLED fragment — the outer coat that separated and curled
+        # into a C. Keep an outer crescent wall; erase the inner hollow to the background.
+        inner_el=Image.new("L",(D,D),0)
+        # inner hollow: an ellipse offset toward the right, leaving a C opening on the right
+        ImageDraw.Draw(inner_el).ellipse([cx-rx*0.35, cy-ry*0.70, cx+rx*1.45, cy+ry*0.70],fill=255)
+        inner_el=inner_el.filter(ImageFilter.GaussianBlur(D*0.004))
+        # shade the inner concave wall (a curved rim of shadow just inside the crescent)
+        wall=inner_el.filter(ImageFilter.GaussianBlur(D*0.035)); wall=ImageChops.subtract(wall,inner_el)
+        wall=ImageChops.multiply(wall,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*mul(base,0.5),255)),img,wall)
+        # a soft highlight on the outer curl edge (left) so it reads as a rounded fragment
+        hl=Image.new("L",(D,D),0); ImageDraw.Draw(hl).arc([cx-rx*1.0,cy-ry*0.95,cx+rx*0.6,cy+ry*0.95],110,250,fill=120,width=int(D*0.02))
+        hl=hl.filter(ImageFilter.GaussianBlur(D*0.01)); hl=ImageChops.multiply(hl,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(*mul(base,1.25),255)),img,hl)
+        # erase the inner hollow -> background shows through the C opening
+        a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(inner_el,mask)); img.putalpha(a)
     elif overlay=='pale':
         # underdeveloped: pale light-brown, matte wash
         img=Image.composite(Image.new("RGBA",(D,D),(196,150,96,150)),img,mask)
     elif overlay=='quaker':
         # unripe bean stays pale beige/tan after roast
         img=Image.composite(Image.new("RGBA",(D,D),(214,180,120,180)),img,mask)
+    elif overlay=='charred':
+        # carbonized: near-black matte with a faint ashy grey bloom
+        img=Image.composite(Image.new("RGBA",(D,D),(20,15,11,235)),img,mask)
+        ash=Image.new("L",(D,D),0); ImageDraw.Draw(ash).ellipse([cx-rx*0.6,cy-ry*0.5,cx+rx*0.4,cy+ry*0.3],fill=40)
+        ash=ash.filter(ImageFilter.GaussianBlur(D*0.05)); ash=ImageChops.multiply(ash,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(120,110,100,255)),img,ash)
     elif overlay=='baked':
         # looks normal but flat/dull — very slight desaturating wash
         img=Image.composite(Image.new("RGBA",(D,D),(150,120,90,60)),img,mask)
@@ -214,16 +236,27 @@ def draw_bean(D, base, kind, overlay=None):
         half=half.filter(ImageFilter.GaussianBlur(D*0.03)); half=ImageChops.multiply(half,mask)
         img=Image.composite(Image.new("RGBA",(D,D),(20,12,6,220)),img,half)
     elif overlay=='chip':
-        # a missing chunk at the edge: fully erase a notch so the panel shows through,
-        # with a thin pale 'exposed inner' rim on the BEAN side of the fresh break.
-        notch=[(cx+rx*0.30,cy-ry*0.62),(cx+rx*1.30,cy-ry*0.62),(cx+rx*1.30,cy+ry*0.35),(cx+rx*0.72,cy+ry*0.20)]
+        # a missing chunk at the edge with a RANDOM JAGGED break (real chips aren't smooth).
+        # Build the break edge as a zigzag line from a top point to a lower point, then
+        # close the polygon out past the bean edge so that whole corner is erased.
+        rng=random.Random(42)
+        p_top=(cx+rx*0.28, cy-ry*0.60); p_bot=(cx+rx*0.66, cy+ry*0.30)
+        steps=7; edge=[]
+        for i in range(steps+1):
+            t=i/steps
+            bx=p_top[0]+(p_bot[0]-p_top[0])*t
+            by=p_top[1]+(p_bot[1]-p_top[1])*t
+            # perpendicular jitter for a rough fracture
+            jx=rng.uniform(-1,1)*rx*0.14; jy=rng.uniform(-1,1)*ry*0.06
+            edge.append((bx+jx, by+jy))
+        notch=edge+[(cx+rx*1.4,cy+ry*0.4),(cx+rx*1.4,cy-ry*0.7)]  # out past the bean, top-right corner
         nm=Image.new("L",(D,D),0); ImageDraw.Draw(nm).polygon(notch,fill=255)
-        # pale exposed-inner rim: draw a bright band just inside the break line first
+        # pale exposed-inner rim along the jagged break, on the bean side
         inner=(214,196,158) if kind=='roast' else (200,206,168)
-        brk=Image.new("L",(D,D),0); ImageDraw.Draw(brk).line([notch[0],notch[3]],fill=220,width=int(D*0.045))
-        brk=brk.filter(ImageFilter.GaussianBlur(D*0.006)); brk=ImageChops.multiply(brk,mask)
+        brk=Image.new("L",(D,D),0); ImageDraw.Draw(brk).line(edge,fill=210,width=int(D*0.05),joint="curve")
+        brk=brk.filter(ImageFilter.GaussianBlur(D*0.007)); brk=ImageChops.multiply(brk,mask)
         img=Image.composite(Image.new("RGBA",(D,D),(*inner,255)),img,brk)
-        # now erase the notch (full)
+        # erase the jagged notch
         a=img.split()[3]; a=ImageChops.subtract(a,ImageChops.multiply(nm,mask)); img.putalpha(a)
     elif overlay=='oil':
         # overdeveloped: dark + oily sheen patches
@@ -245,13 +278,15 @@ def draw_bean(D, base, kind, overlay=None):
     if overlay in ('immature','floater','pale','quaker','baked','sour','fungus','fullblack','partblack','shell'):
         glint_alpha=0                             # matte / not applicable
     if glint_alpha>0:
-        sh=Image.new("L",(D,D),0); sd2=ImageDraw.Draw(sh)
-        # a slim curved streak in the upper-left quadrant, angled along the bean's long axis
-        streak=[(cx-rx*0.42,cy-ry*0.42),(cx-rx*0.18,cy-ry*0.30),(cx-rx*0.10,cy-ry*0.02),(cx-rx*0.30,cy-ry*0.06)]
-        sd2.polygon(streak,fill=glint_alpha)
-        sh=sh.filter(ImageFilter.GaussianBlur(D*0.012))   # tight blur, not D*0.03
-        sh=ImageChops.multiply(sh,mask)
-        img=Image.composite(Image.new("RGBA",(D,D),(255,252,244,255)),img,sh)
+        # a soft elongated highlight (rotated ellipse), blurred so it reads as sheen not a shape
+        gl=Image.new("L",(D,D),0)
+        ge=Image.new("L",(D,D),0)
+        ImageDraw.Draw(ge).ellipse([cx-rx*0.34,cy-ry*0.52,cx-rx*0.02,cy-ry*0.04],fill=glint_alpha)
+        ge=ge.rotate(18,center=(cx,cy),resample=Image.BILINEAR)
+        gl=ImageChops.lighter(gl,ge)
+        gl=gl.filter(ImageFilter.GaussianBlur(D*0.03))   # soft, no hard edges
+        gl=ImageChops.multiply(gl,mask)
+        img=Image.composite(Image.new("RGBA",(D,D),(255,252,244,255)),img,gl)
 
     return img
 
@@ -315,3 +350,47 @@ gallery("roastdefects.png","Roast defects","roast",(150,96,54),[
     ("Baked","temp stalled \u2014 looks fine!","baked",None),
     ("Quaker","unripe bean \u2014 stays pale","quaker",None),
 ])
+
+# ---- compact inline strips for the methodology bean-card galleries (image-7 style) ----
+def strip(fname, kind, base, cells, per_row=4):
+    """cells: (label, sub, overlay). Rendered as cards in a grid, transparent bg (sits on the page panel)."""
+    import math as _m
+    n=len(cells); cols=min(per_row,n); rows=_m.ceil(n/cols)
+    cw,ch=180,150
+    W,H=cols*cw, rows*ch
+    s=SS
+    im=Image.new("RGBA",(W*s,H*s),(0,0,0,0)); d=ImageDraw.Draw(im)
+    for i,(label,sub,overlay) in enumerate(cells):
+        r,c=divmod(i,cols); cx=cw*c+cw/2; cy=ch*r+58
+        # card
+        d.rounded_rectangle([(cw*c+6)*s,(ch*r+6)*s,(cw*c+cw-6)*s,(ch*r+ch-6)*s],radius=10*s,outline=(58,46,32),width=int(1*s),fill=(30,22,15,255))
+        D=int(74*s); bean=draw_bean(D,base,kind,overlay)
+        im.paste(bean,(int(cx*s-D/2),int(cy*s-D/2)),bean)
+        d.text((cx*s,(cy+50)*s),label,font=font(12*s,True),fill=INK,anchor="mm")
+        # wrap sub to two lines
+        words=sub.split(); mid=len(words)//2 if len(sub)>26 else len(words)
+        l1=" ".join(words[:mid]) if mid<len(words) else sub
+        l2=" ".join(words[mid:]) if mid<len(words) else ""
+        d.text((cx*s,(cy+68)*s),l1 if l2 else sub,font=font(9*s),fill=INK3,anchor="mm")
+        if l2: d.text((cx*s,(cy+80)*s),l2,font=font(9*s),fill=INK3,anchor="mm")
+    im=im.resize((W,H),Image.LANCZOS); im.save(OUT/fname); print("wrote",fname,im.size)
+
+# roast defects page (image 7): Well-developed, Quaker, Scorched tips, Charred
+strip("beans_roast.png","roast",(150,96,54),[
+    ("Well-developed","even color, fully developed",None),
+    ("Quaker","pale, underdeveloped, unripe","quaker"),
+    ("Scorched tips","burnt tips from too-high heat","tip"),
+    ("Charred","carbonized, ashy, taken too far","charred"),
+],per_row=4)
+
+# green grading page: 8 green defects
+strip("beans_green.png","green",(102,128,92),[
+    ("Healthy","even, intact, clean crease",None),
+    ("Full black","dead/fermented, blackened","fullblack"),
+    ("Partial black","less than half black","partblack"),
+    ("Full sour","reddish-brown, over-fermented","sour"),
+    ("Broken / chipped","milling damage","broken"),
+    ("Insect damage","bore holes (borer)","insect"),
+    ("Quaker","pale after roasting","quaker"),
+    ("Shell","malformed hollow bean","shell"),
+],per_row=4)

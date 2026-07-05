@@ -1,5 +1,5 @@
-const CACHE="coffee-guide-v83";
-const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg","./img/latteart.png","./img/roasters.png","./img/greendefects.png","./img/roastdefects.png"];
+const CACHE="coffee-guide-v88";
+const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg","./img/latteart.png","./img/roasters.png","./img/greendefects.png","./img/roastdefects.png","./img/processing.png","./img/milkdrinks.png","./img/blend.png","./img/teacoffee.png","./img/decafmethods.png","./img/beans_roast.png","./img/beans_green.png"];
 self.addEventListener("install",e=>{
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));
