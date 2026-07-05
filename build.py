@@ -54,13 +54,13 @@ _meth_raw = json.loads((BASE / "data_methodology.json").read_text())
 methodology = _meth_raw["METHODOLOGY"]
 glossary = _meth_raw.get("GLOSSARY", [])
 
-APP_VERSION = "v81"
-CACHE_C = "coffee-guide-v81"
+APP_VERSION = "v82"
+CACHE_C = "coffee-guide-v82"
 
 # Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
 # These read better as art than hand-drawn SVG. Listed here so the build copies
 # them into the output and the service worker precaches them for offline use.
-IMG_ASSETS = ["latteart.png", "roasters.png"]
+IMG_ASSETS = ["latteart.png", "roasters.png", "greendefects.png", "roastdefects.png"]
 
 PROFILE_GROUPS = [
     ("light", "Light"),
@@ -4217,7 +4217,7 @@ function diagram(kind){
     case 'instantcoffee':return diaInstantCoffee();
     case 'esphistory':return diaEspHistory();
     case 'geishastory':return diaGeishaStory();
-    case 'roastdefects':return diaRoastDefects();
+    case 'roastdefects':return diaImg('roastdefects.png','A visual field guide to the common roast defects.','Roasted coffee bean defects: scorching, tipping, facing, chipping, quaker and more');
     case 'spotsl28':return diaSpotSl28();
     case 'spotbourbon':return diaSpotBourbon();
     case 'spotpacamara':return diaSpotPacamara();
@@ -4225,7 +4225,7 @@ function diagram(kind){
     case 'caffeinescience':return diaCaffeineScience();
     case 'fermentmethods':return diaFermentMethods();
     case 'mokapot':return diaMokaPot();
-    case 'greendefects':return diaGreenDefects();
+    case 'greendefects':return diaImg('greendefects.png','A visual field guide to the common green-coffee defects and their SCA categories.','Green coffee bean defects: full black, full sour, insect damage, immature, fungus and more');
     case 'spotworkhorse':return diaSpotWorkhorse();
     case 'profiling':return diaProfiling();
     case 'spottypica':return diaSpotTypica();
