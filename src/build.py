@@ -89,8 +89,8 @@ try:
 except FileNotFoundError:
     PM_CATALOG = {}
 
-APP_VERSION = "v114"
-CACHE_C = "coffee-guide-v114"
+APP_VERSION = "v115"
+CACHE_C = "coffee-guide-v115"
 
 # Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
 # These read better as art than hand-drawn SVG. Listed here so the build copies
@@ -6792,8 +6792,47 @@ function closeTermPop(){const p=document.getElementById('termpop');if(p)p.remove
   go('home');
 })();
 
+/* ---- SERVICE WORKER REGISTRATION + AUTO-UPDATE ----
+   An installed home-screen app should pick up a new version by itself, without
+   being deleted and re-added. Three things make that work:
+     1. updateViaCache:'none' so the browser never serves a stale sw.js.
+     2. An explicit update check on load and whenever the app regains focus.
+     3. A one-time reload when a new worker takes control.
+   The reload is guarded so it can only happen once per page life. */
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+  let reloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(reloading) return;
+    reloading=true;
+    location.reload();
+  });
+
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+      // If a new worker is already waiting, let it take over now.
+      if(reg.waiting) reg.waiting.postMessage('SKIP_WAITING');
+
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        if(!nw) return;
+        nw.addEventListener('statechange',()=>{
+          // Installed with an existing controller means this is an UPDATE,
+          // not a first install. Activate it straight away.
+          if(nw.state==='installed' && navigator.serviceWorker.controller){
+            nw.postMessage('SKIP_WAITING');
+          }
+        });
+      });
+
+      // Check for a new build on load, when the app is brought back to the
+      // foreground, and hourly while it stays open.
+      const check=()=>{ reg.update().catch(()=>{}); };
+      check();
+      document.addEventListener('visibilitychange',()=>{ if(!document.hidden) check(); });
+      window.addEventListener('focus',check);
+      setInterval(check,60*60*1000);
+    }).catch(()=>{});
+  });
 }
 </script>
 </body>
@@ -6867,21 +6906,66 @@ print(f"Display font: {', '.join(FONT_ASSETS)} (served from ./fonts/)")
 # --- Service worker: cache the shell + illustrated images + font for offline field use ---
 _img_paths = "".join(f',"./img/{f}"' for f in IMG_ASSETS)
 _font_paths = "".join(f',"./fonts/{f}"' for f in FONT_ASSETS)
-sw = f'''const CACHE="{CACHE_C}";
+sw = f'''/* Service worker for Coffee: An Industry Guide.
+
+   STRATEGY
+   - Navigations / HTML: NETWORK FIRST. The app always tries to fetch a fresh
+     index.html and only falls back to cache when offline. This is what lets a
+     new version reach an installed home-screen app without reinstalling it.
+   - Static assets (images, fonts, icon): CACHE FIRST. They are versioned by the
+     cache name, never change within a version, and are what make offline work.
+   - On activate we delete every old cache and claim open clients immediately.
+
+   The page also polls for updates and, when a new worker takes over, reloads
+   itself once. See the registration block in index.html.
+*/
+const CACHE="{CACHE_C}";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"{_img_paths}{_font_paths}];
+
 self.addEventListener("install",e=>{{
-  self.skipWaiting();
+  self.skipWaiting();                       // do not wait for old tabs to close
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{{}}));
 }});
+
 self.addEventListener("activate",e=>{{
-  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+  e.waitUntil(
+    caches.keys()
+      .then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
+      .then(()=>self.clients.claim())
+  );
 }});
+
+// Allow the page to ask a waiting worker to take over right now.
+self.addEventListener("message",e=>{{
+  if(e.data==="SKIP_WAITING") self.skipWaiting();
+}});
+
+function isHTML(req){{
+  return req.mode==="navigate" ||
+         (req.headers.get("accept")||"").includes("text/html");
+}}
+
 self.addEventListener("fetch",e=>{{
-  if(e.request.method!=="GET")return;
+  if(e.request.method!=="GET") return;
+  const req=e.request;
+
+  // HTML: network first, so a new build is picked up as soon as it exists.
+  if(isHTML(req)){{
+    e.respondWith(
+      fetch(req).then(res=>{{
+        const copy=res.clone();
+        caches.open(CACHE).then(c=>c.put("./index.html",copy)).catch(()=>{{}});
+        return res;
+      }}).catch(()=>caches.match("./index.html").then(hit=>hit||caches.match("./")))
+    );
+    return;
+  }}
+
+  // Everything else: cache first, fill the cache on a miss.
   e.respondWith(
-    caches.match(e.request).then(hit=>hit||fetch(e.request).then(res=>{{
+    caches.match(req).then(hit=>hit||fetch(req).then(res=>{{
       const copy=res.clone();
-      caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{{}});
+      caches.open(CACHE).then(c=>c.put(req,copy)).catch(()=>{{}});
       return res;
     }}).catch(()=>caches.match("./index.html")))
   );
