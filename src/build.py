@@ -89,8 +89,8 @@ try:
 except FileNotFoundError:
     PM_CATALOG = {}
 
-APP_VERSION = "v112"
-CACHE_C = "coffee-guide-v112"
+APP_VERSION = "v113"
+CACHE_C = "coffee-guide-v113"
 
 # Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
 # These read better as art than hand-drawn SVG. Listed here so the build copies
@@ -262,6 +262,118 @@ html[data-theme="pm"] .heatbar i:nth-child(5){background:var(--pm-red)!important
    data stays legible regardless of page theme. One rule fixes all of them. */
 html[data-theme="pm"] .diagram{background:#1b140e;border-color:#3a2e24}
 html[data-theme="pm"] .diagram figcaption{color:#8f7c66}
+
+/* ---- QUALITY SYSTEM / PLAYBOOK / RUNBOOK ---- */
+.qmswhy{background:rgba(200,80,58,.06);border-left:4px solid var(--pm-red,#c8503a);
+  border-radius:0 10px 10px 0;padding:13px 16px;margin:16px 0 20px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.qmswhy b{color:var(--ink1)}
+.qmsblock{margin:22px 0}
+.qmsblock h3{font-family:var(--display);font-size:17px;color:var(--ink1);margin:0 0 10px}
+.qmsfields{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.qmsfield{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.qmsfield b{display:block;font-size:13px;color:var(--ink1);margin-bottom:3px}
+.qmsfield span{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.qmschips{display:flex;flex-wrap:wrap;gap:7px}
+.qmschips span{background:var(--panel2);border:1px solid var(--line);border-radius:20px;
+  padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+.pmtemplate-note{background:rgba(26,26,26,.04);border:1px dashed var(--line);border-radius:10px;
+  padding:12px 15px;margin:20px 0 6px;font-size:12.5px;color:var(--ink3);font-style:italic}
+.qmsmatrix{margin-top:14px;overflow-x:auto}
+.qmsmatrix table{border-collapse:collapse;font-size:12px;min-width:520px}
+.qmsmatrix th{font-weight:600;color:var(--ink3);padding:0 6px 8px;text-align:center;vertical-align:bottom}
+.qmsmatrix th span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  white-space:nowrap;font-size:11px;max-height:110px}
+.qmsmatrix td{padding:6px;text-align:center}
+.qmsmatrix .qmsp{text-align:left;color:var(--ink1);font-weight:600;padding-right:12px;white-space:nowrap}
+.qmsdot{display:inline-block;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line)}
+.qmsdot.l0{background:transparent}
+.qmsdot.l1{background:#d9c9a8}
+.qmsdot.l2{background:#7cc4dc}
+.qmsdot.l3{background:#27b388}
+.qmslegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink2)}
+.qmslegend span{display:inline-flex;align-items:center;gap:6px}
+.qmsdemo-note{font-size:11.5px;color:var(--ink3);font-style:italic;margin-top:8px}
+.pblist{display:flex;flex-direction:column;gap:14px}
+.pbblock{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:15px 16px}
+.pbnum{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--ink2)}
+.pbbody h3{font-family:var(--display);font-size:17px;color:var(--ink1);margin:2px 0 5px}
+.pbbody p{font-size:13px;color:var(--ink2);margin:0 0 8px}
+.pbbody ul{margin:0;padding-left:18px}
+.pbbody li{font-size:12.5px;color:var(--ink2);margin-bottom:4px;line-height:1.5}
+/* visit checklist */
+.vtally{display:inline-block;background:var(--pm-red,#c8503a);color:#fff;font-weight:700;
+  font-size:12.5px;padding:5px 13px;border-radius:20px;margin-bottom:14px}
+.vsecs{display:flex;flex-direction:column;gap:16px}
+.vsec{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.vsec h3{font-family:var(--display);font-size:16px;color:var(--ink1);margin:0 0 10px}
+.vchk{display:flex;align-items:flex-start;gap:10px;padding:7px 0;cursor:pointer;
+  border-top:1px solid var(--line)}
+.vsec .vchk:first-of-type{border-top:none}
+.vchk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--pm-red,#c8503a)}
+.vchk span{font-size:13.5px;color:var(--ink2);line-height:1.45}
+/* diagnostic */
+.dxlist{display:flex;flex-direction:column;gap:10px}
+.dxcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.dxcard summary{padding:14px 16px;cursor:pointer;list-style:none;font-weight:600;
+  color:var(--ink1);font-size:14px;display:flex;align-items:center;gap:10px}
+.dxcard summary::-webkit-details-marker{display:none}
+.dxcard summary::before{content:'\25B8';color:var(--pm-red,#c8503a);font-size:12px;flex:none}
+.dxcard[open] summary::before{content:'\25BE'}
+.dxcard[open] summary{border-bottom:1px solid var(--line)}
+.dxbody{padding:14px 16px}
+.dxcause{font-size:12.5px;color:var(--ink3);margin-bottom:6px}
+.dxcause b{color:var(--pm-red,#c8503a);font-size:14px}
+.dxbody p{font-size:13px;color:var(--ink2);margin:0 0 10px}
+.dxbody ul{margin:0;padding-left:18px}
+.dxbody li{font-size:13px;color:var(--ink2);margin-bottom:5px;line-height:1.5}
+/* freshness */
+.freshdate{display:block;width:100%;margin-top:8px;background:var(--panel2);border:1px solid var(--line);
+  color:var(--ink1);border-radius:9px;padding:11px 12px;font-size:15px;font-family:var(--mono)}
+.freshcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--fc,#27b388);
+  border-radius:12px;padding:16px 18px}
+.freshday{font-family:var(--mono);font-size:38px;font-weight:800;color:var(--fc,#27b388);line-height:1}
+.freshday small{display:block;font-size:11.5px;font-weight:600;color:var(--ink3);
+  letter-spacing:.05em;text-transform:uppercase;margin-top:5px;font-family:var(--sans)}
+.freshstate{font-family:var(--display);font-size:20px;color:var(--ink1);margin:10px 0 6px}
+.freshmsg{font-size:13.5px;color:var(--ink2);margin:0;line-height:1.55}
+.freshbar{position:relative;height:10px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:20px;margin-top:18px;overflow:hidden}
+.freshbar-fill{height:100%;border-radius:20px;transition:width .3s}
+.freshbar i{position:absolute;top:-3px;width:2px;height:16px;background:var(--line)}
+.freshmarks{position:relative;height:16px;margin-top:4px}
+.freshmarks span{position:absolute;transform:translateX(-50%);font-size:10px;color:var(--ink3);white-space:nowrap}
+/* content infusion */
+.pminfuse{display:flex;align-items:flex-start;gap:10px;background:rgba(200,80,58,.06);
+  border:1px solid rgba(200,80,58,.25);border-radius:10px;padding:11px 14px;margin:0 0 16px;
+  font-size:13.5px;color:var(--ink2);line-height:1.55}
+.phasehead{display:flex;align-items:baseline;gap:10px;margin:18px 0 8px;padding-bottom:6px;
+  border-bottom:2px solid var(--ga,#c8503a)}
+.phasehead b{font-family:var(--display);font-size:16px;color:var(--ink1)}
+.phasehead span{font-size:12.5px;color:var(--ink3)}
+.pminfuse-tag{flex:none;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:var(--pm-red,#c8503a);padding:3px 8px;border-radius:20px;margin-top:1px}
+
+/* ---- BAR MODE: bigger targets, calmer contrast, for 6am with wet hands ---- */
+html[data-barmode="1"] .navtabs button,html[data-barmode="1"] .mobnav button{font-size:15px;padding:12px 14px}
+html[data-barmode="1"] .secard,html[data-barmode="1"] .origcard,html[data-barmode="1"] .pmmenucard{padding:18px 20px}
+html[data-barmode="1"] .secard-title{font-size:19px}
+html[data-barmode="1"] .back{padding:12px 20px;font-size:15px}
+html[data-barmode="1"] .vchk input{width:26px;height:26px}
+html[data-barmode="1"] .vchk span{font-size:15.5px}
+html[data-barmode="1"] .dxcard summary{padding:18px 18px;font-size:16px}
+html[data-barmode="1"] .dxbody li{font-size:15px;margin-bottom:8px}
+html[data-barmode="1"] .msection p{font-size:16px;line-height:1.7}
+html[data-barmode="1"] .bc-range{height:34px}
+html[data-barmode="1"] .pmt-card{min-height:104px}
+html[data-barmode="1"] button,html[data-barmode="1"] .relchip{min-height:44px}
+.barmodebtn{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:35;
+  background:var(--pm-red,#c8503a);color:#fff;border:none;border-radius:26px;padding:11px 16px;
+  font-weight:700;font-size:12.5px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}
+html[data-theme="pm"] .barmodebtn{display:inline-flex;align-items:center;gap:7px}
+html[data-barmode="1"] .barmodebtn{background:#1a1a1a}
+@media(max-width:640px){.barmodebtn{bottom:calc(70px + env(safe-area-inset-bottom,0px))}}
 
 /* ---- PM CATALOG COMPONENTS (tiers, lots, menu, home strip) ---- */
 .pmtier{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
@@ -1049,6 +1161,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
   </div>
   <button class="pm-toolkitbar" id="pm-toolkitbar" onclick="go('pmhub')">Proud Mary Toolkit</button>
 </header>
+<button class="barmodebtn" id="barmodebtn" onclick="toggleBarMode()" aria-label="Toggle bar mode">Bar mode</button>
 <div id="devpanel" class="devpanel" style="display:none">
   <div class="devpanel-inner">
     <div class="devpanel-head">
@@ -1635,6 +1748,24 @@ function updateFooter(){
    Replaces the old injected nav tab (which cramped the desktop tab row). The bar
    is CSS-hidden in the neutral theme; here we just keep the mobile nav in sync and
    highlight the bar when the user is inside a PM view. */
+/* ---- BAR MODE ----
+   The guide gets used behind a bar at 6am, one-handed, often with wet hands.
+   Bar mode scales up touch targets and body text without changing the layout.
+   PM mode only, persisted per device. */
+function barModeOn(){ try{ return localStorage.getItem('cig_barmode')==='1'; }catch(e){ return false; } }
+function applyBarMode(on){
+  if(on) document.documentElement.setAttribute('data-barmode','1');
+  else document.documentElement.removeAttribute('data-barmode');
+  var b=document.getElementById('barmodebtn');
+  if(b) b.textContent = on ? 'Bar mode on' : 'Bar mode';
+}
+function toggleBarMode(){
+  var next=!barModeOn();
+  try{ localStorage.setItem('cig_barmode', next?'1':'0'); }catch(e){}
+  applyBarMode(next);
+}
+function initBarMode(){ applyBarMode(barModeOn()); }
+
 function syncPmTab(){
   var on = pmModeOn();
   // mobile bottom nav still gets a compact "Proud Mary" entry
@@ -1770,7 +1901,7 @@ function go(view,arg,restore){
   render();
   const top=['home','start','profiles','origins','compare','learn'].includes(view)?view:
     (view==='profile'?'profiles':view==='origin'?'origins':view==='meth'?'learn':
-     (view==='pmhub'||view==='pmwholesale'||view==='pmcva'||view==='pmonboard'||view==='pmoffer'||view==='pmrecipes'||view==='coffee'||view==='radarcompare'||view==='roastplay'||view==='brewcompare'||view==='glossaryhub'||view==='pmmenu'||view==='pmcardgen'||view==='pmwholesale2'||view==='pmmenucoffee')?'pm':'home');
+     (view==='pmhub'||view==='pmwholesale'||view==='pmcva'||view==='pmonboard'||view==='pmoffer'||view==='pmrecipes'||view==='coffee'||view==='radarcompare'||view==='roastplay'||view==='brewcompare'||view==='glossaryhub'||view==='pmmenu'||view==='pmcardgen'||view==='pmwholesale2'||view==='pmmenucoffee'||view==='pmquality'||view==='pmrepplaybook'||view==='pmrunbook'||view==='pmvisit'||view==='pmdiagnose'||view==='pmfresh')?'pm':'home');
   setNav(top);
   // restore remembered position when returning to a view; otherwise go to top.
   const y = restore ? (scrollMemo[viewKey(state)]||0) : 0;
@@ -1799,7 +1930,7 @@ function navBack(fallbackView,fallbackArg){
 function navTopFor(view){
   return ['home','start','profiles','origins','compare','learn'].includes(view)?view:
     (view==='profile'?'profiles':view==='origin'?'origins':view==='meth'?'learn':
-     (view==='pmhub'||view==='pmwholesale'||view==='pmcva'||view==='pmonboard'||view==='pmoffer'||view==='pmrecipes'||view==='coffee'||view==='radarcompare'||view==='roastplay'||view==='brewcompare'||view==='glossaryhub'||view==='pmmenu'||view==='pmcardgen'||view==='pmwholesale2'||view==='pmmenucoffee')?'pm':'home');
+     (view==='pmhub'||view==='pmwholesale'||view==='pmcva'||view==='pmonboard'||view==='pmoffer'||view==='pmrecipes'||view==='coffee'||view==='radarcompare'||view==='roastplay'||view==='brewcompare'||view==='glossaryhub'||view==='pmmenu'||view==='pmcardgen'||view==='pmwholesale2'||view==='pmmenucoffee'||view==='pmquality'||view==='pmrepplaybook'||view==='pmrunbook'||view==='pmvisit'||view==='pmdiagnose'||view==='pmfresh')?'pm':'home');
 }
 // A label for the back button based on where we'll actually return to.
 function backLabelFor(fallbackLabel){
@@ -1810,7 +1941,7 @@ function backLabelFor(fallbackLabel){
     pmhub:'Toolkit',pmonboard:'Onboarding',pmwholesale:'Wholesale',pmwholesale2:'Portal',
     coffee:'Dial-in',pmcva:'Cupping',pmoffer:'Offerings',pmrecipes:'Recipes',
     pmmenu:'Menu',pmcardgen:'Cards',glossaryhub:'Glossary',radarcompare:'Compare',
-    roastplay:'Playground',brewcompare:'Brew compare',pmmenucoffee:'Our coffees'};
+    roastplay:'Playground',brewcompare:'Brew compare',pmmenucoffee:'Our coffees',pmquality:'Quality system',pmrepplaybook:'Rep playbook',pmrunbook:'Opening runbook',pmvisit:'Visit checklist',pmdiagnose:'Diagnose',pmfresh:'Freshness'};
   // onboarding path detail: show the role
   if(prev.view==='pmonboard' && prev.arg){
     var r=(typeof PM_ROLES!=='undefined')&&PM_ROLES[prev.arg];
@@ -1852,6 +1983,12 @@ function renderView(){
   if(v==='pmoffer')return pmOfferingsView();
   if(v==='pmrecipes')return pmRecipesView();
   if(v==='pmmenucoffee')return pmCoffeeMenuView();
+  if(v==='pmquality')return pmQualityView(state.arg);
+  if(v==='pmrepplaybook')return pmRepPlaybookView();
+  if(v==='pmrunbook')return pmRunbookView();
+  if(v==='pmvisit')return pmVisitView();
+  if(v==='pmdiagnose')return pmDiagnoseView();
+  if(v==='pmfresh')return pmFreshView();
   if(v==='radarcompare')return radarCompareView();
   if(v==='roastplay')return roastPlayView();
   if(v==='brewcompare')return brewCompareView();
@@ -2605,7 +2742,7 @@ function originDetail(id){
     <div class="factstrip">${facts.map(f=>`<div class="fact"><div class="fl">${esc(f[0])}</div><div class="fv">${esc(f[1])}</div></div>`).join('')}</div>
     ${pmOriginLots(id)}
     ${originRegionMap(m)}
-    ${m.sections.map(s=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>`).join('')}
+    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>${i===0?pmInfuse(id):''}`).join('')}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${refsBlock(m.refs)}
     ${siblings.length?`<div class="siblings"><h4>More origins</h4><div class="origrid">${siblings.map(([sid,sm])=>originCard(sid,sm)).join('')}</div></div>`:''}
@@ -5518,22 +5655,34 @@ function pmHub(){
       '<h1 class="page-title">The Proud Mary toolkit</h1>'+
       '<p class="pmhero-lede">The working tools behind the guide: what a caf\u00e9 partner, a new barista, or a customer actually reaches for. Built as a demo, wired to our real menu, ready for real numbers wherever they\u2019re still placeholders.</p>'+
     '</section>'+
-    '<div class="dirlead">Pick a tool</div>'+
+    '<div class="dirlead">For your caf\u00e9 partners</div>'+
     '<div class="secdir">'+
-      pmToolCard(pmIcon('bag'),'Our coffees','The full menu by tier \u2014 Mild, Curious, Wild, Deluxe \u2014 with every lot on right now.','See the menu','pmmenucoffee',null,'live')+
-      pmToolCard(svgIcon('compare'),'Wholesale dial-in','Per-coffee recipe cards a caf\u00e9 gets by scanning the bag \u2014 espresso, batch, and at-home, plus the grower story.','Open '+wholesaleN+' coffees','pmwholesale',null,'flagship')+
-      pmToolCard(pmIcon('cup'),'Cupping scorer','The official SCA CVA affective calculator \u2014 rate eight sections, get the cup score live.','Score a coffee','pmcva')+
-      pmToolCard(pmIcon('grad'),'Staff onboarding','Role-based training paths \u2014 barista, roaster, wholesale \u2014 that turn the guide into a ramp for new hires.','See the paths','pmonboard')+
-      pmToolCard(pmIcon('bag'),'Current offerings','This month\u2019s lots as shelf-ready cards, sorted by the Mild \u2192 Wild \u2192 Deluxe tiers.','Browse lots','pmoffer')+
-      pmToolCard(pmIcon('recipe'),'House recipes','Proud Mary\u2019s standard brew specs as presets \u2014 the same cup, every bar.','View recipes','pmrecipes')+
-      pmToolCard(pmIcon('bag'),'Partner portal','The wholesale-facing bundle \u2014 recipes, staff training, and QC in one place.','Open portal','pmwholesale2')+
-      pmToolCard(pmIcon('cup'),'Menu decoder','\u201cWhat am I drinking?\u201d \u2014 plain-English guide to every drink on the board.','Decode the menu','pmmenu')+
-      pmToolCard(pmIcon('recipe'),'Grower-story cards','Print-ready shelf/bag cards \u2014 the story, specs, and notes for any coffee.','Make a card','pmcardgen')+
+      pmToolCard(pmIcon('bag'),'Our coffees','The full menu by tier, Mild through Deluxe, with every lot on right now.','See the menu','pmmenucoffee',null,'live')+
+      pmToolCard(svgIcon('compare'),'Wholesale dial-in','Per-coffee recipe cards a caf\u00e9 gets by scanning the bag: espresso, batch, and at-home.','Open '+wholesaleN+' coffees','pmwholesale',null,'flagship')+
+      pmToolCard(pmIcon('grad'),'Partner onboarding','Week one to month one for a new wholesale account, laid out as a path.','See the timeline','pmonboard')+
+      pmToolCard(pmIcon('recipe'),'Caf\u00e9 visit checklist','Same checks at every site, so a visit becomes a trend instead of an opinion.','Run a visit','pmvisit')+
+      pmToolCard(pmIcon('bag'),'Partner portal','The wholesale-facing bundle: recipes, staff training, and QC in one place.','Open portal','pmwholesale2')+
+    '</div>'+
+    '<div class="dirlead" style="margin-top:34px">For your team</div>'+
+    '<div class="secdir">'+
+      pmToolCard(pmIcon('recipe'),'Quality system','Procedures, deviation log, training matrix, calibration, audit. What keeps eight bars tasting like two.','Open the system','pmquality',null,'core')+
+      pmToolCard(pmIcon('grad'),'Rep playbook &amp; handover','How a territory runs, and how it survives changing hands.','Open playbook','pmrepplaybook')+
+      pmToolCard(pmIcon('bag'),'Opening a new site','A runbook for standing up a location so it tastes right from day one.','Open runbook','pmrunbook')+
+      pmToolCard(pmIcon('cup'),'Cupping scorer','The SCA CVA affective calculator. Rate eight sections, get the cup score live.','Score a coffee','pmcva')+
+      pmToolCard(pmIcon('recipe'),'House recipes','Standard brew specs as presets, so it is the same cup on every bar.','View recipes','pmrecipes')+
+    '</div>'+
+    '<div class="dirlead" style="margin-top:34px">For the counter</div>'+
+    '<div class="secdir">'+
+      pmToolCard(pmIcon('cup'),'Why does it taste different today?','The 6am question. Start from what you are tasting, work back to the dial that moved.','Diagnose it','pmdiagnose')+
+      pmToolCard(pmIcon('cup'),'Is this bag ready?','Enter the roast date, see where it sits in the window.','Check a bag','pmfresh')+
+      pmToolCard(pmIcon('cup'),'Menu decoder','Plain-English guide to every drink on the board.','Decode the menu','pmmenu')+
+      pmToolCard(pmIcon('recipe'),'Grower-story cards','Print-ready shelf cards: the story, specs, and notes for any coffee.','Make a card','pmcardgen')+
+      pmToolCard(pmIcon('bag'),'Current offerings','This month\u2019s lots as shelf-ready cards, sorted by tier.','Browse lots','pmoffer')+
     '</div>'+
     '<div class="dirlead" style="margin-top:34px">Explorer tools</div>'+
     '<div class="secdir">'+
       pmToolCard(svgIcon('profiles'),'Roast playground','Drag the sliders, watch the curve, DTR, and temps move live.','Play with a roast','roastplay')+
-      pmToolCard(pmIcon('cup'),'Brew face-off','Two brew methods, same water \u2014 see how dose, grind, and time differ.','Compare brews','brewcompare')+
+      pmToolCard(pmIcon('cup'),'Brew face-off','Two brew methods, same water. See how dose, grind, and time differ.','Compare brews','brewcompare')+
       pmToolCard(svgIcon('learn'),'Glossary','Every term the guide uses, searchable in one place.','Open glossary','glossaryhub')+
     '</div>'+
     '<p class="pmhub-note">This tab only appears in Proud Mary mode. A normal visitor to the guide never sees it.</p>'+
@@ -5603,7 +5752,8 @@ function pmCvaPage(){
 // Role-based training paths: each step points at an existing Learn page, so the
 // guide doubles as a new-hire ramp. Content is real (maps to real meth pages).
 var PM_ROLES = {
-  cafepartner: { name:'New caf\u00e9 partner', color:'var(--pm-red)', blurb:'Onboarding a wholesale account, week one.',
+  cafepartner: { name:'New caf\u00e9 partner', color:'var(--pm-red)', blurb:'Onboarding a wholesale account, week one to month one.',
+    phases:[['Week 1','Get them serving well'],['Week 2','Make it repeatable'],['Month 1','Make it theirs']],
     steps:[
       ['history','What you\u2019re now serving','The short version of what coffee actually is, for a team that\u2019s about to sell it.'],
       ['brew_extraction','Extraction theory','The one idea under every drink your staff will make.'],
@@ -5665,7 +5815,16 @@ function pmOnboardingView(role){
   // detail view: one role's path
   var r=PM_ROLES[role];
   var steps=r.steps.map(function(st,i){
-    return '<button class="pathstep" onclick="go(\'meth\',\''+st[0]+'\')" style="--ga:'+r.color+'">'+
+    var head='';
+    // Timeline paths group their steps into phases (Week 1 / Week 2 / Month 1).
+    if(r.phases){
+      var per=Math.ceil(r.steps.length/r.phases.length);
+      if(i%per===0){
+        var ph=r.phases[Math.floor(i/per)];
+        if(ph) head='<div class="phasehead" style="--ga:'+r.color+'"><b>'+esc(ph[0])+'</b><span>'+esc(ph[1])+'</span></div>';
+      }
+    }
+    return head+'<button class="pathstep" onclick="go(\'meth\',\''+st[0]+'\')" style="--ga:'+r.color+'">'+
       '<span class="pathnum" style="border-color:'+r.color+';color:'+r.color+'">'+(i+1)+'</span>'+
       '<span class="pathtxt"><span class="pathname">'+esc(st[1])+'</span>'+
       '<span class="pathwhy">'+esc(st[2])+'</span></span>'+
@@ -6022,6 +6181,368 @@ function pmCoffeeMenuView(){
   '</div>';
 }
 
+
+/* ============================================================================
+   QUALITY SYSTEM FOR CAFES  (the thesis: pharma quality practice, applied to
+   multi-site coffee). Structure is real and complete; the CONTENT slots are
+   PM's to fill. Every template is labelled honestly as such rather than being
+   stuffed with invented specifics.
+   ============================================================================ */
+var PM_QMS = [
+  { id:'sop', name:'Standard procedures', icon:'recipe', color:'var(--pm-blue)',
+    line:'One written way to do each task, so every bar does it the same way.',
+    body:'A procedure is not paperwork for its own sake. It is the answer to "how do we do this here" written down once, so a new hire on their third shift makes the same drink as a five-year barista. Each one stays on a single page: what it is for, what you need, the steps, and how you know it went right.',
+    fields:[['Purpose','Why this procedure exists, in one line.'],
+            ['Scope','Which sites, which equipment, which people.'],
+            ['You will need','Equipment, tools, consumables.'],
+            ['Steps','Numbered, one action each, in the order performed.'],
+            ['How you know it worked','The observable result. Taste, time, weight, appearance.'],
+            ['If it goes wrong','The first two things to check, and who to call.'],
+            ['Owner / last reviewed','A name and a date. Unowned documents rot.']],
+    starters:['Opening the bar','Dialling in the espresso','Steaming and texturing milk',
+              'Brewing batch filter','Closing and cleaning','Weekly deep clean',
+              'Receiving a coffee delivery','Handling a customer remake'] },
+  { id:'deviation', name:'Deviation log', icon:'cup', color:'var(--pm-red)',
+    line:'When something goes wrong, write it down, find the actual cause, fix that.',
+    body:'The point is not blame, it is memory. Most cafe problems repeat because nobody recorded them the first time. A deviation log turns "the espresso was weird on Tuesday" into a pattern you can actually act on. Keep it short enough that a busy barista will genuinely fill it in.',
+    fields:[['What happened','Plain language. What did you observe?'],
+            ['When and where','Date, time, site, which machine or grinder.'],
+            ['Immediate action','What you did right then to serve the customer.'],
+            ['Why it happened','The real cause, not the first guess. Keep asking why.'],
+            ['Fix','What stops it happening again, not just today\u2019s workaround.'],
+            ['Closed by / date','Someone signs it off, or it never actually closes.']],
+    starters:['Shots running fast or slow','Grinder drifting through service',
+              'Milk not texturing','Batch brew tasting thin','Machine pressure off',
+              'Coffee delivered late or short','Wrong coffee on the wrong hopper'] },
+  { id:'matrix', name:'Training matrix', icon:'grad', color:'var(--pm-mint)',
+    line:'Who is trained on what, at a glance, per site.',
+    body:'A grid: people down the side, skills across the top. It answers the question a manager actually asks, which is "can I roster Tuesday morning without a problem." It also makes the gaps obvious before they bite you, and it is the fastest way to see whether one person is quietly holding up the whole bar.',
+    levels:[['Not yet','Has not started this skill.'],
+            ['Learning','Can do it with someone watching.'],
+            ['Independent','Can do it alone, to standard.'],
+            ['Can teach','Can bring someone else up to independent.']],
+    skills:['Espresso dial-in','Milk texturing','Batch brew','Manual brew','Cleaning & maintenance',
+            'Coffee knowledge','Customer recovery','Opening','Closing'] },
+  { id:'calibration', name:'Calibration schedule', icon:'cup', color:'var(--pm-terra)',
+    line:'Scales, thermometers, and grinders drift. Check them on a schedule.',
+    body:'Every measurement on the bar depends on an instrument, and every instrument drifts. If the scale reads half a gram light, every recipe in the building is wrong and nobody knows why. Checking on a schedule is unglamorous and it is the cheapest quality win available to a cafe.',
+    fields:[['Instrument','What it is, and which site or bar it lives on.'],
+            ['How to check','The reference used and the method.'],
+            ['Acceptable range','What counts as still good.'],
+            ['How often','Daily, weekly, monthly.'],
+            ['Last checked / by','Date and a name.'],
+            ['Result','Pass, or what was adjusted.']],
+    starters:['Bar scales against a known weight','Grinder zero point',
+              'Machine group temperature','Steam wand pressure','Water TDS / filter life',
+              'Brewer water volume','Fridge temperature'] },
+  { id:'audit', name:'Quality visit checklist', icon:'recipe', color:'var(--pm-blue)',
+    line:'What good looks like, checked the same way at every site.',
+    body:'Walk in, work down the list, score it, leave a copy. Done consistently it turns a friendly visit into a trend you can track, and it gives the cafe a fair, predictable standard instead of an opinion that changes with whoever visited.',
+    sections:[['The coffee','Dial-in current? Recipe posted? Tastes to spec? Roast dates in window?'],
+              ['The equipment','Clean? Maintained? Calibrated? Anything limping?'],
+              ['The people','Trained to the matrix? Confident? Know who to call?'],
+              ['The presentation','Menu current? Bags and shelf-talkers right? Story told well?'],
+              ['The paperwork','Deviations logged and closed? Calibration up to date?']] }
+];
+
+function pmQualityView(arg){
+  if(!pmActive()){ return home(); }
+  // detail view for one module
+  if(arg){
+    var m=PM_QMS.find(function(x){return x.id===arg;});
+    if(!m) return pmQualityView(null);
+    var blocks='';
+    if(m.fields) blocks+='<div class="qmsblock"><h3>What the form captures</h3><div class="qmsfields">'+
+      m.fields.map(function(f){return '<div class="qmsfield"><b>'+esc(f[0])+'</b><span>'+esc(f[1])+'</span></div>';}).join('')+'</div></div>';
+    if(m.levels)blocks+='<div class="qmsblock"><h3>Competency levels</h3><div class="qmsfields">'+
+      m.levels.map(function(l,i){return '<div class="qmsfield"><b>'+(i+1)+'. '+esc(l[0])+'</b><span>'+esc(l[1])+'</span></div>';}).join('')+'</div></div>';
+    if(m.skills)blocks+='<div class="qmsblock"><h3>Skills across the top</h3><div class="qmschips">'+
+      m.skills.map(function(s){return '<span>'+esc(s)+'</span>';}).join('')+'</div>'+pmMatrixDemo(m)+'</div>';
+    if(m.starters)blocks+='<div class="qmsblock"><h3>Where to start</h3><div class="qmschips">'+
+      m.starters.map(function(s){return '<span>'+esc(s)+'</span>';}).join('')+'</div></div>';
+    if(m.sections)blocks+='<div class="qmsblock"><h3>What gets checked</h3><div class="qmsfields">'+
+      m.sections.map(function(s){return '<div class="qmsfield"><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>';}).join('')+'</div></div>';
+    app.innerHTML='<div class="wrap detail">'+
+      '<button class="back sticky" onclick="navBack(\'pmquality\')">'+backLabelFor('\u2190 Quality system')+'</button>'+
+      '<div class="dhead" style="border-bottom:none;padding-bottom:6px"><div class="txt">'+
+        '<div class="lvl" style="color:'+m.color+'">QUALITY SYSTEM</div>'+
+        '<h1>'+esc(m.name)+'</h1><div class="sub">'+esc(m.line)+'</div>'+
+      '</div></div>'+
+      '<div class="msection"><p>'+esc(m.body)+'</p></div>'+
+      blocks+
+      '<div class="pmtemplate-note">This is the structure, not the content. The specifics are yours to write, and they should be, nobody outside your bars knows how you actually work.</div>'+
+      '<div style="height:40px"></div>'+
+    '</div>';
+    return;
+  }
+  // index
+  var cards=PM_QMS.map(function(m){
+    return '<button class="secard pmt-card" onclick="go(\'pmquality\',\''+m.id+'\')" style="--ga:'+m.color+'">'+
+      '<span class="secard-ic" style="color:'+m.color+'">'+pmIcon(m.icon)+'</span>'+
+      '<span class="secard-body"><span class="secard-title">'+esc(m.name)+'</span>'+
+      '<span class="secard-blurb">'+esc(m.line)+'</span>'+
+      '<span class="secard-cta" style="color:'+m.color+'">Open \u2192</span></span></button>';
+  }).join('');
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Quality system</h2>'+
+      '<p>Five pieces that keep a growing group consistent: written procedures, a deviation log that finds real causes, a training matrix, a calibration schedule, and a quality visit checklist. Borrowed wholesale from regulated manufacturing, where getting the same result twice is the entire job.</p></div></div>'+
+    '<div class="qmswhy"><b>Why this matters more as you grow.</b> Two cafes can stay consistent because the same people are in both. Eight cannot. What holds a group together at that size is not talent, it is a system that makes the right way the easy way, and that survives your best barista leaving.</div>'+
+    '<div class="secdir">'+cards+'</div>'+
+    '<div class="pmtemplate-note">Structure built and ready. The content belongs to Proud Mary.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+}
+// A small worked example of the training matrix so the idea lands visually.
+function pmMatrixDemo(m){
+  var people=['Alex','Sam','Jordan','New hire'];
+  var lv=[[3,3,2,3,3,2,3,3,3],[2,3,3,1,2,2,2,3,2],[3,2,2,2,3,3,2,2,3],[1,1,0,0,1,1,0,1,0]];
+  var head='<tr><th></th>'+m.skills.map(function(s){return '<th><span>'+esc(s)+'</span></th>';}).join('')+'</tr>';
+  var rows=people.map(function(p,i){
+    return '<tr><td class="qmsp">'+esc(p)+'</td>'+lv[i].map(function(v){
+      return '<td><i class="qmsdot l'+v+'" title="'+esc(m.levels[v][0])+'"></i></td>';}).join('')+'</tr>';
+  }).join('');
+  return '<div class="qmsmatrix"><table>'+head+rows+'</table>'+
+    '<div class="qmslegend">'+m.levels.map(function(l,i){return '<span><i class="qmsdot l'+i+'"></i>'+esc(l[0])+'</span>';}).join('')+'</div>'+
+    '<div class="qmsdemo-note">Example layout with placeholder names, to show the shape.</div></div>';
+}
+
+
+/* ---------- REP / TERRITORY PLAYBOOK + ACCOUNT HANDOVER ---------- */
+var PM_REP = [
+  ['Know the book','Every account, what they buy, how often, who makes the call, and what they care about. Written down, not carried in one head.',
+   ['Account name, sites, and who owns the relationship','What they serve and on what equipment','Order cadence and typical volume','Last visit, last issue, last win','The thing that would make them leave']],
+  ['The first month','Meet every account face to face before you change anything. Listen more than you pitch.',
+   ['Week 1: read the book, taste what they serve','Week 2: visit the top accounts with the outgoing rep if you can','Week 3: visit the rest','Week 4: one written note per account, what you found']],
+  ['A good visit','Show up useful, not just friendly.',
+   ['Taste what the customer would be served, before you announce yourself','Check the dial-in and the roast dates','Ask what is annoying them right now','Fix or log one thing before you leave','Leave a written note behind']],
+  ['Between visits','The relationship is maintained in the gaps, not the meetings.',
+   ['A short check-in beats a long silence','Tell them about a new lot before they read it online','Close the loop on anything you logged','Never let a complaint go unanswered overnight']],
+  ['Handover','When a territory changes hands, the knowledge has to survive the person.',
+   ['One page per account, current within the last month','Open issues, with owner and status','Anything promised but not yet delivered','Introductions made in person or by name, not by silence']]
+];
+function pmRepPlaybookView(){
+  if(!pmActive()){ return home(); }
+  var blocks=PM_REP.map(function(b,i){
+    return '<div class="pbblock"><div class="pbnum">'+(i+1)+'</div><div class="pbbody">'+
+      '<h3>'+esc(b[0])+'</h3><p>'+esc(b[1])+'</p>'+
+      '<ul>'+b[2].map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></div></div>';
+  }).join('');
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Rep playbook &amp; handover</h2>'+
+      '<p>How a territory gets run, and how it survives changing hands. Written for the moment a rep leaves and a year of relationships is sitting in their memory instead of on paper.</p></div></div>'+
+    '<div class="qmswhy"><b>The expensive problem.</b> When a rep moves on, the accounts stay but the context goes with them. What that partner is sensitive about, what you already promised, why they switched from the last roaster. A playbook is just that context, kept outside one person\u2019s head.</div>'+
+    '<div class="pblist">'+blocks+'</div>'+
+    '<div class="pmtemplate-note">Structure ready. The account detail is yours to fill in, and it should live somewhere your whole team can read it.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+}
+
+/* ---------- NEW SITE OPENING RUNBOOK ---------- */
+var PM_RUNBOOK=[
+  ['T minus 8 weeks','Decisions that are expensive to change later.',
+   ['Equipment specified and ordered, with lead times confirmed','Water tested and treatment specified','Layout walked for workflow, not just looks','Menu decided and costed']],
+  ['T minus 4 weeks','Get the systems in before the people.',
+   ['Procedures printed and posted','Calibration schedule set up','Training matrix built for the hires you have','First coffee order placed with buffer']],
+  ['T minus 2 weeks','People and practice.',
+   ['Staff trained to independent on the core skills','Dial-in run on the actual machine, in the actual room','Full service rehearsal at expected peak volume','Deviation log started on day one of rehearsal']],
+  ['Opening week','Overstaff, overcheck, and expect to be wrong about something.',
+   ['A trainer on the floor every shift','Taste the bar three times a day','Log every deviation, no matter how small','Daily debrief, fix one thing each night']],
+  ['First 90 days','Turn a new site into a normal site.',
+   ['Weekly quality visit for the first month','Move deviations from daily to weekly as they settle','Bring the site onto the same audit checklist as the rest','Only then call it open']]
+];
+function pmRunbookView(){
+  if(!pmActive()){ return home(); }
+  var blocks=PM_RUNBOOK.map(function(b,i){
+    return '<div class="pbblock"><div class="pbnum" style="background:var(--pm-red);color:#fff;border-color:var(--pm-red)">'+(i+1)+'</div><div class="pbbody">'+
+      '<h3>'+esc(b[0])+'</h3><p>'+esc(b[1])+'</p>'+
+      '<ul>'+b[2].map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></div></div>';
+  }).join('');
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Opening a new site</h2>'+
+      '<p>A runbook for standing up a location so it tastes like the others from day one. Written with a small-format, on-the-go site in mind, where speed of service and consistency matter more than anywhere.</p></div></div>'+
+    '<div class="qmswhy"><b>The pattern that bites.</b> New sites are usually opened by the most experienced people in the company, then handed to the least. Everything that worked during opening week quietly depends on someone who is no longer there. The runbook exists so the site keeps working after they leave.</div>'+
+    '<div class="pblist">'+blocks+'</div>'+
+    '<div class="pmtemplate-note">A template shaped for how you already work, ready for your real lead times, equipment, and menu.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+}
+
+/* ---------- CAFE VISIT CHECKLIST ---------- */
+function pmVisitView(){
+  if(!pmActive()){ return home(); }
+  var m=PM_QMS.find(function(x){return x.id==='audit';});
+  var secs=m.sections.map(function(s,i){
+    var items=s[1].split('? ').filter(Boolean).map(function(q){
+      q=q.trim(); if(q.slice(-1)!=='?'&&q.indexOf('?')<0) q=q; else if(q.slice(-1)!=='?') q=q+'?';
+      return '<label class="vchk"><input type="checkbox" onchange="pmVisitTally()"><span>'+esc(q)+'</span></label>';
+    }).join('');
+    return '<div class="vsec"><h3>'+esc(s[0])+'</h3>'+items+'</div>';
+  }).join('');
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Caf\u00e9 visit checklist</h2>'+
+      '<p>Walk the bar, work down the list, leave a copy behind. Same checks every time, so a visit becomes a trend instead of an opinion.</p></div></div>'+
+    '<div class="vtally" id="vtally">0 checked</div>'+
+    '<div class="vsecs">'+secs+'</div>'+
+    '<div class="ctarow" style="margin-top:18px"><button onclick="window.print()">Print this checklist</button></div>'+
+    '<div class="pmtemplate-note">Ticks are for the visit in front of you and are not saved anywhere.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+}
+function pmVisitTally(){
+  var all=document.querySelectorAll('.vchk input'), n=0;
+  all.forEach(function(i){ if(i.checked) n++; });
+  var el=document.getElementById('vtally'); if(el) el.textContent=n+' of '+all.length+' checked';
+}
+
+/* ---------- "WHY DOES IT TASTE DIFFERENT TODAY?" DIAGNOSTIC ---------- */
+var PM_DIAG=[
+  { q:'Sour, sharp, or thin. Like it stopped early.', cause:'Under-extraction',
+    why:'Water left the coffee before it dissolved enough. Almost always grind, dose, or temperature.',
+    fix:['Grind finer, one small step at a time','Check the dose has not drifted light','Confirm the shot is running its full time, not gushing','Check machine temperature is up','Check the grinder burrs are not worn or the hopper empty'] },
+  { q:'Bitter, harsh, drying, or ashy.', cause:'Over-extraction',
+    why:'Water stayed too long or moved too slowly. You have pulled out the parts you did not want.',
+    fix:['Grind coarser, one small step','Check the shot is not choking or dripping','Check the basket is clean and not blocked','Check water temperature is not running hot','Look at roast date, very fresh or very old both cause this'] },
+  { q:'It tasted right yesterday and wrong today, nothing changed.', cause:'Drift',
+    why:'Something moved on its own. Humidity, burr wear, a new bag, or the scale.',
+    fix:['Re-dial from scratch rather than nudging','Weigh the dose against a known weight, scales drift','Check the roast date on the bag you just opened','Note the weather, humidity moves grind','Log it, because this is exactly what a deviation log is for'] },
+  { q:'Milk drinks taste flat or the texture is wrong.', cause:'Milk or steam',
+    why:'Usually steam pressure, technique, or milk temperature rather than the coffee.',
+    fix:['Check steam pressure and purge the wand','Check milk is properly cold to start','Stretch first, then texture, do not do both at once','Check you are not overheating, past about 65C it turns','Try the same shot without milk to isolate the cause'] },
+  { q:'Batch brew is thin or bland.', cause:'Brew ratio or contact',
+    why:'Batch is unforgiving of a small dose and a big volume.',
+    fix:['Check the recipe against the posted spec','Weigh the dose rather than scooping','Check the brewer is delivering the water volume it claims','Check the bed is flat and the spray head is clear','Check how long it has been sitting, batch does not age well'] },
+  { q:'Everything tastes slightly off, across the whole bar.', cause:'Water or machine',
+    why:'When every drink shifts at once, look upstream of the coffee.',
+    fix:['Check filter life and water treatment','Taste the water on its own','Check machine pressure and temperature','Check whether the site recently changed anything about the supply','Escalate, this one is worth a call'] }
+];
+function pmDiagnoseView(){
+  if(!pmActive()){ return home(); }
+  var cards=PM_DIAG.map(function(d,i){
+    return '<details class="dxcard"><summary><span class="dxq">'+esc(d.q)+'</span></summary>'+
+      '<div class="dxbody"><div class="dxcause">Likely: <b>'+esc(d.cause)+'</b></div>'+
+      '<p>'+esc(d.why)+'</p><ul>'+d.fix.map(function(f){return '<li>'+esc(f)+'</li>';}).join('')+'</ul></div></details>';
+  }).join('');
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Why does it taste different today?</h2>'+
+      '<p>The 6am question. Start with what you are actually tasting, and work back to the dial that moved.</p></div></div>'+
+    '<div class="dxlist">'+cards+'</div>'+
+    '<div class="qmswhy" style="margin-top:20px"><b>Then write it down.</b> Whatever you find, log it. Same problem next Tuesday is a pattern; same problem you never recorded is just a bad morning you get to have again.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+}
+
+/* ---------- ROAST DATE -> FRESHNESS WINDOW ---------- */
+function pmFreshView(){
+  if(!pmActive()){ return home(); }
+  var today=new Date().toISOString().slice(0,10);
+  app.innerHTML='<div class="wrap">'+
+    '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
+    '<div class="seclead"><span class="no">\u25c9</span><div><h2>Is this bag ready?</h2>'+
+      '<p>Enter the roast date on the bag. Coffee needs a few days to settle after roasting and then holds well for a few weeks. This tells you where you are in that window.</p></div></div>'+
+    '<div class="bc-wrap">'+
+      '<label class="bc-waterlab" style="display:block"><b>Roast date</b>'+
+        '<input class="freshdate" id="freshdate" type="date" max="'+today+'" value="'+today+'" onchange="pmFreshCalc()" oninput="pmFreshCalc()"></label>'+
+      '<div style="margin-top:10px"><label class="bc-lab">Brewing as'+
+        '<select class="bc-sel" id="freshmode" onchange="pmFreshCalc()">'+
+        '<option value="esp">Espresso</option><option value="fil">Filter / batch</option></select></label></div>'+
+      '<div id="freshout" style="margin-top:16px"></div>'+
+    '</div>'+
+    '<div class="pmtemplate-note">General guidance for specialty coffee, not a Proud Mary specification. Your own rest windows per roast would replace these numbers.</div>'+
+    '<div style="height:50px"></div>'+
+  '</div>';
+  pmFreshCalc();
+}
+function pmFreshCalc(){
+  var el=document.getElementById('freshout'); if(!el) return;
+  var v=(document.getElementById('freshdate')||{}).value;
+  var mode=(document.getElementById('freshmode')||{}).value||'esp';
+  if(!v){ el.innerHTML=''; return; }
+  var d=new Date(v+'T00:00:00'), now=new Date();
+  var days=Math.floor((now-d)/86400000);
+  if(isNaN(days)){ el.innerHTML=''; return; }
+  // espresso rests longer than filter
+  var restEnd = mode==='esp'?10:5, peakEnd = mode==='esp'?35:28, ok=mode==='esp'?45:35;
+  var state,msg,col;
+  if(days<0){ state='Date is in the future'; msg='Check the bag again.'; col='#8a7a5c'; }
+  else if(days<restEnd){ state='Still resting'; col='#7cc4dc';
+    msg='Give it '+(restEnd-days)+' more day'+((restEnd-days)===1?'':'s')+'. Freshly roasted coffee is still degassing, which makes extraction unstable and shots inconsistent.'; }
+  else if(days<=peakEnd){ state='In the window'; col='#27b388';
+    msg='This is the good part. Expect it to taste as intended, and expect to nudge the grind slightly as it ages through the window.'; }
+  else if(days<=ok){ state='Past peak, still usable'; col='#d08a52';
+    msg='Sweetness and aromatics are fading. Fine for milk drinks, less impressive black. Grind may want to go finer.'; }
+  else { state='Old'; col='#c8503a';
+    msg='Well past its best. Flat, papery, and no amount of dialling fixes it. Worth pulling from the bar.'; }
+  var bar='';
+  var marks=[[0,'roast'],[restEnd,'ready'],[peakEnd,'peak ends'],[ok,'done']];
+  var span=ok+10, pos=Math.min(Math.max(days,0),span)/span*100;
+  bar='<div class="freshbar"><div class="freshbar-fill" style="width:'+pos.toFixed(1)+'%;background:'+col+'"></div>'+
+    marks.map(function(m){return '<i style="left:'+(m[0]/span*100).toFixed(1)+'%" data-l="'+m[1]+'"></i>';}).join('')+'</div>'+
+    '<div class="freshmarks">'+marks.map(function(m){return '<span style="left:'+(m[0]/span*100).toFixed(1)+'%">'+m[1]+'</span>';}).join('')+'</div>';
+  el.innerHTML='<div class="freshcard" style="--fc:'+col+'">'+
+    '<div class="freshday">'+(days<0?'\u2014':days)+'<small>day'+(days===1?'':'s')+' off roast</small></div>'+
+    '<div class="freshstate">'+esc(state)+'</div>'+
+    '<p class="freshmsg">'+esc(msg)+'</p></div>'+bar;
+}
+
+
+/* ---- CONTENT INFUSION ----
+   In PM mode, weave Proud Mary's REAL lots into the guide's prose. When a page
+   talks about a Panama Geisha, PM mode adds a short line naming the ones we
+   actually have. This is what stops the guide reading like a generic
+   encyclopedia with a logo on it. Only fires where we genuinely have a match. */
+function pmInfuse(originId){
+  if(!pmActive()) return '';
+  var lots=pmLotsFor(originId||'');
+  if(!lots.length) return '';
+  var country=((PMCAT&&PMCAT.originMap)||{})[originId]||'';
+  var names=lots.slice(0,3).map(function(c){
+    var t=pmTier(c.tier);
+    return '<b style="color:'+((t&&t.color)||'var(--pm-red)')+'">'+esc(c.lot)+'</b>';
+  });
+  var tail=lots.length>3?(', and '+(lots.length-3)+' more'):'';
+  var join=names.length===1?names[0]:(names.slice(0,-1).join(', ')+' and '+names[names.length-1]);
+  return '<div class="pminfuse"><span class="pminfuse-tag">Ours</span>'+
+    'From '+esc(country)+' right now we have '+join+tail+'.</div>';
+}
+/* Variety/process-level infusion for non-origin pages: if a Learn page is about
+   Geisha, or natural process, point at the lots that show it off. */
+var PM_TOPIC_MATCH=[
+  ['geisha',      function(c){return /geisha/i.test(c.variety||'');},      'Geisha'],
+  ['gesha',       function(c){return /geisha/i.test(c.variety||'');},      'Geisha'],
+  ['natural',     function(c){return /natural/i.test(c.process||'');},     'natural process'],
+  ['honey',       function(c){return /honey/i.test(c.process||'');},       'honey process'],
+  ['washed',      function(c){return /washed/i.test(c.process||'');},      'washed process'],
+  ['anaerobic',   function(c){return /anaerobic/i.test(c.process||'');},   'anaerobic fermentation'],
+  ['pacamara',    function(c){return /pacamara/i.test(c.variety||'');},    'Pacamara'],
+  ['bourbon',     function(c){return /bourbon/i.test(c.variety||'');},     'Bourbon'],
+  ['heirloom',    function(c){return /heirloom/i.test(c.variety||'');},    'Ethiopian heirloom'],
+  ['sl28',        function(c){return /SL-?28/i.test(c.variety||'');},      'SL-28'],
+  ['sl34',        function(c){return /SL-?34/i.test(c.variety||'');},      'SL-34'],
+  ['decaf',       function(c){return !!c.decaf;},                          'decaf'],
+  ['cup of excellence', function(c){return /excellence/i.test(c.accolade||'');}, 'Cup of Excellence'],
+];
+function pmInfuseTopic(pageId, pageName){
+  if(!pmActive()) return '';
+  var hay=((pageId||'')+' '+(pageName||'')).toLowerCase();
+  var hit=PM_TOPIC_MATCH.find(function(m){ return hay.indexOf(m[0])>=0; });
+  if(!hit) return '';
+  var lots=pmCoffees().filter(hit[1]);
+  if(!lots.length) return '';
+  var names=lots.slice(0,3).map(function(c){
+    var t=pmTier(c.tier);
+    return '<b style="color:'+((t&&t.color)||'var(--pm-red)')+'">'+esc(c.origin)+' '+esc(c.lot)+'</b>';
+  });
+  var tail=lots.length>3?(', plus '+(lots.length-3)+' more'):'';
+  var join=names.length===1?names[0]:(names.slice(0,-1).join(', ')+' and '+names[names.length-1]);
+  return '<div class="pminfuse"><span class="pminfuse-tag">Ours</span>'+
+    'On the menu now showing '+esc(hit[2])+': '+join+tail+'.</div>';
+}
+
 function methDetail(id){
   const m=METHODOLOGY[id]; if(!m)return go('learn');
   const glabel=METH_GROUPS.find(g=>g[0]===m.group)?.[1]||'';
@@ -6039,7 +6560,7 @@ function methDetail(id){
         <div class="sub">${esc(m.sub)}</div>
       </div>
     </div>
-    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>${i===0&&m.diagram?diagram(m.diagram):''}`).join('')}
+    ${m.sections.map((s,i)=>`<div class="msection"><h3>${esc(s.h)}</h3><p>${linkTerms(s.body, m.name)}</p></div>${i===0?pmInfuseTopic(id,m.name):''}${i===0&&m.diagram?diagram(m.diagram):''}`).join('')}
     ${m.visuals?`<div class="msection"><h3>${esc(m.visuals.title||'Defect Reference')}</h3>${m.visuals.note?`<p>${esc(m.visuals.note)}</p>`:''}${beanGallery(m.visuals.beans, id)}</div>`:''}
     ${m.keypoints?`<div class="keypoints"><h4>Key Points</h4><ul style="margin:0;padding:0">${m.keypoints.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>`:''}
     ${relatedBlock(m.related)}
@@ -6197,6 +6718,7 @@ function closeTermPop(){const p=document.getElementById('termpop');if(p)p.remove
   if(pmModeOn()){ PM_BUILT_FEATURES.forEach(function(f){ FF_OVERRIDE[f]=true; }); } // persisted PM mode = features on
   updateFooter();        // house-aware footer copy
   syncPmTab();           // add the Proud Mary tab if PM mode persisted
+  initBarMode();         // restore bar mode if it was left on
   initLocaleButtons();   // fill the flag buttons + set active state (all defs assigned by now)
   initDevPanelTrigger();  // long-press #verlabel/#footver, or ?dev=1, opens the hidden dev panel
   try{

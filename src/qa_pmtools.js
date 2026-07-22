@@ -19,7 +19,7 @@ t('toolkit bar hidden when master off', w.getComputedStyle(w.document.getElement
 w=load('https://stucky602.github.io/Coffee/');
 w.eval('setPmMode(true); go("pmhub")');
 t('hub renders title', w.document.querySelector('.pmhero .page-title').textContent.includes('toolkit'));
-t('hub shows 12 tool cards (base)', w.document.querySelectorAll('.secdir .pmt-card').length===12);
+t('hub shows 12 tool cards (base)', w.document.querySelectorAll('.secdir .pmt-card').length===18);
 t('hub nav highlights PM tab', w.document.querySelector('[data-nav=pm]').classList.contains('on'));
 
 // each tool renders (not bounced home) when its flag is on
@@ -97,7 +97,7 @@ w.eval('setPmMode(true)');
 // hub shows all 12 tool cards in PM mode
 var wh=load('https://stucky602.github.io/Coffee/');
 wh.eval('setPmMode(true); go("pmhub")');
-t('hub shows 12 tool cards', wh.document.querySelectorAll('.secdir .pmt-card').length===12);
+t('hub shows 12 tool cards', wh.document.querySelectorAll('.secdir .pmt-card').length===18);
 // master switch enables all 13 built features
 var wm=load('https://stucky602.github.io/Coffee/');
 wm.eval('setPmMode(true)');
@@ -215,6 +215,85 @@ wP.eval('navBack("profiles")');
 t('back from compare-opened profile returns to compare', wP.eval('state.view')==='compare');
 wP.eval('go("profiles"); go("profile","french"); navBack("profiles");');
 t('back from profiles-opened profile returns to profiles', wP.eval('state.view')==='profiles');
+
+
+
+// ---- v113: the ten PM-ification upgrades ----
+var wU=load('https://stucky602.github.io/Coffee/');
+wU.eval('setPmMode(true)');
+
+// 3. hub regrouped by audience
+wU.eval('go("pmhub")');
+var hubHtml=wU.document.getElementById('app').innerHTML;
+t('hub groups: for partners', hubHtml.indexOf('For your caf')>=0);
+t('hub groups: for team', hubHtml.indexOf('For your team')>=0);
+t('hub groups: for counter', hubHtml.indexOf('For the counter')>=0);
+
+// 2. quality system
+wU.eval('go("pmquality")');
+t('quality index has 5 modules', wU.document.querySelectorAll('.secdir .pmt-card').length===5);
+wU.eval('go("pmquality","matrix")');
+t('training matrix renders grid', wU.document.querySelectorAll('.qmsmatrix table tr').length>=5);
+t('matrix has competency legend', wU.document.querySelectorAll('.qmslegend .qmsdot').length===4);
+wU.eval('go("pmquality","deviation")');
+t('deviation log lists fields', wU.document.querySelectorAll('.qmsfield').length>=6);
+wU.eval('go("pmquality","sop")');
+t('SOP module labelled as template', wU.document.getElementById('app').innerHTML.indexOf('pmtemplate-note')>=0);
+
+// 6. rep playbook / 7. runbook
+wU.eval('go("pmrepplaybook")');
+t('rep playbook has 5 blocks', wU.document.querySelectorAll('.pbblock').length===5);
+t('rep playbook mentions handover', wU.document.getElementById('app').innerHTML.toLowerCase().indexOf('handover')>=0);
+wU.eval('go("pmrunbook")');
+t('runbook has 5 phases', wU.document.querySelectorAll('.pbblock').length===5);
+
+// 8. visit checklist
+wU.eval('go("pmvisit")');
+t('visit checklist has checkboxes', wU.document.querySelectorAll('.vchk input').length>=5);
+t('visit checklist has tally', !!wU.document.getElementById('vtally'));
+
+// 5. diagnostic
+wU.eval('go("pmdiagnose")');
+t('diagnostic has 6 symptoms', wU.document.querySelectorAll('.dxcard').length===6);
+
+// 9. freshness calculator
+wU.eval('go("pmfresh")');
+t('freshness renders a verdict', !!wU.document.querySelector('.freshcard'));
+t('freshness has timeline bar', !!wU.document.querySelector('.freshbar'));
+
+// 1. content infusion
+wU.eval('go("origin","origin_honduras")');
+t('origin page names our real lots', wU.document.getElementById('app').innerHTML.indexOf('La Salvaje')>=0);
+t('origin infusion is tagged Ours', wU.document.getElementById('app').innerHTML.indexOf('pminfuse-tag')>=0);
+var infuseHits=0, MM=wU.eval('METHODOLOGY');
+Object.keys(MM).forEach(function(id){
+  var out=wU.eval('pmInfuseTopic('+JSON.stringify(id)+','+JSON.stringify(MM[id].name||'')+')');
+  if(out&&out.length) infuseHits++;
+});
+t('topic infusion fires on learn pages', infuseHits>=5);
+
+// 4. onboarding timeline
+wU.eval('go("pmonboard","cafepartner")');
+t('cafe partner path has phase headers', wU.document.querySelectorAll('.phasehead').length===3);
+
+// 10. bar mode
+t('bar mode button present', !!wU.document.getElementById('barmodebtn'));
+wU.eval('toggleBarMode()');
+t('bar mode sets attribute', wU.document.documentElement.getAttribute('data-barmode')==='1');
+wU.eval('toggleBarMode()');
+t('bar mode clears attribute', wU.document.documentElement.getAttribute('data-barmode')===null);
+
+// neutral isolation for everything new
+var wZ=load('https://stucky602.github.io/Coffee/');
+wZ.eval('go("origin","origin_honduras")');
+t('NEUTRAL origin has no infusion', wZ.document.getElementById('app').innerHTML.indexOf('pminfuse')<0);
+wZ.eval('go("meth","spotlight_geisha")');
+t('NEUTRAL learn page has no infusion', wZ.document.getElementById('app').innerHTML.indexOf('pminfuse')<0);
+['pmquality','pmrepplaybook','pmrunbook','pmvisit','pmdiagnose','pmfresh'].forEach(function(v){
+  var wq=load('https://stucky602.github.io/Coffee/');
+  wq.eval('go("'+v+'")');
+  t('NEUTRAL '+v+' does not render', wq.eval('state.view')==='home' || wq.document.querySelectorAll('.pbblock,.dxcard,.freshcard,.vchk').length===0);
+});
 
 console.log('');
 console.log(pass+' passed, '+fail+' failed');
