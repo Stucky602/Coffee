@@ -1,0 +1,45 @@
+{
+  "_note": "PLACEHOLDER DEMO DATA — replace every value with real Proud Mary lot info before any real use. Coffee identities (names/origins/process) are REAL current PM lots from their live menu as of Jul 2026, used so the demo lands with a genuine coffee; but the DIAL-IN NUMBERS are illustrative starting points, NOT PM's actual house recipes. Schema is the deliverable; real recipes are TODO from PM.",
+  "OFFERINGS": [
+    {
+      "slug": "honduras-la-salvaje-coe",
+      "name": "Honduras · La Salvaje · Geisha (DEMO)",
+      "origin": "Honduras",
+      "producer": "TODO — La Salvaje (1st Place Cup of Excellence lot)",
+      "region": "Honduras",
+      "altitude": "TODO masl",
+      "variety": "Geisha",
+      "process": "Washed",
+      "roast": "Light (filter)",
+      "notes": ["jasmine", "bergamot", "stone fruit", "honey", "tea-like"],
+      "story": "TODO — PM producer story. A 1st-place Cup of Excellence Geisha; PM's green team have served on COE international juries for ~a decade, so this is squarely in their wheelhouse.",
+      "dialin": {
+        "espresso": {"dose_g": 18, "yield_g": 42, "time_s": "28–33", "ratio": "1:2.3", "temp": "92°C", "grinder": "EK43 ~9.5 / Mythos fine-of-medium — ILLUSTRATIVE starting point, dial to taste"},
+        "batch":    {"ratio": "1:16.5", "grind": "medium", "temp": "96°C", "time": "per brewer"},
+        "home":     {"method": "V60", "dose_g": 15, "water_g": 250, "grind": "medium-fine", "temp": "96°C", "time": "2:45–3:15"}
+      },
+      "dialin_note": "Delicate Geisha — protect the florals: err lighter/brighter. Every new bag drifts 4–6s; re-dial. Sour = grind finer; bitter = grind coarser. (Numbers are a starting point, not PM's official recipe.)",
+      "subscribe": true
+    },
+    {
+      "slug": "demo-geisha",
+      "name": "Panama Geisha (DEMO)",
+      "origin": "Panama",
+      "producer": "TODO — producer name",
+      "region": "Boquete / Chiriquí (example)",
+      "altitude": "1600–1800 masl",
+      "variety": "Geisha",
+      "process": "Washed",
+      "roast": "Light (filter)",
+      "notes": ["jasmine", "bergamot", "peach", "black tea", "silky"],
+      "story": "TODO — PM producer-relationship story. Panama is the origin most associated with Proud Mary's rarest lots; the Geisha variety traces from Ethiopia via the Panamanian estates that made it famous.",
+      "dialin": {
+        "espresso": {"dose_g": 18, "yield_g": 40, "time_s": "28–32", "ratio": "1:2.2", "temp": "93°C", "grinder": "EK43 ~9.0 / Mythos ~fine-of-medium (STARTING POINT)"},
+        "batch":    {"ratio": "1:16.5", "grind": "medium", "temp": "96°C", "time": "as per brewer"},
+        "home":     {"method": "V60", "dose_g": 15, "water_g": 250, "grind": "medium-fine", "temp": "96°C", "time": "2:45–3:15"}
+      },
+      "dialin_note": "Every new bag drifts — expect a 4–6s shift in shot time and re-dial. Sour = grind finer; bitter = grind coarser.",
+      "subscribe": true
+    }
+  ]
+}

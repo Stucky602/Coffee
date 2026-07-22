@@ -1,0 +1,111 @@
+{
+  "schema": "cig-catalog/1",
+  "_note": "CANONICAL CATALOG (schema cig-catalog/1, see docs/CIG_DATA_MODEL.md). PLACEHOLDER DEMO DATA — replace every TODO with real Proud Mary info before any real use. Coffee identities (names/origins/process) are REAL current PM lots from their live menu as of Jul 2026; the DIAL-IN NUMBERS are illustrative starting points, NOT PM's actual house recipes. Entities: house, tiers, locations, producers, recipes (shared house presets), coffees. References are by id; build.py resolves them into flat runtime records. This file must always work standalone from plain JSON — commerce systems (Toast, Unleashed) are optional build-time adapters, never dependencies.",
+
+  "house": {
+    "id": "pm",
+    "name": "Proud Mary Coffee",
+    "footer": "A Proud Mary Coffee reference",
+    "links": {
+      "site": "https://proudmarycoffee.com",
+      "academy": "https://proudmaryacademy.com",
+      "subscribe": "TODO — subscription landing URL"
+    }
+  },
+
+  "tiers": [
+    { "id": "mild",    "name": "Mild",    "blurb": "Comfortable, approachable everyday coffees.", "subscribeUrl": "TODO" },
+    { "id": "curious", "name": "Curious", "blurb": "A step further — distinctive single origins and processes.", "subscribeUrl": "TODO" },
+    { "id": "wild",    "name": "Wild",    "blurb": "Expressive, adventurous lots for the deep end.", "subscribeUrl": "TODO" },
+    { "id": "deluxe",  "name": "Deluxe",  "blurb": "Monthly rare lots — Geishas and Cup of Excellence winners.", "subscribeUrl": "TODO" }
+  ],
+
+  "locations": [
+    {
+      "id": "austin-slamar",
+      "name": "Austin — S Lamar",
+      "address": "2043 S Lamar Blvd, Austin, TX",
+      "lineup": { "espresso": [], "filter": ["honduras-la-salvaje-coe"], "retail": ["honduras-la-salvaje-coe", "demo-geisha"] },
+      "note": "DEMO lineup — TODO replace with the real current bar/shelf list."
+    },
+    {
+      "id": "austin-guadalupe",
+      "name": "Austin — Guadalupe (opening ~Sept 2026)",
+      "address": "4301 Guadalupe St, Ste 100, Austin, TX",
+      "lineup": { "espresso": [], "filter": [], "retail": [] },
+      "note": "Not yet open — the consistency-across-locations use case this schema exists for."
+    },
+    { "id": "portland-alberta", "name": "Portland — Alberta St (roastery)", "address": "TODO", "lineup": { "espresso": [], "filter": [], "retail": [] } },
+    { "id": "melbourne-collingwood", "name": "Melbourne — Collingwood", "address": "TODO", "lineup": { "espresso": [], "filter": [], "retail": [] } }
+  ],
+
+  "producers": [
+    {
+      "id": "la-salvaje",
+      "name": "TODO — producer / family name",
+      "farm": "La Salvaje",
+      "region": "Honduras",
+      "altitude": "TODO masl",
+      "story": "TODO — PM producer story. PM's green team have served on Cup of Excellence international juries for ~a decade, so this lot is squarely in their wheelhouse.",
+      "originPage": "origin_honduras"
+    },
+    {
+      "id": "demo-panama-estate",
+      "name": "TODO — producer name",
+      "farm": "TODO — estate name",
+      "region": "Boquete / Chiriquí (example)",
+      "altitude": "1600–1800 masl",
+      "story": "TODO — PM producer-relationship story. Panama is the origin most associated with Proud Mary's rarest lots; the Geisha variety traces from Ethiopia via the Panamanian estates that made it famous.",
+      "originPage": "origin_panama"
+    }
+  ],
+
+  "recipes": [
+    { "id": "pm-cafe-pourover", "kind": "pourover", "name": "PM Café Pourover", "status": "TODO — needs PM's real numbers (ff:pm_recipes stays dark until supplied)", "dose_g": null, "water_g": null, "ratio": null, "grind": null, "temp": null, "time": null },
+    { "id": "pm-batch",         "kind": "batch",    "name": "PM Batch Brew",    "status": "TODO — needs PM's real numbers", "ratio": null, "grind": null, "temp": null, "time": null },
+    { "id": "pm-espresso",      "kind": "espresso", "name": "PM Espresso Baseline", "status": "TODO — needs PM's real numbers", "dose_g": null, "yield_g": null, "time_s": null, "ratio": null, "temp": null }
+  ],
+
+  "coffees": [
+    {
+      "slug": "honduras-la-salvaje-coe",
+      "name": "Honduras · La Salvaje · Geisha (DEMO)",
+      "origin": "Honduras",
+      "variety": "Geisha",
+      "process": "Washed",
+      "roast": "Light (filter)",
+      "notes": ["jasmine", "bergamot", "stone fruit", "honey", "tea-like"],
+      "producer": "la-salvaje",
+      "tier": "deluxe",
+      "lotNote": "1st Place Cup of Excellence lot.",
+      "channels": ["wholesale", "retail"],
+      "dialin": {
+        "espresso": { "dose_g": 18, "yield_g": 42, "time_s": "28–33", "ratio": "1:2.3", "temp": "92°C", "grinder": "EK43 ~9.5 / Mythos fine-of-medium — ILLUSTRATIVE starting point, dial to taste" },
+        "batch":    { "ratio": "1:16.5", "grind": "medium", "temp": "96°C", "time": "per brewer" },
+        "home":     { "method": "V60", "dose_g": 15, "water_g": 250, "grind": "medium-fine", "temp": "96°C", "time": "2:45–3:15" }
+      },
+      "dialinNote": "Delicate Geisha — protect the florals: err lighter/brighter. Every new bag drifts 4–6s; re-dial. Sour = grind finer; bitter = grind coarser. (Numbers are a starting point, not PM's official recipe.)",
+      "links": { "shop": null }
+    },
+    {
+      "slug": "demo-geisha",
+      "name": "Panama Geisha (DEMO)",
+      "origin": "Panama",
+      "variety": "Geisha",
+      "process": "Washed",
+      "roast": "Light (filter)",
+      "notes": ["jasmine", "bergamot", "peach", "black tea", "silky"],
+      "producer": "demo-panama-estate",
+      "tier": "deluxe",
+      "lotNote": null,
+      "channels": ["wholesale", "retail"],
+      "dialin": {
+        "espresso": { "dose_g": 18, "yield_g": 40, "time_s": "28–32", "ratio": "1:2.2", "temp": "93°C", "grinder": "EK43 ~9.0 / Mythos ~fine-of-medium (STARTING POINT)" },
+        "batch":    { "ratio": "1:16.5", "grind": "medium", "temp": "96°C", "time": "as per brewer" },
+        "home":     { "method": "V60", "dose_g": 15, "water_g": 250, "grind": "medium-fine", "temp": "96°C", "time": "2:45–3:15" }
+      },
+      "dialinNote": "Every new bag drifts — expect a 4–6s shift in shot time and re-dial. Sour = grind finer; bitter = grind coarser.",
+      "links": { "shop": null }
+    }
+  ]
+}

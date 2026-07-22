@@ -1,0 +1,1171 @@
+{
+  "PROFILES": {
+    "cinnamon": {
+      "name": "Cinnamon",
+      "sub": "Extreme Light",
+      "level": "Light",
+      "group": "light",
+      "aka": [
+        "Half City (loosely)",
+        "Light Roast (US)"
+      ],
+      "agtron": "95–85",
+      "accent": "#D4B15E",
+      "oneLine": "The lightest named US roast, pulled right at first crack before caramelization gets going — toasty, grain-like, sharp, and named for the color, not the spice.",
+      "useFor": "Cupping and evaluation, showcasing raw origin traits, drinkers chasing maximum acidity and caffeine. Rarely sold retail — it's an acquired taste.",
+      "curve": {
+        "chargeC": "195–210",
+        "chargeF": "383–410",
+        "tpC": "85–95",
+        "tpF": "185–203",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–200",
+        "fcF": "385–392",
+        "dropC": "196–200",
+        "dropF": "385–392",
+        "totalTime": "7:30–9:30",
+        "dtr": "8–11%"
+      },
+      "flavor": {
+        "acidity": 5,
+        "body": 1,
+        "sweetness": 2,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "The whole roast is essentially an extended drying phase with the briefest browning. You're driving off moisture and stopping almost immediately after."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Barely begun. Caramelization has not meaningfully started, which is exactly why cinnamon roasts taste grain-like and lack the brown-sugar sweetness of a medium roast."
+        },
+        {
+          "h": "First Crack",
+          "body": "You drop right as first crack begins — sometimes before it fully rolls through the batch. This is the defining move of the style and its biggest risk."
+        },
+        {
+          "h": "Development",
+          "body": "Essentially none. DTR is the lowest of any roast (8–11%). The danger is dropping so early that the beans are underdeveloped and grassy rather than brightly light."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Grassy / hay-like",
+          "cause": "Dropped before drying and initial browning truly completed.",
+          "avoid": "Confirm even yellowing before first crack; cinnamon is unforgiving because there's no development to mask an uneven batch."
+        },
+        {
+          "d": "Sharp / sour, no sweetness",
+          "cause": "Sucrose never caramelized at all.",
+          "avoid": "This is partly inherent to the style — pick a naturally sweet, bright green so the acidity reads as pleasant, not just sour."
+        },
+        {
+          "d": "Tipping (scorched bean tips)",
+          "cause": "Charge temperature too high for such a short, hot roast — the bean tips burn before the body develops.",
+          "avoid": "Lower the charge temp and moderate early heat; the tips scorch when energy outruns the bean's ability to conduct it inward."
+        },
+        {
+          "d": "Uneven roast (mottled color)",
+          "cause": "Batch too large or airflow too weak to move heat evenly in a fast roast, so beans roast at different rates.",
+          "avoid": "Small batches and strong, even convection — a fast light roast has no time to self-equalize."
+        }
+      ],
+      "machine": "Needs a very responsive, convection-forward machine and small batches — fluid-bed or a modern drum with strong airflow. Because the roast is over so fast, you have almost no time to correct a curve that's running away, so control and repeatability matter more than thermal mass. Underpowered or high-mass drums tend to bake or tip this roast because they can't shed and add heat quickly enough. Keep batches small so the beans roast evenly in the short window."
+    },
+    "newengland": {
+      "name": "New England",
+      "sub": "US Northeast Light",
+      "level": "Light",
+      "group": "light",
+      "aka": [
+        "Light City",
+        "Half City",
+        "Breakfast (loosely)"
+      ],
+      "agtron": "80–70",
+      "accent": "#C09A48",
+      "oneLine": "The classic light roast of the US Northeast, pulled a touch after first crack — the grain-like edge of cinnamon roast cooked away, leaving clean, bright, fruity origin flavor.",
+      "useFor": "Traditional Northeastern US drip coffee, bright single origins, drinkers who want light but not as extreme as cinnamon.",
+      "curve": {
+        "chargeC": "198–212",
+        "chargeF": "388–414",
+        "tpC": "88–96",
+        "tpF": "190–205",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "202–207",
+        "dropF": "396–405",
+        "totalTime": "8:30–10:30",
+        "dtr": "12–16%"
+      },
+      "flavor": {
+        "acidity": 5,
+        "body": 2,
+        "sweetness": 3,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard, even drying. New England is a small step darker than cinnamon, so the early phase is managed the same way but with a hair more energy carried into browning."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Just enough browning to cook away the grassy, grain-like taste of a cinnamon roast without building real body. The origin fruit and floral notes are at their most expressive here."
+        },
+        {
+          "h": "First Crack",
+          "body": "You let first crack roll through the batch, then give it a short beat before dropping."
+        },
+        {
+          "h": "Development",
+          "body": "Brief but real (12–16% DTR). This small window is what separates a clean, bright New England from an underdeveloped cinnamon roast."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Grassy / underdeveloped",
+          "cause": "Treated like a cinnamon roast and dropped too early.",
+          "avoid": "Give it that extra beat past first crack — the whole point of New England versus cinnamon is a touch more development."
+        },
+        {
+          "d": "Sour",
+          "cause": "Acids not resolved in the short development.",
+          "avoid": "Nudge development slightly longer or pick a sweeter green; brightness is the goal, sourness is the miss."
+        },
+        {
+          "d": "Bready / cereal, no clarity",
+          "cause": "Enough development to lose the green notes but not enough to build sweetness or acidity — stuck in the middle.",
+          "avoid": "Commit to the level: either keep it bright and clean or take it to City, but don't stall in between."
+        }
+      ],
+      "machine": "Forgiving for a light roast. Works on drum or fluid-bed; a drum adds a little body while air keeps it crisp and bright. Good for learning to read a light-roast curve because it tolerates minor timing errors better than Nordic or Cinnamon. Moderate batch sizes are fine. Watch that your machine has enough airflow to finish the drying phase cleanly."
+    },
+    "nordic": {
+      "name": "Nordic",
+      "sub": "Scandinavian Light",
+      "level": "Light",
+      "group": "light",
+      "agtron": "95–75",
+      "accent": "#C9A34E",
+      "oneLine": "Ultra-light filter roast that stops well before first crack completes, built to showcase origin acidity and florals.",
+      "useFor": "Single-origin filter, competition-style clarity, delicate washed Africans and high-grown lots.",
+      "curve": {
+        "chargeC": "195–210",
+        "chargeF": "383–410",
+        "tpC": "85–95",
+        "tpF": "185–203",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–200",
+        "fcF": "385–392",
+        "dropC": "200–205",
+        "dropF": "392–401",
+        "totalTime": "8:00–10:00",
+        "dtr": "10–14%"
+      },
+      "flavor": {
+        "acidity": 5,
+        "body": 2,
+        "sweetness": 3,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 5
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Long, gentle drying. Bean stays green-to-yellow. You're driving off free moisture without rushing energy into the bean — a scorched Nordic roast is unrecoverable because there's no development to hide behind."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Kept short and controlled. Sugars begin browning but you're deliberately not letting caramelization run. This is where the floral and acidic precursors are preserved rather than cooked off."
+        },
+        {
+          "h": "First Crack",
+          "body": "You drop at or barely into first crack. The crack may be sparse and quiet. Timing here is everything — a few seconds long and you lose the wispy top-end that defines the style."
+        },
+        {
+          "h": "Development",
+          "body": "Minimal by design. DTR runs low (10–14%). The goal is a fully-dried, evenly-roasted bean that is barely developed, not an underdeveloped one — the distinction is even heat application, not just a fast drop."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Grassy / green",
+          "cause": "Dropped before drying truly finished; moisture still locked in center.",
+          "avoid": "Confirm even yellowing across the batch before pushing toward first crack; don't chase the clock."
+        },
+        {
+          "d": "Sharp / sour",
+          "cause": "Underdeveloped acids never resolved into sweetness.",
+          "avoid": "Nudge DTR up slightly or extend Maillard by a few seconds; sourness is the Nordic failure mode, brightness is the goal."
+        },
+        {
+          "d": "Vegetal / peapod",
+          "cause": "Drying phase rushed — surface browns while the core is still under-dried, leaving raw vegetal notes.",
+          "avoid": "Give the drying phase enough time and even heat; on dense high-grown coffee this phase can't be shortcut."
+        },
+        {
+          "d": "Astringent finish",
+          "cause": "Uneven extraction potential from an uneven roast — mixed development across the batch.",
+          "avoid": "Even, responsive heat and small batches; Nordic exposes every inconsistency because there's nowhere to hide."
+        }
+      ],
+      "machine": "Demands responsive convection and tight control — fluid-bed and modern high-airflow drums shine here. This is the most control-hungry roast on the light end: the whole point is preserving delicate acidity and florals, and a machine that can't move heat precisely will bake or scorch them. Small batches are non-negotiable, and consistent charge temperature (a disciplined between-batch protocol) matters because there's no development buffer to absorb variation.",
+      "aka": [
+        "Scandinavian",
+        "Light Nordic"
+      ]
+    },
+    "blonde": {
+      "name": "Blonde",
+      "sub": "Light (Marketing Term)",
+      "level": "Light",
+      "group": "light",
+      "aka": [
+        "Golden",
+        "Starbucks Blonde",
+        "Light Roast (retail)"
+      ],
+      "agtron": "85–75",
+      "accent": "#DCC06A",
+      "oneLine": "A pale, golden light roast made famous as a retail term by Starbucks in 2012 — bright and mellow, though in practice most 'blonde' offerings land closer to a City roast than a true extreme-light.",
+      "useFor": "Approachable light-roast retail coffee, lighter espresso for a broad audience, drinkers stepping down from medium who want less bitterness without going fully Nordic.",
+      "curve": {
+        "chargeC": "198–212",
+        "chargeF": "388–414",
+        "tpC": "88–96",
+        "tpF": "190–205",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "204–209",
+        "dropF": "399–408",
+        "totalTime": "9:00–11:00",
+        "dtr": "13–17%"
+      },
+      "flavor": {
+        "acidity": 4,
+        "body": 2,
+        "sweetness": 3,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard even drying. Blonde is a broadly-marketed light roast, so the approach is a clean, unfussy light-roast curve rather than the knife-edge precision of a Nordic or cinnamon."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "A modest browning cooks off the grassy edge and builds gentle sweetness. The aim is 'smooth and light,' not maximum origin expression."
+        },
+        {
+          "h": "First Crack",
+          "body": "You let first crack roll fully, then drop within a short window. Because 'blonde' isn't a precise level, exactly where you drop varies a lot between roasters."
+        },
+        {
+          "h": "Development",
+          "body": "A short-to-moderate window (13–17% DTR). Enough to keep it mellow and approachable rather than sharp — which is why many commercial blonde roasts drift toward City rather than staying truly light."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Not actually light",
+          "cause": "Chasing 'smooth,' the roast drifts to City or beyond and stops being a light roast at all.",
+          "avoid": "If you're selling it as blonde, hold the drop genuinely light; know that the term sets a light expectation even if it's loosely defined."
+        },
+        {
+          "d": "Sour / underdeveloped",
+          "cause": "Overcorrecting toward light and dropping too early.",
+          "avoid": "Give it enough development to resolve acids; blonde should read mellow-bright, not sour."
+        },
+        {
+          "d": "Peanutty / flat",
+          "cause": "Rushed Maillard — not enough time in the browning phase to build sweetness before dropping light.",
+          "avoid": "Stretch the Maillard phase a little even when finishing light; sweetness is built there, not at the drop."
+        }
+      ],
+      "machine": "Forgiving across machines. The real trick of a blonde roast is honestly just a clean, approachable light-to-light-medium roast — no special hardware needed. Any reasonably controllable drum or fluid-bed handles it. The engineering effort goes into consistency and avoiding under-development, not into machine choice."
+    },
+    "city": {
+      "name": "City",
+      "sub": "Light–Medium Filter",
+      "level": "Light",
+      "group": "light",
+      "agtron": "70–65",
+      "accent": "#B07B3E",
+      "oneLine": "The classic light-medium filter roast dropped in the early minute of development, balancing origin character with rounded sweetness.",
+      "useFor": "Everyday single-origin filter, pour-over programs, origins where you still want acidity but with more body than Nordic.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "205–210",
+        "dropF": "401–410",
+        "totalTime": "9:00–11:00",
+        "dtr": "15–18%"
+      },
+      "flavor": {
+        "acidity": 4,
+        "body": 3,
+        "sweetness": 4,
+        "bitterness": 1,
+        "roast": 1,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard drying phase, roughly half the total roast. Even yellowing is the target. Sets up a stable rate-of-rise heading into browning."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Fuller than Nordic — you let browning build more sweetness and body. This is where City earns its rounder cup versus a Scandinavian light."
+        },
+        {
+          "h": "First Crack",
+          "body": "You ride into first crack and let it establish before dropping. The crack is audible and consistent across the batch."
+        },
+        {
+          "h": "Development",
+          "body": "A short but real development window (15–18% DTR). Enough to resolve acids into sweetness and knock off the grassy edge without pushing into roast character."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Baked",
+          "cause": "RoR crashed and flat-lined through development; energy stalled.",
+          "avoid": "Keep the rate-of-rise gliding gently downward — never flat, never rising, into the drop."
+        },
+        {
+          "d": "Underdeveloped",
+          "cause": "Dropped too soon after first crack onset.",
+          "avoid": "Give at least ~1:15–1:45 of development past first crack for this level."
+        },
+        {
+          "d": "Muted acidity",
+          "cause": "Slightly too much development for the origin, dulling the brightness you kept it light to preserve.",
+          "avoid": "If the coffee's appeal is its acidity, drop toward the earlier end of the City window."
+        }
+      ],
+      "machine": "Forgiving across roaster types — a genuine all-rounder and a great profile to learn a new machine on. Drum roasters lend it a touch more body; fluid-bed keeps it brighter. Batch size is not especially critical. If you're commissioning or characterizing an unfamiliar roaster, City is the profile that will show you the machine's honest behavior without punishing small mistakes.",
+      "aka": [
+        "Light City",
+        "Half City"
+      ]
+    },
+    "american": {
+      "name": "American",
+      "sub": "Medium-Light",
+      "level": "Medium",
+      "group": "medium",
+      "aka": [
+        "Breakfast",
+        "Regular",
+        "Medium (US)"
+      ],
+      "agtron": "68–62",
+      "accent": "#A06E38",
+      "oneLine": "The medium-light US standard — the everyday 'regular' or 'breakfast' roast, balanced and approachable, sitting between a bright light roast and a sweeter specialty medium.",
+      "useFor": "Traditional American drip and diner coffee, crowd-pleasing house blends, the safe middle a broad audience already expects.",
+      "curve": {
+        "chargeC": "200–214",
+        "chargeF": "392–417",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "207–212",
+        "dropF": "405–414",
+        "totalTime": "9:30–11:30",
+        "dtr": "16–19%"
+      },
+      "flavor": {
+        "acidity": 4,
+        "body": 3,
+        "sweetness": 4,
+        "bitterness": 2,
+        "roast": 2,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard even drying. American is the classic middle roast, so nothing here is pushed — it's a balanced, unhurried approach."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "A solid browning phase builds the balanced sweetness and body that makes this roast so approachable. More developed than New England, lighter than City+."
+        },
+        {
+          "h": "First Crack",
+          "body": "First crack rolls fully through the batch and you note its timing before carrying into a moderate development."
+        },
+        {
+          "h": "Development",
+          "body": "A moderate window (16–19% DTR). Enough to balance acidity with body and sweetness, landing the familiar, non-challenging cup most American drinkers grew up on."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Flat / generic",
+          "cause": "The safe middle roasted without attention drifts to dull.",
+          "avoid": "Even a balanced roast wants a clean declining RoR; don't let 'medium' mean 'unmanaged.'"
+        },
+        {
+          "d": "Baked",
+          "cause": "Stalled RoR through the moderate development.",
+          "avoid": "Keep momentum — the middle of the spectrum still bakes if the rate of rise flatlines."
+        },
+        {
+          "d": "Papery / stale-tasting",
+          "cause": "Over-long drying or a baked stretch flattens the cup into cardboard.",
+          "avoid": "Keep the roast moving with a steady declining rate of rise; don't let it coast."
+        },
+        {
+          "d": "Roasty without depth",
+          "cause": "Pushed a touch dark to hide green notes rather than developing properly.",
+          "avoid": "Fix development with time and a clean curve, not with extra color."
+        }
+      ],
+      "machine": "The most forgiving roast on the spectrum — it works on essentially any machine, which is exactly why it became the mass-market default. Drum, fluid-bed, high mass, low mass: all produce an acceptable American roast. Batch size and airflow are non-critical within reason. The engineering challenge here is volume and consistency at scale, not coaxing character out of the roast."
+    },
+    "cityplus": {
+      "name": "City+",
+      "sub": "Specialty Default",
+      "level": "Medium",
+      "group": "medium",
+      "agtron": "63–58",
+      "accent": "#95602F",
+      "oneLine": "The most common specialty medium roast — a hair past City, deep enough for sweetness and balance while keeping origin identity intact.",
+      "useFor": "The default specialty filter roast, blends meant to be versatile, café house filter, and the safest starting point when dialing a new coffee.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "210–216",
+        "dropF": "410–421",
+        "totalTime": "10:00–12:00",
+        "dtr": "18–22%"
+      },
+      "flavor": {
+        "acidity": 3,
+        "body": 4,
+        "sweetness": 5,
+        "bitterness": 2,
+        "roast": 2,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Even, unhurried drying — this profile rewards a stable, well-managed early phase because the longer development amplifies any inconsistency from earlier."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "The workhorse phase for City+. A generous, well-controlled browning is where the signature sweetness and caramel notes are built."
+        },
+        {
+          "h": "First Crack",
+          "body": "First crack is a landmark, not the finish. You note its timing precisely — development time is measured from here."
+        },
+        {
+          "h": "Development",
+          "body": "The sweet spot: 18–22% DTR. Long enough to fully round out and build sweetness, short enough that origin character and a clean finish survive. This is the most-dialed window in specialty roasting."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Flat / dull",
+          "cause": "Development pushed too long, muting acidity without adding complexity.",
+          "avoid": "Watch that DTR doesn't creep past ~22%; pull back drop temp if the cup goes lifeless."
+        },
+        {
+          "d": "Roasty edge",
+          "cause": "Drifted too close to second crack.",
+          "avoid": "Hold drop temp comfortably below second-crack territory; City+ should never taste toasty."
+        },
+        {
+          "d": "Slightly baked, hollow middle",
+          "cause": "Rate of rise sagged through the Maillard phase, hollowing out the body.",
+          "avoid": "Protect a gentle, continuous RoR decline through Maillard — the sweet spot depends on it."
+        }
+      ],
+      "machine": "The universal reference profile — works on nearly anything, which is why it's the industry benchmark. Dial your machine here first: if City+ comes out clean and sweet, the roaster is behaving. Drum adds body, fluid-bed adds clarity, but both land in a usable place. Moderate batches. It's the profile against which you diagnose a machine's quirks before attempting anything more demanding.",
+      "aka": [
+        "City Plus",
+        "Medium"
+      ]
+    },
+    "fullcity": {
+      "name": "Full City",
+      "sub": "Medium–Dark",
+      "level": "Medium-Dark",
+      "group": "mediumdark",
+      "agtron": "55–50",
+      "accent": "#6E3E1E",
+      "oneLine": "Medium-dark roast taken right up to the edge of second crack — deep caramelization and body while stopping just short of roast dominating.",
+      "useFor": "Fuller-bodied filter, classic espresso bases, blends built for milk, chocolate-and-nut flavor profiles.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "218–224",
+        "dropF": "424–435",
+        "totalTime": "11:00–13:00",
+        "dtr": "20–25%"
+      },
+      "flavor": {
+        "acidity": 2,
+        "body": 5,
+        "sweetness": 4,
+        "bitterness": 3,
+        "roast": 3,
+        "aroma": 3
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard drying. From here on, total energy delivered matters more than any single phase — Full City is about accumulated development."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Full browning, deep caramel formation. Sugars are heavily transformed; acidity is dropping and body is climbing."
+        },
+        {
+          "h": "First Crack",
+          "body": "First crack comes and goes with meaningful time still ahead. The cracks roll through the whole batch and settle."
+        },
+        {
+          "h": "Development",
+          "body": "Extended development approaching — but not reaching — second crack. You're listening for the first isolated snaps of second crack as your ceiling, and dropping before they build."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Roasty / carbony",
+          "cause": "Slid into second crack; roast character took over.",
+          "avoid": "Drop at the very first hint of second crack, not after; the window closes fast at this level."
+        },
+        {
+          "d": "Baked / flat",
+          "cause": "Long roast with a stalled RoR through the back half.",
+          "avoid": "Maintain momentum — a long roast still needs a declining, never-flat rate-of-rise."
+        },
+        {
+          "d": "Oily too soon",
+          "cause": "Dropped just into second crack and rested warm — oils migrate to the surface faster than expected.",
+          "avoid": "Drop at the very start of second crack if you don't want surface oil, and cool fast."
+        },
+        {
+          "d": "Muddled / no origin character",
+          "cause": "Development pushed far enough to erase the bean's identity without gaining a clean dark-roast profile.",
+          "avoid": "Decide the goal: preserve some origin (drop earlier) or commit to a clean dark roast (later), not a muddy middle."
+        }
+      ],
+      "machine": "Drum roasters excel here — conductive heat and thermal mass build the body this style is known for, and a heavier drum carries momentum smoothly into second crack. Batch size matters more than at lighter levels because you're managing the approach to second crack: too full and you may lack the heat headroom to steer it, too empty and it can race. Airflow needs to clear the smoke that begins at second crack without stripping heat.",
+      "aka": [
+        "Full City"
+      ]
+    },
+    "fullcityplus": {
+      "name": "Full City+",
+      "sub": "Into Second Crack",
+      "level": "Medium-Dark",
+      "group": "mediumdark",
+      "agtron": "48–45",
+      "accent": "#5A2F16",
+      "oneLine": "Dropped into the rolling start of second crack — the first roast level where surface oils begin to appear and roast character joins origin flavor.",
+      "useFor": "Bold espresso, traditional-leaning blends, darker café programs that still want some sweetness underneath the roast.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "224–229",
+        "dropF": "435–444",
+        "totalTime": "12:00–14:00",
+        "dtr": "22–27%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 5,
+        "sweetness": 3,
+        "bitterness": 4,
+        "roast": 4,
+        "aroma": 3
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard. The character of this roast is decided almost entirely in the final couple of minutes, so a clean early phase just keeps the back half predictable."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Full, deep browning already behind you before the finish. Origin acidity is mostly spent by now."
+        },
+        {
+          "h": "First Crack",
+          "body": "First crack is an early landmark. You're managing energy so second crack arrives controlled, not runaway."
+        },
+        {
+          "h": "Development",
+          "body": "You drop into the early roll of second crack. First oils bead on the surface hours later. Judgment shifts from taste-forward development to controlling how far into second crack you commit."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Ashy / burnt",
+          "cause": "Rode too deep into second crack; pushed toward carbon.",
+          "avoid": "Drop in the early, sporadic phase of second crack — not once it's rolling continuously."
+        },
+        {
+          "d": "Uneven surface oil",
+          "cause": "Inconsistent heat let some beans out-roast others.",
+          "avoid": "Ensure even development into second crack; blotchy oiling signals an uneven batch, not just a dark roast."
+        },
+        {
+          "d": "Bitter, drying finish",
+          "cause": "Development stretched too long into second crack, extracting harsh compounds.",
+          "avoid": "Once into second crack, time is short — small delays read as big jumps in bitterness."
+        }
+      ],
+      "machine": "Drum roasters own this territory. Watch airflow closely — you want to clear smoke and chaff without stripping so much heat that development stalls right when the roast is most sensitive. Thermal mass helps carry even heat through early second crack. Batch consistency becomes important: as you darken, small differences in charge temperature and batch size translate into visible differences in surface oil and color.",
+      "aka": [
+        "Full City Plus"
+      ]
+    },
+    "vienna": {
+      "name": "Vienna",
+      "sub": "Dark",
+      "level": "Dark",
+      "group": "dark",
+      "agtron": "42–38",
+      "accent": "#8a4a28",
+      "oneLine": "A moderate dark roast well into second crack with a light, even oil sheen — bittersweet and roast-forward but still short of full French intensity.",
+      "useFor": "Traditional dark-roast espresso, European-style café blends, drinkers who want dark but not scorched.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "230–235",
+        "dropF": "446–455",
+        "totalTime": "13:00–15:00",
+        "dtr": "25–30%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 4,
+        "sweetness": 3,
+        "bitterness": 4,
+        "roast": 5,
+        "aroma": 2
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard drying. At dark levels, consistency of the whole curve matters more than any nuance — you're building toward a roast-dominant cup."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Fully complete and behind you. Origin sugars are largely converted; what's left is roast-driven bittersweetness."
+        },
+        {
+          "h": "First Crack",
+          "body": "A distant landmark. You roll through first crack and keep energy moving toward second."
+        },
+        {
+          "h": "Development",
+          "body": "You settle into the middle of second crack. Oils migrate to the surface evenly. Control matters — the difference between Vienna and French is a matter of seconds and a few degrees here."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Acrid / smoky",
+          "cause": "Airflow too low; smoke reabsorbed into the beans.",
+          "avoid": "Open airflow through second crack to evacuate smoke; dark roast should be bittersweet, not smoky."
+        },
+        {
+          "d": "Baked-then-burnt",
+          "cause": "Slow approach that stalled, then a hard finish to reach color.",
+          "avoid": "Reach dark color through steady momentum, not by stalling and then blasting heat to catch up."
+        },
+        {
+          "d": "Uneven oil sheen",
+          "cause": "Inconsistent heat or airflow late in the roast leaves some beans oily and others dry.",
+          "avoid": "Even heat and steady airflow through second crack; batch-to-batch consistency matters more as you darken."
+        }
+      ],
+      "machine": "Drum roasters with good airflow control. At this darkness, smoke management and even heat are the whole game, and batch-to-batch consistency starts to dominate — the same beans a minute apart look and taste noticeably different. Adequate extraction and evacuation of smoke keeps the cup from turning acrid. Fluid-bed machines can struggle to hold even heat this deep into second crack.",
+      "aka": [
+        "Viennese",
+        "Light French",
+        "Continental (loosely)"
+      ]
+    },
+    "continental": {
+      "name": "Continental",
+      "sub": "Dark",
+      "level": "Dark",
+      "group": "dark",
+      "aka": [
+        "New Orleans",
+        "European",
+        "After-Dinner",
+        "High Roast"
+      ],
+      "agtron": "40–35",
+      "accent": "#77401E",
+      "oneLine": "A dark roast in the Vienna-to-French band with a smoky, caramelized, bittersweet body — the traditional 'after-dinner' European style, historically the entry to the darkest roasts.",
+      "useFor": "Dark-roast blends, after-dinner and dessert coffee, drinkers who want deep and smoky but not as punishing as French or Italian.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "232–237",
+        "dropF": "450–459",
+        "totalTime": "13:30–15:30",
+        "dtr": "26–31%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 4,
+        "sweetness": 2,
+        "bitterness": 5,
+        "roast": 5,
+        "aroma": 2
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard. As with all dark roasts, accumulated energy over the whole curve matters more than any single phase's nuance."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Fully complete well before the finish. Origin character is largely spent; the cup is roast-driven from here."
+        },
+        {
+          "h": "First Crack",
+          "body": "An early landmark. You manage energy so the run into second crack stays controlled rather than runaway."
+        },
+        {
+          "h": "Development",
+          "body": "You settle into second crack, past Vienna but short of full French. Smoky, caramelized, bittersweet. The name blurs with New Orleans and European — all sit in this same dark band."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Acrid / smoky",
+          "cause": "Low airflow let roast smoke reabsorb into the beans.",
+          "avoid": "Open airflow through second crack; the target is a clean bittersweet smokiness, not an ashtray."
+        },
+        {
+          "d": "Ashy",
+          "cause": "Pushed too close to the French/Italian end.",
+          "avoid": "Hold the drop in the mid-second-crack range; Continental should keep some caramel body under the roast."
+        },
+        {
+          "d": "Flat / one-dimensional",
+          "cause": "So much development that only roast character remains, with no sweetness or complexity left underneath.",
+          "avoid": "Even at this darkness, a clean curve into second crack preserves a little sweetness beneath the roast."
+        }
+      ],
+      "machine": "Drum roaster with good airflow control. Historically some New Orleans versions blend in chicory — a separate ingredient added after roasting, not a roast technique. Mechanically this is a dark-roast discipline: even heat through a sustained second crack, aggressive smoke clearance, and tight repeatability. High-mass drums help hold steady heat; airflow keeps smoke off the beans."
+    },
+    "french": {
+      "name": "French",
+      "sub": "Very Dark",
+      "level": "Dark",
+      "group": "dark",
+      "agtron": "35–30",
+      "accent": "#9c5a34",
+      "oneLine": "A very dark roast deep into second crack with heavy surface oil — roast character dominates, origin is largely gone, intense and bittersweet.",
+      "useFor": "Traditional French/Italian-leaning espresso, dark-roast house blends, drinkers who want bold, smoky, low-acid coffee.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "235–240",
+        "dropF": "455–464",
+        "totalTime": "14:00–16:00",
+        "dtr": "28–33%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 4,
+        "sweetness": 2,
+        "bitterness": 5,
+        "roast": 5,
+        "aroma": 2
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard drying, then the roast becomes about controlled energy delivery all the way to a very dark drop."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Long complete. By now the cup's character is roast and carbon chemistry, not origin sugars."
+        },
+        {
+          "h": "First Crack",
+          "body": "A memory. You're managing the run deep into second crack without letting it become uncontrolled."
+        },
+        {
+          "h": "Development",
+          "body": "You push well into or past the peak of second crack. Surface is heavily oiled. This is the edge of the safe roasting envelope — a little further is charcoal, and the risk of roaster fires climbs, so vigilance is mandatory."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Burnt / carbony",
+          "cause": "Pushed past controlled dark into scorched territory.",
+          "avoid": "Know your drop point cold; at French level there's almost no margin before flavor becomes ash."
+        },
+        {
+          "d": "Flat, no sweetness",
+          "cause": "All fermentable sugar cooked off with nothing balancing the bitterness.",
+          "avoid": "Start from a sweeter, denser green; thin coffees turn hollow and purely bitter at this level."
+        },
+        {
+          "d": "Uncontrolled second crack",
+          "cause": "Too much heat entering second crack sends it racing — seconds separate a French roast from charcoal.",
+          "avoid": "Ease heat before second crack so you can steer the final seconds precisely; this is the danger zone."
+        }
+      ],
+      "machine": "Drum roasters, close supervision, and aggressive airflow. Fire safety becomes a genuine operational concern at this level — chaff and accumulated oils plus high heat are a real ignition risk, so cleaning discipline is part of running this roast. The craft is easing heat before second crack so you can steer the final seconds; a machine you can't throttle quickly will overshoot into charcoal. Never leave it unattended.",
+      "aka": [
+        "Dark Roast",
+        "Turkish (loosely)"
+      ]
+    },
+    "italian": {
+      "name": "Italian",
+      "sub": "Darkest Traditional",
+      "level": "Dark",
+      "group": "dark",
+      "agtron": "28–25",
+      "accent": "#b06a3e",
+      "oneLine": "The darkest common roast — near the end of the safe envelope, heavily oiled and carbon-forward, built for traditional dark espresso tradition.",
+      "useFor": "Traditional Italian espresso blends, very dark café identities, customers who specifically want the darkest cup.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "240–245",
+        "dropF": "464–473",
+        "totalTime": "15:00–17:00",
+        "dtr": "30–35%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 3,
+        "sweetness": 1,
+        "bitterness": 5,
+        "roast": 5,
+        "aroma": 1
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard. Everything past drying is energy management toward the darkest safe drop point."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Fully spent long before the finish. No origin character remains to preserve."
+        },
+        {
+          "h": "First Crack",
+          "body": "Far behind. Second crack has fully rolled and largely finished by the time you approach the drop."
+        },
+        {
+          "h": "Development",
+          "body": "You take it to the very edge of the safe roasting envelope — beyond here is combustion, not coffee. Bean surface is fully oiled and near-black. This level exists for tradition and identity, not flavor development."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Charred / ash",
+          "cause": "One step too far; the bean crossed from dark roast to burnt.",
+          "avoid": "This roast lives on a knife's edge — precise, repeatable drop timing is the entire skill."
+        },
+        {
+          "d": "Roaster fire",
+          "cause": "Accumulated oil and chaff igniting at extreme heat.",
+          "avoid": "Meticulous roaster cleaning and constant supervision; this is the highest fire-risk common roast."
+        },
+        {
+          "d": "Thin body despite darkness",
+          "cause": "So much mass burned off that the cup is dark but hollow — bitterness without weight.",
+          "avoid": "Manage heat so darkness comes from development, not from simply torching the bean to nothing."
+        }
+      ],
+      "machine": "Drum roasters with rigorous cleaning and fire protocols. At Italian darkness the discipline is almost entirely about safety and repeatability rather than flavor nuance. Keep the drum clean (oil and chaff buildup is a fire load), manage airflow to evacuate heavy smoke, and watch the roast continuously. Thermal mass helps hold even heat, but the operator's attention is the real safety system.",
+      "aka": [
+        "Espresso Roast (traditional)"
+      ]
+    },
+    "spanish": {
+      "name": "Spanish",
+      "sub": "Darkest / Carbonized Edge",
+      "level": "Dark",
+      "group": "dark",
+      "aka": [
+        "Dark French (loosely)",
+        "Extreme Dark"
+      ],
+      "agtron": "25–20",
+      "accent": "#8a5233",
+      "oneLine": "The darkest named roast — pushed past Italian to the very edge of carbonization, thin-bodied, intensely bitter and smoky, existing at the outer limit of what's still coffee.",
+      "useFor": "Extreme dark-roast traditions and specific regional tastes. A niche, identity-driven roast, not a flavor-development one.",
+      "curve": {
+        "chargeC": "200–215",
+        "chargeF": "392–419",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "245–250",
+        "dropF": "473–482",
+        "totalTime": "15:30–17:30",
+        "dtr": "31–36%"
+      },
+      "flavor": {
+        "acidity": 1,
+        "body": 2,
+        "sweetness": 1,
+        "bitterness": 5,
+        "roast": 5,
+        "aroma": 1
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Standard. Everything after is a controlled march to the darkest safe drop point on the spectrum."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Long spent. There is no origin character left to preserve at this darkness."
+        },
+        {
+          "h": "First Crack",
+          "body": "A distant memory. Second crack has fully rolled and largely finished before you approach the drop."
+        },
+        {
+          "h": "Development",
+          "body": "Taken past Italian to the very verge of combustion. The bean is heavily carbonized and can be over a quarter ash. Body actually thins out here as structure breaks down. This is the outer edge of the roasting envelope."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Charred / charcoal",
+          "cause": "One step past the edge; the bean crossed from roast to burnt.",
+          "avoid": "Spanish already lives at the limit — a few seconds or degrees too far is literally charcoal. Precise, repeatable timing is the whole skill."
+        },
+        {
+          "d": "Roaster fire",
+          "cause": "Oil and chaff plus extreme heat, with dumping into the cooling tray adding oxygen.",
+          "avoid": "Meticulous cleaning, constant supervision, and fire protocols. This is the highest fire-risk roast there is."
+        },
+        {
+          "d": "Acrid smoke taint",
+          "cause": "Smoke not cleared fast enough at extreme darkness settles back onto the beans.",
+          "avoid": "Aggressive, clean airflow to evacuate smoke continuously; at this level smoke management is flavor management."
+        }
+      ],
+      "machine": "Drum roaster with rigorous cleaning and active fire safety — this is the darkest common roast and the highest-risk. The entire job is safety and repeatability: continuous supervision, aggressive clean airflow to clear dense smoke, and a spotless machine, because oil and chaff at this heat are a serious fire hazard. Flavor is almost entirely roast character by now; the engineering is about doing it safely and identically every time."
+    },
+    "espresso": {
+      "name": "Espresso",
+      "sub": "Modern Specialty",
+      "level": "Purpose",
+      "group": "purpose",
+      "agtron": "58–48",
+      "accent": "#7A4A28",
+      "oneLine": "A purpose profile, not a roast level — extended development for solubility and sweetness under pressure, tuned so it extracts evenly as espresso rather than for a color target.",
+      "useFor": "Modern specialty espresso, single-origin espresso, café espresso where you want clarity and sweetness in a short, pressurized shot.",
+      "curve": {
+        "chargeC": "195–210",
+        "chargeF": "383–410",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "212–222",
+        "dropF": "414–432",
+        "totalTime": "11:00–14:00",
+        "dtr": "20–25%"
+      },
+      "flavor": {
+        "acidity": 3,
+        "body": 5,
+        "sweetness": 5,
+        "bitterness": 3,
+        "roast": 3,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Often a slightly gentler, longer drying to promote even heat penetration — espresso punishes uneven roasts because the extraction concentrates every flaw."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "Deliberately extended. This is the heart of an espresso profile: a long Maillard builds the sweetness and solubility that a short pressurized shot depends on."
+        },
+        {
+          "h": "First Crack",
+          "body": "A managed landmark. You typically stretch the time between first crack and drop more than a filter roast of the same color, prioritizing development over speed."
+        },
+        {
+          "h": "Development",
+          "body": "Longer development (often 20–25% DTR) than a filter roast landing at the same Agtron. The extra development lowers perceived acidity and raises solubility so the shot pulls evenly and sweet, not sharp or hollow."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Sharp / sour shot",
+          "cause": "Underdeveloped for espresso; acids not resolved and solubility too low.",
+          "avoid": "Extend development; espresso needs more than a filter roast at the same color to pull sweet under pressure."
+        },
+        {
+          "d": "Hollow / ashy shot",
+          "cause": "Over-roasted chasing body, tipped into roast character.",
+          "avoid": "Build body through development time, not a darker drop; more time at a moderate color beats a darker roast."
+        },
+        {
+          "d": "Harsh crema, bitter finish",
+          "cause": "Roasted too dark or developed too long for the intended shot, so extraction turns harsh under pressure.",
+          "avoid": "Design the roast for the machine and ratio; espresso concentrates every flaw, so aim for even development over color."
+        }
+      ],
+      "machine": "Any roaster, but repeatability is critical because espresso amplifies every variation into the shot. The skill is profile design — targeting even development so the coffee extracts cleanly under nine bars of pressure. Whatever machine you use, lock down a disciplined between-batch protocol and consistent charge temperature; a shot exposes drift that a filter brew would forgive. Log everything and cup against a reference."
+    },
+    "omni": {
+      "name": "Omni",
+      "sub": "Filter + Espresso",
+      "level": "Purpose",
+      "group": "purpose",
+      "agtron": "62–55",
+      "accent": "#8A5A34",
+      "oneLine": "A modern medium roast deliberately designed to work as both filter and espresso — the third-wave default that trades a little peak performance in each for versatility.",
+      "useFor": "Cafés running one roast across both bar and brew, single-origin programs that want one SKU per coffee, roasters simplifying inventory.",
+      "curve": {
+        "chargeC": "198–212",
+        "chargeF": "388–414",
+        "tpC": "88–98",
+        "tpF": "190–208",
+        "dryEndC": "150–160",
+        "dryEndF": "302–320",
+        "fcC": "196–202",
+        "fcF": "385–396",
+        "dropC": "210–218",
+        "dropF": "410–424",
+        "totalTime": "10:30–13:00",
+        "dtr": "19–23%"
+      },
+      "flavor": {
+        "acidity": 3,
+        "body": 4,
+        "sweetness": 5,
+        "bitterness": 2,
+        "roast": 2,
+        "aroma": 4
+      },
+      "phases": [
+        {
+          "h": "Drying",
+          "body": "Clean, even drying. Omni lives or dies on evenness because it has to satisfy two extraction methods at once — no room to hide an uneven batch."
+        },
+        {
+          "h": "Maillard / Browning",
+          "body": "A generous browning builds the sweetness that makes the roast forgiving in espresso while keeping enough clarity for filter."
+        },
+        {
+          "h": "First Crack",
+          "body": "Landmark noted precisely. Omni development sits between a pure filter and a pure espresso target."
+        },
+        {
+          "h": "Development",
+          "body": "A middle-path DTR (roughly 19–23%). Enough development for espresso to pull sweet, restrained enough that filter still shows origin. You're intentionally not optimizing for either — the whole point is one roast that does both well."
+        }
+      ],
+      "defects": [
+        {
+          "d": "Compromised both ways",
+          "cause": "Split the difference badly — too light for great espresso, too developed for bright filter.",
+          "avoid": "Aim the profile at the coffee's strength; an omni still leans slightly toward what that specific green does best."
+        },
+        {
+          "d": "Sour as espresso",
+          "cause": "Erred too far toward the filter end.",
+          "avoid": "If the shot pulls sharp, add development; test it on the bar, not just the cupping table."
+        },
+        {
+          "d": "Muddy as filter",
+          "cause": "Compromise roast leaning espresso loses the clarity filter brewing needs.",
+          "avoid": "Accept that omni is a deliberate trade-off; if one method matters more, roast for it and let omni go."
+        }
+      ],
+      "machine": "Any well-controlled roaster. The real work is profile design and disciplined cupping across both filter and espresso — you validate the roast by brewing it both ways and confirming it's acceptable in each. Consistency and record-keeping matter more than the specific machine, because you're chasing a narrow window that satisfies two extraction methods at once."
+    }
+  }
+}
