@@ -89,8 +89,8 @@ try:
 except FileNotFoundError:
     PM_CATALOG = {}
 
-APP_VERSION = "v113"
-CACHE_C = "coffee-guide-v113"
+APP_VERSION = "v114"
+CACHE_C = "coffee-guide-v114"
 
 # Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
 # These read better as art than hand-drawn SVG. Listed here so the build copies
@@ -374,6 +374,8 @@ html[data-barmode="1"] button,html[data-barmode="1"] .relchip{min-height:44px}
 html[data-theme="pm"] .barmodebtn{display:inline-flex;align-items:center;gap:7px}
 html[data-barmode="1"] .barmodebtn{background:#1a1a1a}
 @media(max-width:640px){.barmodebtn{bottom:calc(70px + env(safe-area-inset-bottom,0px))}}
+
+}
 
 /* ---- PM CATALOG COMPONENTS (tiers, lots, menu, home strip) ---- */
 .pmtier{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
@@ -1121,6 +1123,66 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
+
+/* ============================================================================
+   DESKTOP PRESENTATION (>=1000px)
+   The app was built mobile-first and read as a narrow column stranded on the
+   left of a wide monitor. These rules give large screens a layout of their own:
+   a wider measure, a two-column PM hero, denser grids, and the removal of
+   touch-only affordances that make no sense with a mouse.
+   ============================================================================ */
+@media(min-width:1000px){
+  .wrap{max-width:1240px}
+  /* Bar mode is a behind-the-counter, wet-hands feature. Pointless on a desktop. */
+  .barmodebtn{display:none!important}
+  html[data-theme="pm"] .barmodebtn{display:none!important}
+
+  /* PM hero becomes two columns: emblem and copy side by side, vertically centred,
+     instead of a centred emblem sitting above left-aligned text. */
+  html[data-theme="pm"] .hero .wrap{
+    display:grid;grid-template-columns:300px minmax(0,1fr);gap:52px;align-items:center}
+  html[data-theme="pm"] .hero .herocopy{min-width:0}
+  html[data-theme="pm"] .pm-hero-emblem{max-width:300px;margin:0}
+  html[data-theme="pm"] .hero h1{max-width:none;font-size:clamp(40px,3.6vw,58px)}
+  html[data-theme="pm"] .hero .lede{max-width:56ch}
+  html[data-theme="pm"] .hero .heatbar{max-width:520px}
+  html[data-theme="pm"] .herosig{max-width:60ch}
+
+  /* Neutral hero: give the text room rather than a 15ch column on a wide screen. */
+  .hero h1{max-width:22ch}
+  .hero .lede{max-width:70ch}
+
+  /* Denser, more even grids so cards stop orphaning onto half-empty rows. */
+  .pmstripgrid{grid-template-columns:repeat(6,1fr)}
+  .secdir{grid-template-columns:repeat(3,1fr)}
+  .origrid{grid-template-columns:repeat(4,1fr)}
+  .pmmenugrid{grid-template-columns:repeat(4,1fr)}
+  .qmsfields{grid-template-columns:repeat(3,1fr)}
+  .pmlots-grid{grid-template-columns:repeat(3,1fr)}
+
+  /* Toolkit bar: keep the full-bleed band but align its label to the content column. */
+  html[data-theme="pm"] .pm-toolkitbar{text-align:left}
+  html[data-theme="pm"] .pm-toolkitbar span.tkinner{display:block;max-width:1240px;margin:0 auto;padding:0 20px}
+
+  /* Sub-row: pull search, flags and version onto the same measure as the content. */
+  html[data-theme="pm"] .pm-subrow{max-width:1240px;margin:0 auto;width:100%}
+
+  /* Checklist and diagnostic read better in two columns on a wide screen. */
+  .vsecs{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .dxlist{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .pblist{gap:16px}
+
+  /* Freshness tool: verdict and controls side by side. */
+  .freshgrid{display:grid;grid-template-columns:340px 1fr;gap:28px;align-items:start}
+}
+
+@media(min-width:1500px){
+  .wrap{max-width:1360px}
+  html[data-theme="pm"] .pm-toolkitbar span.tkinner{max-width:1360px}
+  html[data-theme="pm"] .pm-subrow{max-width:1360px}
+  .origrid{grid-template-columns:repeat(5,1fr)}
+  .pmmenugrid{grid-template-columns:repeat(5,1fr)}
+
 </style>
 </head>
 <body>
@@ -1159,7 +1221,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
     </span>
     <span class="ver pm-subver" id="verlabel2"></span>
   </div>
-  <button class="pm-toolkitbar" id="pm-toolkitbar" onclick="go('pmhub')">Proud Mary Toolkit</button>
+  <button class="pm-toolkitbar" id="pm-toolkitbar" onclick="go('pmhub')"><span class="tkinner">Proud Mary Toolkit</span></button>
 </header>
 <button class="barmodebtn" id="barmodebtn" onclick="toggleBarMode()" aria-label="Toggle bar mode">Bar mode</button>
 <div id="devpanel" class="devpanel" style="display:none">
@@ -2094,10 +2156,12 @@ function home(){
   <section class="hero">
     <div class="wrap">
       <div class="pm-hero-emblem"><img src="img/pm-emblem.png" alt="Proud Mary Coffee Roasters"></div>
+      <div class="herocopy">
       <h1>${pmOr('The coffee, <span class="grad">explained.</span>','Where green coffee <span class="grad">becomes flavor.</span>')}</h1>
       <p class="lede">${pmOr("Everything behind the cup you're about to make \u2014 green buying, the roast, the brew, the science. Made in-house, for the people who take this as seriously as we do.",'A field reference for the people who roast, brew, and buy coffee for a living. From the green bean to the roast curve to the cup, this is the theory that actually changes what you do at the machine. Opinionated where it counts, honest about the rest, and blessedly free of fluff.')}</p>
       <div class="heatbar">${heat}</div>
       <p class="herosig">${pmOr('Melbourne \u2192 Portland \u2192 Austin. Same standards, every cup.','Light to dark, seed to cup. Every step here has a reason, and we tell you what it is.')}</p>
+      </div>
     </div>
   </section>
   ${pmHomeStrip()}
@@ -6444,14 +6508,14 @@ function pmFreshView(){
     '<button class="back sticky" onclick="navBack(\'pmhub\')">'+backLabelFor('\u2190 Toolkit')+'</button>'+
     '<div class="seclead"><span class="no">\u25c9</span><div><h2>Is this bag ready?</h2>'+
       '<p>Enter the roast date on the bag. Coffee needs a few days to settle after roasting and then holds well for a few weeks. This tells you where you are in that window.</p></div></div>'+
-    '<div class="bc-wrap">'+
-      '<label class="bc-waterlab" style="display:block"><b>Roast date</b>'+
+    '<div class="bc-wrap"><div class="freshgrid">'+
+      '<div><label class="bc-waterlab" style="display:block"><b>Roast date</b>'+
         '<input class="freshdate" id="freshdate" type="date" max="'+today+'" value="'+today+'" onchange="pmFreshCalc()" oninput="pmFreshCalc()"></label>'+
       '<div style="margin-top:10px"><label class="bc-lab">Brewing as'+
         '<select class="bc-sel" id="freshmode" onchange="pmFreshCalc()">'+
-        '<option value="esp">Espresso</option><option value="fil">Filter / batch</option></select></label></div>'+
-      '<div id="freshout" style="margin-top:16px"></div>'+
-    '</div>'+
+        '<option value="esp">Espresso</option><option value="fil">Filter / batch</option></select></label></div></div>'+
+      '<div id="freshout"></div>'+
+    '</div></div>'+
     '<div class="pmtemplate-note">General guidance for specialty coffee, not a Proud Mary specification. Your own rest windows per roast would replace these numbers.</div>'+
     '<div style="height:50px"></div>'+
   '</div>';

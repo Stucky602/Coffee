@@ -35,16 +35,22 @@ Then copy those outputs to the repo root.
 
 ```bash
 cd src
-node qa_v101.js qa_locale.js qa_devpanel.js qa_pmmode.js qa_pmtools.js   # run individually
+node qa_v101.js        # core architecture
+node qa_locale.js      # US / AU locale switching
+node qa_devpanel.js    # demo panel plumbing
+node qa_pmmode.js      # Proud Mary master switch
+node qa_pmtools.js     # PM tools, catalog, back-navigation
+python3 qa_responsive.py   # responsive layout (needs Playwright, uses a real browser)
 python3 check_catalog.py
 ```
 
-All five suites should pass clean before shipping. Current total: 200 tests.
+All suites should pass clean before shipping. Current total: 224 tests.
 
 ## Demo mode
 
 Long-press the version number (or add `?dev=1`) to open the demo panel. The headline control
 is a single **Proud Mary mode** switch: one flip applies the house theme, logo, and copy, and
-reskins the guide around Proud Mary's actual catalog, tiers, and lots. In PM mode a **Bar
-mode** toggle also appears for behind-the-counter use. Nothing is saved to the live site
-apart from the theme and bar-mode preferences.
+reskins the guide around Proud Mary's actual catalog, tiers, and lots.
+
+On phones and tablets a **Bar mode** toggle also appears, scaling touch targets and body text
+for behind-the-counter use. It is hidden on desktop, where it serves no purpose.
