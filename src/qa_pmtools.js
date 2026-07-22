@@ -277,11 +277,7 @@ wU.eval('go("pmonboard","cafepartner")');
 t('cafe partner path has phase headers', wU.document.querySelectorAll('.phasehead').length===3);
 
 // 10. bar mode
-t('bar mode button present', !!wU.document.getElementById('barmodebtn'));
-wU.eval('toggleBarMode()');
-t('bar mode sets attribute', wU.document.documentElement.getAttribute('data-barmode')==='1');
-wU.eval('toggleBarMode()');
-t('bar mode clears attribute', wU.document.documentElement.getAttribute('data-barmode')===null);
+t('bar mode fully removed', !wU.document.getElementById('barmodebtn') && typeof wU.toggleBarMode==='undefined');
 
 // neutral isolation for everything new
 var wZ=load('https://stucky602.github.io/Coffee/');

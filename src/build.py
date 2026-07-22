@@ -89,8 +89,8 @@ try:
 except FileNotFoundError:
     PM_CATALOG = {}
 
-APP_VERSION = "v115"
-CACHE_C = "coffee-guide-v115"
+APP_VERSION = "v116"
+CACHE_C = "coffee-guide-v116"
 
 # Illustrated raster diagrams (PNG) that ship alongside index.html in ./img/.
 # These read better as art than hand-drawn SVG. Listed here so the build copies
@@ -356,24 +356,6 @@ html[data-theme="pm"] .diagram figcaption{color:#8f7c66}
   color:#fff;background:var(--pm-red,#c8503a);padding:3px 8px;border-radius:20px;margin-top:1px}
 
 /* ---- BAR MODE: bigger targets, calmer contrast, for 6am with wet hands ---- */
-html[data-barmode="1"] .navtabs button,html[data-barmode="1"] .mobnav button{font-size:15px;padding:12px 14px}
-html[data-barmode="1"] .secard,html[data-barmode="1"] .origcard,html[data-barmode="1"] .pmmenucard{padding:18px 20px}
-html[data-barmode="1"] .secard-title{font-size:19px}
-html[data-barmode="1"] .back{padding:12px 20px;font-size:15px}
-html[data-barmode="1"] .vchk input{width:26px;height:26px}
-html[data-barmode="1"] .vchk span{font-size:15.5px}
-html[data-barmode="1"] .dxcard summary{padding:18px 18px;font-size:16px}
-html[data-barmode="1"] .dxbody li{font-size:15px;margin-bottom:8px}
-html[data-barmode="1"] .msection p{font-size:16px;line-height:1.7}
-html[data-barmode="1"] .bc-range{height:34px}
-html[data-barmode="1"] .pmt-card{min-height:104px}
-html[data-barmode="1"] button,html[data-barmode="1"] .relchip{min-height:44px}
-.barmodebtn{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:35;
-  background:var(--pm-red,#c8503a);color:#fff;border:none;border-radius:26px;padding:11px 16px;
-  font-weight:700;font-size:12.5px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}
-html[data-theme="pm"] .barmodebtn{display:inline-flex;align-items:center;gap:7px}
-html[data-barmode="1"] .barmodebtn{background:#1a1a1a}
-@media(max-width:640px){.barmodebtn{bottom:calc(70px + env(safe-area-inset-bottom,0px))}}
 
 }
 
@@ -1133,10 +1115,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
    ============================================================================ */
 @media(min-width:1000px){
   .wrap{max-width:1240px}
-  /* Bar mode is a behind-the-counter, wet-hands feature. Pointless on a desktop. */
-  .barmodebtn{display:none!important}
-  html[data-theme="pm"] .barmodebtn{display:none!important}
-
   /* PM hero becomes two columns: emblem and copy side by side, vertically centred,
      instead of a centred emblem sitting above left-aligned text. */
   html[data-theme="pm"] .hero .wrap{
@@ -1223,7 +1201,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
   </div>
   <button class="pm-toolkitbar" id="pm-toolkitbar" onclick="go('pmhub')"><span class="tkinner">Proud Mary Toolkit</span></button>
 </header>
-<button class="barmodebtn" id="barmodebtn" onclick="toggleBarMode()" aria-label="Toggle bar mode">Bar mode</button>
 <div id="devpanel" class="devpanel" style="display:none">
   <div class="devpanel-inner">
     <div class="devpanel-head">
@@ -1810,23 +1787,6 @@ function updateFooter(){
    Replaces the old injected nav tab (which cramped the desktop tab row). The bar
    is CSS-hidden in the neutral theme; here we just keep the mobile nav in sync and
    highlight the bar when the user is inside a PM view. */
-/* ---- BAR MODE ----
-   The guide gets used behind a bar at 6am, one-handed, often with wet hands.
-   Bar mode scales up touch targets and body text without changing the layout.
-   PM mode only, persisted per device. */
-function barModeOn(){ try{ return localStorage.getItem('cig_barmode')==='1'; }catch(e){ return false; } }
-function applyBarMode(on){
-  if(on) document.documentElement.setAttribute('data-barmode','1');
-  else document.documentElement.removeAttribute('data-barmode');
-  var b=document.getElementById('barmodebtn');
-  if(b) b.textContent = on ? 'Bar mode on' : 'Bar mode';
-}
-function toggleBarMode(){
-  var next=!barModeOn();
-  try{ localStorage.setItem('cig_barmode', next?'1':'0'); }catch(e){}
-  applyBarMode(next);
-}
-function initBarMode(){ applyBarMode(barModeOn()); }
 
 function syncPmTab(){
   var on = pmModeOn();
@@ -6782,7 +6742,6 @@ function closeTermPop(){const p=document.getElementById('termpop');if(p)p.remove
   if(pmModeOn()){ PM_BUILT_FEATURES.forEach(function(f){ FF_OVERRIDE[f]=true; }); } // persisted PM mode = features on
   updateFooter();        // house-aware footer copy
   syncPmTab();           // add the Proud Mary tab if PM mode persisted
-  initBarMode();         // restore bar mode if it was left on
   initLocaleButtons();   // fill the flag buttons + set active state (all defs assigned by now)
   initDevPanelTrigger();  // long-press #verlabel/#footver, or ?dev=1, opens the hidden dev panel
   try{

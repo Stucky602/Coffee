@@ -11,7 +11,7 @@
    The page also polls for updates and, when a new worker takes over, reloads
    itself once. See the registration block in index.html.
 */
-const CACHE="coffee-guide-v115";
+const CACHE="coffee-guide-v116";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg","./img/roasters.png","./img/greendefects.png","./img/roastdefects.png","./img/processing.png","./img/milkdrinks.png","./img/blend.png","./img/teacoffee.png","./img/decafmethods.png","./img/beans_roast.png","./img/beans_green.png","./img/arabica_robusta.png","./img/cupping.png","./img/qcloop.png","./img/og-card.png","./img/roastchem.png","./img/degassing.png","./img/greenmetrics.png","./img/harvest.png","./img/betweenbatch.png","./img/grading.png","./img/threats.png","./img/grinder.png","./img/pm-logo.png","./img/pm-emblem.png","./fonts/fraunces-display.woff2"];
 
 self.addEventListener("install",e=>{

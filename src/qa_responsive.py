@@ -18,7 +18,6 @@ with sync_playwright() as p:
     # --- desktop ---
     pg=page(1800); pg.evaluate('setPmMode(true); go("home")'); pg.wait_for_timeout(400)
     t('desktop: wrap widens past 1120', pg.evaluate('document.querySelector(".wrap").getBoundingClientRect().width')>1200)
-    t('desktop: bar mode hidden', pg.evaluate('getComputedStyle(document.getElementById("barmodebtn")).display')=='none')
     t('desktop: PM hero is a grid', pg.evaluate('getComputedStyle(document.querySelector(".hero .wrap")).display')=='grid')
     em=pg.evaluate('document.querySelector(".pm-hero-emblem").getBoundingClientRect()')
     h1=pg.evaluate('document.querySelector(".hero h1").getBoundingClientRect()')
@@ -34,13 +33,11 @@ with sync_playwright() as p:
 
     # --- tablet ---
     pg=page(900); pg.evaluate('setPmMode(true); go("home")'); pg.wait_for_timeout(400)
-    t('tablet: bar mode still shown', pg.evaluate('getComputedStyle(document.getElementById("barmodebtn")).display')!='none')
     t('tablet: no overflow', pg.evaluate('document.documentElement.scrollWidth')<=902)
     pg.close()
 
     # --- phone ---
     pg=page(420); pg.evaluate('setPmMode(true); go("home")'); pg.wait_for_timeout(400)
-    t('phone: bar mode shown', pg.evaluate('getComputedStyle(document.getElementById("barmodebtn")).display')!='none')
     t('phone: hero not forced to 2 cols', pg.evaluate('getComputedStyle(document.querySelector(".hero .wrap")).display')!='grid')
     t('phone: no overflow', pg.evaluate('document.documentElement.scrollWidth')<=422)
     for v in ['pmhub','pmquality','pmdiagnose','pmvisit','pmfresh','pmmenucoffee','origins']:
@@ -51,7 +48,7 @@ with sync_playwright() as p:
     # --- neutral desktop unaffected ---
     pg=page(1800); pg.evaluate('go("home")'); pg.wait_for_timeout(400)
     t('neutral desktop: hero not a PM grid', pg.evaluate('getComputedStyle(document.querySelector(".hero .wrap")).display')!='grid')
-    t('neutral desktop: no bar mode button', pg.evaluate('getComputedStyle(document.getElementById("barmodebtn")).display')=='none')
+    t('no bar mode button anywhere', pg.evaluate('!document.getElementById("barmodebtn")'))
     pg.close()
     b.close()
 
